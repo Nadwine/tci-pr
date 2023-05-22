@@ -38,7 +38,7 @@ PropertyView.init(
   {
     // Other model options
     sequelize,
-    tableName: "project_views",
+    tableName: "property_views",
     timestamps: true,
     modelName: "ProjectView"
   }

@@ -35,7 +35,7 @@ PropertyQuestion.init(
   {
     // Other model options go here
     sequelize,
-    tableName: "property_enquires",
+    tableName: "property_questions",
     timestamps: true,
     modelName: "PropertyEnquiry"
   }
