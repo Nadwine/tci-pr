@@ -1,0 +1,6 @@
+{
+  "verbose": true,
+  "ignore": ["*.test.js", "client/*"],
+  "watch": ["server.ts", "src/server", "src/database", "src/utils"],
+  "ext": "js,mjs,json,ts"
+}

@@ -1,0 +1,27 @@
+### Request 1
+GET http://localhost:8080/api/auth/whoami HTTP/1.1
+
+### Request 1
+GET http://localhost:8080/api/auth/logout HTTP/1.1
+
+###
+
+POST http://localhost:8080/api/auth/register HTTP/1.1
+content-type: application/json
+
+{
+    "username": "sample",
+    "email": "email@mail.com",
+    "password": "pwd"
+}
+
+###
+
+POST http://localhost:8080/api/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "sample",
+    "email": "email@mail.com",
+    "password": "pwd"
+}

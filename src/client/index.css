@@ -1,0 +1,137 @@
+/* @import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities"; */
+
+/*__________________________________________________*
+|
+|             Global Styles (Start)
+|*__________________________________________________*/
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-top: 4.5rem;
+  min-height: 100vh;
+}
+
+.palette-pink {
+  background-color: #ec5f5f;
+}
+
+.palette-yellow {
+  background-color: #ffd05b;
+}
+
+.palette-pink-text {
+  color: #ec5f5f;
+}
+
+.palette-pink.btn:hover {
+  background-color: #c74f4f;
+}
+
+.no-input-border[type=text]{ 
+  border: 0;
+  border: 1px solid #c74f4f;
+  padding-left: 10px;
+  outline: 0;
+}
+
+.point {
+  cursor: pointer;
+}
+
+.user-circle {
+  position: relative;
+  background-color: grey;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  line-height: 200%;
+  text-align: center;
+  margin-right: 10px;
+}
+/*________________ Global Styles (End)________________*/
+
+/*====================================================*
+|
+|             HomeFeed (Start)
+|*====================================================*/
+.home-feed .markdown *{
+  max-width: 100%;
+}
+
+.home-feed .markdown {
+  max-height: 250px;
+  overflow: hidden;
+}
+/*________________ HomeFeed (End)_____________________*/
+
+
+/*====================================================*
+|
+|             Register (Start)
+|*====================================================*/
+/*________________ Register (End)_____________________*/
+
+
+/*====================================================*
+|
+|             ViewProject (Start)
+|*====================================================*/
+
+.view-project .markdown * {
+  max-width: 100%;
+}
+
+
+.view-project .progresses {
+  display: flex;
+  align-items: center;
+}
+
+
+.view-project .line {
+
+  width: 100px;
+  height: 6px;
+  /* background: #fd9999; lit pink */
+  /* background: #c9c9c9; */
+}
+
+
+.view-project .steps {
+
+  display: flex;
+  /* background-color: #a7a6a6; */
+  color: #1b1b1b;
+  font-size: 14px;
+  width: 25px;
+  height: 25px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+
+}
+
+.view-project .steps span {
+  margin-bottom: 1.7em;
+  font-weight: bold;
+  font-size: 12px;
+  z-index: +1;
+}
+/*________________ ViewProject (End)_____________________*/
+
+
+/*====================================================*
+|
+|             CreatePost (Start)
+|*====================================================*/
+.create-post .markdown-editor button[class=table] {
+  width: 2em;
+}
+
+/*________________ ViewProject (End)_____________________*/
