@@ -1,6 +1,6 @@
-import { DataTypes, Model, Optional, InferAttributes, InferCreationAttributes, CreationOptional } from "sequelize";
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from "sequelize";
 import sequelize from "../sequelize-connection";
-import PropertyEnquiry from "./property_enquiry";
+import ListingEnquiry from "./listing_enquiry";
 import { AccountTypes } from "../../utils/enums";
 
 // for typeScript typing
@@ -14,7 +14,7 @@ export default class User extends Model<InferAttributes<User>, InferCreationAttr
   declare password: string;
   declare verified: boolean;
   declare accountType?: AccountTypes; // landlord, admin, tenant/user
-  declare ProjectTenants: CreationOptional<PropertyEnquiry[]>;
+  declare ProjectTenants: CreationOptional<ListingEnquiry[]>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }

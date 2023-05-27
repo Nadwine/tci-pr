@@ -30,7 +30,7 @@ router.use("*", (req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// Auth routes
+//  api/auth  routes
 router.get("/auth/credentials", getUserCredentials);
 router.get("/auth/refresh-perms", refreshUserPermission);
 router.post("/auth/register", ensureLogout, registerUser);
@@ -39,7 +39,7 @@ router.post("/auth/resend-verification", resendVerificationToUserEmail);
 router.post("/auth/login", loginUser);
 router.get("/auth/logout", logoutUser);
 
-// Media routes
+// api/media  routes
 router.post("/media/attach", ensureAuthentication, uploadMemory.any(), attachMediaToProject);
 router.get("/media/:visibility/:userId/:projectId/:filename", getMediaFromS3Bucket);
 

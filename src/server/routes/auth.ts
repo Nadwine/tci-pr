@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "../../database/models/user";
 
-import PropertyEnquiry from "../../database/models/property_enquiry";
+import ListingEnquiry from "../../database/models/listing_enquiry";
 import { RoutesEnum } from "../../utils/enums";
 import { Op } from "sequelize";
 import { ensureAuthentication, ensureLogout } from "../middlewareFunctions/auth-middleware";
@@ -24,11 +24,11 @@ export const refreshUserPermission = async (req: Request, res: Response) => {
       return res.json({ result: "success" });
     } else {
       const dbUser: User | null = await User.findByPk(req.session.user.id, {
-        include: [{ model: PropertyEnquiry }]
+        include: [{ model: ListingEnquiry }]
       });
 
       if (dbUser) {
-        const projectsAllowed: number[] = dbUser.ProjectTenants.map((p: PropertyEnquiry) => p.projectId);
+        const projectsAllowed: number[] = dbUser.ProjectTenants.map((p: ListingEnquiry) => p.projectId);
         req.session.user = {
           id: dbUser.id,
           username: dbUser.username,
@@ -237,7 +237,7 @@ export const loginUser = async (req: Request, res: Response) => {
           }
         ]
       },
-      include: [{ model: PropertyEnquiry }]
+      include: [{ model: ListingEnquiry }]
     });
 
     if (!foundUser) {
@@ -254,7 +254,7 @@ export const loginUser = async (req: Request, res: Response) => {
     bcrypt.compare(password, dBHashedPassword, (err, result) => {
       if (result === true) {
         // create a session for user
-        const projectsAllowed = foundUser.ProjectTenants.map((p: PropertyEnquiry) => p.projectId);
+        const projectsAllowed = foundUser.ProjectTenants.map((p: ListingEnquiry) => p.projectId);
         req.session.user = { id: foundUser.id, email: foundUser.email, username: foundUser.username, projectsAllowed };
         // req.session.cookie.expires = dayjs(); // Expires sets an expiry date for when a cookie gets deleted;
         // req.session.cookie.maxAge = thirtyDays;   //  Max-age sets the time in seconds for when a cookie will be deleted

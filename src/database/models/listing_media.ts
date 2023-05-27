@@ -1,55 +1,43 @@
 import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
 import Listing from "./listing";
-// path from seqalize root to db path
-// const sequelize = new Sequelize({
-//   username: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DATABASE,
-//   host: process.env.DB_HOST,
-//   dialect: process.env.DB_DIALECT,
-//   logging: process.env.DB_QUERY_LOG === "true" ? true : false
-// });
 import sequelize from "../sequelize-connection";
 
-export default class Location extends Model<InferAttributes<Location>, InferCreationAttributes<Location>> {
+export default class ListingMedia extends Model<InferAttributes<ListingMedia>, InferCreationAttributes<ListingMedia>> {
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
-  declare address: string;
-  declare city: string;
-  declare settlement: string;
-  declare postcode: string;
-  declare country: string;
+  declare mediaType: string;
+  declare mediaFormat: string;
+  declare s3BucketKey: string;
+  declare mediaUrl: string;
+  declare listingId: number;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
 
 // allowNull defaults to true if not set
-Location.init(
+ListingMedia.init(
   // @ts-ignore
   {
+    // Model attributes are defined here
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
-    address: {
+    mediaType: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    city: {
+    mediaFormat: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    settlement: {
+    s3BucketKey: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    postcode: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    country: {
+    mediaUrl: {
       type: DataTypes.STRING,
       allowNull: false
     }
@@ -57,10 +45,10 @@ Location.init(
   {
     // Other model options
     sequelize,
-    tableName: "locations",
+    tableName: "listing_media",
     timestamps: true,
-    modelName: "Location"
+    modelName: "ListingMedia"
   }
 );
-
-Listing.hasOne(Location, { foreignKey: "listingId" });
+// Media.belongsTo(Project, { foreignKey: 'listingId' })
+Listing.hasMany(ListingMedia, { foreignKey: "listingId" });

@@ -1,4 +1,4 @@
-import type { Request, Response, Express, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 import fs from "fs/promises";
 import path from "path";
 import * as yup from "yup";
@@ -21,13 +21,20 @@ async function initialiseModels() {
     const syncOrder = [
       "user.ts",
       "landlord.ts",
-      "property.ts",
-      "property_enquiry.ts",
-      "property_question.ts",
-      "property_view.ts",
-      "property_saved.ts",
+      "listing.ts",
+      "listing_enquiry.ts",
+      "listing_question.ts",
+      "listing_view.ts",
+      "listing_saved.ts",
+      "sale.ts",
+      "rent.ts",
+      "property_for_rent.ts",
+      "property_for_sale.ts",
+      "land_for_sale.ts",
       "location.ts",
-      "media.ts"
+      "listing_media.ts",
+      "profile.ts",
+      "profile_media.ts"
     ];
     const files = await fs.readdir("./src/database/models");
     files.sort(function (a, b) {
@@ -113,7 +120,7 @@ async function createServer(isProd = process.env.NODE_ENV === "production") {
         schemaName: "public"
       }),
       saveUninitialized: false,
-      secret: "makit_hush",
+      secret: "tcipr_hush",
       resave: false,
       cookie: { maxAge: thirtyDays }
       // Insert express-session options here

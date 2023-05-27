@@ -3,17 +3,16 @@ import sequelize from "../sequelize-connection";
 import User from "./user";
 
 // for typeScript typing
-export default class Landlord extends Model<InferAttributes<Landlord>, InferCreationAttributes<Landlord>> {
+export default class Profile extends Model<InferAttributes<Profile>, InferCreationAttributes<Profile>> {
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
-  declare verified: boolean;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
 
 // allowNull defaults to true if not set
-Landlord.init(
+Profile.init(
   // @ts-ignore
   {
     // Model attributes are defined here
@@ -21,19 +20,15 @@ Landlord.init(
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
-    },
-    verified: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
     }
   },
   {
     // Other model options go here
     sequelize,
-    tableName: "landlords",
+    tableName: "profiles",
     timestamps: true,
-    modelName: "Landlord"
+    modelName: "Profile"
   }
 );
 
-Landlord.belongsTo(User, { foreignKey: "userId" });
+Profile.belongsTo(User, { foreignKey: "userId" });

@@ -24,7 +24,7 @@ resources:
     NewResource:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: makit
+        BucketName: tcipr
 functions:
   webhook:
     handler: handler.webhook
@@ -35,5 +35,5 @@ functions:
   s3hook:
     handler: handler.s3hook
     events:
-      - s3: makit
+      - s3: tcipr
         event: s3:*

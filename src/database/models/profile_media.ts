@@ -1,8 +1,8 @@
-import { Sequelize, DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
-import Property from "./property";
+import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
 import sequelize from "../sequelize-connection";
+import Profile from "./profile";
 
-export default class Media extends Model<InferAttributes<Media>, InferCreationAttributes<Media>> {
+export default class ProfileMedia extends Model<InferAttributes<ProfileMedia>, InferCreationAttributes<ProfileMedia>> {
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
@@ -10,13 +10,13 @@ export default class Media extends Model<InferAttributes<Media>, InferCreationAt
   declare mediaFormat: string;
   declare s3BucketKey: string;
   declare mediaUrl: string;
-  declare propertyId: number;
+  declare profileId: number;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
 
 // allowNull defaults to true if not set
-Media.init(
+ProfileMedia.init(
   // @ts-ignore
   {
     // Model attributes are defined here
@@ -45,10 +45,10 @@ Media.init(
   {
     // Other model options
     sequelize,
-    tableName: "media",
+    tableName: "profile_media",
     timestamps: true,
-    modelName: "Media"
+    modelName: "ProfileMedia"
   }
 );
-// Media.belongsTo(Project, { foreignKey: 'propertyId' })
-Property.hasMany(Media, { foreignKey: "propertyId" });
+
+Profile.hasMany(ProfileMedia, { foreignKey: "profileId" });

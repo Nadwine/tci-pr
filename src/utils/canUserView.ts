@@ -1,7 +1,7 @@
-import Property from "../database/models/property";
+import Listing from "../database/models/listing";
 import { SessionData } from "express-session";
 
-export function canUserViewProject(project: Property, serverSession: Partial<SessionData>): boolean {
+export function canUserViewProject(project: Listing, serverSession: Partial<SessionData>): boolean {
   let result = false;
 
   switch ("public") {

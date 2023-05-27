@@ -1,6 +1,6 @@
-import { Sequelize, DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
+import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
 import sequelize from "../sequelize-connection";
-import Property from "./property";
+import Listing from "./listing";
 
 // for typeScript typing
 export default class PropertyQuestion extends Model<
@@ -10,7 +10,7 @@ export default class PropertyQuestion extends Model<
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
-  declare propertyId: number;
+  declare listingId: number;
   declare text: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -41,5 +41,5 @@ PropertyQuestion.init(
   }
 );
 
-PropertyQuestion.belongsTo(Property, { foreignKey: "propertyId" });
-Property.hasMany(PropertyQuestion, { foreignKey: "propertyId" }); // reverse association
+PropertyQuestion.belongsTo(Listing, { foreignKey: "listingId" });
+Listing.hasMany(PropertyQuestion, { foreignKey: "listingId" }); // reverse association

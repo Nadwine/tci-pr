@@ -1,10 +1,10 @@
-import { Sequelize, DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
-import Property from "./property";
+import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
+import Listing from "./listing";
 import User from "./user";
 import sequelize from "../sequelize-connection";
 
 // for typeScript typing
-export default class PropertyView extends Model<InferAttributes<PropertyView>, InferCreationAttributes<PropertyView>> {
+export default class ListingView extends Model<InferAttributes<ListingView>, InferCreationAttributes<ListingView>> {
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<string>;
@@ -16,7 +16,7 @@ export default class PropertyView extends Model<InferAttributes<PropertyView>, I
 }
 
 // allowNull defaults to true if not set
-PropertyView.init(
+ListingView.init(
   // @ts-ignore
   {
     // Model attributes are defined here
@@ -38,12 +38,12 @@ PropertyView.init(
   {
     // Other model options
     sequelize,
-    tableName: "property_views",
+    tableName: "listing_views",
     timestamps: true,
-    modelName: "ProjectView"
+    modelName: "ListingView"
   }
 );
 
-Property.hasMany(PropertyView, { foreignKey: "projectId" });
+Listing.hasMany(ListingView, { foreignKey: "listingId" });
 
-PropertyView.belongsTo(User, { foreignKey: { name: "userId", allowNull: true } });
+ListingView.belongsTo(User, { foreignKey: { name: "userId", allowNull: true } });

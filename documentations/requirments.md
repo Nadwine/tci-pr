@@ -1,3 +1,11 @@
+# Brand Colors
+====================================
+https://huemint.com/gradient-4/#palette=f9fdfe-b4c1c4-77cede-4c7486
+#f9fdfe   - white
+#b4c1c4  - grey
+#77cede  - turquoise
+#4c7486  - Blueish/Greyish
+
 # Business analysis
 ==========================================================================================================================
 * Title:
@@ -7,12 +15,12 @@
   A Platform to allow Turks and Caicos' locals to easily find and get in contact with landlords, and to help landlords find tenants to accommodate their property.
 
 * Users & Target Audience
-  Individuals that are looking for a place to stay in the TCI & landlords that are looking for tenants.
+  Individuals that are looking for a place to stay in the TCI & landlords that are looking for tenants
 
-* How do we get funding/ Monetize the web app
+* How do we fund/ Monetize the web app
 
 * How is the market for the product
-  SEO(we are the first so this will easily be their top google search result given we have set up SEO property on the website)
+  SEO(we are one of the first so this will easily be the top google search result given we have set up SEO properly on the website)
     
 
 # Milestones & Requirements

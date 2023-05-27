@@ -4,9 +4,9 @@ import S3 from "aws-sdk/clients/s3";
 import fs from "fs";
 import path from "path";
 import { Express } from "express";
-import Media from "../../database/models/media";
+import ListingMedia from "../../database/models/listing_media";
 import { canUserViewMedia } from "../../utils/canUserView";
-import Property from "../../database/models/property";
+import Listing from "../../database/models/listing";
 const router = express.Router();
 
 const s3Bucket = new S3({
@@ -24,7 +24,7 @@ const s3Bucket = new S3({
  *===================================================================*/
 export const attachMediaToProject = async (req: Request, res: Response) => {
   // TODO ensure user owns project
-  const project: Property = JSON.parse(req.body.projectStr);
+  const project: Listing = JSON.parse(req.body.projectStr);
   const visibility = project.visibility;
   const files = req.files ?? [];
   const successUploadResult: any[] = [];
@@ -68,12 +68,12 @@ export const attachMediaToProject = async (req: Request, res: Response) => {
         const format = currentFile.mimetype.split("/")[1];
         const mediaURl = `${domain}/api/media/${val.Key}`;
 
-        await Media.create({
+        await ListingMedia.create({
           mediaType: mediaType,
           mediaFormat: format,
           s3BucketKey: val.Key,
           mediaUrl: mediaURl,
-          projectId: project.id
+          listingId: 12123213
         });
 
         successUploadResult.push({
