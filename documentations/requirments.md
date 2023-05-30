@@ -83,6 +83,10 @@ As a user, I want all of the landlords on the site to be verified, so that I can
 
 As a user, I want to be supplied with facts about scams, so that I can avoid them.
 
+* Help
+How to instruction videos. (make very prominent all across the landlord website)
+
+Phone number help line (make very prominent all across the website)
 
 # Developer Features
 ==========================================================================================================================

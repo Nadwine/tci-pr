@@ -8,6 +8,7 @@ export default class LandForSale extends Model<InferAttributes<LandForSale>, Inf
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
+  declare price: CreationOptional<number>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }

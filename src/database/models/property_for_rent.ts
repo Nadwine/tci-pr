@@ -2,6 +2,7 @@ import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOpt
 import sequelize from "../sequelize-connection";
 import Listing from "./listing";
 import Rent from "./rent";
+import { float } from "aws-sdk/clients/cloudfront";
 
 // for typeScript typing
 export default class PropertyForRent extends Model<
@@ -11,9 +12,16 @@ export default class PropertyForRent extends Model<
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
+  declare room: number;
+  declare pricePerMonth: float;
+  declare maxTenant: number;
+  // declare square_ft: CreationOptional<number>;
+  declare address: number;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
+
+// Link landlord id
 
 // allowNull defaults to true if not set
 PropertyForRent.init(

@@ -7,7 +7,7 @@ export default class ListingMedia extends Model<InferAttributes<ListingMedia>, I
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
   declare mediaType: string;
-  declare mediaFormat: string;
+  declare fileFormat: string;
   declare s3BucketKey: string;
   declare mediaUrl: string;
   declare listingId: number;
@@ -29,7 +29,7 @@ ListingMedia.init(
       type: DataTypes.STRING,
       allowNull: false
     },
-    mediaFormat: {
+    fileFormat: {
       type: DataTypes.STRING,
       allowNull: false
     },
