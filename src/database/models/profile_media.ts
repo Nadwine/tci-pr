@@ -10,6 +10,7 @@ export default class ProfileMedia extends Model<InferAttributes<ProfileMedia>, I
   declare mediaFormat: string;
   declare s3BucketKey: string;
   declare mediaUrl: string;
+  declare label: string;
   declare profileId: number;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -40,6 +41,10 @@ ProfileMedia.init(
     mediaUrl: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    label: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   },
   {

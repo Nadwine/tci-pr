@@ -10,6 +10,7 @@ export default class ListingMedia extends Model<InferAttributes<ListingMedia>, I
   declare fileFormat: string;
   declare s3BucketKey: string;
   declare mediaUrl: string;
+  declare label: string;
   declare listingId: number;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -40,6 +41,10 @@ ListingMedia.init(
     mediaUrl: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    label: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   },
   {

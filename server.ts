@@ -26,12 +26,10 @@ async function initialiseModels() {
       "listing_question.ts",
       "listing_view.ts",
       "listing_saved.ts",
-      "sale.ts",
-      "rent.ts",
       "property_for_rent.ts",
       "property_for_sale.ts",
       "land_for_sale.ts",
-      "location.ts",
+      "address.ts",
       "listing_media.ts",
       "profile.ts",
       "profile_media.ts"
@@ -200,9 +198,7 @@ async function createServer(isProd = process.env.NODE_ENV === "production") {
   });
   const port = process.env.SERVER_PORT || 8080;
   app.listen(Number(port), "0.0.0.0", () => {
-    console.log(
-      `\x1b[43m \x1b[30m App is listening on http://localhost:${port} with environment >> ${process.env.NODE_ENV}\x1b[0m `
-    );
+    console.log(`\x1b[43m \x1b[30m App is listening on http://localhost:${port} with environment >> ${process.env.NODE_ENV}\x1b[0m `);
   });
 }
 

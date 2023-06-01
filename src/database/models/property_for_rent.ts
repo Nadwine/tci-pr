@@ -1,8 +1,7 @@
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from "sequelize";
 import sequelize from "../sequelize-connection";
 import Listing from "./listing";
-import Rent from "./rent";
-import { float } from "aws-sdk/clients/cloudfront";
+import Address from "./address";
 
 // for typeScript typing
 export default class PropertyForRent extends Model<
@@ -12,11 +11,14 @@ export default class PropertyForRent extends Model<
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
-  declare room: number;
-  declare pricePerMonth: float;
+  declare numOfRooms: number;
+  declare numOfBathRooms: number;
   declare maxTenant: number;
-  // declare square_ft: CreationOptional<number>;
-  declare address: number;
+  declare sqFt: number;
+  declare billsIncluded: boolean;
+  declare availability: Date;
+  declare Address: CreationOptional<Address>;
+  declare Listing: CreationOptional<Listing>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -32,6 +34,30 @@ PropertyForRent.init(
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
+    },
+    numOfRooms: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    numOfBathRooms: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    maxTenant: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    sqFt: {
+      type: DataTypes.FLOAT,
+      allowNull: true
+    },
+    availability: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
+    },
+    billsIncluded: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     }
   },
   {
@@ -44,4 +70,3 @@ PropertyForRent.init(
 );
 
 Listing.hasOne(PropertyForRent, { foreignKey: "listingId" });
-PropertyForRent.belongsTo(Rent, { foreignKey: "saleId" });

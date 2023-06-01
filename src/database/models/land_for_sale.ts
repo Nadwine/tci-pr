@@ -1,7 +1,6 @@
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from "sequelize";
 import sequelize from "../sequelize-connection";
 import Listing from "./listing";
-import Sale from "./sale";
 
 // for typeScript typing
 export default class LandForSale extends Model<InferAttributes<LandForSale>, InferCreationAttributes<LandForSale>> {
@@ -34,4 +33,3 @@ LandForSale.init(
 );
 
 Listing.hasOne(LandForSale, { foreignKey: "listingId" });
-LandForSale.belongsTo(Sale, { foreignKey: "saleId" });

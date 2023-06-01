@@ -20,9 +20,7 @@ const CookieConsentModal = props => {
       <Modal.Header>
         <Modal.Title>Cookie consent</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        By using this website you agree to the processing of cookie to enable the basic functions of the site.
-      </Modal.Body>
+      <Modal.Body>By using this website you agree to the processing of cookie to enable the basic functions of the site.</Modal.Body>
       <Modal.Footer>
         <Button variant="white">Customize</Button>
         <Button onClick={handleAcceptAll} variant="primary">

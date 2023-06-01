@@ -60,20 +60,14 @@ function Navbar() {
             <ul className="nav navbar-nav ms-auto pe-2">
               <div className="nav-item nav-link">
                 <span className="bi bi-chat-dots-fill fs-5 position-relative">
-                  <span
-                    className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                    style={{ fontSize: "0.6rem" }}
-                  >
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
                     3
                   </span>
                 </span>
               </div>
               <div className="nav-item nav-link mx-3">
                 <span className="bi bi-bell-fill fs-5 position-relative">
-                  <span
-                    className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                    style={{ fontSize: "0.6rem" }}
-                  >
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
                     12
                   </span>
                 </span>
@@ -90,10 +84,7 @@ function Navbar() {
                 >
                   {user?.username.charAt(0).toUpperCase()}
                 </span>
-                <div
-                  className={`dropdown-menu dropdown-menu-dark ${shouldShowUserDropDown}`}
-                  style={{ left: "auto", right: 0 }}
-                >
+                <div className={`dropdown-menu dropdown-menu-dark ${shouldShowUserDropDown}`} style={{ left: "auto", right: 0 }}>
                   <a href="/my-profile" className="dropdown-item">
                     My Profile
                   </a>

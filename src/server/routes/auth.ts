@@ -28,12 +28,11 @@ export const refreshUserPermission = async (req: Request, res: Response) => {
       });
 
       if (dbUser) {
-        const projectsAllowed: number[] = dbUser.ProjectTenants.map((p: ListingEnquiry) => p.projectId);
         req.session.user = {
           id: dbUser.id,
           username: dbUser.username,
           email: dbUser.email,
-          projectsAllowed: projectsAllowed
+          projectsAllowed: []
         };
       }
       return res.json({ result: "success" });
@@ -254,8 +253,7 @@ export const loginUser = async (req: Request, res: Response) => {
     bcrypt.compare(password, dBHashedPassword, (err, result) => {
       if (result === true) {
         // create a session for user
-        const projectsAllowed = foundUser.ProjectTenants.map((p: ListingEnquiry) => p.projectId);
-        req.session.user = { id: foundUser.id, email: foundUser.email, username: foundUser.username, projectsAllowed };
+        req.session.user = { id: foundUser.id, email: foundUser.email, username: foundUser.username, projectsAllowed: [] };
         // req.session.cookie.expires = dayjs(); // Expires sets an expiry date for when a cookie gets deleted;
         // req.session.cookie.maxAge = thirtyDays;   //  Max-age sets the time in seconds for when a cookie will be deleted
         console.log(`${foundUser.username} has signed in`);

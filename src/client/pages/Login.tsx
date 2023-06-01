@@ -34,9 +34,7 @@ const Login = () => {
           {/* <!-- Title --> */}
           <div className="mt-32 mb-20">
             <h1 className="ls-tight font-bolder display-6 text-white mb-5">Let’s showcase something amazing today.</h1>
-            <p className="text-white text-opacity-75">
-              Maybe some text here will help me see it better. Oh God. Oke, let’s do it then.
-            </p>
+            <p className="text-white text-opacity-75">Maybe some text here will help me see it better. Oh God. Oke, let’s do it then.</p>
           </div>
           {/* <!-- Circle --> */}
           <div className="w-56 h-56 bg-orange-500 rounded-circle position-absolute bottom-0 end-20 transform translate-y-1/3"></div>
@@ -56,26 +54,13 @@ const Login = () => {
                   <label className="form-label" htmlFor="nameOrEmail">
                     Username/Email
                   </label>
-                  <input
-                    type="text"
-                    className="form-control form-control-muted"
-                    id="nameOrEmail"
-                    name="nameOrEmail"
-                    required
-                  />
+                  <input type="text" className="form-control form-control-muted" id="nameOrEmail" name="nameOrEmail" required />
                 </div>
                 <div className="mb-5">
                   <label className="form-label" htmlFor="password">
                     Password
                   </label>
-                  <input
-                    type="password"
-                    className="form-control form-control-muted"
-                    id="password"
-                    name="password"
-                    required
-                    autoComplete="current-password"
-                  />
+                  <input type="password" className="form-control form-control-muted" id="password" name="password" required autoComplete="current-password" />
                 </div>
                 <div className="mb-5">
                   <div className="form-check">
@@ -140,14 +125,7 @@ const Login = () => {
                           />
                         </g>
                         <defs>
-                          <linearGradient
-                            id="paint0_linear"
-                            x1="1.07434"
-                            y1="7.03731"
-                            x2="22.8646"
-                            y2="17.1983"
-                            gradientUnits="userSpaceOnUse"
-                          >
+                          <linearGradient id="paint0_linear" x1="1.07434" y1="7.03731" x2="22.8646" y2="17.1983" gradientUnits="userSpaceOnUse">
                             <stop stopColor="white" stopOpacity="0.2" />
                             <stop offset="1" stopColor="white" stopOpacity="0" />
                           </linearGradient>
@@ -190,11 +168,7 @@ const Login = () => {
                           d="M23.9944 12.147C23.9952 12.0978 24 12.0494 24 12C24 11.986 23.9978 11.9725 23.9977 11.9586C23.9971 12.0215 23.9939 12.0838 23.9944 12.147Z"
                           fill="#E6E6E6"
                         />
-                        <path
-                          opacity="0.2"
-                          d="M12 9.5V9.75H23.7856C23.7698 9.66748 23.7526 9.58191 23.7352 9.5H12Z"
-                          fill="white"
-                        />
+                        <path opacity="0.2" d="M12 9.5V9.75H23.7856C23.7698 9.66748 23.7526 9.58191 23.7352 9.5H12Z" fill="white" />
                         <path
                           d="M23.7352 9.5H12V14.5H18.4862C17.4775 17.1216 14.9772 19 12 19C8.13403 19 5 15.866 5 12C5 8.13397 8.13403 5 12 5C13.4019 5 14.6939 5.43066 15.7885 6.14069C15.9561 6.24957 16.1289 6.35181 16.2863 6.47406L19.9235 3.00409L19.8414 2.94098C17.7369 1.11707 15.0035 0 12 0C5.37256 0 0 5.37256 0 12C0 18.6274 5.37256 24 12 24C18.1177 24 23.1555 19.4188 23.8961 13.5018C23.9586 13.0102 24 12.5087 24 12C24 11.1422 23.9063 10.3068 23.7352 9.5Z"
                           fill="url(#paint0_linear)"
@@ -210,14 +184,7 @@ const Login = () => {
                           fill="white"
                         />
                         <defs>
-                          <linearGradient
-                            id="paint0_linear"
-                            x1="0"
-                            y1="12"
-                            x2="24"
-                            y2="12"
-                            gradientUnits="userSpaceOnUse"
-                          >
+                          <linearGradient id="paint0_linear" x1="0" y1="12" x2="24" y2="12" gradientUnits="userSpaceOnUse">
                             <stop stopColor="white" stopOpacity="0.2" />
                             <stop offset="1" stopColor="white" stopOpacity="0" />
                           </linearGradient>

@@ -10,7 +10,7 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare id: CreationOptional<number>;
   declare title: string;
   declare description: string;
-  declare listingType: string; // sales, letting
+  declare listingType: string; // sales, rent
   declare landlordId?: number;
   declare Landlord: CreationOptional<Landlord>;
   declare PropertyEnquiries: CreationOptional<ListingEnquiry>;

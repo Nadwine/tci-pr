@@ -11,11 +11,12 @@ import Listing from "./listing";
 // });
 import sequelize from "../sequelize-connection";
 
-export default class Location extends Model<InferAttributes<Location>, InferCreationAttributes<Location>> {
+export default class Address extends Model<InferAttributes<Address>, InferCreationAttributes<Address>> {
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
-  declare address: string;
+  declare addressLine1: string;
+  declare addressLine2: string;
   declare city: string;
   declare settlement: string;
   declare postcode: string;
@@ -25,7 +26,7 @@ export default class Location extends Model<InferAttributes<Location>, InferCrea
 }
 
 // allowNull defaults to true if not set
-Location.init(
+Address.init(
   // @ts-ignore
   {
     id: {
@@ -33,9 +34,13 @@ Location.init(
       autoIncrement: true,
       primaryKey: true
     },
-    address: {
+    addressLine1: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    addressLine2: {
+      type: DataTypes.STRING,
+      allowNull: true
     },
     city: {
       type: DataTypes.STRING,
@@ -57,10 +62,10 @@ Location.init(
   {
     // Other model options
     sequelize,
-    tableName: "locations",
+    tableName: "addresses",
     timestamps: true,
-    modelName: "Location"
+    modelName: "Address"
   }
 );
 
-Listing.hasOne(Location, { foreignKey: "listingId" });
+Listing.hasOne(Address, { foreignKey: "listingId" });

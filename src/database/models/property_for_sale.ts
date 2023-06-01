@@ -1,7 +1,6 @@
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from "sequelize";
 import sequelize from "../sequelize-connection";
 import Listing from "./listing";
-import Sale from "./sale";
 
 // for typeScript typing
 export default class PropertyForSale extends Model<
@@ -11,6 +10,11 @@ export default class PropertyForSale extends Model<
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
+  declare sqFt: number;
+  declare numOfRooms: number;
+  declare numOfBathRooms: number;
+  declare availability: Date;
+  declare PropertyForSale: CreationOptional<PropertyForSale>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -24,6 +28,22 @@ PropertyForSale.init(
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
+    },
+    sqFt: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    },
+    availability: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
+    },
+    numOfRooms: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    numOfBathRooms: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   },
   {
@@ -36,4 +56,3 @@ PropertyForSale.init(
 );
 
 Listing.hasOne(PropertyForSale, { foreignKey: "listingId" });
-PropertyForSale.belongsTo(Sale, { foreignKey: "saleId" });
