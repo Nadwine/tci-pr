@@ -34,6 +34,17 @@ https://huemint.com/gradient-4/#palette=f9fdfe-b4c1c4-77cede-4c7486
 - Search & Filter
 - Messaging Feature
 - Admin site
+- Feedback and/or Report Bugs Feature
+- 'How to' Tutorials in different languages with subtitles 
+- Disclaimers for scams 
+- Nice quality images for landing page/ other pages
+- Ad positioning
+- Tenant Referencing Feature, - Verifying tenant suitability?
+- Advert Boosting
+- Rent collection (easier becuase landlord dosen't have to chase etc)
+- Tenancy Aggreements
+- Reoccuring listings will need to be re-activated every rental period (easier to introduce new polocies, auto notification of listing )
+- The listings' tenancy start date will be tracked and notifications will be sent to avoid dead listing, Otherwise listing will be auto decativated
 
 
 # Requirements/ User Stories
