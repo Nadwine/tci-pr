@@ -9,6 +9,8 @@ import initAxios from "../utils/initAxios";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 
+import "../utils/library-configs/i18next-config";
+
 initAxios();
 
 export function render(url: string) {

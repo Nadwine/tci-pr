@@ -3,11 +3,12 @@ import { useAppContext } from "../Context";
 import { useSearchParams } from "react-router-dom";
 import stringToBoolean from "../../utils/stringToBoolean";
 import { connect } from "react-redux";
-import { Formik, withFormik } from "formik";
 import { registerBodySchema } from "../../utils/validation-schemas/schema-register";
 import { ValidationError } from "yup";
+import { useTranslation, Trans } from "react-i18next";
 
 const Register = () => {
+  const { t } = useTranslation();
   const { name, setName } = useAppContext();
   const [urlQuery, setUrlQuery] = useSearchParams();
   const [serverError, setServerError] = useState("");
@@ -16,6 +17,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [terms, setTerms] = useState(false);
+  const [registerReason, setRegisterReason] = useState("");
   const [touched, setTouched] = useState({});
   const [errors, setErrors]: any = useState({});
 
@@ -39,7 +41,8 @@ const Register = () => {
       email: email,
       password: password,
       confirmPassword: confirmPassword,
-      terms: terms
+      terms: terms,
+      registerReason: registerReason
     };
     const newErrors = {};
     registerBodySchema.validate(formData, { abortEarly: false }).catch((errs: ValidationError) => {
@@ -92,12 +95,12 @@ const Register = () => {
     <div className="px-5 py-5 p-lg-0 bg-surface-secondary">
       <div className="d-flex justify-content-center overflow-hidden">
         <div
-          className="login-sidebar col-lg-5 col-xl-4 p-12 p-xl-20 position-fixed start-0 top-0 h-screen overflow-y-hidden bg-primary d-none d-lg-flex flex-column px-3"
+          className="login-sidebar col-lg-5 col-xl-4 p-12 p-xl-20 position-fixed start-0 top-0 h-screen overflow-y-hidden bg-info d-none d-lg-flex flex-column px-3"
           style={{ paddingTop: "4.3rem", height: "98%", boxShadow: "13px 10px 29px -17px rgba(0,0,0,0.75)" }}
         >
           {/* <!-- Logo --> */}
           <a className="d-block" href="#">
-            <img src="/static/weblogo.png" className="h-10" alt="..." style={{ width: "70px" }} />
+            <img src="/static/web-logo-white.png" className="h-10" alt="..." style={{ width: "70px" }} />
           </a>
           {/* <!-- Title --> */}
           <div className="mt-32 mb-20">
@@ -115,24 +118,23 @@ const Register = () => {
                 <div className="text-danger" style={{ minHeight: "1em" }}>
                   {serverError}
                 </div>
-                <h1 className="ls-tight font-bolder h2">Nice to see you!</h1>
+                <h1 className="ls-tight font-bolder h2">{t("Nice to see you!")}</h1>
               </div>
               <form action="/api/auth/register" method="POST" onSubmit={handleFormSubmit}>
                 {JSON.stringify(errors)}
                 <div className="mb-4">
-                  <label className="form-label" htmlFor="username">
-                    {errors.username}
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control form-control-muted"
-                    id="username"
-                    name="username"
-                    onChange={e => setUsername(e.target.value)}
-                    onBlur={() => setElementAsTouched("username")}
-                    value={username}
-                  />
+                  <label className="pe-3">What are you looking for</label>
+                  <select
+                    name="registerReason"
+                    value={registerReason}
+                    onChange={e => e.target.value !== "select" && setRegisterReason(e.target.value)}
+                    onBlur={() => setElementAsTouched("registerReason")}
+                    style={{ height: "2em" }}
+                  >
+                    <option value="select">Choose an option</option>
+                    <option value="tenant">I am looking for a property</option>
+                    <option value="landlord">I am a landlord</option>
+                  </select>
                 </div>
                 <div className="mb-4">
                   <label className="form-label" htmlFor="email">

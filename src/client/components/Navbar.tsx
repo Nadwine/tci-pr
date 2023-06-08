@@ -19,10 +19,10 @@ function Navbar() {
     <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark px-0">
       <div className="container-xl">
         {/* <!-- Logo --> */}
-        <a className="navbar-brand" href="/">
-          <img src="/static/android-chrome-512x512.png" style={{ width: "40px" }} className="h-8" alt="..." />
-          <span className="text-white ps-2" style={{ fontSize: "1em" }}>
-            Makit
+        <a className="navbar-brand d-flex flex-row" href="/">
+          <img src="./static/web-logo-white.png" style={{ width: "40px" }} className="h-8" alt="..." />
+          <span className="d-flex align-items-center ps-2" style={{ fontSize: "0.7em" }}>
+            TCI Homebase
           </span>
         </a>
         {/* <!-- Navbar toggle --> */}
@@ -109,7 +109,7 @@ function Navbar() {
           {/* <!-- Action --> */}
           {!user && (
             <div className="d-flex align-items-lg-center mt-lg-0">
-              <a href="/register" className="btn btn-sm w-full w-lg-auto palette-yellow">
+              <a href="/register" className="btn btn-sm w-full w-lg-auto bg-info">
                 Register
               </a>
             </div>

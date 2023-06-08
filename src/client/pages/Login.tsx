@@ -29,7 +29,7 @@ const Login = () => {
         >
           {/* <!-- Logo --> */}
           <a className="d-block" href="#">
-            <img src="/static/weblogo.png" className="h-10" alt="..." style={{ width: "70px" }} />
+            <img src="/static/web-logo-white.png" className="h-10" alt="..." style={{ width: "70px" }} />
           </a>
           {/* <!-- Title --> */}
           <div className="mt-32 mb-20">
