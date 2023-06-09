@@ -18,7 +18,35 @@ import { LoadingSpinnerWholePage } from "../components/LoadingSpinners";
 import HomeFeed from "./HomeFeed";
 import CookieConsentModal from "../components/CookieConsentModal";
 import { setBrowserInfo, setVisitorId } from "../redux/reducers/authReducer";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
+import translations from "../translations/translations";
+import LanguageSelector from "../components/LanguageSelector";
 const threeMinute = 180000;
+
+function initTranslations() {
+  i18n
+    // detect user language
+    // learn more: https://github.com/i18next/i18next-browser-languageDetector
+    .use(LanguageDetector)
+    // pass the i18n instance to react-i18next.
+    .use(initReactI18next)
+    // init i18next
+    // for all options read: https://www.i18next.com/overview/configuration-options
+    .init({
+      debug: true,
+      fallbackLng: "en",
+      interpolation: {
+        escapeValue: false // not needed for react as it escapes by default
+      },
+      resources: {
+        en: translations.en,
+        es: translations.es,
+        fr: translations.fr
+      }
+    });
+}
 
 const Main = () => {
   const dispatcher = useDispatch();
@@ -27,6 +55,7 @@ const Main = () => {
   const [showCookieConsent, setShowCookieConsent] = useState(false);
 
   useEffect(() => {
+    // initTranslations();
     verifyAuthState()
       .then(() => setLoadingCredentials(false))
       .catch(() => setLoadingCredentials(false));
@@ -79,6 +108,7 @@ const Main = () => {
         </div>
       </section>
       <Footer />
+      {/* <LanguageSelector /> */}
     </div>
   );
 };

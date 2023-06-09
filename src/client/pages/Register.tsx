@@ -118,7 +118,7 @@ const Register = () => {
                 <div className="text-danger" style={{ minHeight: "1em" }}>
                   {serverError}
                 </div>
-                <h1 className="ls-tight font-bolder h2">{t("Nice to see you!")}</h1>
+                <h1 className="ls-tight font-bolder h2">{t("register.welcome.text")}</h1>
               </div>
               <form action="/api/auth/register" method="POST" onSubmit={handleFormSubmit}>
                 {JSON.stringify(errors)}
@@ -197,7 +197,7 @@ const Register = () => {
                   </div>
                 </div>
                 <div>
-                  <button type="submit" className="btn btn-primary w-full">
+                  <button type="submit" className="btn btn-dark w-full">
                     Sign Up
                   </button>
                 </div>
@@ -206,7 +206,7 @@ const Register = () => {
                 <span className="text-xs text-uppercase font-semibold">or</span>
               </div>
               <div className="row">
-                <div className="col-sm-6">
+                <div className="col-sm-6 visually-hidden">
                   <a href="#" className="btn btn-neutral w-full">
                     <span className="icon icon-sm pe-2">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -264,7 +264,7 @@ const Register = () => {
                     Github
                   </a>
                 </div>
-                <div className="col-sm-6">
+                <div className="col-sm-6 visually-hidden">
                   <a href="#" className="btn btn-neutral w-full">
                     <span className="icon icon-sm pe-2">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -54,6 +54,15 @@ body {
   text-align: center;
   margin-right: 10px;
 }
+
+.languages:hover {
+  background-color: rgb(223, 223, 223);
+  cursor: pointer;
+}
+.languages {
+  border-radius: 7px;
+  padding-left: 7px;
+}
 /*________________ Global Styles (End)________________*/
 
 /*====================================================*
