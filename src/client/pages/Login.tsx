@@ -24,7 +24,7 @@ const Login = () => {
     <div className="px-5 py-5 p-lg-0 bg-surface-secondary">
       <div className="d-flex justify-content-center overflow-hidden">
         <div
-          className="login-sidebar col-lg-5 col-xl-4 p-12 p-xl-20 position-fixed start-0 top-0 h-screen overflow-y-hidden bg-primary d-none d-lg-flex flex-column px-3"
+          className="login-sidebar col-lg-5 col-xl-4 p-12 p-xl-20 position-fixed start-0 top-0 h-screen overflow-y-hidden d-none d-lg-flex flex-column px-3"
           style={{ paddingTop: "4.3rem", height: "98%", boxShadow: "13px 10px 29px -17px rgba(0,0,0,0.75)" }}
         >
           {/* <!-- Logo --> */}
@@ -42,17 +42,19 @@ const Login = () => {
         <div className="col-12 col-md-9 col-lg-7 offset-lg-5 border-left-lg min-h-lg-screen d-flex flex-column justify-content-center py-lg-16 px-lg-20 position-relative">
           <div className="row">
             <div className="col-lg-10 col-md-9 col-xl-6 mx-auto ms-xl-0">
-              <div className="mt-10 mt-lg-5 mb-6 d-flex align-items-center d-lg-block">
-                <span className="d-inline-block d-lg-block h1 mb-lg-6 me-3">👋</span>
+              <div className="mt-10 mt-lg-5 mb-5 d-flex align-items-center d-lg-block">
+                <span className="d-inline-block d-lg-block h1 mb-lg-6 me-3">
+                  <i className="bi bi-person-circle text-primary" />
+                </span>
                 <div className="text-danger" style={{ minHeight: "1em" }}>
                   {serverError}
                 </div>
-                <h1 className="ls-tight font-bolder h2">Nice to see you!</h1>
+                <h1 className="ls-tight font-bolder h2">Login</h1>
               </div>
               <form action="/api/auth/login" method="POST">
                 <div className="mb-5">
                   <label className="form-label" htmlFor="nameOrEmail">
-                    Username/Email
+                    Username/Email1
                   </label>
                   <input type="text" className="form-control form-control-muted" id="nameOrEmail" name="nameOrEmail" required />
                 </div>
@@ -71,7 +73,7 @@ const Login = () => {
                   </div>
                 </div>
                 <div>
-                  <button type="submit" className="btn btn-primary w-full">
+                  <button type="submit" className="btn btn-dark w-full">
                     Sign in
                   </button>
                 </div>
@@ -79,7 +81,7 @@ const Login = () => {
               <div className="py-5 text-center">
                 <span className="text-xs text-uppercase font-semibold">or</span>
               </div>
-              <div className="row">
+              <div className="GitHub & Google row visually-hidden">
                 <div className="col-sm-6">
                   <a href="#" className="btn btn-neutral w-full">
                     <span className="icon icon-sm pe-2">
@@ -197,7 +199,7 @@ const Login = () => {
               </div>
               <div className="my-6">
                 <small>{"Don't"} have an account?</small>
-                <a href="/register" className="text-warning text-sm font-semibold">
+                <a href="/register" className="text-primary text-sm font-semibold">
                   Sign up
                 </a>
               </div>

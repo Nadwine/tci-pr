@@ -8,6 +8,7 @@ export default class Landlord extends Model<InferAttributes<Landlord>, InferCrea
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
   declare verified: boolean;
+  declare userId: number;
   declare phone: CreationOptional<number>;
   declare email: CreationOptional<string>;
   declare address: CreationOptional<string>;
@@ -28,6 +29,10 @@ Landlord.init(
     verified: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   },
   {

@@ -16,11 +16,12 @@ export default class Address extends Model<InferAttributes<Address>, InferCreati
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
   declare addressLine1: string;
-  declare addressLine2: string;
+  declare addressLine2?: string;
   declare city: string;
   declare settlement: string;
   declare postcode: string;
   declare country: string;
+  declare listingId: number;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }

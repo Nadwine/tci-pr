@@ -2,6 +2,7 @@ import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttri
 import sequelize from "../sequelize-connection";
 import ListingEnquiry from "./listing_enquiry";
 import Landlord from "./landlord";
+import { ListingTypeEnum } from "../../../types/enums";
 
 // for typeScript typing
 export default class Listing extends Model<InferAttributes<Listing>, InferCreationAttributes<Listing>> {
@@ -10,8 +11,8 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare id: CreationOptional<number>;
   declare title: string;
   declare description: string;
-  declare listingType: string; // sales, rent
-  declare landlordId?: number;
+  declare listingType: ListingTypeEnum; // sales, rent
+  declare landlordId: number;
   declare Landlord: CreationOptional<Landlord>;
   declare PropertyEnquiries: CreationOptional<ListingEnquiry>;
   declare createdAt: CreationOptional<Date>;

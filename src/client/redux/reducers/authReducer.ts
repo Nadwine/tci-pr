@@ -1,9 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { AccountTypeEnum } from "../../../../types/enums";
 
-const initialState = {
-  user: null,
-  visitorId: null,
-  browserInfo: null
+type stateType = {
+  user?: { id: number; email: string; username?: string; allowed: []; accountType: AccountTypeEnum };
+  visitorId?: string;
+  browserInfo?: string;
+};
+
+const initialState: stateType = {
+  user: undefined,
+  visitorId: undefined,
+  browserInfo: undefined
 };
 
 const authReducer = createSlice({

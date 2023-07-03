@@ -6,12 +6,13 @@ import bcrypt from "bcrypt";
 import User from "../../database/models/user";
 
 import ListingEnquiry from "../../database/models/listing_enquiry";
-import { RoutesEnum } from "../../utils/enums";
+import { AccountTypeEnum, ReactRoutesEnum } from "../../../types/enums";
 import { Op } from "sequelize";
 import { ensureAuthentication, ensureLogout } from "../middlewareFunctions/auth-middleware";
 import { registerRequestValidation } from "../../utils/validation-schemas/schema-register";
 import { loginRequestValidation } from "../../utils/validation-schemas/schema-login";
 import dayjs from "dayjs";
+import Landlord from "../../database/models/landlord";
 const router = express.Router();
 
 export const getUserCredentials = async (req: Request, res: Response, next: NextFunction) => {
@@ -23,16 +24,16 @@ export const refreshUserPermission = async (req: Request, res: Response) => {
     if (!req.session.user) {
       return res.json({ result: "success" });
     } else {
-      const dbUser: User | null = await User.findByPk(req.session.user.id, {
-        include: [{ model: ListingEnquiry }]
-      });
+      const dbUser: User | null = await User.findByPk(req.session.user.id);
 
+      // TODO compare difference and send back a updated version to client
       if (dbUser) {
         req.session.user = {
           id: dbUser.id,
-          username: dbUser.username,
+          username: dbUser.username || "",
           email: dbUser.email,
-          projectsAllowed: []
+          allowed: [],
+          accountType: dbUser.accountType || ""
         };
       }
       return res.json({ result: "success" });
@@ -52,30 +53,35 @@ export const registerUser = async (req: Request, res: Response) => {
   if (!isValidRequest) {
     return res.redirect("/register/?error=invalid request");
   }
-  const { email, password, username }: { email: string; password: string; username: string } = req.body;
+  const { email, password, username, registerReason }: { email: string; password: string; username: string; registerReason: string } = req.body;
+  const isLandlord = registerReason === "landlord";
 
-  // Check if Email or Username is not already existing
+  // Check if Email is not already existing
   const matchedEmail = await User.findOne({
-    where: { email: email }
-  });
-
-  const matchedUsername = await User.findOne({
-    where: { username: username }
+    where: { email: email.toLowerCase() }
   });
 
   if (matchedEmail) return res.redirect(`/register/?error=A user with email "${email}" already exist`);
-  if (matchedUsername) return res.redirect(`/register/?error=A user with username "${username}" already exist`);
 
   // Create hash password and save user
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(password, salt);
   const createdUserCallback: User | null = await User.create({
     username: username,
-    email: email,
+    email: email.toLowerCase(),
     password: hashedPassword,
     company: "",
-    verified: false
+    verified: false,
+    accountType: registerReason === "landlord" ? AccountTypeEnum.LANDLORD : AccountTypeEnum.TENANT
   });
+
+  if (isLandlord && createdUserCallback) {
+    await Landlord.create({
+      verified: false,
+      email: email,
+      userId: createdUserCallback.id
+    });
+  }
 
   const hashSecret = process.env.EMAIL_TOKEN_HASH_SECRET || "";
   // creating email token/url
@@ -226,17 +232,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
     // username or email match query
     const foundUser: User | null = await User.findOne({
-      where: {
-        [Op.or]: [
-          {
-            username: { [Op.eq]: nameOrEmail }
-          },
-          {
-            email: { [Op.eq]: nameOrEmail }
-          }
-        ]
-      },
-      include: [{ model: ListingEnquiry }]
+      where: { email: nameOrEmail }
     });
 
     if (!foundUser) {
@@ -253,7 +249,13 @@ export const loginUser = async (req: Request, res: Response) => {
     bcrypt.compare(password, dBHashedPassword, (err, result) => {
       if (result === true) {
         // create a session for user
-        req.session.user = { id: foundUser.id, email: foundUser.email, username: foundUser.username, projectsAllowed: [] };
+        req.session.user = {
+          id: foundUser.id,
+          email: foundUser.email,
+          username: foundUser.username || "",
+          allowed: [],
+          accountType: foundUser.accountType || ""
+        };
         // req.session.cookie.expires = dayjs(); // Expires sets an expiry date for when a cookie gets deleted;
         // req.session.cookie.maxAge = thirtyDays;   //  Max-age sets the time in seconds for when a cookie will be deleted
         console.log(`${foundUser.username} has signed in`);

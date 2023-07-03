@@ -13,6 +13,7 @@ import { attachMediaToProject, getMediaFromS3Bucket } from "./routes/media";
 import { ensureAuthentication, ensureLogout } from "./middlewareFunctions/auth-middleware";
 import multer from "multer";
 import dayjs from "dayjs";
+import { createRentListingRoute } from "./routes/listing-route";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -30,7 +31,7 @@ router.use("*", (req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-//  api/auth  routes
+//  api/auth    routes
 router.get("/auth/credentials", getUserCredentials);
 router.get("/auth/refresh-perms", refreshUserPermission);
 router.post("/auth/register", ensureLogout, registerUser);
@@ -38,6 +39,9 @@ router.get("/auth/register-confirm/:token", confirmUserAccountFromEmailToken);
 router.post("/auth/resend-verification", resendVerificationToUserEmail);
 router.post("/auth/login", loginUser);
 router.get("/auth/logout", logoutUser);
+
+// /api/listing   routes
+router.post("/listing/rent/create", createRentListingRoute);
 
 // api/media  routes
 router.post("/media/attach", ensureAuthentication, uploadMemory.any(), attachMediaToProject);

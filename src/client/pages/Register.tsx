@@ -76,10 +76,10 @@ const Register = () => {
   const handleFormSubmit = async e => {
     e.preventDefault();
     const formData = {
-      username,
       email,
       password,
       confirmPassword,
+      registerReason,
       terms
     };
     const isFormValid = await registerBodySchema.isValid(formData);
@@ -95,7 +95,7 @@ const Register = () => {
     <div className="px-5 py-5 p-lg-0 bg-surface-secondary">
       <div className="d-flex justify-content-center overflow-hidden">
         <div
-          className="login-sidebar col-lg-5 col-xl-4 p-12 p-xl-20 position-fixed start-0 top-0 h-screen overflow-y-hidden bg-info d-none d-lg-flex flex-column px-3"
+          className="login-sidebar col-lg-5 col-xl-4 p-12 p-xl-20 position-fixed start-0 top-0 h-screen overflow-y-hidden d-none d-lg-flex flex-column px-3"
           style={{ paddingTop: "4.3rem", height: "98%", boxShadow: "13px 10px 29px -17px rgba(0,0,0,0.75)" }}
         >
           {/* <!-- Logo --> */}
@@ -113,15 +113,18 @@ const Register = () => {
         <div className="col-12 col-md-9 col-lg-7 offset-lg-5 border-left-lg min-h-lg-screen d-flex flex-column justify-content-center py-lg-16 px-lg-20 position-relative">
           <div className="row">
             <div className="col-lg-10 col-md-9 col-xl-6 mx-auto ms-xl-0">
-              <div className="mt-10 mt-lg-5 mb-6 d-flex align-items-center d-lg-block">
-                <span className="d-inline-block d-lg-block h1 mb-lg-6 me-3">👋</span>
+              <div className="mt-10 mt-lg-5 mb-5 d-flex align-items-center d-lg-block">
+                {/* <span className="d-inline-block d-lg-block h1 mb-lg-6 me-3">👋</span> */}
                 <div className="text-danger" style={{ minHeight: "1em" }}>
                   {serverError}
+                  {JSON.stringify(errors)}
                 </div>
-                <h1 className="ls-tight font-bolder h2">{t("register.welcome.text")}</h1>
+                <h1 className="ls-tight font-bolder h2">
+                  {/* {t("register.welcome.text")} */}
+                  Create an account
+                </h1>
               </div>
               <form action="/api/auth/register" method="POST" onSubmit={handleFormSubmit}>
-                {JSON.stringify(errors)}
                 <div className="mb-4">
                   <label className="pe-3">What are you looking for</label>
                   <select
@@ -205,8 +208,8 @@ const Register = () => {
               <div className="py-5 text-center">
                 <span className="text-xs text-uppercase font-semibold">or</span>
               </div>
-              <div className="row">
-                <div className="col-sm-6 visually-hidden">
+              <div className="GitHub & Google row visually-hidden">
+                <div className="col-sm-6">
                   <a href="#" className="btn btn-neutral w-full">
                     <span className="icon icon-sm pe-2">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -264,7 +267,7 @@ const Register = () => {
                     Github
                   </a>
                 </div>
-                <div className="col-sm-6 visually-hidden">
+                <div className="col-sm-6">
                   <a href="#" className="btn btn-neutral w-full">
                     <span className="icon icon-sm pe-2">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -323,7 +326,7 @@ const Register = () => {
               </div>
               <div className="my-6">
                 <small>Already have an account?</small>
-                <a href="/login" className="text-warning text-sm font-semibold">
+                <a href="/login" className="text-primary text-sm font-semibold">
                   Login
                 </a>
               </div>

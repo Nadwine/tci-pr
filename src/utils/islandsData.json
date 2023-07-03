@@ -1,0 +1,47 @@
+[
+  {
+    "key": "providenciales",
+    "settlements": ["Five cays", "The Bight", "Blue Hills", "Kew town"],
+    "displayLabel": "Providenciales"
+  },
+  {
+    "settlements": ["Cockburn Town"],
+    "key": "grandTurk",
+    "displayLabel": "Grand Turk"
+  },
+  {
+    "settlements": ["Bottle Creek", "Whitby", "Kew", "Sandy Point"],
+    "key": "northCaicos",
+    "displayLabel": "North Caicos"
+  },
+  {
+    "settlements": ["Lorimers", "Bambarra", "Conch Bar"],
+    "key": "middleCaicos",
+    "displayLabel": "Middle Caicos"
+  },
+  {
+    "settlements": ["Cockburn Harbour"],
+    "key": "southCaicos",
+    "displayLabel": "South Caicos"
+  },
+  {
+    "settlements": [],
+    "key": "saltCay",
+    "displayLabel": "Salt Cay"
+  },
+  {
+    "settlements": [],
+    "key": "pineCay",
+    "displayLabel": "Pine Cay"
+  },
+  {
+    "settlements": [],
+    "key": "parrotCay",
+    "displayLabel": "Parrot Cay"
+  },
+  {
+    "settlements": [],
+    "key": "ambergrisCay",
+    "displayLabel": "Ambergris Cay"
+  }
+]

@@ -26,11 +26,21 @@ const exampleRequestWithYup = yup.object({
 
 export const registerRequestValidation = (req: Request): boolean => {
   // only grab wanted keys
-  const { username, password, email } = req.body;
+  const { password, email, registerReason } = req.body;
   // ensure url params is empty we are not expecting anything to be passed
   const emptyURLParams = _.isEmpty(req.params);
+  const emptyQuery = _.isEmpty(req.query);
 
-  if (username && email && password && typeof username === "string" && typeof email === "string" && typeof password === "string" && emptyURLParams) {
+  if (
+    email &&
+    password &&
+    registerReason &&
+    typeof registerReason === "string" &&
+    typeof email === "string" &&
+    typeof password === "string" &&
+    emptyURLParams &&
+    emptyQuery
+  ) {
     return true;
   } else {
     return false;

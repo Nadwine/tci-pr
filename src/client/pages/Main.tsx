@@ -5,7 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import Register from "./Register";
 import Login from "./Login";
-import { RoutesEnum } from "../../utils/enums";
+import { AccountTypeEnum, ReactRoutesEnum } from "../../../types/enums";
 import RegisterConfirm from "./RegisterConfirm";
 import Navbar from "../components/Navbar";
 import { connect, useDispatch } from "react-redux";
@@ -23,6 +23,8 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import translations from "../translations/translations";
 import LanguageSelector from "../components/LanguageSelector";
+import RequirePermission from "../components/RequirePermission";
+import CreateListing from "./CreateListing";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -100,10 +102,12 @@ const Main = () => {
             {/* Do not use Raw Strings as routes. Add it to enums stored in ./utils/enums */}
             {/* TODO add all URLS in the enum and replace them on server and client */}
             <Route index element={<HomeFeed />} />
-            <Route path={RoutesEnum.REGISTERCONFIRM} element={<RegisterConfirm />} />
-            <Route path={RoutesEnum.REGISTER} element={<RequireLogout view={<Register />} />} />
-            <Route path={RoutesEnum.LOGIN} element={<RequireLogout view={<Login />} />} />
-            <Route path="*" element={<p>Theres nothing here: 404!</p>} />
+            <Route path={ReactRoutesEnum.ADMIN} element={<RequirePermission view={<h1>Hi Admin</h1>} roles={[AccountTypeEnum.ADMIN]} />} />
+            <Route path={ReactRoutesEnum.REGISTERCONFIRM} element={<RegisterConfirm />} />
+            <Route path={ReactRoutesEnum.REGISTER} element={<RequireLogout view={<Register />} />} />
+            <Route path={ReactRoutesEnum.LOGIN} element={<RequireLogout view={<Login />} />} />
+            <Route path="create-listing" element={<RequirePermission view={<CreateListing />} roles={[AccountTypeEnum.LANDLORD, AccountTypeEnum.ADMIN]} />} />
+            <Route path="*" element={<h1 className="text-center pt-5">Theres nothing here: 404!</h1>} />
           </Routes>
         </div>
       </section>
