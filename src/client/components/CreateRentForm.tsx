@@ -3,8 +3,12 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import islands from "../../utils/islandsData.json";
+import { useNavigate } from "react-router-dom";
+
+const axiosConfig = { headers: { "Content-Type": "multipart/form-data" } };
 
 const CreateRentForm = props => {
+  const navigate = useNavigate();
   const [fileBlobRef, setFileBlobRef] = useState<string[]>([]);
 
   const { values, errors, touched, handleSubmit, handleChange, handleBlur, setFieldValue } = useFormik({
@@ -45,9 +49,10 @@ const CreateRentForm = props => {
         postcode: "TKCA 1ZZ",
         country: "Turks & Caicos Islands"
       };
-      const data = null;
-      console.log(formValues.billsIncluded);
-      // const response = await axios.post("/api/listing/rent/create", body);
+      await axios
+        .post("/api/listing/rent/create", body, axiosConfig)
+        .then(res => navigate(`/search?searchText=${body.city}&listingType=rent`))
+        .catch(err => console.log("/api/listing/rent/create", err));
     },
     validate(values) {
       //
@@ -57,11 +62,9 @@ const CreateRentForm = props => {
     if (filesArray.length === 0) return;
     const fileBlobs = filesArray.map(blob => URL.createObjectURL(blob));
     setFileBlobRef(fileBlobs);
-
-    // ![image](blob:http://localhost:8080/97bf531f-defc-4d65-8bf2-17459be8ed2d)
-    // ![image](https://nl-at-media-prod.s3.eu-west-2.amazonaws.com/130/203/925/bunny_1by1.mp4)
   };
-  const selectedIsland = islands.find(i => i.key === values.city);
+
+  const selectedIsland = islands.find(i => i.name.toLowerCase() === values.city);
 
   return (
     <div className="create-rent-form d-flex justify-content-center row">
@@ -77,8 +80,8 @@ const CreateRentForm = props => {
                 Select an option
               </option>
               {islands.map((c, i) => (
-                <option key={i} value={c.key}>
-                  {c.displayLabel}
+                <option key={i} value={c.name.toLowerCase()}>
+                  {c.name}
                 </option>
               ))}
             </select>
@@ -93,7 +96,7 @@ const CreateRentForm = props => {
                   Select an option
                 </option>
                 {selectedIsland?.settlements.map((s, i) => (
-                  <option key={i} value={s}>
+                  <option key={i} value={s.toLowerCase()}>
                     {s}
                   </option>
                 ))}
@@ -168,7 +171,7 @@ const CreateRentForm = props => {
               Bills Included
             </label>
           </div>
-          <div className="row images-container rounded-3" style={{ backgroundColor: "#80808030", minHeight: 100 }}>
+          <div className="row ms-1 me-1 images-container rounded-3" style={{ backgroundColor: "#80808030", minHeight: 100 }}>
             {values.files.length === 0 && <div className="w-100 text-center pt-4 text-secondary">No Files</div>}
             {values.files.length > 0 &&
               fileBlobRef.map((blob, index) => (

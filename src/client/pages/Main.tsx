@@ -15,7 +15,7 @@ import verifyAuthState from "../../utils/verifyAuthState";
 import { useState } from "react";
 import axios from "axios";
 import { LoadingSpinnerWholePage } from "../components/LoadingSpinners";
-import HomeFeed from "./HomeFeed";
+import Home from "./Home";
 import CookieConsentModal from "../components/CookieConsentModal";
 import { setBrowserInfo, setVisitorId } from "../redux/reducers/authReducer";
 import i18n from "i18next";
@@ -25,6 +25,7 @@ import translations from "../translations/translations";
 import LanguageSelector from "../components/LanguageSelector";
 import RequirePermission from "../components/RequirePermission";
 import CreateListing from "./CreateListing";
+import SearchResults from "./SearchResults";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -101,12 +102,13 @@ const Main = () => {
           <Routes>
             {/* Do not use Raw Strings as routes. Add it to enums stored in ./utils/enums */}
             {/* TODO add all URLS in the enum and replace them on server and client */}
-            <Route index element={<HomeFeed />} />
+            <Route index element={<Home />} />
             <Route path={ReactRoutesEnum.ADMIN} element={<RequirePermission view={<h1>Hi Admin</h1>} roles={[AccountTypeEnum.ADMIN]} />} />
             <Route path={ReactRoutesEnum.REGISTERCONFIRM} element={<RegisterConfirm />} />
             <Route path={ReactRoutesEnum.REGISTER} element={<RequireLogout view={<Register />} />} />
             <Route path={ReactRoutesEnum.LOGIN} element={<RequireLogout view={<Login />} />} />
             <Route path="create-listing" element={<RequirePermission view={<CreateListing />} roles={[AccountTypeEnum.LANDLORD, AccountTypeEnum.ADMIN]} />} />
+            <Route path="search" element={<SearchResults />} />
             <Route path="*" element={<h1 className="text-center pt-5">Theres nothing here: 404!</h1>} />
           </Routes>
         </div>

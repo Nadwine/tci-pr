@@ -3,6 +3,10 @@ import sequelize from "../sequelize-connection";
 import ListingEnquiry from "./listing_enquiry";
 import Landlord from "./landlord";
 import { ListingTypeEnum } from "../../../types/enums";
+import Address from "./address";
+import PropertyForRent from "./property_for_rent";
+import PropertyForSale from "./property_for_sale";
+import ListingMedia from "./listing_media";
 
 // for typeScript typing
 export default class Listing extends Model<InferAttributes<Listing>, InferCreationAttributes<Listing>> {
@@ -14,7 +18,11 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare listingType: ListingTypeEnum; // sales, rent
   declare landlordId: number;
   declare Landlord: CreationOptional<Landlord>;
-  declare PropertyEnquiries: CreationOptional<ListingEnquiry>;
+  declare PropertyForRent: CreationOptional<PropertyForRent>;
+  declare PropertyForSale: CreationOptional<PropertyForSale>;
+  declare ListingEnquiries: CreationOptional<ListingEnquiry>;
+  declare ListingMedia: CreationOptional<ListingMedia[]>;
+  declare Address: CreationOptional<Address>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
   // property type, rooms, price, advert type (rent, sale)

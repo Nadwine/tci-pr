@@ -1,15 +1,27 @@
-import { Request, Response } from "express";
+import { Request, Response, Express } from "express";
+import AWS, { AWSError } from "aws-sdk";
+import S3 from "aws-sdk/clients/s3";
 import Listing from "../../database/models/listing";
 import Landlord from "../../database/models/landlord";
 import PropertyForRent from "../../database/models/property_for_rent";
 import Address from "../../database/models/address";
 import { ListingTypeEnum } from "../../../types/enums";
+import ListingMedia from "../../database/models/listing_media";
+import { Op } from "sequelize";
+import PropertyForSale from "../../database/models/property_for_sale";
+
+const s3Bucket = new S3({
+  s3ForcePathStyle: true,
+  region: process.env.AWS_S3_REGION,
+  accessKeyId: process.env.AWS_S3_KEY,
+  secretAccessKey: process.env.AWS_S3_SECRET,
+  endpoint: new AWS.Endpoint(process.env.AWS_S3_ENDPOINT ?? "")
+});
 
 export const createRentListingRoute = async (req: Request, res: Response) => {
   const {
     title,
     description,
-    listingType,
     numOfRooms,
     numOfBathRooms,
     maxTenant,
@@ -24,6 +36,7 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
     country,
     rentAmount
   } = req.body;
+  const files = req.files ?? [];
 
   if (req.session.user?.accountType !== "landlord") return res.status(401).json({ message: "Unauthorized" });
   try {
@@ -57,8 +70,115 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
         listingId: newListing.id,
         rentAmount: rentAmount
       });
+
+      // Uploading files
+      for (let i = 0; i < Number(files.length); i++) {
+        const currentFile: Express.Multer.File = files[i];
+        const filename = `${new Date().getTime()}_${currentFile.originalname}`;
+        const s3Key = `${req.session.user.id}/${newListing.id}/${filename}`;
+
+        await s3Bucket
+          .upload(
+            {
+              Bucket: String(process.env.AWS_S3_BUCKET_NAME),
+              Key: s3Key,
+              Body: currentFile.buffer,
+              ACL: "bucket-owner-full-control"
+            },
+            (err, data) => {
+              if (data) {
+                // successUploadResult.push(data.ETag);
+              }
+            }
+          )
+          .on("httpUploadProgress", function (evt) {
+            // console.log(evt)
+            // Emit Here your events (send this to a socket io id then client can listen in to the socket for upload progress)
+            // then destroy the socket when upload is complete
+          })
+          .promise()
+          .then(async (val: S3.ManagedUpload.SendData) => {
+            const mediaType = currentFile.mimetype.split("/")[0];
+            const format = currentFile.mimetype.split("/")[1];
+            const mediaURl = val.Location;
+
+            await ListingMedia.create({
+              mediaType: mediaType,
+              fileFormat: format,
+              s3BucketKey: val.Key,
+              mediaUrl: mediaURl,
+              listingId: newListing.id,
+              label: currentFile.originalname
+            });
+          });
+
+        // 1 Iteration Done
+      }
+
+      return res.status(200).json({ result: "success" });
     }
+    return res.status(400).json({ result: "error" });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
+export const searchRentListingRoute = async (req: Request, res: Response) => {
+  const location = String(req.query.location);
+
+  try {
+    const listings = await Listing.findAll({
+      where: {
+        listingType: ListingTypeEnum.RENT
+      },
+      include: [
+        {
+          model: Address,
+          where: {
+            [Op.or]: [
+              { city: { [Op.iLike]: location } },
+              { settlement: { [Op.iLike]: location } },
+              { addressLine1: { [Op.iLike]: location } },
+              { addressLine2: { [Op.iLike]: location } }
+            ]
+          }
+        },
+        { model: PropertyForRent },
+        { model: ListingMedia }
+      ]
+    });
+    return res.status(200).json(listings);
+  } catch (err) {
+    res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
+export const searchSaleListingRoute = async (req: Request, res: Response) => {
+  const location = String(req.query.location);
+
+  try {
+    const listings = await Listing.findAll({
+      where: {
+        listingType: ListingTypeEnum.SALE
+      },
+      include: [
+        {
+          model: Address,
+          where: {
+            [Op.or]: [
+              { city: { [Op.iLike]: location } },
+              { settlement: { [Op.iLike]: location } },
+              { addressLine1: { [Op.iLike]: location } },
+              { addressLine2: { [Op.iLike]: location } }
+            ]
+          }
+        },
+        { model: PropertyForSale },
+        { model: ListingMedia }
+      ]
+    });
+    return res.status(200).json(listings);
+  } catch (err) {
+    res.status(500).json({ message: "Internal Server error", err });
   }
 };

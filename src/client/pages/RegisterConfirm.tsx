@@ -39,8 +39,19 @@ const RegisterConfirm = () => {
       <div>
         <br />
         Token not working? Enter email to resend
-        <input type="text" placeholder="email" onChange={e => setEmailResender(e.target.value)} />
-        <button onClick={() => requestNewVerifyLink()}>Resend</button>
+        <br />
+        <div className="d-flex pt-3">
+          <input
+            type="text"
+            className=" form-control"
+            style={{ width: "20em", height: "3em" }}
+            placeholder="email"
+            onChange={e => setEmailResender(e.target.value)}
+          />
+          <button onClick={() => requestNewVerifyLink()} className="btn btn-info ms-3">
+            Resend
+          </button>
+        </div>
       </div>
     </div>
   );
