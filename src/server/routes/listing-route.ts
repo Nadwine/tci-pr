@@ -9,6 +9,7 @@ import { ListingTypeEnum } from "../../../types/enums";
 import ListingMedia from "../../database/models/listing_media";
 import { Op } from "sequelize";
 import PropertyForSale from "../../database/models/property_for_sale";
+import User from "../../database/models/user";
 
 const s3Bucket = new S3({
   s3ForcePathStyle: true,
@@ -125,9 +126,14 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
 
 export const searchRentListingRoute = async (req: Request, res: Response) => {
   const location = String(req.query.location);
+  const page = Number(req.query.page || "0");
+  const resultsPerPage = Number(req.query.resultsPerPage || "10");
 
   try {
-    const listings = await Listing.findAll({
+    const listings = await Listing.findAndCountAll({
+      offset: resultsPerPage * page,
+      limit: resultsPerPage,
+      subQuery: false,
       where: {
         listingType: ListingTypeEnum.RENT
       },
@@ -144,10 +150,12 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
           }
         },
         { model: PropertyForRent },
-        { model: ListingMedia }
-      ]
+        { model: ListingMedia },
+        { model: Landlord, include: [User] }
+      ],
+      order: [["createdAt", "DESC"]]
     });
-    return res.status(200).json(listings);
+    return res.status(200).json(listings.rows);
   } catch (err) {
     res.status(500).json({ message: "Internal Server error", err });
   }
@@ -155,9 +163,14 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
 
 export const searchSaleListingRoute = async (req: Request, res: Response) => {
   const location = String(req.query.location);
+  const page = Number(req.query.page || "1");
+  const resultsPerPage = Number(req.query.resultsPerPage || "2");
 
   try {
     const listings = await Listing.findAll({
+      offset: page === 1 ? page - 1 : page * resultsPerPage,
+      limit: resultsPerPage,
+      subQuery: false,
       where: {
         listingType: ListingTypeEnum.SALE
       },
@@ -175,7 +188,8 @@ export const searchSaleListingRoute = async (req: Request, res: Response) => {
         },
         { model: PropertyForSale },
         { model: ListingMedia }
-      ]
+      ],
+      order: [["createdAt", "DESC"]]
     });
     return res.status(200).json(listings);
   } catch (err) {

@@ -20,7 +20,7 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare Landlord: CreationOptional<Landlord>;
   declare PropertyForRent: CreationOptional<PropertyForRent>;
   declare PropertyForSale: CreationOptional<PropertyForSale>;
-  declare ListingEnquiries: CreationOptional<ListingEnquiry>;
+  declare ListingEnquiries?: CreationOptional<ListingEnquiry>;
   declare ListingMedia: CreationOptional<ListingMedia[]>;
   declare Address: CreationOptional<Address>;
   declare createdAt: CreationOptional<Date>;

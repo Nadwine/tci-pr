@@ -13,17 +13,16 @@ const Home = props => {
   const [searchResults, setSearchResults] = useState<Listing[]>([]);
 
   const searchRent = async () => {
-    navigate(`/search?searchText=${searchText}&listingType=rent`);
+    navigate(`/search?searchText=${searchText}&listingType=rent&page=1`);
   };
 
   const searchSale = async () => {
-    navigate(`/search?searchText=${searchText}&listingType=sale`);
+    navigate(`/search?searchText=${searchText}&listingType=sale&page=1`);
   };
 
   console.log(searchParams);
   return (
     <div className="home justify-content-center">
-      {/* <WelcomeSearch searchRent={searchRent} searchSale={searchSale} setSearchText={setSearchText} /> */}
       <div className="welcome-search">
         <div className="col-lg-12 text-center mt-5 pt-5">
           <h1>Welcome to TCI HomeBase</h1>

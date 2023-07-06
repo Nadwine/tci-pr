@@ -2,6 +2,7 @@ import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOpt
 import sequelize from "../sequelize-connection";
 import ListingEnquiry from "./listing_enquiry";
 import { AccountTypeEnum } from "../../../types/enums";
+import Landlord from "./landlord";
 
 // for typeScript typing
 export default class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
@@ -14,6 +15,7 @@ export default class User extends Model<InferAttributes<User>, InferCreationAttr
   declare password: string;
   declare verified: boolean;
   declare accountType?: AccountTypeEnum; // landlord, admin, tenant/user
+  declare LandLord?: CreationOptional<Landlord>;
   declare ProjectTenants: CreationOptional<ListingEnquiry[]>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;

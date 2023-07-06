@@ -12,6 +12,7 @@ export default class Landlord extends Model<InferAttributes<Landlord>, InferCrea
   declare phone: CreationOptional<number>;
   declare email: CreationOptional<string>;
   declare address: CreationOptional<string>;
+  declare User?: CreationOptional<User>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -45,3 +46,4 @@ Landlord.init(
 );
 
 Landlord.belongsTo(User, { foreignKey: "userId" });
+User.hasOne(Landlord, { foreignKey: "userId" });
