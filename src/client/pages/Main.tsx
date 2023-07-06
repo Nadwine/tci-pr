@@ -26,6 +26,7 @@ import LanguageSelector from "../components/LanguageSelector";
 import RequirePermission from "../components/RequirePermission";
 import CreateListing from "./CreateListing";
 import SearchRentResults from "./SearchRentResults";
+import ViewRentProperty from "./ViewRentProperty";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -109,6 +110,7 @@ const Main = () => {
             <Route path={ReactRoutesEnum.LOGIN} element={<RequireLogout view={<Login />} />} />
             <Route path="create-listing" element={<RequirePermission view={<CreateListing />} roles={[AccountTypeEnum.LANDLORD, AccountTypeEnum.ADMIN]} />} />
             <Route path="search/rent" element={<SearchRentResults />} />
+            <Route path="property/rent/:id" element={<ViewRentProperty />} />
             <Route path="*" element={<h1 className="text-center pt-5">Theres nothing here: 404!</h1>} />
           </Routes>
         </div>

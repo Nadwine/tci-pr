@@ -75,6 +75,10 @@ const SearchRentResults = props => {
     if (res.status !== 200) setServerError("Error getting results");
   };
 
+  const viewProperty = (id: number) => {
+    navigate(`/property/rent/${id}`);
+  };
+
   return (
     <div className="search-results d-flex row flex-wrap row-cols-auto">
       <div className="w-100 text-center text-danger">{serverError}</div>
@@ -86,7 +90,7 @@ const SearchRentResults = props => {
         {searchResults.map((listing, i) => (
           <div key={i} className="card mb-3">
             <div className="card-body d-flex flex-wrap">
-              <div className="image-container col-12 col-md-5 me-2 pb-3">
+              <div onClick={() => viewProperty(listing.id)} className="image-container col-12 col-md-5 me-2 pb-3">
                 <img width="100%" src={listing.ListingMedia[0]?.mediaUrl} />
                 <div className="price fw-bold fs-5" style={{ backgroundColor: "#ebf8ff", borderBottomLeftRadius: "7px", borderBottomRightRadius: "7px" }}>
                   {"$"}
@@ -94,16 +98,16 @@ const SearchRentResults = props => {
                 </div>
               </div>
               <div className="info col-12 col-md-6">
-                <div className="title fw-bold col-12">
+                <div onClick={() => viewProperty(listing.id)} className="title fw-bold col-12">
                   {listing.title}
                   <div className="availability col-3 float-end" style={{ fontSize: "0.7em" }}>
                     Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}
                   </div>
                 </div>
-                <div>{listing.Address.settlement.charAt(0).toUpperCase() + listing.Address.settlement.slice(1)}</div>
+                <div onClick={() => viewProperty(listing.id)} className="location">{listing.Address.settlement.charAt(0).toUpperCase() + listing.Address.settlement.slice(1)}</div>
 
                 <div className="foot d-flex flex-row">
-                  <div className="col-10">
+                  <div onClick={() => viewProperty(listing.id)} className="col-10">
                     <div className="beds pt-5">
                       <i className="bi-door-closed pe-1" />
                       Rooms {listing.PropertyForRent.numOfRooms}
@@ -114,7 +118,7 @@ const SearchRentResults = props => {
                     </div>
                   </div>
                   <div className="col-2 pt-5 mt-2 float-end">
-                    <span className="btn btn-link bg-secondary rounded-circle text-black fs-5" style={{ width: "45px", height: "45px" }}>
+                    <span onClick={() => console.log("landlord")} className="btn btn-link bg-secondary rounded-circle text-black fs-5" style={{ width: "45px", height: "45px" }}>
                       {listing.Landlord.User?.email?.charAt(0)}
                     </span>
                   </div>

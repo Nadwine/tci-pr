@@ -128,6 +128,20 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
   }
 };
 
+export const getRentListingById = async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  try {
+    const listing = await Listing.findByPk(id, {
+      include: [{ model: Address }, { model: PropertyForRent }, { model: ListingMedia }, { model: Landlord, include: [User] }]
+    });
+
+    return res.status(200).json(listing);
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
 export const searchRentListingRoute = async (req: Request, res: Response) => {
   const location = String(req.query.location);
   const page = Number(req.query.page || "0");
@@ -183,7 +197,7 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
     const data = { rows: listingResults, count: count };
     return res.status(200).json(data);
   } catch (err) {
-    res.status(500).json({ message: "Internal Server error", err });
+    return res.status(500).json({ message: "Internal Server error", err });
   }
 };
 
@@ -199,7 +213,7 @@ export const searchSaleListingRoute = async (req: Request, res: Response) => {
       limit: limit,
       subQuery: true,
       where: {
-        listingType: ListingTypeEnum.RENT
+        listingType: ListingTypeEnum.SALE
       },
       include: [
         {
