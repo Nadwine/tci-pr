@@ -51,7 +51,7 @@ const CreateRentForm = props => {
       };
       await axios
         .post("/api/listing/rent/create", body, axiosConfig)
-        .then(res => navigate(`/search?searchText=${body.city}&listingType=rent`))
+        .then(res => navigate(`/search/rent?searchText=${body.city}&page=0`))
         .catch(err => console.log("/api/listing/rent/create", err));
     },
     validate(values) {

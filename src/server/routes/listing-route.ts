@@ -129,15 +129,16 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
 };
 
 export const searchRentListingRoute = async (req: Request, res: Response) => {
-  let location = String(req.query.location);
+  const location = String(req.query.location);
   const page = Number(req.query.page || "0");
-  const resultsPerPage = Number(req.query.resultsPerPage || "10");
+  const limit = Number(req.query.limit || "10");
 
   try {
-    const listingResults = await Listing.findAndCountAll({
-      offset: resultsPerPage * page,
-      limit: resultsPerPage,
-      subQuery: false,
+    const offset = page * limit;
+    const listingResults = await Listing.findAll({
+      offset: offset,
+      limit: limit,
+      subQuery: true,
       where: {
         listingType: ListingTypeEnum.RENT
       },
@@ -159,7 +160,28 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
       ],
       order: [["createdAt", "DESC"]]
     });
-    return res.status(200).json(listingResults);
+
+    const count = await Listing.count({
+      where: {
+        listingType: ListingTypeEnum.RENT
+      },
+      include: [
+        {
+          model: Address,
+          where: {
+            [Op.or]: [
+              { city: { [Op.iLike]: location } },
+              { settlement: { [Op.iLike]: location } },
+              { addressLine1: { [Op.iLike]: location } },
+              { addressLine2: { [Op.iLike]: location } }
+            ]
+          }
+        }
+      ]
+    });
+
+    const data = { rows: listingResults, count: count };
+    return res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: "Internal Server error", err });
   }
@@ -167,16 +189,17 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
 
 export const searchSaleListingRoute = async (req: Request, res: Response) => {
   const location = String(req.query.location);
-  const page = Number(req.query.page || "1");
-  const resultsPerPage = Number(req.query.resultsPerPage || "2");
+  const page = Number(req.query.page || "0");
+  const limit = Number(req.query.limit || "10");
 
   try {
-    const listings = await Listing.findAll({
-      offset: page === 1 ? page - 1 : page * resultsPerPage,
-      limit: resultsPerPage,
-      subQuery: false,
+    const offset = page * limit;
+    const listingResults = await Listing.findAll({
+      offset: offset,
+      limit: limit,
+      subQuery: true,
       where: {
-        listingType: ListingTypeEnum.SALE
+        listingType: ListingTypeEnum.RENT
       },
       include: [
         {
@@ -190,12 +213,34 @@ export const searchSaleListingRoute = async (req: Request, res: Response) => {
             ]
           }
         },
-        { model: PropertyForSale },
-        { model: ListingMedia }
+        { model: PropertyForRent },
+        { model: ListingMedia },
+        { model: Landlord, include: [User] }
       ],
       order: [["createdAt", "DESC"]]
     });
-    return res.status(200).json(listings);
+
+    const count = await Listing.count({
+      where: {
+        listingType: ListingTypeEnum.RENT
+      },
+      include: [
+        {
+          model: Address,
+          where: {
+            [Op.or]: [
+              { city: { [Op.iLike]: location } },
+              { settlement: { [Op.iLike]: location } },
+              { addressLine1: { [Op.iLike]: location } },
+              { addressLine2: { [Op.iLike]: location } }
+            ]
+          }
+        }
+      ]
+    });
+
+    const data = { rows: listingResults, count: count };
+    return res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: "Internal Server error", err });
   }

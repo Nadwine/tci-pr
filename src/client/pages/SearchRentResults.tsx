@@ -31,10 +31,33 @@ const SearchRentResults = props => {
     fetchInitialSearchResult();
   }, []);
 
-
   const addFilter = (property: string, values: []) => {
+    //
+  };
 
-  }
+  const goToNextPage = async () => {
+    const newPage = Number(page) + 1;
+    setPage(`${newPage}`);
+    navigate(`/search/rent?searchText=${searchText}&page=${newPage}`);
+    const res = await axios.get(`/api/listing/rent/search?location=${searchTextFromURL}&page=${newPage}`);
+    if (res.status === 200) {
+      setSearchResults(res.data.rows);
+      setTotalResults(res.data.count);
+    }
+    if (res.status !== 200) setServerError("Error getting results");
+  };
+
+  const goToPrevPage = async () => {
+    const newPage = Number(page) - 1;
+    setPage(`${newPage}`);
+    navigate(`/search/rent?searchText=${searchText}&page=${newPage}`);
+    const res = await axios.get(`/api/listing/rent/search?location=${searchTextFromURL}&page=${newPage}`);
+    if (res.status === 200) {
+      setSearchResults(res.data.rows);
+      setTotalResults(res.data.count);
+    }
+    if (res.status !== 200) setServerError("Error getting results");
+  };
 
   const searchRent = async () => {
     let searchTextTransform = searchText;
@@ -100,6 +123,15 @@ const SearchRentResults = props => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="paginate col-12 d-flex justify-content-center">
+        <button onClick={() => goToPrevPage()} disabled={page === "0"} className="btn btn-info me-4">
+          Perv
+        </button>
+        Page {page}
+        <button onClick={() => goToNextPage()} className="btn btn-info ms-4">
+          Next
+        </button>
       </div>
     </div>
   );
