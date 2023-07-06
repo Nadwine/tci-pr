@@ -21,3 +21,5 @@ aws s3 bucket files are uploaded to aws-s3-media folder located on the root of t
 aws ses email are sent to aws-ses folder located on the root of the project. This is hosted on port: 9001
 
 the ./dist folder is the production bundle of the application
+
+sharp package might error upon nmp install:  npm install --unsafe-perm

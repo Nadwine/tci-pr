@@ -1,28 +1,29 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Listing from "../../database/models/listing";
 import FilterSearchMobile from "../components/FilterSearchMobile";
 import FilterSearchDesktop from "../components/FilterSearchDesktop";
 import dayjs from "dayjs";
 
-const SearchResults = props => {
+const SearchRentResults = props => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const searchTextFromURL = searchParams.get("searchText") || "";
   const pageFromURL = searchParams.get("page") || "1";
-  const listingType = searchParams.get("listingType");
   const [searchText, setSearchText] = useState(searchTextFromURL);
   const [searchResults, setSearchResults] = useState<Listing[]>([]);
+  const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(pageFromURL);
   const [serverError, setServerError] = useState("");
 
   const fetchInitialSearchResult = async () => {
-    const res =
-      listingType === "rent"
-        ? await axios.get(`/api/listing/rent/search?location=${searchTextFromURL}&page=${page}`)
-        : await axios.get(`/api/listing/sale/search?location=${searchTextFromURL}&page=${page}`);
-    if (res.status === 200) setSearchResults(res.data);
+    const res = await axios.get(`/api/listing/rent/search?location=${searchTextFromURL}&page=${page}`);
+    if (res.status === 200) {
+      setSearchResults(res.data.rows);
+      setTotalResults(res.data.count);
+    }
     if (res.status !== 200) setServerError("Error getting results");
   };
 
@@ -30,18 +31,39 @@ const SearchResults = props => {
     fetchInitialSearchResult();
   }, []);
 
+
+  const addFilter = (property: string, values: []) => {
+
+  }
+
+  const searchRent = async () => {
+    let searchTextTransform = searchText;
+    if (searchText.toLowerCase() === "provo") {
+      setSearchText("providenciales");
+      searchTextTransform = "providenciales";
+    }
+
+    navigate(`/search/rent?searchText=${searchTextTransform}&page=0`);
+    const res = await axios.get(`/api/listing/rent/search?location=${searchTextTransform}&page=0`);
+    if (res.status === 200) {
+      setSearchResults(res.data.rows);
+      setTotalResults(res.data.count);
+    }
+    if (res.status !== 200) setServerError("Error getting results");
+  };
+
   return (
     <div className="search-results d-flex row flex-wrap row-cols-auto">
       <div className="w-100 text-center text-danger">{serverError}</div>
       <div className="filter col-12 col-md-4 col-lg-4 col-xl-4">
-        <FilterSearchMobile setSearchText={setSearchText} searchText={searchText} />
-        <FilterSearchDesktop setSearchText={setSearchText} searchText={searchText} />
+        <FilterSearchMobile setSearchText={setSearchText} searchText={searchText} searchRent={searchRent} />
+        <FilterSearchDesktop setSearchText={setSearchText} searchText={searchText} searchRent={searchRent} />
       </div>
       <div className="list col-12 col-md-8 col-lg-8 col-xl-8">
         {searchResults.map((listing, i) => (
           <div key={i} className="card mb-3">
             <div className="card-body d-flex flex-wrap">
-              <div className="image-container col-12 col-md-5 me-2">
+              <div className="image-container col-12 col-md-5 me-2 pb-3">
                 <img width="100%" src={listing.ListingMedia[0]?.mediaUrl} />
                 <div className="price fw-bold fs-5" style={{ backgroundColor: "#ebf8ff", borderBottomLeftRadius: "7px", borderBottomRightRadius: "7px" }}>
                   {"$"}
@@ -83,4 +105,4 @@ const SearchResults = props => {
   );
 };
 
-export default connect()(SearchResults);
+export default connect()(SearchRentResults);

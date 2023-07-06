@@ -25,7 +25,7 @@ import translations from "../translations/translations";
 import LanguageSelector from "../components/LanguageSelector";
 import RequirePermission from "../components/RequirePermission";
 import CreateListing from "./CreateListing";
-import SearchResults from "./SearchResults";
+import SearchRentResults from "./SearchRentResults";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -108,7 +108,7 @@ const Main = () => {
             <Route path={ReactRoutesEnum.REGISTER} element={<RequireLogout view={<Register />} />} />
             <Route path={ReactRoutesEnum.LOGIN} element={<RequireLogout view={<Login />} />} />
             <Route path="create-listing" element={<RequirePermission view={<CreateListing />} roles={[AccountTypeEnum.LANDLORD, AccountTypeEnum.ADMIN]} />} />
-            <Route path="search" element={<SearchResults />} />
+            <Route path="search/rent" element={<SearchRentResults />} />
             <Route path="*" element={<h1 className="text-center pt-5">Theres nothing here: 404!</h1>} />
           </Routes>
         </div>

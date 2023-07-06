@@ -8,16 +8,26 @@ import Listing from "../../database/models/listing";
 const Home = props => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [pagination, setPagination] = useState(0);
   const [searchText, setSearchText] = useState("");
-  const [searchResults, setSearchResults] = useState<Listing[]>([]);
 
   const searchRent = async () => {
-    navigate(`/search?searchText=${searchText}&listingType=rent&page=1`);
+    let searchTextTransform = searchText;
+    if (searchText.toLowerCase() === "provo") {
+      setSearchText("providenciales");
+      searchTextTransform = "providenciales";
+    }
+
+    navigate(`/search/rent?searchText=${searchTextTransform}&page=0`);
   };
 
   const searchSale = async () => {
-    navigate(`/search?searchText=${searchText}&listingType=sale&page=1`);
+    let searchTextTransform = searchText;
+    if (searchText.toLowerCase() === "provo") {
+      setSearchText("providenciales");
+      searchTextTransform = "providenciales";
+    }
+
+    navigate(`/search/sale?searchText=${searchTextTransform}&page=0`);
   };
 
   console.log(searchParams);
@@ -43,8 +53,8 @@ const Home = props => {
           </div>
         </div>
         <div className="suggestions text-center text-primary mt-5">
-          Recent properties for rent <br />
-          Recent properties for sale
+          Recent properties for rent {"(dummy)"} <br />
+          Recent properties for sale {"(dummy)"}
           <br />
         </div>
       </div>

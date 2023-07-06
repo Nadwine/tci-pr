@@ -20,7 +20,7 @@ function Navbar() {
       <div className="container-xl">
         {/* <!-- Logo --> */}
         <a className="navbar-brand d-flex flex-row" href="/">
-          <img src="./static/web-logo-white.png" style={{ width: "40px" }} className="h-8" alt="..." />
+          <img src="/static/web-logo-white.png" style={{ width: "40px" }} className="h-8" alt="..." />
           <span className="d-flex align-items-center ps-2" style={{ fontSize: "0.7em" }}>
             TCI Homebase
           </span>

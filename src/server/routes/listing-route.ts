@@ -1,5 +1,6 @@
 import { Request, Response, Express } from "express";
 import AWS, { AWSError } from "aws-sdk";
+import sharp from "sharp";
 import S3 from "aws-sdk/clients/s3";
 import Listing from "../../database/models/listing";
 import Landlord from "../../database/models/landlord";
@@ -78,12 +79,15 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
         const filename = `${new Date().getTime()}_${currentFile.originalname}`;
         const s3Key = `${req.session.user.id}/${newListing.id}/${filename}`;
 
+        // transform to small thumbnail and fix aspect ratio
+        const imageBuffer = await sharp(currentFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer();
+
         await s3Bucket
           .upload(
             {
               Bucket: String(process.env.AWS_S3_BUCKET_NAME),
               Key: s3Key,
-              Body: currentFile.buffer,
+              Body: imageBuffer,
               ACL: "bucket-owner-full-control"
             },
             (err, data) => {
@@ -125,12 +129,12 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
 };
 
 export const searchRentListingRoute = async (req: Request, res: Response) => {
-  const location = String(req.query.location);
+  let location = String(req.query.location);
   const page = Number(req.query.page || "0");
   const resultsPerPage = Number(req.query.resultsPerPage || "10");
 
   try {
-    const listings = await Listing.findAndCountAll({
+    const listingResults = await Listing.findAndCountAll({
       offset: resultsPerPage * page,
       limit: resultsPerPage,
       subQuery: false,
@@ -155,7 +159,7 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
       ],
       order: [["createdAt", "DESC"]]
     });
-    return res.status(200).json(listings.rows);
+    return res.status(200).json(listingResults);
   } catch (err) {
     res.status(500).json({ message: "Internal Server error", err });
   }
