@@ -124,7 +124,10 @@ const SearchRentResults = props => {
           </div>
         ))}
       </div>
-      <div className="paginate col-12 d-flex justify-content-center">
+      <div
+        style={{ zIndex: +1, backgroundColor: "#e5e5e5", borderBottomLeftRadius: "20px", borderBottomRightRadius: "20px" }}
+        className="paginate py-3 col-12 d-flex justify-content-center"
+      >
         <button onClick={() => goToPrevPage()} disabled={page === "0"} className="btn btn-info me-4">
           Perv
         </button>
