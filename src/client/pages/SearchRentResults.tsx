@@ -5,6 +5,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Listing from "../../database/models/listing";
 import FilterSearchMobile from "../components/FilterSearchMobile";
 import FilterSearchDesktop from "../components/FilterSearchDesktop";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBed, faBath } from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
 
 const SearchRentResults = props => {
@@ -86,7 +88,7 @@ const SearchRentResults = props => {
         <FilterSearchMobile setSearchText={setSearchText} searchText={searchText} searchRent={searchRent} />
         <FilterSearchDesktop setSearchText={setSearchText} searchText={searchText} searchRent={searchRent} />
       </div>
-      <div className="list col-12 col-md-8 col-lg-8 col-xl-8">
+      <div style={{ minHeight: "70vh" }} className="list col-12 col-md-8 col-lg-8 col-xl-8">
         {searchResults.map((listing, i) => (
           <div key={i} className="card mb-3">
             <div className="card-body d-flex flex-wrap">
@@ -104,21 +106,27 @@ const SearchRentResults = props => {
                     Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}
                   </div>
                 </div>
-                <div onClick={() => viewProperty(listing.id)} className="location">{listing.Address.settlement.charAt(0).toUpperCase() + listing.Address.settlement.slice(1)}</div>
+                <div onClick={() => viewProperty(listing.id)} className="location pt-4">
+                  {listing.Address.settlement.charAt(0).toUpperCase() + listing.Address.settlement.slice(1)}
+                </div>
 
-                <div className="foot d-flex flex-row">
+                <div className="foot d-flex flex-row pt-2">
                   <div onClick={() => viewProperty(listing.id)} className="col-10">
                     <div className="beds pt-5">
-                      <i className="bi-door-closed pe-1" />
+                      <FontAwesomeIcon className="pe-1" icon={faBed} />
                       Rooms {listing.PropertyForRent.numOfRooms}
                     </div>
                     <div className="beds pt-2">
-                      <i className="bi-water pe-1" />
+                      <FontAwesomeIcon className="pe-1" icon={faBath} />
                       Baths {listing.PropertyForRent.numOfRooms}
                     </div>
                   </div>
                   <div className="col-2 pt-5 mt-2 float-end">
-                    <span onClick={() => console.log("landlord")} className="btn btn-link bg-secondary rounded-circle text-black fs-5" style={{ width: "45px", height: "45px" }}>
+                    <span
+                      onClick={() => console.log("landlord")}
+                      className="btn btn-link bg-secondary rounded-circle text-black fs-5"
+                      style={{ width: "45px", height: "45px" }}
+                    >
                       {listing.Landlord.User?.email?.charAt(0)}
                     </span>
                   </div>

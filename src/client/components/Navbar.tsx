@@ -42,8 +42,8 @@ function Navbar() {
         <div className={dynamicClassName} id="navbarCollapse">
           {/* <!-- Nav --> */}
           <div className="navbar-nav mx-lg-auto">
-            <a className="nav-item nav-link active" href="#" aria-current="page">
-              Home
+            <a className="nav-item nav-link active" href="/" aria-current="page">
+              Search
             </a>
             <a className="nav-item nav-link" href="#">
               Product
@@ -51,21 +51,21 @@ function Navbar() {
             <a className="nav-item nav-link" href="#">
               Features
             </a>
-            <a className="nav-item nav-link" href="#">
-              Pricing
+            <a className="nav-item nav-link" href="/help">
+              Help
             </a>
           </div>
           {/* <!-- Right navigation --> */}
           {user && (
             <ul className="nav navbar-nav ms-auto pe-2">
-              <div className="nav-item nav-link">
+              <div className="nav-item nav-link ms-2">
                 <span className="bi bi-chat-dots-fill fs-5 position-relative">
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
                     3
                   </span>
                 </span>
               </div>
-              <div className="nav-item nav-link mx-3">
+              <div className="nav-item nav-link ms-2 pe-4">
                 <span className="bi bi-bell-fill fs-5 position-relative">
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
                     12
@@ -82,11 +82,19 @@ function Navbar() {
                   }}
                   onBlur={() => setUserDropDownShow(false)}
                 >
-                  {user?.username.charAt(0).toUpperCase()}
+                  {user?.email.charAt(0).toUpperCase()}
                 </span>
                 <div className={`dropdown-menu dropdown-menu-dark ${shouldShowUserDropDown}`} style={{ left: "auto", right: 0 }}>
                   <a href="/my-profile" className="dropdown-item">
                     My Profile
+                  </a>
+                  {user.accountType === "landlord" && (
+                    <a href="/dashboard" className="dropdown-item">
+                      Dashboard
+                    </a>
+                  )}
+                  <a href="/create-listing" className="dropdown-item">
+                    Create Listing
                   </a>
                   <a href="#" className="dropdown-item">
                     Settings

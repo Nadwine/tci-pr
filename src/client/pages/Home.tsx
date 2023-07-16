@@ -34,21 +34,23 @@ const Home = props => {
   return (
     <div className="home justify-content-center">
       <div className="welcome-search">
-        <div className="col-lg-12 text-center mt-5 pt-5">
+        <div className="col-12 text-center mt-5 pt-5">
           <h1>Welcome to TCI HomeBase</h1>
         </div>
-        <div className="col-md-10 mt-5 border border-secondary px-2 pt-3">
-          <div className="input-group mb-3">
-            <input onChange={e => setSearchText(e.target.value)} type="text" className="form-control" placeholder="Search ......" />
-            <div className="input-group-append">
-              <button onClick={() => searchRent()} className="btn btn-dark">
-                Rent
-              </button>
-            </div>
-            <div className="input-group-append">
-              <button onClick={() => searchSale()} className="btn btn-info">
-                Sale
-              </button>
+        <div className="col-12 d-flex justify-content-center">
+          <div className="col-12 col-md-8 mt-5 border border-secondary px-2 pt-3">
+            <div className="input-group mb-3">
+              <input onChange={e => setSearchText(e.target.value)} type="text" className="form-control" placeholder="Search ......" />
+              <div className="input-group-append">
+                <button onClick={() => searchRent()} className="btn btn-dark">
+                  Rent
+                </button>
+              </div>
+              <div className="input-group-append">
+                <button onClick={() => searchSale()} className="btn btn-info">
+                  Sale
+                </button>
+              </div>
             </div>
           </div>
         </div>

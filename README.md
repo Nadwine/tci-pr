@@ -1,13 +1,14 @@
 # Development Setup
 ==================================================
-* Require Node v14
+* Require Node v14.17.6
+
 * Require Local Postgres v12
 
 * run: npm install all dependencies
 
 * .env.development variables are stored on git so postgres user details must match
 
-* run: npm run createDB to create the database
+* run: npm run create-db to create the database
 
 * run: npm run build to create server static files(picture-logos etc) this is needed since server and client run on  the same port
 
@@ -22,4 +23,6 @@ aws ses email are sent to aws-ses folder located on the root of the project. Thi
 
 the ./dist folder is the production bundle of the application
 
-sharp package might error upon nmp install:  npm install --unsafe-perm
+# known issues
+sharp package might error upon nmp install:  "npm install --unsafe-perm" may work
+Also package version and node combo had to be exact node 14.17.6 and sharp 0.29.1

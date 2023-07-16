@@ -133,7 +133,7 @@ export const getRentListingById = async (req: Request, res: Response) => {
 
   try {
     const listing = await Listing.findByPk(id, {
-      include: [{ model: Address }, { model: PropertyForRent }, { model: ListingMedia }, { model: Landlord, include: [User] }]
+      include: [{ model: Address }, { model: PropertyForRent }, { model: ListingMedia, order: [["id", "ASC"]] }, { model: Landlord, include: [User] }]
     });
 
     return res.status(200).json(listing);
@@ -169,7 +169,7 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
           }
         },
         { model: PropertyForRent },
-        { model: ListingMedia },
+        { model: ListingMedia, order: [["id", "ASC"]] },
         { model: Landlord, include: [User] }
       ],
       order: [["createdAt", "DESC"]]
