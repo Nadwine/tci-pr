@@ -4,12 +4,14 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import islands from "../../utils/islandsData.json";
 import { useNavigate } from "react-router-dom";
+import { cloneDeep } from "lodash";
 
 const axiosConfig = { headers: { "Content-Type": "multipart/form-data" } };
 
 const CreateRentForm = props => {
   const navigate = useNavigate();
   const [fileBlobRef, setFileBlobRef] = useState<string[]>([]);
+  const [questionBeingTyped, setQuestionBeingTyped] = useState("");
 
   const { values, errors, touched, handleSubmit, handleChange, handleBlur, setFieldValue } = useFormik({
     initialValues: {
@@ -20,7 +22,10 @@ const CreateRentForm = props => {
       maxTenant: "",
       rentAmount: "",
       sqFt: "",
-      billsIncluded: false,
+      internetIncluded: false,
+      electricityIncluded: false,
+      waterIncluded: false,
+      isFurnished: false,
       availability: "",
       addressLine1: "",
       addressLine2: "",
@@ -28,9 +33,11 @@ const CreateRentForm = props => {
       city: "",
       postcode: "",
       country: "",
-      files: [] as File[]
+      files: [] as File[],
+      questions: [] as string[]
     },
     async onSubmit(formValues, formikHelpers) {
+      const billsIncluded = formValues.electricityIncluded || formValues.internetIncluded || formValues.waterIncluded;
       const body = {
         files: formValues.files,
         title: formValues.title,
@@ -40,14 +47,19 @@ const CreateRentForm = props => {
         maxTenant: formValues.maxTenant,
         rentAmount: formValues.rentAmount,
         sqFt: formValues.sqFt,
-        billsIncluded: formValues.billsIncluded,
+        billsIncluded: billsIncluded,
+        internetIncluded: formValues.internetIncluded,
+        electricityIncluded: formValues.electricityIncluded,
+        waterIncluded: formValues.waterIncluded,
+        isFurnished: formValues.isFurnished,
         availability: formValues.availability,
         addressLine1: formValues.addressLine1,
         addressLine2: formValues.addressLine2,
         settlement: formValues.settlement,
         city: formValues.city,
         postcode: "TKCA 1ZZ",
-        country: "Turks & Caicos Islands"
+        country: "Turks & Caicos Islands",
+        questions: JSON.stringify(formValues.questions)
       };
       await axios
         .post("/api/listing/rent/create", body, axiosConfig)
@@ -64,12 +76,26 @@ const CreateRentForm = props => {
     setFileBlobRef(fileBlobs);
   };
 
+  const appendQuestion = () => {
+    if (questionBeingTyped !== "") {
+      const newQuestions = [...values.questions, questionBeingTyped];
+      setFieldValue("questions", newQuestions);
+      setQuestionBeingTyped("");
+    }
+  };
+
+  const removeQuestion = (index: number) => {
+    const newQuestions = cloneDeep(values.questions);
+    newQuestions.splice(index, 1);
+    setFieldValue("questions", newQuestions);
+  };
+
   const selectedIsland = islands.find(i => i.name.toLowerCase() === values.city);
 
   return (
     <div className="create-rent-form d-flex justify-content-center row">
       <div className="col-md-6 col-sm-10 col-lg-5">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} onKeyPress={e => e.key === "Enter" && e.preventDefault()} onKeyUp={e => e.key === "Enter" && e.preventDefault()}>
           <h5 className="text-center pb-4 pt-3">Add property for rent</h5>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
@@ -149,7 +175,14 @@ const CreateRentForm = props => {
             <label htmlFor="description" className="form-label">
               Description
             </label>
-            <textarea name="description" value={values.description} onChange={handleChange} className="form-control" placeholder="Additional details" />
+            <textarea
+              name="description"
+              value={values.description}
+              onChange={handleChange}
+              onKeyUp={e => e.key === "Enter" && setFieldValue("description", values.description + "\r\n")}
+              className="form-control"
+              placeholder="Additional details"
+            />
           </div>
           <div className="mb-3">
             <label htmlFor="availability" className="form-label">
@@ -165,11 +198,35 @@ const CreateRentForm = props => {
             <input name="rentAmount" value={values.rentAmount} onChange={handleChange} type="number" className="form-control" />
             <span className="input-group-text">.00</span>
           </div>
+          <div className="inclusions pt-4">
+            <p className="fs-5 w-100 pt-2 mb-1">Inclusions</p>
+          </div>
           <div className="mb-3 form-check">
-            <input name="billsIncluded" type="checkbox" className="form-check-input" onChange={handleChange} />
-            <label className="form-check-label" htmlFor="billsIncluded">
-              Bills Included
+            <input name="internetIncluded" value={String(values.internetIncluded)} type="checkbox" className="form-check-input" onChange={handleChange} />
+            <label className="form-check-label" htmlFor="internetIncluded">
+              Internet Included
             </label>
+          </div>
+          <div className="mb-3 form-check">
+            <input name="electricityIncluded" value={String(values.electricityIncluded)} type="checkbox" className="form-check-input" onChange={handleChange} />
+            <label className="form-check-label" htmlFor="electricityIncluded">
+              Electricity Included
+            </label>
+          </div>
+          <div className="mb-3 form-check">
+            <input name="waterIncluded" value={String(values.waterIncluded)} type="checkbox" className="form-check-input" onChange={handleChange} />
+            <label className="form-check-label" htmlFor="waterIncluded">
+              Water Included
+            </label>
+          </div>
+          <div className="mb-5 form-check">
+            <input name="isFurnished" value={String(values.isFurnished)} type="checkbox" className="form-check-input" onChange={handleChange} />
+            <label className="form-check-label" htmlFor="isFurnished">
+              Furnished
+            </label>
+          </div>
+          <div className="inclusions">
+            <p className="fs-5 w-100 pt-2 mb-1">Photos/Videos</p>
           </div>
           <div className="row ms-1 me-1 images-container rounded-3" style={{ backgroundColor: "#80808030", minHeight: 100 }}>
             {values.files.length === 0 && <div className="w-100 text-center pt-4 text-secondary">No Files</div>}
@@ -239,7 +296,36 @@ const CreateRentForm = props => {
               multiple
             />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <div className="mb-3">
+            <p className="fs-5 w-100 mb-1">Questions</p>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="sqFt" className="form-label text-muted">
+              What would you like to ask your tenant?
+            </label>
+            <div className="d-flex flex-row justify-content-between">
+              <input
+                name="question"
+                value={questionBeingTyped}
+                onChange={e => setQuestionBeingTyped(e.target.value)}
+                type="text"
+                className="form-control w-75"
+                onKeyUp={e => e.key === "Enter" && appendQuestion()}
+              />
+              <button type="button" onClick={() => appendQuestion()} className="btn btn-info mt-2 float-end">
+                <i className="bi bi-plus" />
+              </button>
+            </div>
+          </div>
+          {values.questions.map((q, i) => (
+            <div key={i} className="row ms-1 me-1 images-container rounded-3 mb-2" style={{ backgroundColor: "rgba(128, 128, 128, 0.19)" }}>
+              <div className="w-100 text-center text-secondary">
+                {q}
+                <i className="bi bi-x-circle-fill text-danger float-end point" onClick={() => removeQuestion(i)} />
+              </div>
+            </div>
+          ))}
+          <button type="submit" id="create-rent-submit-button" className="btn btn-primary" style={{ marginTop: "100px" }}>
             Submit
           </button>
         </form>

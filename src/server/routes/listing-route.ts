@@ -11,6 +11,7 @@ import ListingMedia from "../../database/models/listing_media";
 import { Op } from "sequelize";
 import PropertyForSale from "../../database/models/property_for_sale";
 import User from "../../database/models/user";
+import ListingQuestion from "../../database/models/listing_question";
 
 const s3Bucket = new S3({
   s3ForcePathStyle: true,
@@ -29,6 +30,10 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
     maxTenant,
     sqFt,
     billsIncluded,
+    internetIncluded,
+    electricityIncluded,
+    waterIncluded,
+    isFurnished,
     availability,
     addressLine1,
     addressLine2,
@@ -39,8 +44,15 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
     rentAmount
   } = req.body;
   const files = req.files ?? [];
+  const questions: string[] = JSON.parse(req.body.questions);
 
   if (req.session.user?.accountType !== "landlord") return res.status(401).json({ message: "Unauthorized" });
+
+  let createdListingId: number | null = null;
+  let createdAddressId: number | null = null;
+  let createdPropertyForRentId: number | null = null;
+  let createdQuestionIds: number[] = [];
+  let createdMediaIds: number[] = [];
   try {
     const landlord = await Landlord.findOne({ where: { userId: req.session.user?.id } });
 
@@ -51,8 +63,9 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
         listingType: ListingTypeEnum.RENT,
         landlordId: landlord!.id
       });
+      createdListingId = newListing.id;
 
-      await Address.create({
+      const newAddress = await Address.create({
         addressLine1: addressLine1,
         addressLine2: addressLine2,
         settlement: settlement,
@@ -61,17 +74,34 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
         country: country,
         listingId: newListing!.id
       });
+      createdAddressId = newAddress.id;
 
-      await PropertyForRent.create({
+      const newPropertyForRent = await PropertyForRent.create({
         numOfRooms: numOfRooms,
         numOfBathRooms: numOfBathRooms,
         maxTenant: maxTenant,
         sqFt: sqFt,
         billsIncluded: billsIncluded,
+        internetIncluded: internetIncluded,
+        electricityIncluded: electricityIncluded,
+        waterIncluded: waterIncluded,
+        isFurnished: isFurnished,
         availability: availability,
         listingId: newListing.id,
         rentAmount: rentAmount
       });
+      createdPropertyForRentId = newPropertyForRent.id;
+
+      // Creating required questions
+      for (let i = 0; i < Number(questions.length); i++) {
+        const currentQuestion = questions[0];
+
+        const newQuestion = await ListingQuestion.create({
+          text: currentQuestion,
+          listingId: newListing.id
+        });
+        createdQuestionIds.push(newQuestion.id);
+      }
 
       // Uploading files
       for (let i = 0; i < Number(files.length); i++) {
@@ -107,7 +137,7 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
             const format = currentFile.mimetype.split("/")[1];
             const mediaURl = val.Location;
 
-            await ListingMedia.create({
+            const newMedia = await ListingMedia.create({
               mediaType: mediaType,
               fileFormat: format,
               s3BucketKey: val.Key,
@@ -115,6 +145,7 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
               listingId: newListing.id,
               label: currentFile.originalname
             });
+            createdMediaIds.push(newMedia.id);
           });
 
         // 1 Iteration Done
@@ -124,6 +155,31 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
     }
     return res.status(400).json({ result: "error" });
   } catch (err) {
+    // on error delete media
+    for (let i = 0; i < Number(createdMediaIds.length); i++) {
+      const mediaId = createdMediaIds[i];
+      await ListingMedia.destroy({ where: { id: mediaId } });
+    }
+    //on error delete questions
+    for (let i = 0; i < Number(createdQuestionIds.length); i++) {
+      const questionId = createdQuestionIds[i];
+      await ListingQuestion.destroy({ where: { id: questionId } });
+    }
+    //on error delete property
+    if (createdPropertyForRentId) {
+      await PropertyForRent.destroy({ where: { id: createdPropertyForRentId } });
+    }
+
+    //on error delete address
+    if (createdAddressId) {
+      await Address.destroy({ where: { id: createdAddressId } });
+    }
+
+    //on error delete listing
+    if (createdListingId) {
+      await Listing.destroy({ where: { id: createdListingId } });
+    }
+
     return res.status(500).json({ message: "Internal Server error", err });
   }
 };
@@ -133,7 +189,13 @@ export const getRentListingById = async (req: Request, res: Response) => {
 
   try {
     const listing = await Listing.findByPk(id, {
-      include: [{ model: Address }, { model: PropertyForRent }, { model: ListingMedia, order: [["id", "ASC"]] }, { model: Landlord, include: [User] }]
+      include: [
+        { model: Address },
+        { model: PropertyForRent },
+        { model: ListingMedia, order: [["id", "ASC"]] },
+        { model: Landlord, include: [User] },
+        { model: ListingQuestion }
+      ]
     });
 
     return res.status(200).json(listing);

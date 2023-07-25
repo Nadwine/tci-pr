@@ -7,6 +7,7 @@ import Address from "./address";
 import PropertyForRent from "./property_for_rent";
 import PropertyForSale from "./property_for_sale";
 import ListingMedia from "./listing_media";
+import ListingQuestion from "./listing_question";
 
 // for typeScript typing
 export default class Listing extends Model<InferAttributes<Listing>, InferCreationAttributes<Listing>> {
@@ -20,7 +21,8 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare Landlord: CreationOptional<Landlord>;
   declare PropertyForRent: CreationOptional<PropertyForRent>;
   declare PropertyForSale: CreationOptional<PropertyForSale>;
-  declare ListingEnquiries?: CreationOptional<ListingEnquiry>;
+  declare ListingEnquiries?: CreationOptional<ListingEnquiry[]>;
+  declare ListingQuestions?: CreationOptional<ListingQuestion[]>;
   declare ListingMedia: CreationOptional<ListingMedia[]>;
   declare Address: CreationOptional<Address>;
   declare createdAt: CreationOptional<Date>;

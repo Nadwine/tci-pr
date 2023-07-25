@@ -12,6 +12,10 @@ export default class PropertyForRent extends Model<InferAttributes<PropertyForRe
   declare maxTenant: number;
   declare sqFt: number;
   declare billsIncluded: boolean;
+  declare internetIncluded: boolean;
+  declare electricityIncluded: boolean;
+  declare waterIncluded: boolean;
+  declare isFurnished: boolean;
   declare rentAmount: number;
   declare availability: Date;
   declare listingId: number;
@@ -53,6 +57,22 @@ PropertyForRent.init(
       allowNull: false
     },
     billsIncluded: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    internetIncluded: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    electricityIncluded: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    waterIncluded: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    isFurnished: {
       type: DataTypes.BOOLEAN,
       allowNull: false
     },

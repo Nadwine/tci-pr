@@ -7,11 +7,14 @@ import dayjs from "dayjs";
 import { LoadingSpinnerWholePage } from "../components/LoadingSpinners";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBed, faBath, faPerson } from "@fortawesome/free-solid-svg-icons";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 const ViewRentProperty = props => {
   const params = useParams();
   const { id } = params;
   const [listing, setListing] = useState<Listing>();
+  const [showEnquiryModal, setShowEnquiryModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const initialFetch = async () => {
@@ -28,10 +31,40 @@ const ViewRentProperty = props => {
     initialFetch();
   }, []);
 
+  const EnquiryModal = () => {
+    return (
+      <Modal show={showEnquiryModal} onHide={() => setShowEnquiryModal(false)}>
+        <Modal.Header>
+          <Modal.Title>Submit enquiry to landlord</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="d-flex flex-column justify-content-center">
+          {listing?.ListingQuestions &&
+            listing.ListingQuestions.map((q, i) => (
+              <div key={i}>
+                <label>{q.text}</label>
+                <input type="text" className="form-control" />
+              </div>
+            ))}
+          <h6 className="pt-5">Message</h6>
+          <textarea className="form-control" />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowEnquiryModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="info" onClick={() => console.log("Submitting")}>
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
+
   console.log(listing);
   if (loading) return <LoadingSpinnerWholePage />;
   return (
     <div>
+      <EnquiryModal />
       {listing && (
         <div className="card mb-3">
           <div className="card-body d-flex flex-wrap justify-content-center">
@@ -79,23 +112,35 @@ const ViewRentProperty = props => {
                 {listing.description}
               </div>
               <div className="bills text-secondary pt-3">
-                Bills:
-                {listing.PropertyForRent.billsIncluded ? (
-                  <span className="ps-1">
-                    Included <i className="text-success fw-bold bi-check-circle-fill" />
-                  </span>
-                ) : (
-                  <span className="ps-1">
-                    Not Included <i className="text-danger fw-bold bi-x-circle-fill" />
-                  </span>
-                )}{" "}
+                <h6>Inclusions</h6>
+                <div className="furnished">
+                  <span className="pe-2">Furnished:</span>
+                  {listing.PropertyForRent.isFurnished ? <i className=" bi-check-circle" /> : <i className=" bi-x-circle-fill" />}
+                </div>
+                <div className="internet">
+                  <span className="pe-2">Internet:</span>
+                  {listing.PropertyForRent.internetIncluded ? <i className=" bi-check-circle" /> : <i className=" bi-x-circle-fill" />}
+                </div>
+                <div className="water">
+                  <span className="pe-2">Water:</span>
+                  {listing.PropertyForRent.waterIncluded ? <i className=" bi-check-circle" /> : <i className=" bi-x-circle-fill" />}
+                </div>
+                <div className="electricity">
+                  <span className="pe-2">Electricity:</span>
+                  {listing.PropertyForRent.electricityIncluded ? <i className=" bi-check-circle" /> : <i className=" bi-x-circle-fill" />}
+                </div>
               </div>
               <div className="sqft"></div>
               <hr />
               <div className="text-secondary">
-                <h6>Contact Details</h6>
-                <div>Email: {listing.Landlord.User?.email}</div>
-                <div>Phone: {listing.Landlord.phone || "N/A"}</div>
+                <h6>Contact</h6>
+                {/* <div>Email: {listing.Landlord.User?.email}</div>
+                <div>Phone: {listing.Landlord.phone || "N/A"}</div> */}
+              </div>
+              <div className="mt-4">
+                <button onClick={() => setShowEnquiryModal(true)} className="btn btn-success">
+                  Submit online enquiry
+                </button>
               </div>
             </div>
           </div>
