@@ -23,10 +23,10 @@ const CreateListing = props => {
         </button>
       )}
       {!listingType && (
-        <div>
-          Listing Type
-          <button onClick={() => setSearchParams("type=rent")}>Rent</button>
-          <button onClick={() => setSearchParams("type=sale")}>Sale</button>
+        <div className="d-flex flex-column justify-content-center">
+          <h1 className="ls-tight font-bolder d-flex h2 justify-content-center">Listing Type</h1>
+          <button className="btn btn-info" style={{width:'300px', height:'100px', marginBottom:'10px'}} onClick={() => setSearchParams("type=rent")}>Rent</button>
+          <button className="btn btn-info" style={{width:'300px', height:'100px' }} onClick={() => setSearchParams("type=sale")}>Sale</button>
         </div>
       )}
       {listingType && listingType === "sale" && <CreateSaleForm />}
