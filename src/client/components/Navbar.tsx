@@ -16,12 +16,12 @@ function Navbar() {
   const dynamicClassName = isCollapsed ? "collapse navbar-collapse" : "navbar-collapse";
   const shouldShowUserDropDown = isCollapsed === false ? "show" : userDropDownShow ? "show" : "";
   return (
-    <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark px-0">
+    <nav className="navbar navbar-expand-md navbar-light fixed-top bg-light px-0 shadow-sm">
       <div className="container-xl">
         {/* <!-- Logo --> */}
         <a className="navbar-brand d-flex flex-row" href="/">
-          <img src="/static/web-logo-white.png" style={{ width: "40px" }} className="h-8" alt="..." />
-          <span className="d-flex align-items-center ps-2" style={{ fontSize: "0.7em" }}>
+          <img src="/static/web-logo-cyan.png" style={{ width: "40px" }} className="h-8" alt="..." />
+          <span className="d-flex align-items-center ps-2" style={{ fontSize: "0.7em", fontWeight: "bold" }}>
             TCI Homebase
           </span>
         </a>
@@ -42,15 +42,15 @@ function Navbar() {
         <div className={dynamicClassName} id="navbarCollapse">
           {/* <!-- Nav --> */}
           <div className="navbar-nav mx-lg-auto">
-            <a className="nav-item nav-link active" href="/" aria-current="page">
+            <a className="nav-item nav-link active" href="/search/rent" aria-current="page">
               Search
             </a>
-            <a className="nav-item nav-link" href="#">
+            {/*<a className="nav-item nav-link" href="#">
               Product
             </a>
             <a className="nav-item nav-link" href="#">
               Features
-            </a>
+  </a>*/}
             <a className="nav-item nav-link" href="/help">
               Help
             </a>
@@ -74,8 +74,8 @@ function Navbar() {
               </div>
               <li className="nav-item dropdown">
                 <span
-                  className="btn btn-link nav-link bg-light rounded-circle text-black fs-5"
-                  style={{ width: "45px", height: "45px" }}
+                  className="btn btn-link nav-link rounded-circle text-black fs-5"
+                  style={{ width: "45px", height: "45px", backgroundColor: "darkgrey" }}
                   onClick={() => {
                     setUserDropDownShow(!userDropDownShow);
                     setIsCollapse(true);
@@ -84,7 +84,7 @@ function Navbar() {
                 >
                   {user?.email.charAt(0).toUpperCase()}
                 </span>
-                <div className={`dropdown-menu dropdown-menu-dark ${shouldShowUserDropDown}`} style={{ left: "auto", right: 0 }}>
+                <div className={`dropdown-menu dropdown-menu-light mt-3 ${shouldShowUserDropDown}`} style={{ left: "auto", right: 0 }}>
                   <a href="/my-profile" className="dropdown-item">
                     My Profile
                   </a>
@@ -117,7 +117,7 @@ function Navbar() {
           {/* <!-- Action --> */}
           {!user && (
             <div className="d-flex align-items-lg-center mt-lg-0">
-              <a href="/register" className="btn btn-sm w-full w-lg-auto bg-info">
+              <a href="/register" className="btn btn-sm w-full w-lg-auto bg-primary">
                 Register
               </a>
             </div>

@@ -140,11 +140,11 @@ const SearchRentResults = props => {
         style={{ zIndex: +1, backgroundColor: "#e5e5e5", borderBottomLeftRadius: "20px", borderBottomRightRadius: "20px" }}
         className="paginate py-3 col-12 d-flex justify-content-center"
       >
-        <button onClick={() => goToPrevPage()} disabled={page === "0"} className="btn btn-info me-4">
+        <button onClick={() => goToPrevPage()} disabled={page === "0"} className="btn btn-primary me-4">
           Perv
         </button>
         Page {page}
-        <button onClick={() => goToNextPage()} className="btn btn-info ms-4">
+        <button onClick={() => goToNextPage()} className="btn btn-primary ms-4">
           Next
         </button>
       </div>

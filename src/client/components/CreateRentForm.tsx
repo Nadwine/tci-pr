@@ -96,7 +96,7 @@ const CreateRentForm = props => {
     <div className="create-rent-form d-flex justify-content-center row">
       <div className="col-md-6 col-sm-10 col-lg-5">
         <form onSubmit={handleSubmit} onKeyPress={e => e.key === "Enter" && e.preventDefault()} onKeyUp={e => e.key === "Enter" && e.preventDefault()}>
-          <h5 className="text-center pb-4 pt-3">Add property for rent</h5>
+          <h4 className="text-center pb-4 pt-3">Add property for rent</h4>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
               Island
@@ -112,7 +112,7 @@ const CreateRentForm = props => {
               ))}
             </select>
           </div>
-          {values.city && (
+          {values.city && selectedIsland && selectedIsland?.settlements.length > 1 && (
             <div className="mb-3">
               <label htmlFor="title" className="form-label">
                 Settlement
@@ -232,7 +232,12 @@ const CreateRentForm = props => {
             {values.files.length === 0 && <div className="w-100 text-center pt-4 text-secondary">No Files</div>}
             {values.files.length > 0 &&
               fileBlobRef.map((blob, index) => (
-                <div className="image-box d-flex" data-file-index={index} key={index} style={{ width: 200 }}>
+                <div
+                  className="image-box d-flex"
+                  data-file-index={index}
+                  key={index}
+                  style={{ maxWidth: "100px", maxHeight: "100px", overflow: "scroll", marginLeft: "3px", marginBottom: "4px" }}
+                >
                   <div className="image">
                     <button
                       className="position-absolute btn-sm btn-danger"
@@ -248,7 +253,7 @@ const CreateRentForm = props => {
                       <i className=" bi-x-lg" />
                     </button>
                     {values.files[index]?.type.includes("image") && (
-                      <img
+                      <img className="letterbox-img"
                         data-file-index={index}
                         width={150}
                         draggable
@@ -261,7 +266,8 @@ const CreateRentForm = props => {
                       />
                     )}
                     {values.files[index]?.type.includes("video") && (
-                      <video
+                      //TODO: video cannot exit, the mouse captures play btn
+                      <video className="letterbox-img"
                         data-file-index={index}
                         width={150}
                         controls
@@ -303,7 +309,7 @@ const CreateRentForm = props => {
             <label htmlFor="sqFt" className="form-label text-muted">
               What would you like to ask your tenant?
             </label>
-            <div className="d-flex flex-row justify-content-between">
+            <div className="d-flex flex-row">
               <input
                 name="question"
                 value={questionBeingTyped}
@@ -312,14 +318,18 @@ const CreateRentForm = props => {
                 className="form-control w-75"
                 onKeyUp={e => e.key === "Enter" && appendQuestion()}
               />
-              <button type="button" onClick={() => appendQuestion()} className="btn btn-info mt-2 float-end">
-                <i className="bi bi-plus" />
+              <button type="button" onClick={() => appendQuestion()} className="btn btn-primary mt-2 float-end" style={{marginLeft:'10px'}}>
+                <i className="bi bi-plus" /> Add
               </button>
             </div>
           </div>
           {values.questions.map((q, i) => (
-            <div key={i} className="row ms-1 me-1 images-container rounded-3 mb-2" style={{ backgroundColor: "rgba(128, 128, 128, 0.19)" }}>
-              <div className="w-100 text-center text-secondary">
+            <div
+              key={i}
+              className="row ms-1 me-1 images-container rounded-3 mb-2 align-content-center shadow-sm"
+              style={{ backgroundColor: "white", height: "40px" }}
+            >
+              <div className="w-100 text-muted">
                 {q}
                 <i className="bi bi-x-circle-fill text-danger float-end point" onClick={() => removeQuestion(i)} />
               </div>

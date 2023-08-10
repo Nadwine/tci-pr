@@ -184,6 +184,159 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
   }
 };
 
+export const createSaleListingRoute = async (req: Request, res: Response) => {
+  const {
+    title,
+    description,
+    numOfRooms,
+    numOfBathRooms,
+    sqFt,
+    isFurnished,
+    availability,
+    addressLine1,
+    addressLine2,
+    settlement,
+    city,
+    postcode,
+    country,
+    saleAmount
+  } = req.body;
+  const files = req.files ?? [];
+  const questions: string[] = JSON.parse(req.body.questions);
+
+  if (req.session.user?.accountType !== "landlord") return res.status(401).json({ message: "Unauthorized" });
+
+  let createdListingId: number | null = null;
+  let createdAddressId: number | null = null;
+  let createdPropertyForSaleId: number | null = null;
+  let createdQuestionIds: number[] = [];
+  let createdMediaIds: number[] = [];
+  try {
+    const landlord = await Landlord.findOne({ where: { userId: req.session.user?.id } });
+
+    if (landlord) {
+      const newListing = await Listing.create({
+        title: title,
+        description: description,
+        listingType: ListingTypeEnum.SALE,
+        landlordId: landlord!.id
+      });
+      createdListingId = newListing.id;
+
+      const newAddress = await Address.create({
+        addressLine1: addressLine1,
+        addressLine2: addressLine2,
+        settlement: settlement,
+        city: city,
+        postcode: postcode,
+        country: country,
+        listingId: newListing!.id
+      });
+      createdAddressId = newAddress.id;
+
+      const newPropertyForSale = await PropertyForSale.create({
+        numOfRooms: numOfRooms,
+        numOfBathRooms: numOfBathRooms,
+        sqFt: sqFt,
+        isFurnished: isFurnished,
+        availability: availability,
+        listingId: newListing.id,
+        saleAmount: saleAmount
+      });
+      createdPropertyForSaleId = newPropertyForSale.id;
+
+      // Creating required questions
+      for (let i = 0; i < Number(questions.length); i++) {
+        const currentQuestion = questions[0];
+
+        const newQuestion = await ListingQuestion.create({
+          text: currentQuestion,
+          listingId: newListing.id
+        });
+        createdQuestionIds.push(newQuestion.id);
+      }
+
+      // Uploading files
+      for (let i = 0; i < Number(files.length); i++) {
+        const currentFile: Express.Multer.File = files[i];
+        const filename = `${new Date().getTime()}_${currentFile.originalname}`;
+        const s3Key = `${req.session.user.id}/${newListing.id}/${filename}`;
+
+        // transform to small thumbnail and fix aspect ratio
+        const imageBuffer = await sharp(currentFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer();
+
+        await s3Bucket
+          .upload(
+            {
+              Bucket: String(process.env.AWS_S3_BUCKET_NAME),
+              Key: s3Key,
+              Body: imageBuffer,
+              ACL: "bucket-owner-full-control"
+            },
+            (err, data) => {
+              if (data) {
+                // successUploadResult.push(data.ETag);
+              }
+            }
+          )
+          .on("httpUploadProgress", function (evt) {
+            // console.log(evt)
+            // Emit Here your events (send this to a socket io id then client can listen in to the socket for upload progress)
+            // then destroy the socket when upload is complete
+          })
+          .promise()
+          .then(async (val: S3.ManagedUpload.SendData) => {
+            const mediaType = currentFile.mimetype.split("/")[0];
+            const format = currentFile.mimetype.split("/")[1];
+            const mediaURl = val.Location;
+
+            const newMedia = await ListingMedia.create({
+              mediaType: mediaType,
+              fileFormat: format,
+              s3BucketKey: val.Key,
+              mediaUrl: mediaURl,
+              listingId: newListing.id,
+              label: currentFile.originalname
+            });
+            createdMediaIds.push(newMedia.id);
+          });
+
+        // 1 Iteration Done
+      }
+
+      return res.status(200).json({ result: "success" });
+    }
+    return res.status(400).json({ result: "error" });
+  } catch (err) {
+    // on error delete media
+    for (let i = 0; i < Number(createdMediaIds.length); i++) {
+      const mediaId = createdMediaIds[i];
+      await ListingMedia.destroy({ where: { id: mediaId } });
+    }
+    //on error delete questions
+    for (let i = 0; i < Number(createdQuestionIds.length); i++) {
+      const questionId = createdQuestionIds[i];
+      await ListingQuestion.destroy({ where: { id: questionId } });
+    }
+    //on error delete property
+    if (createdPropertyForSaleId) {
+      await PropertyForSale.destroy({ where: { id: createdPropertyForSaleId } });
+    }
+
+    //on error delete address
+    if (createdAddressId) {
+      await Address.destroy({ where: { id: createdAddressId } });
+    }
+
+    //on error delete listing
+    if (createdListingId) {
+      await Listing.destroy({ where: { id: createdListingId } });
+    }
+
+    return res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
 export const getRentListingById = async (req: Request, res: Response) => {
   const id = req.params.id;
 
@@ -290,7 +443,7 @@ export const searchSaleListingRoute = async (req: Request, res: Response) => {
           }
         },
         { model: PropertyForRent },
-        { model: ListingMedia },
+        { model: ListingMedia, order: [["id", "ASC"]] },
         { model: Landlord, include: [User] }
       ],
       order: [["createdAt", "DESC"]]
@@ -298,7 +451,7 @@ export const searchSaleListingRoute = async (req: Request, res: Response) => {
 
     const count = await Listing.count({
       where: {
-        listingType: ListingTypeEnum.RENT
+        listingType: ListingTypeEnum.SALE
       },
       include: [
         {

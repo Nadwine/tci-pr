@@ -3,10 +3,7 @@ import sequelize from "../sequelize-connection";
 import Listing from "./listing";
 
 // for typeScript typing
-export default class PropertyForSale extends Model<
-  InferAttributes<PropertyForSale>,
-  InferCreationAttributes<PropertyForSale>
-> {
+export default class PropertyForSale extends Model<InferAttributes<PropertyForSale>, InferCreationAttributes<PropertyForSale>> {
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
@@ -14,7 +11,10 @@ export default class PropertyForSale extends Model<
   declare numOfRooms: number;
   declare numOfBathRooms: number;
   declare availability: Date;
-  declare PropertyForSale: CreationOptional<PropertyForSale>;
+  declare isFurnished: boolean;
+  declare saleAmount: number;
+  declare listingId: number;
+  declare Listing: CreationOptional<Listing>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -42,6 +42,14 @@ PropertyForSale.init(
       allowNull: false
     },
     numOfBathRooms: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    isFurnished: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    saleAmount: {
       type: DataTypes.INTEGER,
       allowNull: false
     }

@@ -48,7 +48,7 @@ const RegisterConfirm = () => {
             placeholder="email"
             onChange={e => setEmailResender(e.target.value)}
           />
-          <button onClick={() => requestNewVerifyLink()} className="btn btn-info ms-3">
+          <button onClick={() => requestNewVerifyLink()} className="btn btn-primary ms-3">
             Resend
           </button>
         </div>
