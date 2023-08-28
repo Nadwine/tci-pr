@@ -4,23 +4,20 @@ import User from "./user";
 import Listing from "./listing";
 
 // for typeScript typing
-export default class ListingEnquiry extends Model<
-  InferAttributes<ListingEnquiry>,
-  InferCreationAttributes<ListingEnquiry>
-> {
+export default class EnquiryConversation extends Model<InferAttributes<EnquiryConversation>, InferCreationAttributes<EnquiryConversation>> {
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
-  declare userId: number;
   declare listingId: number;
-  declare message: string;
+  declare userId: number;
+  declare intro_message: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
 
 // allowNull defaults to true if not set
 // const User = sequelize.define('User', {
-ListingEnquiry.init(
+EnquiryConversation.init(
   //@ts-ignore
   {
     // Model attributes are defined here
@@ -29,7 +26,7 @@ ListingEnquiry.init(
       autoIncrement: true,
       primaryKey: true
     },
-    message: {
+    intro_message: {
       type: DataTypes.TEXT,
       allowNull: false
     }
@@ -37,13 +34,13 @@ ListingEnquiry.init(
   {
     // Other model options go here
     sequelize,
-    tableName: "listing_enquires",
+    tableName: "enquiry_conversation",
     timestamps: true,
-    modelName: "ListingEnquiry"
+    modelName: "EnquiryConversation"
   }
 );
 
-ListingEnquiry.belongsTo(User, { foreignKey: "userId" });
-User.hasMany(ListingEnquiry, { foreignKey: "userId" }); // reverse association
-ListingEnquiry.belongsTo(Listing, { foreignKey: "listingId" });
-Listing.hasMany(ListingEnquiry, { foreignKey: "listingId" }); // reverse association
+EnquiryConversation.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(EnquiryConversation, { foreignKey: "userId" }); // reverse association
+EnquiryConversation.belongsTo(Listing, { foreignKey: "listingId" });
+Listing.hasMany(EnquiryConversation, { foreignKey: "listingId" }); // reverse association

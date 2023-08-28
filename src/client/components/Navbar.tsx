@@ -38,6 +38,22 @@ function Navbar() {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+        <div className="d-flex" style={{ position: "fixed", display: "flex !important", top: "10px", right: "70px" }}>
+          {/* <div className="nav-item nav-link  ms-2 text-muted">
+            <span className="bi bi-bell-fill fs-5 position-relative">
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
+                12
+              </span>
+            </span>
+          </div> */}
+          <div className="nav-item nav-link pe-4 text-muted">
+            <span className="bi bi-chat-dots-fill fs-5 position-relative">
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
+                3
+              </span>
+            </span>
+          </div>
+        </div>
         {/* <!-- Collapse --> */}
         <div className={dynamicClassName} id="navbarCollapse">
           {/* <!-- Nav --> */}
@@ -58,20 +74,6 @@ function Navbar() {
           {/* <!-- Right navigation --> */}
           {user && (
             <ul className="nav navbar-nav ms-auto pe-2">
-              <div className="nav-item nav-link ms-2">
-                <span className="bi bi-chat-dots-fill fs-5 position-relative">
-                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
-                    3
-                  </span>
-                </span>
-              </div>
-              <div className="nav-item nav-link ms-2 pe-4">
-                <span className="bi bi-bell-fill fs-5 position-relative">
-                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
-                    12
-                  </span>
-                </span>
-              </div>
               <li className="nav-item dropdown">
                 <span
                   className="btn btn-link nav-link rounded-circle text-black fs-5"

@@ -28,15 +28,17 @@ const RegisterConfirm = () => {
   };
 
   const renderSentMessage = true; // registerConfirmResult !== 'failed' || emailSubmitted === true
+
+  // TODO: check first if email exist then rate limit the re-send endpoint to avoid spam email
   return (
     <div>
       <h2>Almost there!</h2>
       <br />
       <h2>{"Let's"} confirm your email address.</h2>
       <br />
-      {renderSentMessage && `A link has been sent to your inbox please verify your account: ${""}`}
+      {renderSentMessage && `A link has been sent to your inbox please verify your account ${""}`}
 
-      <div>
+      <div className="pt-5 mt-4">
         <br />
         Token not working? Enter email to resend
         <br />

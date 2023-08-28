@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "../../database/models/user";
 
-import ListingEnquiry from "../../database/models/listing_enquiry";
+import EnquiryConversation from "../../database/models/enquiry_conversation";
 import { AccountTypeEnum, ReactRoutesEnum } from "../../../types/enums";
 import { Op } from "sequelize";
 import { ensureAuthentication, ensureLogout } from "../middlewareFunctions/auth-middleware";

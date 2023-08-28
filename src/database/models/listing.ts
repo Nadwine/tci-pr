@@ -1,6 +1,6 @@
 import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
 import sequelize from "../sequelize-connection";
-import ListingEnquiry from "./listing_enquiry";
+import EnquiryConversation from "./enquiry_conversation";
 import Landlord from "./landlord";
 import { ListingTypeEnum } from "../../../types/enums";
 import Address from "./address";
@@ -21,7 +21,7 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare Landlord: CreationOptional<Landlord>;
   declare PropertyForRent: CreationOptional<PropertyForRent>;
   declare PropertyForSale: CreationOptional<PropertyForSale>;
-  declare ListingEnquiries?: CreationOptional<ListingEnquiry[]>;
+  declare ListingEnquiries?: CreationOptional<EnquiryConversation[]>;
   declare ListingQuestions?: CreationOptional<ListingQuestion[]>;
   declare ListingMedia: CreationOptional<ListingMedia[]>;
   declare Address: CreationOptional<Address>;

@@ -94,7 +94,7 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
 
       // Creating required questions
       for (let i = 0; i < Number(questions.length); i++) {
-        const currentQuestion = questions[0];
+        const currentQuestion = questions[i];
 
         const newQuestion = await ListingQuestion.create({
           text: currentQuestion,
@@ -247,7 +247,7 @@ export const createSaleListingRoute = async (req: Request, res: Response) => {
 
       // Creating required questions
       for (let i = 0; i < Number(questions.length); i++) {
-        const currentQuestion = questions[0];
+        const currentQuestion = questions[i];
 
         const newQuestion = await ListingQuestion.create({
           text: currentQuestion,

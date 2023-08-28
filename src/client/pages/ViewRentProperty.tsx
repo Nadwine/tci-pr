@@ -1,14 +1,17 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router";
 import Listing from "../../database/models/listing";
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 import { LoadingSpinnerWholePage } from "../components/LoadingSpinners";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBed, faBath, faPerson } from "@fortawesome/free-solid-svg-icons";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 const ViewRentProperty = props => {
   const params = useParams();
@@ -16,6 +19,9 @@ const ViewRentProperty = props => {
   const [listing, setListing] = useState<Listing>();
   const [showEnquiryModal, setShowEnquiryModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const enquiryRef = useRef<HTMLFormElement>(null);
+  const user = useSelector((root: RootState) => root.auth.user);
+  const isOwner = user?.id === listing?.landlordId;
 
   const initialFetch = async () => {
     const res = await axios.get(`/api/listing/rent/${id}`);
@@ -27,6 +33,18 @@ const ViewRentProperty = props => {
     }
   };
 
+  const submitEnquiry = async (body: object) => {
+    if (!listing) return;
+
+    const res = await axios.post(`/api/enquiry/${listing.id}`, body);
+    if (res.status === 200) {
+      setShowEnquiryModal(false);
+      toast.success("Enquiry Sent", { theme: "colored" });
+    } else {
+      toast.error("Failed to send enquiry. Try again", { theme: "colored" });
+    }
+  };
+
   useEffect(() => {
     initialFetch();
   }, []);
@@ -34,28 +52,41 @@ const ViewRentProperty = props => {
   const EnquiryModal = () => {
     return (
       <Modal show={showEnquiryModal} onHide={() => setShowEnquiryModal(false)}>
-        <Modal.Header>
-          <Modal.Title>Submit enquiry to landlord</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="d-flex flex-column justify-content-center">
-          {listing?.ListingQuestions &&
-            listing.ListingQuestions.map((q, i) => (
-              <div key={i}>
-                <label>{q.text}</label>
-                <input type="text" className="form-control" />
-              </div>
-            ))}
-          <h6 className="pt-5">Message</h6>
-          <textarea className="form-control" />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowEnquiryModal(false)}>
-            Cancel
-          </Button>
-          <Button variant="info" onClick={() => console.log("Submitting")}>
-            Submit
-          </Button>
-        </Modal.Footer>
+        <form
+          ref={enquiryRef}
+          onSubmit={e => {
+            e.preventDefault();
+            const formData = new FormData(enquiryRef.current || undefined);
+            const body = {};
+            for (var pair of formData.entries()) {
+              body[pair[0]] = pair[1];
+            }
+            submitEnquiry(body);
+          }}
+        >
+          <Modal.Header>
+            <Modal.Title>Submit enquiry to landlord</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="d-flex flex-column justify-content-center">
+            {listing?.ListingQuestions &&
+              listing.ListingQuestions.map((q, i) => (
+                <div key={i}>
+                  <label>{q.text}</label>
+                  <input required name={q.text} type="text" className="form-control" />
+                </div>
+              ))}
+            <h6 className="pt-5">Message</h6>
+            <textarea name="message" required className="form-control" />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowEnquiryModal(false)}>
+              Cancel
+            </Button>
+            <Button variant="info" type="submit">
+              Submit
+            </Button>
+          </Modal.Footer>
+        </form>
       </Modal>
     );
   };
@@ -131,17 +162,21 @@ const ViewRentProperty = props => {
                 </div>
               </div>
               <div className="sqft"></div>
-              <hr />
-              <div className="text-secondary">
-                <h6>Contact</h6>
-                {/* <div>Email: {listing.Landlord.User?.email}</div>
-                <div>Phone: {listing.Landlord.phone || "N/A"}</div> */}
-              </div>
-              <div className="mt-4">
-                <button onClick={() => setShowEnquiryModal(true)} className="btn btn-success">
-                  Submit online enquiry
-                </button>
-              </div>
+              {!isOwner && (
+                <>
+                  <hr />
+                  <div className="text-secondary">
+                    <h6>Contact</h6>
+                    {/* <div>Email: {listing.Landlord.User?.email}</div>
+                  <div>Phone: {listing.Landlord.phone || "N/A"}</div> */}
+                  </div>
+                  <div className="mt-4">
+                    <button onClick={() => setShowEnquiryModal(true)} className="btn btn-success">
+                      Submit online enquiry
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

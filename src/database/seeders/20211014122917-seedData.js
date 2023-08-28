@@ -12,62 +12,26 @@ module.exports = {
      * }], {});
      */
     try {
-      await queryInterface.bulkInsert(
-        "users",
-        [
-          {
-            id: 1,
-            username: "user1",
-            password: "$2b$10$cqpR.FhqULDRtHEA0NHmq.PDcKP2YpslHtDV9hEjp5/cc8dwTu1Fa",
-            email: "mail1@mail.com",
-            company: "corp",
-            salt: 10,
-            createdAt: "2021-05-28T15:36:56.200",
-            updatedAt: "2021-08-28T13:40:02.200"
-          },
-          {
-            id: 2,
-            username: "user2",
-            password: "$2b$10$cqpR.FhqULDRtHEA0NHmq.PDcKP2YpslHtDV9hEjp5/cc8dwTu1Fa",
-            email: "mail2@mail.com",
-            company: "corp",
-            salt: 10,
-            createdAt: "2021-05-28T15:36:56.200",
-            updatedAt: "2021-08-28T13:40:02.200"
-          },
-          {
-            id: 3,
-            username: "user3",
-            password: "$2b$10$cqpR.FhqULDRtHEA0NHmq.PDcKP2YpslHtDV9hEjp5/cc8dwTu1Fa",
-            email: "mail3@mail.com",
-            company: "corp",
-            salt: 10,
-            createdAt: "2021-05-28T15:36:56.200",
-            updatedAt: "2021-08-28T13:40:02.200"
-          },
-          {
-            id: 4,
-            username: "user4",
-            password: "$2b$10$cqpR.FhqULDRtHEA0NHmq.PDcKP2YpslHtDV9hEjp5/cc8dwTu1Fa",
-            email: "mail4@mail.com",
-            company: "corp",
-            salt: 10,
-            createdAt: "2021-05-28T15:36:56.200",
-            updatedAt: "2021-08-28T13:40:02.200"
-          },
-          {
-            id: 5,
-            username: "user5",
-            password: "$2b$10$cqpR.FhqULDRtHEA0NHmq.PDcKP2YpslHtDV9hEjp5/cc8dwTu1Fa",
-            email: "mail5@mail.com",
-            company: "corp",
-            salt: 10,
-            createdAt: "2021-05-28T15:36:56.200",
-            updatedAt: "2021-08-28T13:40:02.200"
-          }
-        ],
-        {}
-      );
+      const usersArray = [
+        {
+          id: 1,
+          username: "user1",
+          password: "$2b$10$cqpR.FhqULDRtHEA0NHmq.PDcKP2YpslHtDV9hEjp5/cc8dwTu1Fa",
+          email: "mail1@mail.com",
+          createdAt: "2021-05-28T15:36:56.200",
+          updatedAt: "2021-08-28T13:40:02.200"
+        },
+        {
+          id: 1,
+          username: "user1",
+          password: "$2b$10$cqpR.FhqULDRtHEA0NHmq.PDcKP2YpslHtDV9hEjp5/cc8dwTu1Fa",
+          email: "mail1@mail.com",
+          createdAt: "2021-05-28T15:36:56.200",
+          updatedAt: "2021-08-28T13:40:02.200"
+        }
+      ];
+
+      await queryInterface.bulkInsert("users", usersArray, {});
     } catch (err) {
       // @ts-ignore
       console.log("Error occured while bulk insert Users", err?.original?.message);

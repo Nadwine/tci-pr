@@ -133,7 +133,7 @@ const CreateSaleForm = props => {
           </div>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
-              Title
+              Advert title
             </label>
             <input name="title" value={values.title} onChange={handleChange} type="text" className="form-control" />
           </div>

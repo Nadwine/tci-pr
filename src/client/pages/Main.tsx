@@ -20,6 +20,8 @@ import CookieConsentModal from "../components/CookieConsentModal";
 import { setBrowserInfo, setVisitorId } from "../redux/reducers/authReducer";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import LanguageDetector from "i18next-browser-languagedetector";
 import translations from "../translations/translations";
 import LanguageSelector from "../components/LanguageSelector";
@@ -101,6 +103,7 @@ const Main = () => {
       {showCookieConsent && <CookieConsentModal />}
       <section className="container-fluid" style={{ flex: 1 }}>
         <div className="row">
+          <ToastContainer hideProgressBar />
           <Routes>
             {/* Do not use Raw Strings as routes. Add it to enums stored in ./utils/enums */}
             {/* TODO add all URLS in the enum and replace them on server and client */}

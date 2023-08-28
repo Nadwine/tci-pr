@@ -143,7 +143,7 @@ const CreateRentForm = props => {
           </div>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
-              Title
+              Advert title
             </label>
             <input name="title" value={values.title} onChange={handleChange} type="text" className="form-control" />
           </div>
@@ -253,7 +253,8 @@ const CreateRentForm = props => {
                       <i className=" bi-x-lg" />
                     </button>
                     {values.files[index]?.type.includes("image") && (
-                      <img className="letterbox-img"
+                      <img
+                        className="letterbox-img"
                         data-file-index={index}
                         width={150}
                         draggable
@@ -267,7 +268,8 @@ const CreateRentForm = props => {
                     )}
                     {values.files[index]?.type.includes("video") && (
                       //TODO: video cannot exit, the mouse captures play btn
-                      <video className="letterbox-img"
+                      <video
+                        className="letterbox-img"
                         data-file-index={index}
                         width={150}
                         controls
@@ -318,7 +320,7 @@ const CreateRentForm = props => {
                 className="form-control w-75"
                 onKeyUp={e => e.key === "Enter" && appendQuestion()}
               />
-              <button type="button" onClick={() => appendQuestion()} className="btn btn-primary mt-2 float-end" style={{marginLeft:'10px'}}>
+              <button type="button" onClick={() => appendQuestion()} className="btn btn-primary mt-2 float-end" style={{ marginLeft: "10px" }}>
                 <i className="bi bi-plus" /> Add
               </button>
             </div>

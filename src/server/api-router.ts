@@ -14,6 +14,7 @@ import { ensureAuthentication, ensureLogout } from "./middlewareFunctions/auth-m
 import multer from "multer";
 import dayjs from "dayjs";
 import { createRentListingRoute, createSaleListingRoute, getRentListingById, searchRentListingRoute, searchSaleListingRoute } from "./routes/listing-route";
+import { createEnquiryRoute } from "./routes/enquiry-route";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -41,11 +42,14 @@ router.post("/auth/login", loginUser);
 router.get("/auth/logout", logoutUser);
 
 // /api/listing   routes
-router.post("/listing/rent/create", uploadMemory.any(), createRentListingRoute);
-router.post("/listing/sale/create", uploadMemory.any(), createSaleListingRoute);
+router.post("/listing/rent/create", ensureAuthentication, uploadMemory.any(), createRentListingRoute);
+router.post("/listing/sale/create", ensureAuthentication, uploadMemory.any(), createSaleListingRoute);
 router.get("/listing/rent/search", searchRentListingRoute);
 router.get("/listing/sale/search", searchSaleListingRoute);
 router.get("/listing/rent/:id", getRentListingById);
+
+// /api/enquiry   routes
+router.post("/enquiry/:listingId", ensureAuthentication, createEnquiryRoute);
 
 // api/media  routes
 router.post("/media/attach", ensureAuthentication, uploadMemory.any(), attachMediaToProject);
