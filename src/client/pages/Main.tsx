@@ -30,6 +30,7 @@ import CreateListing from "./CreateListing";
 import SearchRentResults from "./SearchRentResults";
 import ViewRentProperty from "./ViewRentProperty";
 import Help from "./Help";
+import MessageEnquiries from "./MessageEnquiries";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -116,6 +117,7 @@ const Main = () => {
             <Route path="search/rent" element={<SearchRentResults />} />
             <Route path="help" element={<Help />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
+            <Route path="enquiries" element={<RequireLogin view={<MessageEnquiries />} />} />
             <Route path="*" element={<h1 className="text-center pt-5">Theres nothing here: 404!</h1>} />
           </Routes>
         </div>

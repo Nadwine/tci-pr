@@ -3,8 +3,10 @@ import { useSelector } from "react-redux";
 import { connect } from "react-redux";
 import { RootState } from "../redux/store";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
   const [isCollapsed, setIsCollapse] = useState(true);
   const [userDropDownShow, setUserDropDownShow] = useState(false);
   const user: any = useSelector((reduxState: RootState) => reduxState.auth.user);
@@ -47,7 +49,7 @@ function Navbar() {
             </span>
           </div> */}
           <div className="nav-item nav-link pe-4 text-muted">
-            <span className="bi bi-chat-dots-fill fs-5 position-relative">
+            <span onClick={() => navigate("enquiries")} className="bi bi-chat-dots-fill fs-5 position-relative point">
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
                 3
               </span>
