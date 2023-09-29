@@ -1,8 +1,8 @@
 import React from "react";
-import Main from "./pages/Main";
+import Main from "./Main";
 import { ContextWrapper } from "./Context";
 
-export const App = () => {
+export const Root = () => {
   return (
     <ContextWrapper>
       <Main />
@@ -10,4 +10,4 @@ export const App = () => {
   );
 };
 
-export default App;
+export default Root;

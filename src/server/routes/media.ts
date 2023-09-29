@@ -5,7 +5,6 @@ import fs from "fs";
 import path from "path";
 import { Express } from "express";
 import ListingMedia from "../../database/models/listing_media";
-import { canUserViewMedia } from "../../utils/canUserView";
 import Listing from "../../database/models/listing";
 const router = express.Router();
 
@@ -32,29 +31,29 @@ export const attachMediaToProject = async (req: Request, res: Response) => {
  |
  *===================================================================*/
 
-export const getMediaFromS3Bucket = async (req: Request, res: Response) => {
-  // TODO ensure user can view the image before sending
-  const { visibility, filename } = req.params;
-  const userId = Number(req.params.userId);
-  const projectId = Number(req.params.projectId);
-  const canView = canUserViewMedia(visibility, projectId, userId, req.session);
+// export const getMediaFromS3Bucket = async (req: Request, res: Response) => {
+//   // TODO ensure user can view the image before sending
+//   const { visibility, filename } = req.params;
+//   const userId = Number(req.params.userId);
+//   const projectId = Number(req.params.projectId);
+//   const canView = canUserViewMedia(visibility, projectId, userId, req.session);
 
-  if (!canView) {
-    return res.status(401).json({ message: "unauthorized" });
-  }
+//   if (!canView) {
+//     return res.status(401).json({ message: "unauthorized" });
+//   }
 
-  const s3Key = `${visibility}/${userId}/${projectId}/${filename}`;
-  try {
-    const awsReqParams = { Bucket: String(process.env.AWS_S3_BUCKET_NAME), Key: s3Key };
-    const fileStream = s3Bucket.getObject(awsReqParams).createReadStream();
-    fileStream.on("error", (err: Error) => {
-      return res.status(404).json({ message: "file not found", error: err });
-    });
+//   const s3Key = `${visibility}/${userId}/${projectId}/${filename}`;
+//   try {
+//     const awsReqParams = { Bucket: String(process.env.AWS_S3_BUCKET_NAME), Key: s3Key };
+//     const fileStream = s3Bucket.getObject(awsReqParams).createReadStream();
+//     fileStream.on("error", (err: Error) => {
+//       return res.status(404).json({ message: "file not found", error: err });
+//     });
 
-    await fileStream.pipe(res);
-  } catch (err) {
-    return res.status(500).send();
-  }
-};
+//     await fileStream.pipe(res);
+//   } catch (err) {
+//     return res.status(500).send();
+//   }
+// };
 
 export default router;

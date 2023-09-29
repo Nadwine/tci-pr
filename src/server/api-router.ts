@@ -9,7 +9,6 @@ import {
   registerUser,
   resendVerificationToUserEmail
 } from "./routes/auth";
-import { attachMediaToProject, getMediaFromS3Bucket } from "./routes/media";
 import { ensureAuthentication, ensureLogout } from "./middlewareFunctions/auth-middleware";
 import multer from "multer";
 import dayjs from "dayjs";
@@ -53,7 +52,5 @@ router.post("/enquiry/:listingId", ensureAuthentication, createEnquiryRoute);
 router.get("/enquiry/latest", getLatestEnquiry);
 
 // /api/media  routes
-router.post("/media/attach", ensureAuthentication, uploadMemory.any(), attachMediaToProject);
-router.get("/media/:visibility/:userId/:projectId/:filename", getMediaFromS3Bucket);
 
 export default router;

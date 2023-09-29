@@ -1,7 +1,7 @@
 import React from "react";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { App } from "./App";
+import { Root } from "./Root";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./index.css";
@@ -17,7 +17,7 @@ const FullApp = () => (
   // TODO in production enable strict mode
   <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <Root />
     </Provider>
   </BrowserRouter>
 );

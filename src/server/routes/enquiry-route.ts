@@ -41,6 +41,7 @@ export const getLatestEnquiry = async (req: Request, res: Response) => {
   const conversations = await EnquiryConversation.findAll({
     include: [
       { model: Message, include: [User] },
+      { model: User },
       {
         model: Listing,
         include: [

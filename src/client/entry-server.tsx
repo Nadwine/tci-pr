@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
-import { App } from "./App";
+import { Root } from "./Root";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./index.css";
@@ -16,7 +16,7 @@ export function render(url: string) {
     // TODO in production enable strict mode
     <StaticRouter location={url}>
       <Provider store={store}>
-        <App />
+        <Root />
       </Provider>
     </StaticRouter>
   );

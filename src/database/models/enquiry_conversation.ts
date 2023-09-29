@@ -12,7 +12,8 @@ export default class EnquiryConversation extends Model<InferAttributes<EnquiryCo
   declare listingId: number;
   declare userId: number;
   declare intro_message: string;
-  declare Message: CreationOptional<Message>;
+  declare Messages: CreationOptional<Message[]>;
+  declare User: CreationOptional<User>;
   declare Listing: CreationOptional<Listing>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
