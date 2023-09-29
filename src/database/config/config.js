@@ -14,11 +14,17 @@ if (process.env.NODE_ENV) {
   console.error("No NODE_ENV provided");
   process.exit();
 }
-module.exports = {
-  username: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DATABASE,
-  host: process.env.DB_HOST,
-  dialect: process.env.DB_DIALECT,
-  logging: process.env.DB_QUERY_LOG === "true" ? true : false
-};
+module.exports = process.env.SQLITE
+  ? {
+      storage: "./tcipr.db",
+      dialect: "sqlite",
+      logging: process.env.DB_QUERY_LOG === "true" ? true : false
+    }
+  : {
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DATABASE,
+      host: process.env.DB_HOST,
+      dialect: process.env.DB_DIALECT,
+      logging: process.env.DB_QUERY_LOG === "true" ? true : false
+    };

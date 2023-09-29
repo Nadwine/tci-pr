@@ -48,3 +48,5 @@ Thumbs.db
 # Ignore built ts files
 dist/**/*
 
+tcipr.db
+

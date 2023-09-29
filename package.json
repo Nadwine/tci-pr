@@ -11,9 +11,11 @@
   "scripts": {
     "first-setup": "yarn && npm run create-db && npm run build && npm link serverless",
     "start": "npm-run-all --parallel s3-local ses-local server",
+    "start:sqlite": "npm-run-all --parallel s3-local ses-local server:sqlite",
     "local-tunnel": "npx ngrok config add-authtoken 2STUeKMco4dlY3Vd0QajM6fvc9i_4ToAQB8URXxss2H1px2GK && npx ngrok http --domain=9b3d3dfc4bbc-18146847073628103158.ngrok-free.app 8080",
     "start:concurrently": "concurrently \"NODE_ENV=development nodemon --exec 'ts-node server.ts'\" \"npx serverless offline start\" \"npx aws-ses-local --outputDir ./aws-ses\"",
     "server": "NODE_ENV=development nodemon --exec 'ts-node server.ts'",
+    "server:sqlite": "NODE_ENV=development SQLITE=true nodemon --exec 'ts-node server.ts'",
     "client": "npm run build:client && vite --config vite.config.ts dev",
     "build": "rimraf dist && tsc -p tsconfig.prod.json && yarn build:client && yarn build:server && yarn copy-files",
     "build:client": "vite build --outDir dist/client --ssrManifest",
