@@ -10,6 +10,7 @@ function Navbar() {
   const [isCollapsed, setIsCollapse] = useState(true);
   const [userDropDownShow, setUserDropDownShow] = useState(false);
   const user: any = useSelector((reduxState: RootState) => reduxState.auth.user);
+  const numberOfNewMessages = useSelector((root: RootState) => root.message.numberOfNewMessages);
 
   const logout = async () => {
     await axios.get("/logout");
@@ -40,7 +41,8 @@ function Navbar() {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="d-flex" style={{ position: "fixed", display: "flex !important", top: "10px", right: "70px" }}>
+        {/* notification icons */}
+        <div className="d-flex" style={{ position: "fixed", display: "flex !important", top: "10px", right: "12%" }}>
           {/* <div className="nav-item nav-link  ms-2 text-muted">
             <span className="bi bi-bell-fill fs-5 position-relative">
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
@@ -51,7 +53,7 @@ function Navbar() {
           <div className="nav-item nav-link pe-4 text-muted">
             <span onClick={() => navigate("enquiries")} className="bi bi-chat-dots-fill fs-5 position-relative point">
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
-                3
+                {numberOfNewMessages > 0 && numberOfNewMessages}
               </span>
             </span>
           </div>

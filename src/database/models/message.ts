@@ -13,6 +13,7 @@ export default class Message extends Model<InferAttributes<Message>, InferCreati
   declare messageText: string;
   declare messageType: string;
   declare seenAt: Date;
+  declare User: CreationOptional<User>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }

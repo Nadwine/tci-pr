@@ -162,6 +162,9 @@ const ViewRentProperty = props => {
                 </div>
               </div>
               <div className="sqft"></div>
+              {/* TODO grey out after 1 submission and search data to know if to disable on view 
+                    or show a "view your submitted enquiry" button instead
+              */}
               {!isOwner && (
                 <>
                   <hr />

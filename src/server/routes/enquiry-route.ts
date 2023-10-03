@@ -37,7 +37,7 @@ export const createEnquiryRoute = async (req: Request, res: Response) => {
 
 export const getLatestEnquiry = async (req: Request, res: Response) => {
   const userId = req.session.user!.id;
-  // TODO: remove limit and add pagination
+  // TODO: remove limit and add pagination and filter by logged in user instead of using findAll
   const conversations = await EnquiryConversation.findAll({
     include: [
       { model: Message, include: [User] },
