@@ -30,14 +30,17 @@ export const Chat = (props: Props) => {
 
   return (
     <div className="enquiry-message-wrapper">
-      <div className="d-flex w-100 flex-column">
-        <div className="d-flex chat-header py-3" style={{ borderBottom: "1px solid grey", borderTop: "1px solid grey", marginBottom: "10px" }}>
+      <div className="d-flex w-100 flex-column align-items-center">
+        <div
+          className="d-flex chat-header py-3 px-md-5 px-lg-5 w-100"
+          style={{ borderBottom: "1px solid grey", borderTop: "1px solid grey", marginBottom: "10px" }}
+        >
           <strong>{chats[0]?.EnquiryConversation.Listing.title}</strong>
           <button className="btn btn-danger me-3 rounded-pill ms-auto" onClick={() => dispatch(setActiveConversation(null))}>
             <i className="bi bi-x-lg" />
           </button>
         </div>
-        <div className="d-flex flex-column chat-area px-5 mx-5" style={{ paddingBottom: "60px", height: "50vh", overflow: "scroll" }}>
+        <div className="d-flex flex-column col-12 col-md-8 chat-area" style={{ paddingBottom: "60px", height: "50vh", overflow: "scroll" }}>
           {chats.map((msg, i) => (
             <div className="" key={i} style={{ marginLeft: msg.userId === loggedInUserId ? "auto" : "", marginBottom: "20px" }}>
               <div
