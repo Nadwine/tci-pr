@@ -85,10 +85,6 @@ const MessageEnquiries = props => {
       {/* Conversation List end */}
       {activeConversation && (
         <div className="d-flex flex-column">
-          {" "}
-          <button className="btn btn-secondary mb-4" style={{ width: "2em" }} onClick={() => dispatch(setActiveConversation(null))}>
-            {"<"}
-          </button>
           <Chat onSend={sendMessage} textboxVal={chatTextbox} onChangeTextboxVal={setChatTextbox} />
         </div>
       )}
