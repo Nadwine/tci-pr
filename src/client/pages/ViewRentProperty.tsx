@@ -21,7 +21,7 @@ const ViewRentProperty = props => {
   const [loading, setLoading] = useState(true);
   const enquiryRef = useRef<HTMLFormElement>(null);
   const user = useSelector((root: RootState) => root.auth.user);
-  const isOwner = user?.id === listing?.landlordId;
+  const isOwner = user?.id === listing?.Landlord.userId;
 
   const initialFetch = async () => {
     const res = await axios.get(`/api/listing/rent/${id}`);

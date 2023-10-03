@@ -31,6 +31,8 @@ import SearchRentResults from "./pages/SearchRentResults";
 import ViewRentProperty from "./pages/ViewRentProperty";
 import Help from "./pages/Help";
 import MessageEnquiries from "./pages/MessageEnquiries";
+import { setActiveConversation, setConversations } from "./redux/reducers/messagesReducer";
+import { RootState, store } from "./redux/store";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -74,6 +76,26 @@ const Main = () => {
     }, threeMinute);
 
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const messageRefreshInterval = setInterval(async () => {
+      if (store.getState().auth.user?.id) {
+        const res = await axios.get("/api/enquiry/latest");
+        if (res.status === 200) {
+          console.log("refresh Enquiries", res.data);
+          dispatcher(setConversations(res.data));
+
+          const activeConvo = store.getState().message.activeConversation;
+          if (activeConvo) {
+            const newActiveConvo = res.data.find(c => c.id === activeConvo.id);
+            store.dispatch(setActiveConversation(newActiveConvo));
+          }
+        }
+      }
+    }, 5000);
+
+    return () => clearInterval(messageRefreshInterval);
   }, []);
 
   useEffect(() => {

@@ -12,8 +12,9 @@ export default class Message extends Model<InferAttributes<Message>, InferCreati
   declare enquiryConversationId: number;
   declare messageText: string;
   declare messageType: string;
-  declare seenAt: Date;
+  declare seenAt: CreationOptional<Date>;
   declare User: CreationOptional<User>;
+  declare EnquiryConversation: CreationOptional<EnquiryConversation>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -40,7 +41,7 @@ Message.init(
     },
     seenAt: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     }
   },
   {

@@ -20,10 +20,13 @@ module.exports = {
      */
     try {
       await queryInterface.bulkInsert("users", usersArray, {});
+      await queryInterface.sequelize.query(`ALTER SEQUENCE users_id_seq RESTART WITH ${usersArray.length + 1}`);
+
       await queryInterface.bulkInsert("landlords", [
         { id: 1, verified: true, phone: "123456", userId: 1, createdAt: "2021-05-28T15:36:56.200", updatedAt: "2021-08-28T13:40:02.200" },
         { id: 2, verified: true, phone: "123456", userId: 5, createdAt: "2021-05-28T15:36:56.200", updatedAt: "2021-08-28T13:40:02.200" }
       ]);
+      await queryInterface.sequelize.query("ALTER SEQUENCE landlords_id_seq RESTART WITH 3;");
     } catch (err) {
       // @ts-ignore
       console.log("Error occured while bulk insert Users", err?.original?.message);
@@ -32,6 +35,7 @@ module.exports = {
     try {
       // Listing
       await queryInterface.bulkInsert("listings", listingsArray, {});
+      await queryInterface.sequelize.query(`ALTER SEQUENCE listings_id_seq RESTART WITH ${listingsArray.length + 1}`);
       //Address
       // PropertyForRent
       // ListingQuestion
@@ -44,6 +48,7 @@ module.exports = {
     try {
       //Address
       await queryInterface.bulkInsert("addresses", addressesArray, {});
+      await queryInterface.sequelize.query(`ALTER SEQUENCE addresses_id_seq RESTART WITH ${addressesArray.length + 1}`);
     } catch (err) {
       // @ts-ignore
       console.log("Error occured while bulk insert Addresses", err?.original?.message);
@@ -52,7 +57,10 @@ module.exports = {
     try {
       // PropertyForRent PropertyForSale
       await queryInterface.bulkInsert("property_for_rent", propertyForRentArray, {});
+      await queryInterface.sequelize.query(`ALTER SEQUENCE property_for_rent_id_seq RESTART WITH ${propertyForRentArray.length + 1}`);
+
       await queryInterface.bulkInsert("property_for_sale", propertyForSaleArray, {});
+      await queryInterface.sequelize.query(`ALTER SEQUENCE property_for_sale_id_seq RESTART WITH ${propertyForSaleArray.length + 1}`);
     } catch (err) {
       // @ts-ignore
       console.log("Error occured while bulk insert PropertyForRent", err?.original?.message);
@@ -60,6 +68,7 @@ module.exports = {
 
     try {
       await queryInterface.bulkInsert("listing_media", listingMediaArray, {});
+      await queryInterface.sequelize.query(`ALTER SEQUENCE listing_media_id_seq RESTART WITH ${listingMediaArray.length + 1}`);
     } catch (err) {
       // @ts-ignore
       console.log("Error occured while bulk insert ListingMedia", err?.original?.message);

@@ -14,6 +14,7 @@ import multer from "multer";
 import dayjs from "dayjs";
 import { createRentListingRoute, createSaleListingRoute, getRentListingById, searchRentListingRoute, searchSaleListingRoute } from "./routes/listing-route";
 import { createEnquiryRoute, getLatestEnquiry } from "./routes/enquiry-route";
+import { getMessagesByEnquiryConversationId, sendMessageToConversation } from "./routes/message-chat-route";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -25,11 +26,13 @@ router.use("*", (req: Request, res: Response, next: NextFunction) => {
   const isAsset = req.rawHeaders.filter(h => h.includes("image") || h.includes("video")).length > 0;
 
   // "/api/auth/credentials & refresh-perms is called too many times"
-  if (!isAsset && req.originalUrl !== "/api/auth/credentials" && req.originalUrl !== "/api/auth/refresh-perms") {
+  if (!isAsset && req.originalUrl !== "/api/auth/credentials" && req.originalUrl !== "/api/auth/refresh-perms" && req.originalUrl !== "/api/enquiry/latest") {
     console.log(req.method, req.originalUrl, `  --  ${dayjs().format("h:mm a")}`);
   }
   next();
 });
+
+// TODO: Secure all Routes with auth
 
 //  api/auth    routes
 router.get("/auth/credentials", getUserCredentials);
@@ -49,7 +52,11 @@ router.get("/listing/rent/:id", getRentListingById);
 
 // /api/enquiry   routes
 router.post("/enquiry/:listingId", ensureAuthentication, createEnquiryRoute);
-router.get("/enquiry/latest", getLatestEnquiry);
+router.get("/enquiry/latest", ensureAuthentication, getLatestEnquiry);
+
+// /api/message   routes
+router.get("/message/enquiry/:enquiryConversationId", ensureAuthentication, getMessagesByEnquiryConversationId);
+router.post("/message/enquiry", ensureAuthentication, sendMessageToConversation);
 
 // /api/media  routes
 

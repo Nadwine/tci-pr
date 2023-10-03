@@ -10,11 +10,14 @@ function Navbar() {
   const [isCollapsed, setIsCollapse] = useState(true);
   const [userDropDownShow, setUserDropDownShow] = useState(false);
   const user: any = useSelector((reduxState: RootState) => reduxState.auth.user);
+  const isLoggedIn = Boolean(user?.id);
   const numberOfNewMessages = useSelector((root: RootState) => root.message.numberOfNewMessages);
 
   const logout = async () => {
     await axios.get("/logout");
   };
+
+  console.log("loggedIn", isLoggedIn);
 
   const dynamicClassName = isCollapsed ? "collapse navbar-collapse" : "navbar-collapse";
   const shouldShowUserDropDown = isCollapsed === false ? "show" : userDropDownShow ? "show" : "";
@@ -41,23 +44,28 @@ function Navbar() {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        {/* notification icons */}
-        <div className="d-flex" style={{ position: "fixed", display: "flex !important", top: "10px", right: "12%" }}>
-          {/* <div className="nav-item nav-link  ms-2 text-muted">
+
+        {/* notification icons Start */}
+        {isLoggedIn && (
+          <div className="d-flex" style={{ position: "fixed", display: "flex !important", top: "10px", right: "12%" }}>
+            {/* <div className="nav-item nav-link  ms-2 text-muted">
             <span className="bi bi-bell-fill fs-5 position-relative">
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
                 12
               </span>
             </span>
           </div> */}
-          <div className="nav-item nav-link pe-4 text-muted">
-            <span onClick={() => navigate("enquiries")} className="bi bi-chat-dots-fill fs-5 position-relative point">
-              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
-                {numberOfNewMessages > 0 && numberOfNewMessages}
+            <div className="nav-item nav-link pe-4 text-muted">
+              <span onClick={() => navigate("enquiries")} className="bi bi-chat-dots-fill fs-5 position-relative point">
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
+                  {numberOfNewMessages > 0 && numberOfNewMessages}
+                </span>
               </span>
-            </span>
+            </div>
           </div>
-        </div>
+        )}
+        {/* notification icons End */}
+
         {/* <!-- Collapse --> */}
         <div className={dynamicClassName} id="navbarCollapse">
           {/* <!-- Nav --> */}
@@ -123,7 +131,7 @@ function Navbar() {
           {/* <!-- Action --> */}
           {!user && (
             <div className="d-flex align-items-lg-center mt-lg-0">
-              <a href="/register" className="btn btn-sm w-full w-lg-auto bg-primary">
+              <a href="/register" className="btn btn-sm w-full w-lg-auto bg-primary text-white">
                 Register
               </a>
             </div>
