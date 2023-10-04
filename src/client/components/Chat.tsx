@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import dayjs from "dayjs";
@@ -27,6 +27,12 @@ export const Chat = (props: Props) => {
       textboxVal && onSend(textboxVal);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(setActiveConversation(null));
+    };
+  }, []);
 
   return (
     <div className="enquiry-message-wrapper">
