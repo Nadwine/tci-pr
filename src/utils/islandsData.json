@@ -1,10 +1,10 @@
 [
   {
-    "settlements": ["Five cays", "The Bight", "Blue Hills", "Kew town"],
+    "settlements": ["Five cays", "South Dock", "The Bight", "Blue Hills", "Kewtown", "Cheshire Hall", "Glass Shack", "Leeward", "Long Bay", "Grace Bay", "Chalk Sound", "Wheeland", "Airport Area", "Downtown"],
     "name": "Providenciales"
   },
   {
-    "settlements": ["Cockburn Town"],
+    "settlements": ["Cockburn Town", "West Road", "Overback", "North Ridge", "Cork Tree Beach", "North Backsalina", "South Backsalina"],  
     "name": "Grand Turk"
   },
   {

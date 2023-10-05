@@ -143,7 +143,7 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
               s3BucketKey: val.Key,
               mediaUrl: mediaURl,
               listingId: newListing.id,
-              label: currentFile.originalname
+              label: `${i + 1}`
             });
             createdMediaIds.push(newMedia.id);
           });
@@ -296,7 +296,7 @@ export const createSaleListingRoute = async (req: Request, res: Response) => {
               s3BucketKey: val.Key,
               mediaUrl: mediaURl,
               listingId: newListing.id,
-              label: currentFile.originalname
+              label: `${i + 1}`
             });
             createdMediaIds.push(newMedia.id);
           });

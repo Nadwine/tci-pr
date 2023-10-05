@@ -17,6 +17,7 @@ export const Chat = (props: Props) => {
   const { textboxVal, onChangeTextboxVal, onSend } = props;
   const loggedInUserId = useSelector((r: RootState) => r.auth.user?.id);
   const chats = useSelector((r: RootState) => r.message.activeConversation?.Messages) || [];
+  const activeConvoTitle = useSelector((r: RootState) => r.message.activeConversation?.Listing.title);
 
   const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChangeTextboxVal(e.target.value);
@@ -41,7 +42,7 @@ export const Chat = (props: Props) => {
           className="d-flex chat-header py-3 px-md-5 px-lg-5 w-100"
           style={{ borderBottom: "1px solid grey", borderTop: "1px solid grey", marginBottom: "10px" }}
         >
-          <strong>{chats[0]?.EnquiryConversation.Listing.title}</strong>
+          <strong>{activeConvoTitle}</strong>
           <button className="btn btn-danger me-3 rounded-pill ms-auto" onClick={() => dispatch(setActiveConversation(null))}>
             <i className="bi bi-x-lg" />
           </button>

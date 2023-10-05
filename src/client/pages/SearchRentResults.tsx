@@ -93,7 +93,7 @@ const SearchRentResults = props => {
           <div key={i} className="card mb-3">
             <div className="card-body d-flex flex-wrap">
               <div onClick={() => viewProperty(listing.id)} className="image-container col-12 col-md-5 me-2 pb-3">
-                <img width="100%" src={listing.ListingMedia[0]?.mediaUrl} />
+                <img width="100%" src={listing.ListingMedia.find(m => m.label === "1")?.mediaUrl} />
                 <div className="price fw-bold fs-5" style={{ backgroundColor: "#ebf8ff", borderBottomLeftRadius: "7px", borderBottomRightRadius: "7px" }}>
                   {"$"}
                   {listing?.PropertyForRent.rentAmount} <span style={{ fontSize: "0.6em" }}>Monthly</span>{" "}

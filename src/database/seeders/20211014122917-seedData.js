@@ -6,6 +6,8 @@ const addressesArray = require("../fake-data/addresses");
 const propertyForRentArray = require("../fake-data/property_for_rent");
 const propertyForSaleArray = require("../fake-data/property_for_sale");
 const listingMediaArray = require("../fake-data/listing_media");
+const enqConvoArray = require("../fake-data/enquiry_conversation");
+const messagesArray = require("../fake-data/messages");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -67,11 +69,30 @@ module.exports = {
     }
 
     try {
+      // ListingMedia
       await queryInterface.bulkInsert("listing_media", listingMediaArray, {});
       await queryInterface.sequelize.query(`ALTER SEQUENCE listing_media_id_seq RESTART WITH ${listingMediaArray.length + 1}`);
     } catch (err) {
       // @ts-ignore
       console.log("Error occured while bulk insert ListingMedia", err?.original?.message);
+    }
+
+    try {
+      // EnquiryConversation
+      await queryInterface.bulkInsert("enquiry_conversation", enqConvoArray, {});
+      await queryInterface.sequelize.query(`ALTER SEQUENCE enquiry_conversation_id_seq RESTART WITH ${enqConvoArray.length + 1}`);
+    } catch (err) {
+      // @ts-ignore
+      console.log("Error occured while bulk insert EnquiryConversation", err?.original?.message);
+    }
+
+    try {
+      // Message
+      await queryInterface.bulkInsert("messages", messagesArray, {});
+      await queryInterface.sequelize.query(`ALTER SEQUENCE messages_id_seq RESTART WITH ${messagesArray.length + 1}`);
+    } catch (err) {
+      // @ts-ignore
+      console.log("Error occured while bulk insert Message", err?.original?.message);
     }
   },
 
