@@ -8,6 +8,7 @@ import Chat from "../components/Chat";
 import Message from "../../database/models/message";
 import { toast } from "react-toastify";
 import { cloneDeep } from "lodash";
+import dayjs from "dayjs";
 
 const MessageEnquiries = props => {
   const dispatch = useDispatch();
@@ -63,25 +64,28 @@ const MessageEnquiries = props => {
     <div className="message-view-wrapper">
       {/* Conversation List start */}
       {!activeConversation &&
-        enquiries.map((enq, i) => (
-          <div onClick={() => dispatch(setActiveConversation(enq))} key={i} className="row" style={{ height: "95px" }}>
-            <hr style={{ color: "grey" }}></hr>
-            <div className="col-12 d-flex justify-content-start me-5" style={{ height: "60px" }}>
-              <div className="col-1 d-flex justify-content-end">
-                <img src="/static/banner-img3.jpg" style={{ height: "40px", width: "40px", borderRadius: "5px" }} />
+        enquiries.map((enq, i) => {
+          const lastMessage = enq.Messages[enq.Messages.length - 1];
+          return (
+            <div onClick={() => dispatch(setActiveConversation(enq))} key={i} className="row" style={{ height: "95px" }}>
+              <hr style={{ color: "grey" }}></hr>
+              <div className="col-12 d-flex justify-content-start me-5 mb-2 point" style={{ height: "60px" }}>
+                <div className="col-1 d-flex justify-content-end">
+                  <img src={enq.Listing.ListingMedia.find(m => m.label === "1")?.mediaUrl} style={{ height: "40px", width: "40px", borderRadius: "5px" }} />
+                </div>
+                <div style={{ marginLeft: "25px", width: "100%" }} className=" pe-1 pe-md-5 pe-lg-5">
+                  <span style={{ fontWeight: "bold" }}>{enq.Listing.title}</span>
+                  <p style={{ float: "right" }}>
+                    <small>{dayjs(enq.createdAt).format("MMM D")}</small>
+                  </p>
+                  {/**todo: fix elipsis on bigger screen */}
+                  <p style={{ width: "400px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{lastMessage.messageText}</p>
+                </div>
               </div>
-              <div style={{ marginLeft: "25px" }}>
-                <span style={{ fontWeight: "bold" }}>{enq.Listing.title}</span>
-                <p style={{ float: "right" }}>
-                  <small>date here</small>
-                </p>
-                {/**todo: fix elipsis on bigger screen */}
-                <p style={{ width: "400px", height: "80px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{enq.intro_message}</p>
-              </div>
+              <hr style={{ color: "grey" }}></hr>
             </div>
-            <hr style={{ color: "grey" }}></hr>
-          </div>
-        ))}
+          );
+        })}
       {/* Conversation List end */}
       {activeConversation && (
         <div className="d-flex flex-column">

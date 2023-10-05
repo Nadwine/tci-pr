@@ -82,7 +82,7 @@ const SearchRentResults = props => {
   };
 
   return (
-    <div className="search-results d-flex row flex-wrap row-cols-auto">
+    <div className="search-results d-flex row-cols-auto flex-wrap">
       <div className="w-100 text-center text-danger">{serverError}</div>
       <div className="filter col-12 col-md-4 col-lg-4 col-xl-4">
         <FilterSearchMobile setSearchText={setSearchText} searchText={searchText} searchRent={searchRent} />

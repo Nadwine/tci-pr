@@ -11,7 +11,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
   const { searchRent, setSearchText, searchText } = props;
 
   return (
-    <div style={{ height: "89vh" }} className="desktop-filter card mb-3 d-none d-md-flex d-lg-flex d-xl-flex position-fixed">
+    <div style={{ height: "89vh", minWidth: "30vw" }} className="desktop-filter card mb-3 d-none d-md-flex d-lg-flex d-xl-flex position-fixed">
       <div className="card-body">
         <input
           onKeyUp={e => {
