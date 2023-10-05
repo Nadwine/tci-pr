@@ -10,8 +10,8 @@ module.exports = [
   },
   {
     id: 2,
-    title: "Fresh New 2 Bedroom for share",
-    description: "The living room is very spacious and bright. Big enough for parties and social events",
+    title: "Fully Furnished with extra storage closets",
+    description: "This is really good for people with many belongings to store away",
     listingType: "rent",
     landlordId: 1,
     createdAt: "2021-05-28T15:36:56.200",
@@ -37,8 +37,8 @@ module.exports = [
   },
   {
     id: 5,
-    title: "Fresh New 2 Bedroom for share",
-    description: "The living room is very spacious and bright. Big enough for parties and social events",
+    title: "1 Bedroom with 2 baths",
+    description: "The living room is very spacious and bright. Big enough for parties and social events. This is only available for 1 tenant",
     listingType: "rent",
     landlordId: 1,
     createdAt: "2021-05-28T15:36:56.200",
@@ -46,7 +46,7 @@ module.exports = [
   },
   {
     id: 6,
-    title: "Fresh New 2 Bedroom for share",
+    title: "Large 4 Bedroom for big family",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     landlordId: 1,
@@ -55,7 +55,7 @@ module.exports = [
   },
   {
     id: 7,
-    title: "Fresh New 2 Bedroom for share",
+    title: "Secluded 2 bed near cockburn",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     landlordId: 1,
@@ -64,7 +64,7 @@ module.exports = [
   },
   {
     id: 8,
-    title: "Fresh New 2 Bedroom for share",
+    title: "Room only - Behind IGA",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     landlordId: 1,
