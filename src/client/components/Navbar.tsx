@@ -70,7 +70,7 @@ function Navbar() {
         <div className={dynamicClassName} id="navbarCollapse">
           {/* <!-- Nav --> */}
           <div className="navbar-nav mx-lg-auto">
-            <a className="nav-item nav-link active" href="/search/rent" aria-current="page">
+            <a className="nav-item nav-link active" href="/" aria-current="page">
               Search
             </a>
             {/*<a className="nav-item nav-link" href="#">
@@ -107,9 +107,16 @@ function Navbar() {
                       Dashboard
                     </a>
                   )}
-                  <a href="/create-listing" className="dropdown-item">
-                    Create Listing
-                  </a>
+                  {user.accountType === "landlord" && (
+                    <a href="/create-listing" className="dropdown-item">
+                      Create Listing
+                    </a>
+                  )}
+                  {user.accountType === "landlord" && (
+                    <a href="/my-listings" className="dropdown-item">
+                      My Listing
+                    </a>
+                  )}
                   <a href="#" className="dropdown-item">
                     Settings
                   </a>

@@ -12,6 +12,7 @@ import { Op } from "sequelize";
 import PropertyForSale from "../../database/models/property_for_sale";
 import User from "../../database/models/user";
 import ListingQuestion from "../../database/models/listing_question";
+import EnquiryConversation from "../../database/models/enquiry_conversation";
 
 const s3Bucket = new S3({
   s3ForcePathStyle: true,
@@ -470,6 +471,36 @@ export const searchSaleListingRoute = async (req: Request, res: Response) => {
 
     const data = { rows: listingResults, count: count };
     return res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
+export const landlordViewMyListings = async (req: Request, res: Response) => {
+  const isLandlord = req.session.user?.accountType === "landlord";
+
+  if (!isLandlord) return res.status(401).json({ message: "Unauthorized" });
+
+  try {
+    const landlord = await Landlord.findOne({ where: { userId: req.session.user?.id } });
+    if (!landlord) return res.status(500).json({ message: "Internal Server error" });
+
+    const listingResults = await Listing.findAll({
+      where: {
+        landlordId: landlord.id
+      },
+      include: [
+        { model: Address },
+        { model: PropertyForRent },
+        { model: PropertyForSale },
+        { model: ListingMedia, order: [["id", "ASC"]] },
+        { model: Landlord, include: [User] },
+        { model: EnquiryConversation }
+      ],
+      order: [["createdAt", "DESC"]]
+    });
+
+    return res.status(200).json(listingResults);
   } catch (err) {
     res.status(500).json({ message: "Internal Server error", err });
   }

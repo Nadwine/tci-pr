@@ -8,7 +8,7 @@ declare module "express-session" {
           email: string;
           username: string;
           allowed: number[];
-          accountType: string;
+          accountType: "landlord" | "tenant" | "admin";
         }
       | undefined
       | null;

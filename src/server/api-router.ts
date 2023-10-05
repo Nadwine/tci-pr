@@ -12,7 +12,14 @@ import {
 import { ensureAuthentication, ensureLogout } from "./middlewareFunctions/auth-middleware";
 import multer from "multer";
 import dayjs from "dayjs";
-import { createRentListingRoute, createSaleListingRoute, getRentListingById, searchRentListingRoute, searchSaleListingRoute } from "./routes/listing-route";
+import {
+  createRentListingRoute,
+  createSaleListingRoute,
+  getRentListingById,
+  landlordViewMyListings,
+  searchRentListingRoute,
+  searchSaleListingRoute
+} from "./routes/listing-route";
 import { createEnquiryRoute, getLatestEnquiry } from "./routes/enquiry-route";
 import { getMessagesByEnquiryConversationId, sendMessageToConversation } from "./routes/message-chat-route";
 const memStorage = multer.memoryStorage();
@@ -49,6 +56,7 @@ router.post("/listing/sale/create", ensureAuthentication, uploadMemory.any(), cr
 router.get("/listing/rent/search", searchRentListingRoute);
 router.get("/listing/sale/search", searchSaleListingRoute);
 router.get("/listing/rent/:id", getRentListingById);
+router.get("/listing/my-listings", ensureAuthentication, landlordViewMyListings);
 
 // /api/enquiry   routes
 router.post("/enquiry/:listingId", ensureAuthentication, createEnquiryRoute);

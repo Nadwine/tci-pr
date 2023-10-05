@@ -21,7 +21,7 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare Landlord: CreationOptional<Landlord>;
   declare PropertyForRent: CreationOptional<PropertyForRent>;
   declare PropertyForSale: CreationOptional<PropertyForSale>;
-  declare ListingEnquiries?: CreationOptional<EnquiryConversation[]>;
+  declare EnquiryConversations?: CreationOptional<EnquiryConversation[]>;
   declare ListingQuestions?: CreationOptional<ListingQuestion[]>;
   declare ListingMedia: CreationOptional<ListingMedia[]>;
   declare Address: CreationOptional<Address>;

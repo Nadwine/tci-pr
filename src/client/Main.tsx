@@ -33,6 +33,7 @@ import Help from "./pages/Help";
 import MessageEnquiries from "./pages/MessageEnquiries";
 import { setActiveConversation, setConversations } from "./redux/reducers/messagesReducer";
 import { RootState, store } from "./redux/store";
+import LandlordViewMyListings from "./pages/LandlordViewMyListings";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -140,6 +141,10 @@ const Main = () => {
             <Route path="help" element={<Help />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
             <Route path="enquiries" element={<RequireLogin view={<MessageEnquiries />} />} />
+            <Route
+              path="my-listings"
+              element={<RequirePermission view={<LandlordViewMyListings />} roles={[AccountTypeEnum.LANDLORD, AccountTypeEnum.ADMIN]} />}
+            />
             <Route path="*" element={<h1 className="text-center pt-5">Theres nothing here: 404!</h1>} />
           </Routes>
         </div>
