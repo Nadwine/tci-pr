@@ -63,4 +63,4 @@ PropertyForSale.init(
   }
 );
 
-Listing.hasOne(PropertyForSale, { foreignKey: "listingId" });
+Listing.hasOne(PropertyForSale, { foreignKey: "listingId", onDelete: "CASCADE" });

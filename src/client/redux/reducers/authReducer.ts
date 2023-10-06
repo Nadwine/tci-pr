@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { AccountTypeEnum } from "../../../../types/enums";
 
 type stateType = {
-  user?: { id: number; email: string; username?: string; allowed: []; accountType: AccountTypeEnum };
+  user?: { id: number; email: string; username?: string; allowed: []; accountType: "landlord" | "admin" | "tenant" };
   visitorId?: string;
   browserInfo?: string;
 };

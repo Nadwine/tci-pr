@@ -55,5 +55,5 @@ Message.init(
 
 Message.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(Message, { foreignKey: "userId" }); // reverse association
-Message.belongsTo(EnquiryConversation, { foreignKey: "enquiryConversationId" });
+Message.belongsTo(EnquiryConversation, { foreignKey: "enquiryConversationId", onDelete: "CASCADE" });
 EnquiryConversation.hasMany(Message, { foreignKey: "enquiryConversationId" }); // reverse association

@@ -505,3 +505,90 @@ export const landlordViewMyListings = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal Server error", err });
   }
 };
+
+export const updateRentListingById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const {
+    title,
+    description,
+    numOfRooms,
+    numOfBathRooms,
+    maxTenant,
+    sqFt,
+    billsIncluded,
+    internetIncluded,
+    electricityIncluded,
+    waterIncluded,
+    isFurnished,
+    availability,
+    addressLine1,
+    addressLine2,
+    settlement,
+    city,
+    postcode,
+    country,
+    rentAmount
+  } = req.body;
+
+  try {
+    const relatedListing = await Listing.findByPk(id, { include: [Landlord, Address, PropertyForRent] });
+
+    if (!relatedListing) return res.status(404).json({ message: "Not found" });
+    if (relatedListing?.Landlord.userId !== req.session.user?.id) {
+      return res.status(401).json({ message: "unauthorized" });
+    }
+    const relatedAddress = await Address.findByPk(relatedListing?.Address.id);
+    const relatedProperty = await PropertyForRent.findByPk(relatedListing?.PropertyForRent.id);
+
+    await relatedListing.update({
+      title: title,
+      description: description
+    });
+
+    await relatedProperty?.update({
+      numOfRooms: numOfRooms,
+      numOfBathRooms: numOfBathRooms,
+      maxTenant: maxTenant,
+      sqFt: sqFt,
+      billsIncluded: billsIncluded,
+      internetIncluded: internetIncluded,
+      electricityIncluded: electricityIncluded,
+      waterIncluded: waterIncluded,
+      isFurnished: isFurnished,
+      availability: availability,
+      rentAmount: rentAmount
+    });
+
+    await relatedAddress?.update({
+      addressLine1: addressLine1,
+      addressLine2: addressLine2,
+      settlement: settlement,
+      city: city,
+      postcode: postcode,
+      country: country
+    });
+    res.status(200).json();
+  } catch (err) {
+    res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
+export const deleteRentListingById = async (req: Request, res: Response) => {
+  const listingId = Number(req.params.id);
+  const userId = req.session.user!.id;
+
+  try {
+    const listing = await Listing.findByPk(listingId, { include: [Landlord] });
+    if (!listing && listing!.Landlord.userId !== userId) {
+      return res.status(410).json({ message: "unauthorized" });
+    }
+
+    await Listing.destroy({ where: { id: listingId }, cascade: true });
+    // await Address.destroy({ where: { listingId: listingId } });
+    // await PropertyForRent.destroy({ where: { listingId: listingId } });
+
+    return res.status(200).json({ message: "Success" });
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error", err });
+  }
+};

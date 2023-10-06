@@ -15,10 +15,12 @@ import dayjs from "dayjs";
 import {
   createRentListingRoute,
   createSaleListingRoute,
+  deleteRentListingById,
   getRentListingById,
   landlordViewMyListings,
   searchRentListingRoute,
-  searchSaleListingRoute
+  searchSaleListingRoute,
+  updateRentListingById
 } from "./routes/listing-route";
 import { createEnquiryRoute, getLatestEnquiry } from "./routes/enquiry-route";
 import { getMessagesByEnquiryConversationId, sendMessageToConversation } from "./routes/message-chat-route";
@@ -56,6 +58,8 @@ router.post("/listing/sale/create", ensureAuthentication, uploadMemory.any(), cr
 router.get("/listing/rent/search", searchRentListingRoute);
 router.get("/listing/sale/search", searchSaleListingRoute);
 router.get("/listing/rent/:id", getRentListingById);
+router.put("/listing/rent/:id", ensureAuthentication, uploadMemory.any(), updateRentListingById);
+router.delete("/listing/rent/:id", ensureAuthentication, deleteRentListingById);
 router.get("/listing/my-listings", ensureAuthentication, landlordViewMyListings);
 
 // /api/enquiry   routes

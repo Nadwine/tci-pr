@@ -80,7 +80,7 @@ const CreateSaleForm = props => {
     setFieldValue("questions", newQuestions);
   };
 
-  const selectedIsland = islands.find(i => i.name.toLowerCase() === values.city);
+  const selectedIsland = islands.find(i => i.name === values.city);
 
   return (
     <div className="create-sale-form d-flex justify-content-center row">
@@ -96,7 +96,7 @@ const CreateSaleForm = props => {
                 Select an option
               </option>
               {islands.map((c, i) => (
-                <option key={i} value={c.name.toLowerCase()}>
+                <option key={i} value={c.name}>
                   {c.name}
                 </option>
               ))}
@@ -112,7 +112,7 @@ const CreateSaleForm = props => {
                   Select an option
                 </option>
                 {selectedIsland?.settlements.map((s, i) => (
-                  <option key={i} value={s.toLowerCase()}>
+                  <option key={i} value={s}>
                     {s}
                   </option>
                 ))}

@@ -69,6 +69,6 @@ Address.init(
   }
 );
 
-Address.belongsTo(Listing, { foreignKey: "listingId" });
+Address.belongsTo(Listing, { foreignKey: "listingId", onDelete: "CASCADE" });
 Listing.hasOne(Address, { foreignKey: "listingId" });
 // Address.hasMany(Listing, )

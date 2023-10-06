@@ -34,6 +34,7 @@ import MessageEnquiries from "./pages/MessageEnquiries";
 import { setActiveConversation, setConversations } from "./redux/reducers/messagesReducer";
 import { RootState, store } from "./redux/store";
 import LandlordViewMyListings from "./pages/LandlordViewMyListings";
+import EditRentListing from "./pages/EditRentListing";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -84,7 +85,6 @@ const Main = () => {
       if (store.getState().auth.user?.id) {
         const res = await axios.get("/api/enquiry/latest");
         if (res.status === 200) {
-          console.log("refresh Enquiries", res.data);
           dispatcher(setConversations(res.data));
 
           const activeConvo = store.getState().message.activeConversation;
@@ -137,6 +137,10 @@ const Main = () => {
             <Route path={ReactRoutesEnum.REGISTER} element={<RequireLogout view={<Register />} />} />
             <Route path={ReactRoutesEnum.LOGIN} element={<RequireLogout view={<Login />} />} />
             <Route path="create-listing" element={<RequirePermission view={<CreateListing />} roles={[AccountTypeEnum.LANDLORD, AccountTypeEnum.ADMIN]} />} />
+            <Route
+              path="edit-listing/rent/:id"
+              element={<RequirePermission view={<EditRentListing />} roles={[AccountTypeEnum.LANDLORD, AccountTypeEnum.ADMIN]} />}
+            />
             <Route path="search/rent" element={<SearchRentResults />} />
             <Route path="help" element={<Help />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />

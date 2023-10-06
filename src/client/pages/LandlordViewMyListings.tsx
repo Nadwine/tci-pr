@@ -2,9 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Listing from "../../database/models/listing";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Button, Modal } from "react-bootstrap";
 
 const LandlordViewMyListings = props => {
+  const navigate = useNavigate();
   const [listings, setListings] = useState<Listing[]>([]);
+  const [idToDelete, setIdToDelete] = useState<number>();
 
   const loadData = async () => {
     const res = await axios.get("/api/listing/my-listings");
@@ -12,19 +17,54 @@ const LandlordViewMyListings = props => {
       console.error("error fetching /api/listing/my-listings");
       return;
     }
-    console.log("my-listing", res.data);
     setListings(res.data);
+  };
+
+  const goToEditPage = (id: number) => {
+    navigate(`/edit-listing/rent/${id}`);
+  };
+
+  const deleteListing = async () => {
+    const res = await axios.delete(`/api/listing/rent/${idToDelete}`);
+    if (res.status === 200) {
+      toast.success("success");
+      loadData();
+    } else {
+      toast.error("Error deleting. Try again");
+    }
+
+    setIdToDelete(undefined);
   };
 
   useEffect(() => {
     loadData();
   }, []);
+
+  const DeleteConfirmModal = () => (
+    <Modal show={idToDelete !== undefined} onHide={() => setIdToDelete(undefined)}>
+      <Modal.Header>
+        <Modal.Title>Confirm</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>Are you sure you want to delete this listing?</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => setIdToDelete(undefined)}>
+          Cancel
+        </Button>
+        <Button variant="danger" onClick={() => deleteListing()}>
+          Delete
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+
   return (
     <div>
       <h3 className="ps-md-5 ms-md-5">My Listings</h3>
+      {idToDelete && <DeleteConfirmModal />}
+      {listings.length === 0 && <h6 className="text-center pt-5">No Listings found</h6>}
       <ul className="list-group">
         {listings.map((l, i) => (
-          <li key={i} className="list-group-item d-flex flex-row point px-md-5">
+          <li key={i} className="list-group-item d-flex flex-row px-md-5">
             <div className="d-flex flex-column ps-md-5">
               <div className="fw-bold">{l.title}</div>
               {l.PropertyForRent && <div>Rent: ${l.PropertyForRent?.rentAmount}</div>}
@@ -33,10 +73,10 @@ const LandlordViewMyListings = props => {
               <div>Enquiries: {l.EnquiryConversations?.length}</div>
             </div>
             <div className="d-flex actions ms-auto">
-              <button className="btn btn-white">
+              <button onClick={() => goToEditPage(l.id)} className="btn btn-white">
                 <i className="bi bi-pencil" />
               </button>
-              <button className="btn btn-white">
+              <button onClick={() => setIdToDelete(l.id)} className="btn btn-white">
                 <i className="bi bi-trash3" />
               </button>
             </div>

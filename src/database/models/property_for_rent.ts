@@ -17,7 +17,7 @@ export default class PropertyForRent extends Model<InferAttributes<PropertyForRe
   declare waterIncluded: boolean;
   declare isFurnished: boolean;
   declare rentAmount: number;
-  declare availability: Date;
+  declare availability: Date | string;
   declare listingId: number;
   declare Listing: CreationOptional<Listing>;
   declare createdAt: CreationOptional<Date>;
@@ -90,4 +90,4 @@ PropertyForRent.init(
   }
 );
 
-Listing.hasOne(PropertyForRent, { foreignKey: "listingId" });
+Listing.hasOne(PropertyForRent, { foreignKey: "listingId", onDelete: "CASCADE" });

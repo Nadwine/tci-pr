@@ -3,44 +3,49 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import islands from "../../utils/islandsData.json";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { cloneDeep } from "lodash";
+import Listing from "../../database/models/listing";
+import ListingQuestion from "../../database/models/listing_question";
+import ListingMedia from "../../database/models/listing_media";
 
 const axiosConfig = { headers: { "Content-Type": "multipart/form-data" } };
 
-const CreateRentForm = props => {
+const EditRentForm = ({ listing }: { listing: Listing }) => {
   const navigate = useNavigate();
+  const params = useParams();
+  const { id } = params;
   const [fileBlobRef, setFileBlobRef] = useState<string[]>([]);
   const [questionBeingTyped, setQuestionBeingTyped] = useState("");
 
   const { values, errors, touched, handleSubmit, handleChange, handleBlur, setFieldValue } = useFormik({
     initialValues: {
-      title: "",
-      description: "",
-      numOfRooms: "",
-      numOfBathRooms: "",
-      maxTenant: "",
-      rentAmount: "",
-      sqFt: "",
-      internetIncluded: false,
-      electricityIncluded: false,
-      waterIncluded: false,
-      isFurnished: false,
-      availability: "",
-      addressLine1: "",
-      addressLine2: "",
-      settlement: "",
-      city: "",
-      postcode: "",
-      country: "",
-      files: [] as File[],
-      questions: [] as string[]
+      title: listing.title,
+      description: listing.description,
+      numOfRooms: listing.PropertyForRent.numOfRooms,
+      numOfBathRooms: listing.PropertyForRent.numOfBathRooms,
+      maxTenant: listing.PropertyForRent.maxTenant,
+      rentAmount: listing.PropertyForRent.rentAmount,
+      sqFt: listing.PropertyForRent.sqFt,
+      internetIncluded: listing.PropertyForRent.internetIncluded,
+      electricityIncluded: listing.PropertyForRent.electricityIncluded,
+      waterIncluded: listing.PropertyForRent.waterIncluded,
+      isFurnished: listing.PropertyForRent.isFurnished,
+      availability: listing.PropertyForRent.availability,
+      addressLine1: listing.Address.addressLine1,
+      addressLine2: listing.Address.addressLine2,
+      settlement: listing.Address.settlement,
+      city: listing.Address.city,
+      postcode: listing.Address.postcode,
+      country: listing.Address.country,
+      files: listing.ListingMedia.sort((a, b) => Number(a.label) - Number(b.label)) as ListingMedia[],
+      questions: listing.ListingQuestions as ListingQuestion[]
     },
     async onSubmit(formValues, formikHelpers) {
       const billsIncluded = formValues.electricityIncluded || formValues.internetIncluded || formValues.waterIncluded;
       const body = {
         files: formValues.files,
-        title: formValues.title,
+        title: values.title,
         description: formValues.description,
         numOfRooms: formValues.numOfRooms,
         numOfBathRooms: formValues.numOfBathRooms,
@@ -62,8 +67,8 @@ const CreateRentForm = props => {
         questions: JSON.stringify(formValues.questions)
       };
       await axios
-        .post("/api/listing/rent/create", body, axiosConfig)
-        .then(res => navigate(`/search/rent?searchText=${body.city}&page=0`))
+        .put(`/api/listing/rent/${id}`, body, axiosConfig)
+        .then(res => window.location.reload())
         .catch(err => console.log("/api/listing/rent/create", err));
     },
     validate(values) {
@@ -77,8 +82,8 @@ const CreateRentForm = props => {
   };
 
   const appendQuestion = () => {
-    if (questionBeingTyped !== "") {
-      const newQuestions = [...values.questions, questionBeingTyped];
+    if (questionBeingTyped !== "" && values.questions !== undefined) {
+      const newQuestions:ListingQuestion[] = [...values.questions, questionBeingTyped];
       setFieldValue("questions", newQuestions);
       setQuestionBeingTyped("");
     }
@@ -96,17 +101,14 @@ const CreateRentForm = props => {
     <div className="create-rent-form d-flex justify-content-center row">
       <div className="col-md-6 col-sm-10 col-lg-5">
         <form onSubmit={handleSubmit} onKeyPress={e => e.key === "Enter" && e.preventDefault()} onKeyUp={e => e.key === "Enter" && e.preventDefault()}>
-          <h4 className="text-center pb-4 pt-3">Add property for rent</h4>
+          <h4 className="text-center pb-4 pt-3">Edit property</h4>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
               Island
             </label>
             <select name="city" onChange={handleChange} value={values.city} className="form-select">
-              <option selected value="">
-                Select an option
-              </option>
               {islands.map((c, i) => (
-                <option key={i} value={c.name}>
+                <option key={i} selected={c.name === values.city} value={c.name}>
                   {c.name}
                 </option>
               ))}
@@ -118,11 +120,8 @@ const CreateRentForm = props => {
                 Settlement
               </label>
               <select name="settlement" onChange={handleChange} value={values.settlement} className="form-select">
-                <option selected value="">
-                  Select an option
-                </option>
                 {selectedIsland?.settlements.map((s, i) => (
-                  <option key={i} value={s}>
+                  <option key={i} selected={s === values.settlement} value={s}>
                     {s}
                   </option>
                 ))}
@@ -202,25 +201,25 @@ const CreateRentForm = props => {
             <p className="fs-5 w-100 pt-2 mb-1">Inclusions</p>
           </div>
           <div className="mb-3 form-check">
-            <input name="internetIncluded" value={String(values.internetIncluded)} type="checkbox" className="form-check-input" onChange={handleChange} />
+            <input name="internetIncluded" checked={Boolean(values.internetIncluded)} value={String(values.internetIncluded)} type="checkbox" className="form-check-input" onChange={handleChange} />
             <label className="form-check-label" htmlFor="internetIncluded">
               Internet Included
             </label>
           </div>
           <div className="mb-3 form-check">
-            <input name="electricityIncluded" value={String(values.electricityIncluded)} type="checkbox" className="form-check-input" onChange={handleChange} />
+            <input name="electricityIncluded" checked={Boolean(values.electricityIncluded)} value={String(values.electricityIncluded)} type="checkbox" className="form-check-input" onChange={handleChange} />
             <label className="form-check-label" htmlFor="electricityIncluded">
               Electricity Included
             </label>
           </div>
           <div className="mb-3 form-check">
-            <input name="waterIncluded" value={String(values.waterIncluded)} type="checkbox" className="form-check-input" onChange={handleChange} />
+            <input name="waterIncluded" checked={Boolean(values.waterIncluded)} value={String(values.waterIncluded)} type="checkbox" className="form-check-input" onChange={handleChange} />
             <label className="form-check-label" htmlFor="waterIncluded">
               Water Included
             </label>
           </div>
           <div className="mb-5 form-check">
-            <input name="isFurnished" value={String(values.isFurnished)} type="checkbox" className="form-check-input" onChange={handleChange} />
+            <input name="isFurnished" checked={Boolean(values.isFurnished)} value={String(values.isFurnished)} type="checkbox" className="form-check-input" onChange={handleChange} />
             <label className="form-check-label" htmlFor="isFurnished">
               Furnished
             </label>
@@ -231,7 +230,7 @@ const CreateRentForm = props => {
           <div className="row ms-1 me-1 images-container rounded-3" style={{ backgroundColor: "#80808030", minHeight: 100 }}>
             {values.files.length === 0 && <div className="w-100 text-center pt-4 text-secondary">No Files</div>}
             {values.files.length > 0 &&
-              fileBlobRef.map((blob, index) => (
+              values.files.map((f, index) => (
                 <div
                   className="image-box d-flex"
                   data-file-index={index}
@@ -252,13 +251,13 @@ const CreateRentForm = props => {
                     >
                       <i className=" bi-x-lg" />
                     </button>
-                    {values.files[index]?.type.includes("image") && (
+                    {values.files[index]?.mediaType.includes("image") && (
                       <img
                         className="letterbox-img"
                         data-file-index={index}
                         width={150}
                         draggable
-                        src={blob}
+                        src={f.mediaUrl}
                         onDragStart={e => {
                           e.dataTransfer.setData("file-index", `${index}`);
                           e.dataTransfer.setData("file-type", values.files[index].type);
@@ -266,7 +265,7 @@ const CreateRentForm = props => {
                         }}
                       />
                     )}
-                    {values.files[index]?.type.includes("video") && (
+                    {values.files[index]?.mediaType.includes("video") && (
                       //TODO: video cannot exit, the mouse captures play btn
                       <video
                         className="letterbox-img"
@@ -274,7 +273,7 @@ const CreateRentForm = props => {
                         width={150}
                         controls
                         draggable
-                        src={blob}
+                        src={f.mediaUrl}
                         onDragStart={e => {
                           e.dataTransfer.setData("file-index", `${index}`);
                           e.dataTransfer.setData("file-type", values.files[index].type);
@@ -325,14 +324,14 @@ const CreateRentForm = props => {
               </button>
             </div>
           </div>
-          {values.questions.map((q, i) => (
+          {values?.questions.map((q, i) => (
             <div
               key={i}
               className="row ms-1 me-1 images-container rounded-3 mb-2 align-content-center shadow-sm"
               style={{ backgroundColor: "white", height: "40px" }}
             >
               <div className="w-100 text-muted">
-                {q}
+                {q.text}
                 <i className="bi bi-x-circle-fill text-danger float-end point" onClick={() => removeQuestion(i)} />
               </div>
             </div>
@@ -346,4 +345,4 @@ const CreateRentForm = props => {
   );
 };
 
-export default connect()(CreateRentForm);
+export default connect()(EditRentForm);

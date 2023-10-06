@@ -32,4 +32,4 @@ LandForSale.init(
   }
 );
 
-Listing.hasOne(LandForSale, { foreignKey: "listingId" });
+Listing.hasOne(LandForSale, { foreignKey: "listingId", onDelete: "CASCADE" });
