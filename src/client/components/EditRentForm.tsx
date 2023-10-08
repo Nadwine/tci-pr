@@ -8,6 +8,7 @@ import { cloneDeep } from "lodash";
 import Listing from "../../database/models/listing";
 import ListingQuestion from "../../database/models/listing_question";
 import ListingMedia from "../../database/models/listing_media";
+import { toast } from "react-toastify";
 
 const axiosConfig = { headers: { "Content-Type": "multipart/form-data" } };
 
@@ -39,7 +40,8 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
       postcode: listing.Address.postcode,
       country: listing.Address.country,
       files: listing.ListingMedia.sort((a, b) => Number(a.label) - Number(b.label)) as ListingMedia[],
-      questions: listing.ListingQuestions as ListingQuestion[]
+      questions: listing.ListingQuestions as ListingQuestion[],
+      fullFiles: null
     },
     async onSubmit(formValues, formikHelpers) {
       const billsIncluded = formValues.electricityIncluded || formValues.internetIncluded || formValues.waterIncluded;
@@ -64,34 +66,49 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
         city: formValues.city,
         postcode: "TKCA 1ZZ",
         country: "Turks & Caicos Islands",
-        questions: JSON.stringify(formValues.questions)
+        questions: JSON.stringify(formValues.questions),
+        fullFiles: JSON.stringify(formValues.fullFiles)
       };
       await axios
         .put(`/api/listing/rent/${id}`, body, axiosConfig)
         .then(res => window.location.reload())
-        .catch(err => console.log("/api/listing/rent/create", err));
+        .catch(err => {
+          toast.error("error updating listing. try again");
+          console.log("/api/listing/rent/create", err);
+        });
     },
     validate(values) {
       //
     }
   });
+
   const onchangeDisplayImages = (filesArray: any[]) => {
     if (filesArray.length === 0) return;
-    const fileBlobs = filesArray.map(blob => URL.createObjectURL(blob));
+    const fileBlobs = filesArray.map(fileFromPcOrDatabase => {
+      if (fileFromPcOrDatabase.size) {
+        //From PC
+        return URL.createObjectURL(fileFromPcOrDatabase);
+      } else {
+        //From DB
+        return fileFromPcOrDatabase;
+      }
+    });
     setFileBlobRef(fileBlobs);
   };
 
   const appendQuestion = () => {
     if (questionBeingTyped !== "" && values.questions !== undefined) {
-      const newQuestions:ListingQuestion[] = [...values.questions, questionBeingTyped];
+      //@ts-ignore
+      const newQuestions: ListingQuestion[] = [...values.questions, { text: questionBeingTyped, listingId: listing.id, action: "create" }];
       setFieldValue("questions", newQuestions);
       setQuestionBeingTyped("");
     }
   };
 
   const removeQuestion = (index: number) => {
-    const newQuestions = cloneDeep(values.questions);
-    newQuestions.splice(index, 1);
+    const newQuestions: ListingQuestion[] = cloneDeep(values.questions);
+    //@ts-ignore
+    newQuestions[index].action = "delete";
     setFieldValue("questions", newQuestions);
   };
 
@@ -201,25 +218,53 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
             <p className="fs-5 w-100 pt-2 mb-1">Inclusions</p>
           </div>
           <div className="mb-3 form-check">
-            <input name="internetIncluded" checked={Boolean(values.internetIncluded)} value={String(values.internetIncluded)} type="checkbox" className="form-check-input" onChange={handleChange} />
+            <input
+              name="internetIncluded"
+              checked={Boolean(values.internetIncluded)}
+              value={String(values.internetIncluded)}
+              type="checkbox"
+              className="form-check-input"
+              onChange={handleChange}
+            />
             <label className="form-check-label" htmlFor="internetIncluded">
               Internet Included
             </label>
           </div>
           <div className="mb-3 form-check">
-            <input name="electricityIncluded" checked={Boolean(values.electricityIncluded)} value={String(values.electricityIncluded)} type="checkbox" className="form-check-input" onChange={handleChange} />
+            <input
+              name="electricityIncluded"
+              checked={Boolean(values.electricityIncluded)}
+              value={String(values.electricityIncluded)}
+              type="checkbox"
+              className="form-check-input"
+              onChange={handleChange}
+            />
             <label className="form-check-label" htmlFor="electricityIncluded">
               Electricity Included
             </label>
           </div>
           <div className="mb-3 form-check">
-            <input name="waterIncluded" checked={Boolean(values.waterIncluded)} value={String(values.waterIncluded)} type="checkbox" className="form-check-input" onChange={handleChange} />
+            <input
+              name="waterIncluded"
+              checked={Boolean(values.waterIncluded)}
+              value={String(values.waterIncluded)}
+              type="checkbox"
+              className="form-check-input"
+              onChange={handleChange}
+            />
             <label className="form-check-label" htmlFor="waterIncluded">
               Water Included
             </label>
           </div>
           <div className="mb-5 form-check">
-            <input name="isFurnished" checked={Boolean(values.isFurnished)} value={String(values.isFurnished)} type="checkbox" className="form-check-input" onChange={handleChange} />
+            <input
+              name="isFurnished"
+              checked={Boolean(values.isFurnished)}
+              value={String(values.isFurnished)}
+              type="checkbox"
+              className="form-check-input"
+              onChange={handleChange}
+            />
             <label className="form-check-label" htmlFor="isFurnished">
               Furnished
             </label>
@@ -227,64 +272,79 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
           <div className="inclusions">
             <p className="fs-5 w-100 pt-2 mb-1">Photos/Videos</p>
           </div>
+
+          {/* Media Display Box Start */}
           <div className="row ms-1 me-1 images-container rounded-3" style={{ backgroundColor: "#80808030", minHeight: 100 }}>
             {values.files.length === 0 && <div className="w-100 text-center pt-4 text-secondary">No Files</div>}
             {values.files.length > 0 &&
-              values.files.map((f, index) => (
-                <div
-                  className="image-box d-flex"
-                  data-file-index={index}
-                  key={index}
-                  style={{ maxWidth: "100px", maxHeight: "100px", overflow: "scroll", marginLeft: "3px", marginBottom: "4px" }}
-                >
-                  <div className="image">
-                    <button
-                      className="position-absolute btn-sm btn-danger"
-                      type="button"
-                      onClick={() => {
-                        const filesLeftAfterRemove = values.files.filter((img, i) => i !== index);
-                        // remove from fromik
-                        setFieldValue("files", filesLeftAfterRemove);
-                        // update image blob render
-                        onchangeDisplayImages(filesLeftAfterRemove);
-                      }}
+              values.files.map((f, index) => {
+                return (
+                  // @ts-ignore
+                  f.action !== "delete" && (
+                    <div
+                      className="image-box d-flex"
+                      data-file-index={index}
+                      key={index}
+                      style={{ maxWidth: "100px", maxHeight: "100px", overflow: "scroll", marginLeft: "3px", marginBottom: "4px" }}
                     >
-                      <i className=" bi-x-lg" />
-                    </button>
-                    {values.files[index]?.mediaType.includes("image") && (
-                      <img
-                        className="letterbox-img"
-                        data-file-index={index}
-                        width={150}
-                        draggable
-                        src={f.mediaUrl}
-                        onDragStart={e => {
-                          e.dataTransfer.setData("file-index", `${index}`);
-                          e.dataTransfer.setData("file-type", values.files[index].type);
-                          console.log(values.files[index].type);
-                        }}
-                      />
-                    )}
-                    {values.files[index]?.mediaType.includes("video") && (
-                      //TODO: video cannot exit, the mouse captures play btn
-                      <video
-                        className="letterbox-img"
-                        data-file-index={index}
-                        width={150}
-                        controls
-                        draggable
-                        src={f.mediaUrl}
-                        onDragStart={e => {
-                          e.dataTransfer.setData("file-index", `${index}`);
-                          e.dataTransfer.setData("file-type", values.files[index].type);
-                          console.log(values.files[index].type);
-                        }}
-                      />
-                    )}
-                  </div>
-                </div>
-              ))}
+                      <div className="image">
+                        <button
+                          className="position-absolute btn-sm btn-danger"
+                          type="button"
+                          onClick={() => {
+                            const filesLeftAfterRemove = cloneDeep(values.files); //values.files.filter((img, i) => i !== index);
+                            //@ts-ignore
+                            filesLeftAfterRemove[index].action = "delete";
+
+                            setFieldValue("files", filesLeftAfterRemove);
+                            setFieldValue("fullFiles", filesLeftAfterRemove);
+                            // update image blob render
+
+                            // onchangeDisplayImages(cloneDeep(fileBlobRef).splice(index, 1));
+                          }}
+                        >
+                          <i className=" bi-x-lg" />
+                        </button>
+                        {/* @ts-ignore */}
+                        {(values.files[index]?.mediaType?.includes("image") || values.files[index]?.type?.includes("image")) && (
+                          <img
+                            className="letterbox-img"
+                            data-file-index={index}
+                            width={150}
+                            draggable
+                            src={f.mediaUrl || fileBlobRef[index]}
+                            // onDragStart={e => {
+                            //   e.dataTransfer.setData("file-index", `${index}`);
+                            //   e.dataTransfer.setData("file-type", values.files[index].type);
+                            //   console.log(values.files[index].type);
+                            // }}
+                          />
+                        )}
+                        {/* @ts-ignore */}
+                        {(values.files[index]?.mediaType?.includes("video") || values.files[index]?.type?.includes("video")) && (
+                          //TODO: video cannot exit, the mouse captures play btn
+                          <video
+                            className="letterbox-img"
+                            data-file-index={index}
+                            width={150}
+                            controls
+                            draggable
+                            src={f.mediaUrl || fileBlobRef[index]}
+                            // onDragStart={e => {
+                            //   e.dataTransfer.setData("file-index", `${index}`);
+                            //   e.dataTransfer.setData("file-type", values.files[index].type);
+                            //   console.log(values.files[index].type);
+                            // }}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  )
+                );
+              })}
           </div>
+          {/* Media Display Box End */}
+
           <div>
             <input
               style={{ width: "6.8em" }}
@@ -293,10 +353,24 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
               id="formFileMultiple"
               onChange={event => {
                 if (!event.target.files) return;
+                const fileReader = new FileReader();
                 const filesArray = Array.from(event.target.files);
                 const existingFiles = [...values.files];
                 const combinedFiles = [...existingFiles, ...filesArray];
-                values.files = combinedFiles;
+                //@ts-ignore
+                values.files = [...existingFiles, ...filesArray];
+
+                const fileConverted = [];
+                for (let fI = 0; fI < filesArray.length; fI++) {
+                  //@ts-ignore
+                  fileConverted[fI] = {
+                    type: filesArray[fI].type,
+                    name: filesArray[fI].name,
+                    size: filesArray[fI].size
+                  };
+                }
+                //@ts-ignore
+                values.fullFiles = [...existingFiles, ...fileConverted];
                 onchangeDisplayImages(combinedFiles);
                 event.target.value = "";
               }}
@@ -324,18 +398,21 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
               </button>
             </div>
           </div>
-          {values?.questions.map((q, i) => (
-            <div
-              key={i}
-              className="row ms-1 me-1 images-container rounded-3 mb-2 align-content-center shadow-sm"
-              style={{ backgroundColor: "white", height: "40px" }}
-            >
-              <div className="w-100 text-muted">
-                {q.text}
-                <i className="bi bi-x-circle-fill text-danger float-end point" onClick={() => removeQuestion(i)} />
+          {values?.questions
+            // @ts-ignore
+            .filter(q => !q.action || q.action !== "delete")
+            .map((q, i) => (
+              <div
+                key={i}
+                className="row ms-1 me-1 images-container rounded-3 mb-2 align-content-center shadow-sm"
+                style={{ backgroundColor: "white", height: "40px" }}
+              >
+                <div className="w-100 text-muted">
+                  {q.text}
+                  <i className="bi bi-x-circle-fill text-danger float-end point" onClick={() => removeQuestion(i)} />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
           <button type="submit" id="create-rent-submit-button" className="btn btn-primary" style={{ marginTop: "100px" }}>
             Submit
           </button>

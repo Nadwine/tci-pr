@@ -529,6 +529,9 @@ export const updateRentListingById = async (req: Request, res: Response) => {
     country,
     rentAmount
   } = req.body;
+  const files = req.files ?? [];
+  const questions: ListingQuestion[] = JSON.parse(req.body.questions);
+  const fullFiles = JSON.parse(req.body.fullFiles);
 
   try {
     const relatedListing = await Listing.findByPk(id, { include: [Landlord, Address, PropertyForRent] });
@@ -567,6 +570,83 @@ export const updateRentListingById = async (req: Request, res: Response) => {
       postcode: postcode,
       country: country
     });
+
+    for (let i = 0; i < Number(questions.length); i++) {
+      const currentQuestion = questions[i];
+
+      // @ts-ignore
+      if (currentQuestion.action === "create") {
+        const newQuestion = await ListingQuestion.create({
+          text: currentQuestion.text,
+          listingId: relatedListing.id
+        });
+      }
+      // @ts-ignore
+      if (currentQuestion.action === "delete") {
+        await ListingQuestion.destroy({ where: { id: currentQuestion.id } });
+      }
+    }
+
+    for (let i = 0; i < Number(fullFiles.length); i++) {
+      const currentFullFile = fullFiles[i];
+
+      if (currentFullFile.action === "delete") {
+        console.log("TODelete");
+        //delete from DB
+        // also delete from s3
+        await s3Bucket.deleteObject({ Bucket: String(process.env.AWS_S3_BUCKET_NAME), Key: currentFullFile.s3BucketKey });
+        await ListingMedia.destroy({ where: { id: currentFullFile.id } });
+      }
+
+      // size exists due to File Upload extension
+      // we can use this to know its a new file that was added
+      if (currentFullFile.size) {
+        //@ts-ignore
+        const matchedFile = files.find(f => f.size === currentFullFile.size && f.originalname === currentFullFile.name);
+
+        const filename = `${new Date().getTime()}_${matchedFile.originalname}`;
+        const s3Key = `${req.session.user.id}/${relatedListing.id}/${filename}`;
+
+        // transform to small thumbnail and fix aspect ratio
+        const imageBuffer = await sharp(matchedFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer();
+
+        await s3Bucket
+          .upload(
+            {
+              Bucket: String(process.env.AWS_S3_BUCKET_NAME),
+              Key: s3Key,
+              Body: imageBuffer,
+              ACL: "bucket-owner-full-control"
+            },
+            (err, data) => {
+              if (data) {
+                // successUploadResult.push(data.ETag);
+              }
+            }
+          )
+          .on("httpUploadProgress", function (evt) {
+            // console.log(evt)
+            // Emit Here your events (send this to a socket io id then client can listen in to the socket for upload progress)
+            // then destroy the socket when upload is complete
+          })
+          .promise()
+          .then(async (val: S3.ManagedUpload.SendData) => {
+            const mediaType = matchedFile.mimetype.split("/")[0];
+            const format = matchedFile.mimetype.split("/")[1];
+            const mediaURl = val.Location;
+
+            const newMedia = await ListingMedia.create({
+              mediaType: mediaType,
+              fileFormat: format,
+              s3BucketKey: val.Key,
+              mediaUrl: mediaURl,
+              listingId: relatedListing.id,
+              label: `${i + 1}`
+            });
+          });
+      }
+    }
+
     res.status(200).json();
   } catch (err) {
     res.status(500).json({ message: "Internal Server error", err });
@@ -584,8 +664,6 @@ export const deleteRentListingById = async (req: Request, res: Response) => {
     }
 
     await Listing.destroy({ where: { id: listingId }, cascade: true });
-    // await Address.destroy({ where: { listingId: listingId } });
-    // await PropertyForRent.destroy({ where: { listingId: listingId } });
 
     return res.status(200).json({ message: "Success" });
   } catch (err) {

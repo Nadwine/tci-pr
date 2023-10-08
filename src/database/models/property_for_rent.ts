@@ -1,4 +1,4 @@
-import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from "sequelize";
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, CreationAttributes } from "sequelize";
 import sequelize from "../sequelize-connection";
 import Listing from "./listing";
 
@@ -17,7 +17,7 @@ export default class PropertyForRent extends Model<InferAttributes<PropertyForRe
   declare waterIncluded: boolean;
   declare isFurnished: boolean;
   declare rentAmount: number;
-  declare availability: Date | string;
+  declare availability: string;
   declare listingId: number;
   declare Listing: CreationOptional<Listing>;
   declare createdAt: CreationOptional<Date>;
