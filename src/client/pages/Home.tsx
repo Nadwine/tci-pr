@@ -34,7 +34,12 @@ const Home = props => {
     navigate(`/search/sale?searchText=${searchTextTransform}&page=0`);
   };
 
-  console.log(searchParams);
+  function handleKeyUp(event: React.KeyboardEvent<HTMLInputElement>): void {
+    if (event.key === "Enter") {
+      searchRent();
+    }
+  }
+
   return (
     <div className="home justify-content-center align-items-center" style={{ paddingLeft: "0px", paddingTop: "0px", paddingRight: "0px" }}>
       <div className="welcome-search justify-content-center">
@@ -51,17 +56,23 @@ const Home = props => {
         <div className="col-12 d-flex justify-content-center">
           <div className="col-12 col-md-8 mt-5 border border-light px-2 pt-3" style={{ zIndex: +1, position: "relative", borderRadius: "15px" }}>
             <div className="input-group mb-3">
-              <input onChange={e => setSearchText(e.target.value)} type="text" className="form-control" placeholder="Try 'provo' or 'Providenciales'" />
+              <input
+                onKeyUp={handleKeyUp}
+                onChange={e => setSearchText(e.target.value)}
+                type="text"
+                className="form-control"
+                placeholder="Try 'provo' or 'Providenciales'"
+              />
               <div className="input-group-append">
                 <button onClick={() => searchRent()} className="btn btn-dark">
-                  Rent
+                  Search
                 </button>
               </div>
-              <div className="input-group-append">
+              {/* <div className="input-group-append">
                 <button onClick={() => searchSale()} className="btn btn-primary">
                   Sale
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
