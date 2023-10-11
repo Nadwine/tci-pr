@@ -6,15 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Modal } from "react-bootstrap";
 
-const LandlordViewMyListings = props => {
+const AdminViewListings = props => {
   const navigate = useNavigate();
   const [listings, setListings] = useState<Listing[]>([]);
   const [idToDelete, setIdToDelete] = useState<number>();
 
   const loadData = async () => {
-    const res = await axios.get("/api/listing/my-listings");
+    const res = await axios.get("/api/listing/listings");
     if (res.status !== 200) {
-      console.error("error fetching /api/listing/my-listings");
+      console.error("error fetching /api/listing/listings");
       return;
     }
     setListings(res.data);
@@ -59,7 +59,7 @@ const LandlordViewMyListings = props => {
 
   return (
     <div>
-      <h3 className="ps-md-5 ms-md-5">My Listings</h3>
+      <h3 className="ps-md-5 ms-md-5">Listings</h3>
       {idToDelete && <DeleteConfirmModal />}
       {listings.length === 0 && <h6 className="text-center pt-5">No Listings found</h6>}
       <ul className="list-group">
@@ -87,4 +87,4 @@ const LandlordViewMyListings = props => {
   );
 };
 
-export default connect()(LandlordViewMyListings);
+export default connect()(AdminViewListings);

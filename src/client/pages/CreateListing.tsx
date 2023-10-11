@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 
 const CreateListing = props => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const listingType = searchParams.get("type") as ListingTypeEnum;
+  const listingType = "rent"; //searchParams.get("type") as ListingTypeEnum;
 
   const goBack = () => {
     // clear listing type
@@ -16,12 +16,12 @@ const CreateListing = props => {
 
   return (
     <div className="create-listing-page">
-      {!listingType ? "" : listingType !== "sale" && listingType !== "rent" && "URL query 'type' not provided or not valid"}
-      {listingType && (
+      {/* {!listingType ? "" : listingType !== "sale" && listingType !== "rent" && "URL query 'type' not provided or not valid"} */}
+      {/* {listingType && (
         <button onClick={() => goBack()} className="btn btn-primary">
           <i className="bi-arrow-left" />
         </button>
-      )}
+      )} */}
       {!listingType && (
         <div className="d-flex flex-column justify-content-center">
           <h1 className="ls-tight font-bolder d-flex h2 justify-content-center" style={{ marginTop: "50px", marginBottom: "45px" }}>
@@ -37,7 +37,7 @@ const CreateListing = props => {
           </div>
         </div>
       )}
-      {listingType && listingType === "sale" && <CreateSaleForm />}
+      {/* {listingType && listingType === "sale" && <CreateSaleForm />} */}
       {listingType && listingType === "rent" && <CreateRentForm />}
     </div>
   );

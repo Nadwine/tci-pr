@@ -60,7 +60,7 @@ router.get("/listing/sale/search", searchSaleListingRoute);
 router.get("/listing/rent/:id", getRentListingById);
 router.put("/listing/rent/:id", ensureAuthentication, uploadMemory.any(), updateRentListingById);
 router.delete("/listing/rent/:id", ensureAuthentication, deleteRentListingById);
-router.get("/listing/my-listings", ensureAuthentication, landlordViewMyListings);
+router.get("/listing/listings", ensureAuthentication, landlordViewMyListings);
 
 // /api/enquiry   routes
 router.post("/enquiry/:listingId", ensureAuthentication, createEnquiryRoute);
