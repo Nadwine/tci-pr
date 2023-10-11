@@ -477,9 +477,9 @@ export const searchSaleListingRoute = async (req: Request, res: Response) => {
 };
 
 export const landlordViewMyListings = async (req: Request, res: Response) => {
-  const isLandlord = req.session.user?.accountType === "landlord";
+  const isAdmin = req.session.user?.accountType === "admin";
 
-  if (!isLandlord) return res.status(401).json({ message: "Unauthorized" });
+  if (!isAdmin) return res.status(401).json({ message: "Unauthorized" });
 
   try {
     const landlord = await Admin.findOne({ where: { userId: req.session.user?.id } });

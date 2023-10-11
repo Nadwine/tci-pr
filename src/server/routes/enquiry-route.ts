@@ -40,18 +40,11 @@ export const createEnquiryRoute = async (req: Request, res: Response) => {
 
 export const getLatestEnquiry = async (req: Request, res: Response) => {
   const userId = req.session.user!.id;
-  let landlordListingIds: number[] = [];
-  if (req.session.user?.accountType === "landlord") {
-    const landLord = await Admin.findOne({ where: { userId: userId } });
-    const landlordListings = await Listing.findAll({ where: { adminId: landLord!.id } });
-    landlordListingIds = landlordListings.map(l => l.id);
-  }
+  const isAdmin = req.session.user?.accountType === "admin";
 
   // TODO: remove limit and add pagination and filter by logged in user instead of using findAll
   const conversations = await EnquiryConversation.findAll({
-    where: {
-      [Op.or]: [{ userId: userId }, { listingId: { [Op.in]: landlordListingIds } }]
-    },
+    where: isAdmin ? undefined : { userId: userId },
     include: [
       {
         model: Message,
