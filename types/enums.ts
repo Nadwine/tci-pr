@@ -7,11 +7,7 @@ export enum ReactRoutesEnum {
   ADMIN = "/admin"
 }
 
-export enum AccountTypeEnum {
-  LANDLORD = "landlord",
-  ADMIN = "admin",
-  TENANT = "tenant"
-}
+export type AccountTypeEnum = "landlord" | "admin" | "tenant";
 
 export enum ListingTypeEnum {
   RENT = "rent",

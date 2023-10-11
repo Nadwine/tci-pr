@@ -132,23 +132,17 @@ const Main = () => {
             {/* Do not use Raw Strings as routes. Add it to enums stored in ./utils/enums */}
             {/* TODO add all URLS in the enum and replace them on server and client */}
             <Route index element={<Home />} />
-            <Route path={ReactRoutesEnum.ADMIN} element={<RequirePermission view={<h1>Hi Admin</h1>} roles={[AccountTypeEnum.ADMIN]} />} />
+            <Route path={ReactRoutesEnum.ADMIN} element={<RequirePermission view={<h1>Hi Admin</h1>} roles={["admin"]} />} />
             <Route path={ReactRoutesEnum.REGISTERCONFIRM} element={<RegisterConfirm />} />
             <Route path={ReactRoutesEnum.REGISTER} element={<RequireLogout view={<Register />} />} />
             <Route path={ReactRoutesEnum.LOGIN} element={<RequireLogout view={<Login />} />} />
-            <Route path="create-listing" element={<RequirePermission view={<CreateListing />} roles={[AccountTypeEnum.LANDLORD, AccountTypeEnum.ADMIN]} />} />
-            <Route
-              path="edit-listing/rent/:id"
-              element={<RequirePermission view={<EditRentListing />} roles={[AccountTypeEnum.LANDLORD, AccountTypeEnum.ADMIN]} />}
-            />
+            <Route path="create-listing" element={<RequirePermission view={<CreateListing />} roles={["landlord", "admin"]} />} />
+            <Route path="edit-listing/rent/:id" element={<RequirePermission view={<EditRentListing />} roles={["landlord", "admin"]} />} />
             <Route path="search/rent" element={<SearchRentResults />} />
             <Route path="help" element={<Help />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
             <Route path="enquiries" element={<RequireLogin view={<MessageEnquiries />} />} />
-            <Route
-              path="admin/listings"
-              element={<RequirePermission view={<AdminViewListings />} roles={[AccountTypeEnum.LANDLORD, AccountTypeEnum.ADMIN]} />}
-            />
+            <Route path="admin/listings" element={<RequirePermission view={<AdminViewListings />} roles={["landlord", "admin"]} />} />
             <Route path="*" element={<h1 className="text-center pt-5">Theres nothing here: 404!</h1>} />
           </Routes>
         </div>

@@ -27,7 +27,7 @@ export const refreshUserPermission = async (req: Request, res: Response) => {
       const dbUser: User | null = await User.findByPk(req.session.user.id);
 
       // TODO compare difference and send back a updated version to client
-      if (dbUser) {
+      if (dbUser && dbUser.accountType) {
         req.session.user = {
           id: dbUser.id,
           username: dbUser.username || "",
@@ -72,7 +72,7 @@ export const registerUser = async (req: Request, res: Response) => {
     password: hashedPassword,
     company: "",
     verified: false,
-    accountType: registerReason === "landlord" ? AccountTypeEnum.LANDLORD : AccountTypeEnum.TENANT
+    accountType: registerReason === "landlord" ? "landlord" : "tenant"
   });
 
   if (isLandlord && createdUserCallback) {
@@ -247,14 +247,14 @@ export const loginUser = async (req: Request, res: Response) => {
     const sixMonthsInMS = dayjs().add(6, "month").millisecond();
     const dBHashedPassword = foundUser.password;
     bcrypt.compare(password, dBHashedPassword, (err, result) => {
-      if (result === true) {
+      if (result === true && foundUser.accountType !== undefined) {
         // create a session for user
         req.session.user = {
           id: foundUser.id,
           email: foundUser.email,
           username: foundUser.username || "",
           allowed: [],
-          accountType: foundUser.accountType || ""
+          accountType: foundUser.accountType
         };
         // req.session.cookie.expires = dayjs(); // Expires sets an expiry date for when a cookie gets deleted;
         // req.session.cookie.maxAge = thirtyDays;   //  Max-age sets the time in seconds for when a cookie will be deleted
