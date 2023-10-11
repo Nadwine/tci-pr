@@ -1,7 +1,7 @@
 import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
 import sequelize from "../sequelize-connection";
 import EnquiryConversation from "./enquiry_conversation";
-import Landlord from "./landlord";
+import Admin from "./admin";
 import { ListingTypeEnum } from "../../../types/enums";
 import Address from "./address";
 import PropertyForRent from "./property_for_rent";
@@ -17,8 +17,8 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare title: string;
   declare description: string;
   declare listingType: ListingTypeEnum; // sales, rent
-  declare landlordId: number;
-  declare Landlord: CreationOptional<Landlord>;
+  declare adminId: number;
+  declare Admin: CreationOptional<Admin>;
   declare PropertyForRent: CreationOptional<PropertyForRent>;
   declare PropertyForSale: CreationOptional<PropertyForSale>;
   declare EnquiryConversations?: CreationOptional<EnquiryConversation[]>;
@@ -61,4 +61,4 @@ Listing.init(
     modelName: "Listing"
   }
 );
-Listing.belongsTo(Landlord, { foreignKey: "landlordId", foreignKeyConstraint: true });
+Listing.belongsTo(Admin, { foreignKey: "adminId", foreignKeyConstraint: true });

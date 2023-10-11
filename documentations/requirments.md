@@ -46,6 +46,9 @@ https://huemint.com/gradient-4/#palette=f9fdfe-b4c1c4-77cede-4c7486
 - Reoccuring listings will need to be re-activated every rental period (easier to introduce new polocies, auto notification of listing )
 - The listings' tenancy start date will be tracked and notifications will be sent to avoid dead listing, Otherwise listing will be auto decativated
 
+listing be done by administration
+
+after submit after page
 
 # Requirements/ User Stories
 ==========================================================================================================================

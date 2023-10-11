@@ -12,7 +12,7 @@ import { ensureAuthentication, ensureLogout } from "../middlewareFunctions/auth-
 import { registerRequestValidation } from "../../utils/validation-schemas/schema-register";
 import { loginRequestValidation } from "../../utils/validation-schemas/schema-login";
 import dayjs from "dayjs";
-import Landlord from "../../database/models/landlord";
+import Admin from "../../database/models/admin";
 const router = express.Router();
 
 export const getUserCredentials = async (req: Request, res: Response, next: NextFunction) => {
@@ -76,7 +76,7 @@ export const registerUser = async (req: Request, res: Response) => {
   });
 
   if (isLandlord && createdUserCallback) {
-    await Landlord.create({
+    await Admin.create({
       verified: false,
       email: email,
       userId: createdUserCallback.id

@@ -3,7 +3,7 @@ import sequelize from "../sequelize-connection";
 import User from "./user";
 
 // for typeScript typing
-export default class Landlord extends Model<InferAttributes<Landlord>, InferCreationAttributes<Landlord>> {
+export default class Admin extends Model<InferAttributes<Admin>, InferCreationAttributes<Admin>> {
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
@@ -18,7 +18,7 @@ export default class Landlord extends Model<InferAttributes<Landlord>, InferCrea
 }
 
 // allowNull defaults to true if not set
-Landlord.init(
+Admin.init(
   // @ts-ignore
   {
     // Model attributes are defined here
@@ -39,11 +39,11 @@ Landlord.init(
   {
     // Other model options go here
     sequelize,
-    tableName: "landlords",
+    tableName: "admin",
     timestamps: true,
-    modelName: "Landlord"
+    modelName: "Admin"
   }
 );
 
-Landlord.belongsTo(User, { foreignKey: "userId" });
-User.hasOne(Landlord, { foreignKey: "userId" });
+Admin.belongsTo(User, { foreignKey: "userId" });
+User.hasOne(Admin, { foreignKey: "userId" });

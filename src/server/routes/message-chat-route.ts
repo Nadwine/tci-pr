@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import Message from "../../database/models/message";
 import EnquiryConversation from "../../database/models/enquiry_conversation";
 import Listing from "../../database/models/listing";
-import Landlord from "../../database/models/landlord";
+import Admin from "../../database/models/admin";
 export const getMessagesByEnquiryConversationId = async (req: Request, res: Response) => {
   // TODO validate the session user can view requested conversation.
   // TODO Enable pagination on scroll (while scrolling up loads more previous messages)
@@ -11,7 +11,7 @@ export const getMessagesByEnquiryConversationId = async (req: Request, res: Resp
     const me = "";
     const data = await Message.findAll({
       where: { enquiryConversationId: 1 },
-      include: [{ model: EnquiryConversation, include: [{ model: Listing, include: [Landlord] }] }]
+      include: [{ model: EnquiryConversation, include: [{ model: Listing, include: [Admin] }] }]
     });
 
     return res.json(null);

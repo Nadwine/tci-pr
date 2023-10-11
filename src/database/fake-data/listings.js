@@ -4,7 +4,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -13,7 +13,7 @@ module.exports = [
     title: "Fully Furnished with extra storage closets",
     description: "This is really good for people with many belongings to store away",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -22,7 +22,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "sale",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -31,7 +31,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "sale",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -40,7 +40,7 @@ module.exports = [
     title: "1 Bedroom with 2 baths",
     description: "The living room is very spacious and bright. Big enough for parties and social events. This is only available for 1 tenant",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -49,7 +49,7 @@ module.exports = [
     title: "Large 4 Bedroom for big family",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -58,7 +58,7 @@ module.exports = [
     title: "Secluded 2 bed near cockburn",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -67,7 +67,7 @@ module.exports = [
     title: "Room only - Behind IGA",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -76,7 +76,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -85,7 +85,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -94,7 +94,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -103,7 +103,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -112,7 +112,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -121,7 +121,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -130,7 +130,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -139,7 +139,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -148,7 +148,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -157,7 +157,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -166,7 +166,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -175,7 +175,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 1,
+    adminId: 1,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -184,7 +184,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 2,
+    adminId: 2,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -193,7 +193,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 2,
+    adminId: 2,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -202,7 +202,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 2,
+    adminId: 2,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -211,7 +211,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 2,
+    adminId: 2,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -220,7 +220,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 2,
+    adminId: 2,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -229,7 +229,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 2,
+    adminId: 2,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -238,7 +238,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 2,
+    adminId: 2,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -247,7 +247,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 2,
+    adminId: 2,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -256,7 +256,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 2,
+    adminId: 2,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -265,7 +265,7 @@ module.exports = [
     title: "Fresh New 2 Bedroom for share",
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
-    landlordId: 2,
+    adminId: 2,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   }

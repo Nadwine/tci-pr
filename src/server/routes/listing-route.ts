@@ -3,7 +3,7 @@ import AWS, { AWSError } from "aws-sdk";
 import sharp from "sharp";
 import S3 from "aws-sdk/clients/s3";
 import Listing from "../../database/models/listing";
-import Landlord from "../../database/models/landlord";
+import Admin from "../../database/models/admin";
 import PropertyForRent from "../../database/models/property_for_rent";
 import Address from "../../database/models/address";
 import { ListingTypeEnum } from "../../../types/enums";
@@ -55,14 +55,14 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
   let createdQuestionIds: number[] = [];
   let createdMediaIds: number[] = [];
   try {
-    const landlord = await Landlord.findOne({ where: { userId: req.session.user?.id } });
+    const landlord = await Admin.findOne({ where: { userId: req.session.user?.id } });
 
     if (landlord) {
       const newListing = await Listing.create({
         title: title,
         description: description,
         listingType: ListingTypeEnum.RENT,
-        landlordId: landlord!.id
+        adminId: landlord!.id
       });
       createdListingId = newListing.id;
 
@@ -213,14 +213,14 @@ export const createSaleListingRoute = async (req: Request, res: Response) => {
   let createdQuestionIds: number[] = [];
   let createdMediaIds: number[] = [];
   try {
-    const landlord = await Landlord.findOne({ where: { userId: req.session.user?.id } });
+    const landlord = await Admin.findOne({ where: { userId: req.session.user?.id } });
 
     if (landlord) {
       const newListing = await Listing.create({
         title: title,
         description: description,
         listingType: ListingTypeEnum.SALE,
-        landlordId: landlord!.id
+        adminId: landlord!.id
       });
       createdListingId = newListing.id;
 
@@ -347,7 +347,7 @@ export const getRentListingById = async (req: Request, res: Response) => {
         { model: Address },
         { model: PropertyForRent },
         { model: ListingMedia, order: [["id", "ASC"]] },
-        { model: Landlord, include: [User] },
+        { model: Admin, include: [User] },
         { model: ListingQuestion }
       ]
     });
@@ -386,7 +386,7 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
         },
         { model: PropertyForRent },
         { model: ListingMedia, order: [["id", "ASC"]] },
-        { model: Landlord, include: [User] }
+        { model: Admin, include: [User] }
       ],
       order: [["createdAt", "DESC"]]
     });
@@ -445,7 +445,7 @@ export const searchSaleListingRoute = async (req: Request, res: Response) => {
         },
         { model: PropertyForRent },
         { model: ListingMedia, order: [["id", "ASC"]] },
-        { model: Landlord, include: [User] }
+        { model: Admin, include: [User] }
       ],
       order: [["createdAt", "DESC"]]
     });
@@ -482,19 +482,19 @@ export const landlordViewMyListings = async (req: Request, res: Response) => {
   if (!isLandlord) return res.status(401).json({ message: "Unauthorized" });
 
   try {
-    const landlord = await Landlord.findOne({ where: { userId: req.session.user?.id } });
+    const landlord = await Admin.findOne({ where: { userId: req.session.user?.id } });
     if (!landlord) return res.status(500).json({ message: "Internal Server error" });
 
     const listingResults = await Listing.findAll({
       where: {
-        landlordId: landlord.id
+        adminId: landlord.id
       },
       include: [
         { model: Address },
         { model: PropertyForRent },
         { model: PropertyForSale },
         { model: ListingMedia, order: [["id", "ASC"]] },
-        { model: Landlord, include: [User] },
+        { model: Admin, include: [User] },
         { model: EnquiryConversation }
       ],
       order: [["createdAt", "DESC"]]
@@ -534,10 +534,10 @@ export const updateRentListingById = async (req: Request, res: Response) => {
   const fullFiles = JSON.parse(req.body.fullFiles);
 
   try {
-    const relatedListing = await Listing.findByPk(id, { include: [Landlord, Address, PropertyForRent] });
+    const relatedListing = await Listing.findByPk(id, { include: [Admin, Address, PropertyForRent] });
 
     if (!relatedListing) return res.status(404).json({ message: "Not found" });
-    if (relatedListing?.Landlord.userId !== req.session.user?.id) {
+    if (relatedListing?.Admin.userId !== req.session.user?.id) {
       return res.status(401).json({ message: "unauthorized" });
     }
     const relatedAddress = await Address.findByPk(relatedListing?.Address.id);
@@ -658,8 +658,8 @@ export const deleteRentListingById = async (req: Request, res: Response) => {
   const userId = req.session.user!.id;
 
   try {
-    const listing = await Listing.findByPk(listingId, { include: [Landlord] });
-    if (!listing && listing!.Landlord.userId !== userId) {
+    const listing = await Listing.findByPk(listingId, { include: [Admin] });
+    if (!listing && listing!.Admin.userId !== userId) {
       return res.status(410).json({ message: "unauthorized" });
     }
 

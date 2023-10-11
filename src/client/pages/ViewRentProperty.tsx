@@ -21,7 +21,7 @@ const ViewRentProperty = props => {
   const [loading, setLoading] = useState(true);
   const enquiryRef = useRef<HTMLFormElement>(null);
   const user = useSelector((root: RootState) => root.auth.user);
-  const isOwner = user?.id === listing?.Landlord.userId;
+  const isOwner = user?.id === listing?.Admin.userId;
 
   const initialFetch = async () => {
     const res = await axios.get(`/api/listing/rent/${id}`);
@@ -170,8 +170,8 @@ const ViewRentProperty = props => {
                   <hr />
                   <div className="text-secondary">
                     <h6>Contact</h6>
-                    {/* <div>Email: {listing.Landlord.User?.email}</div>
-                  <div>Phone: {listing.Landlord.phone || "N/A"}</div> */}
+                    {/* <div>Email: {listing.Admin.User?.email}</div>
+                  <div>Phone: {listing.Admin.phone || "N/A"}</div> */}
                   </div>
                   <div className="mt-4">
                     <button onClick={() => setShowEnquiryModal(true)} className="btn btn-success">

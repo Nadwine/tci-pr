@@ -1,13 +1,13 @@
 module.exports = [
   {
     id: 1,
-    username: "landlord1",
+    username: "admin1",
     password: "$2b$10$tvc8WYw278jhiSaKQOHVj.dU2cZvSGbY.WVlGuZcLinZls2GLfawO",
-    email: "landlord@mail.com",
+    email: "admin@mail.com",
     verified: true,
-    accountType: "landlord",
+    accountType: "admin",
     createdAt: "2021-05-28T15:36:56.200",
-    updatedAt: "2021-08-28T13:40:02.200",
+    updatedAt: "2021-08-28T13:40:02.200"
   },
   {
     id: 2,
@@ -31,9 +31,9 @@ module.exports = [
   },
   {
     id: 4,
-    username: "admin1",
+    username: "admin2",
     password: "$2b$10$tvc8WYw278jhiSaKQOHVj.dU2cZvSGbY.WVlGuZcLinZls2GLfawO",
-    email: "admin@mail.com",
+    email: "admin2@mail.com",
     verified: true,
     accountType: "admin",
     createdAt: "2021-05-28T15:36:56.200",
@@ -47,6 +47,6 @@ module.exports = [
     verified: true,
     accountType: "landlord",
     createdAt: "2021-05-28T15:36:56.200",
-    updatedAt: "2021-08-28T13:40:02.200",
-  },
+    updatedAt: "2021-08-28T13:40:02.200"
+  }
 ];

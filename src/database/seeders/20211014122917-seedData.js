@@ -24,11 +24,11 @@ module.exports = {
       await queryInterface.bulkInsert("users", usersArray, {});
       await queryInterface.sequelize.query(`ALTER SEQUENCE users_id_seq RESTART WITH ${usersArray.length + 1}`);
 
-      await queryInterface.bulkInsert("landlords", [
+      await queryInterface.bulkInsert("admin", [
         { id: 1, verified: true, phone: "123456", userId: 1, createdAt: "2021-05-28T15:36:56.200", updatedAt: "2021-08-28T13:40:02.200" },
         { id: 2, verified: true, phone: "123456", userId: 5, createdAt: "2021-05-28T15:36:56.200", updatedAt: "2021-08-28T13:40:02.200" }
       ]);
-      await queryInterface.sequelize.query("ALTER SEQUENCE landlords_id_seq RESTART WITH 3;");
+      await queryInterface.sequelize.query("ALTER SEQUENCE admin_id_seq RESTART WITH 3;");
     } catch (err) {
       // @ts-ignore
       console.log("Error occured while bulk insert Users", err?.original?.message);

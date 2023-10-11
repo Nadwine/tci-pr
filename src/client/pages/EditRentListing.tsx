@@ -13,7 +13,7 @@ const EditRentListing = props => {
   const [listing, setListing] = useState<Listing>();
   const [loading, setLoading] = useState(true);
   const user = useSelector((root: RootState) => root.auth.user);
-  const isOwner = user?.id === listing?.Landlord.userId;
+  const isOwner = user?.id === listing?.Admin.userId;
   const accountType = user?.accountType;
 
   const initialFetch = async () => {

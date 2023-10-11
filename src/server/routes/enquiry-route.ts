@@ -4,7 +4,7 @@ import Listing from "../../database/models/listing";
 import Message from "../../database/models/message";
 import User from "../../database/models/user";
 import Address from "../../database/models/address";
-import Landlord from "../../database/models/landlord";
+import Admin from "../../database/models/admin";
 import ListingMedia from "../../database/models/listing_media";
 import ListingQuestion from "../../database/models/listing_question";
 import PropertyForRent from "../../database/models/property_for_rent";
@@ -13,10 +13,10 @@ import { Op } from "sequelize";
 export const createEnquiryRoute = async (req: Request, res: Response) => {
   const listingId = Number(req.params.listingId);
 
-  const listing = await Listing.findByPk(listingId, { include: [Landlord] });
+  const listing = await Listing.findByPk(listingId, { include: [Admin] });
 
   // Not allowed to submit enquiry on own listing
-  if (!listing || listing.Landlord.userId === req.session.user!.id) {
+  if (!listing || listing.Admin.userId === req.session.user!.id) {
     return res.status(500).json({ message: "Failed to send enquiry. Try again", err: "listing not found" });
   }
 
@@ -42,8 +42,8 @@ export const getLatestEnquiry = async (req: Request, res: Response) => {
   const userId = req.session.user!.id;
   let landlordListingIds: number[] = [];
   if (req.session.user?.accountType === "landlord") {
-    const landLord = await Landlord.findOne({ where: { userId: userId } });
-    const landlordListings = await Listing.findAll({ where: { landlordId: landLord!.id } });
+    const landLord = await Admin.findOne({ where: { userId: userId } });
+    const landlordListings = await Listing.findAll({ where: { adminId: landLord!.id } });
     landlordListingIds = landlordListings.map(l => l.id);
   }
 
@@ -55,7 +55,7 @@ export const getLatestEnquiry = async (req: Request, res: Response) => {
     include: [
       {
         model: Message,
-        include: [{ model: EnquiryConversation, include: [{ model: Listing, include: [{ model: Landlord }] }] }, { model: User }]
+        include: [{ model: EnquiryConversation, include: [{ model: Listing, include: [{ model: Admin }] }] }, { model: User }]
       },
       { model: User },
       {
@@ -64,7 +64,7 @@ export const getLatestEnquiry = async (req: Request, res: Response) => {
           { model: Address },
           { model: PropertyForRent },
           { model: ListingMedia, order: [["id", "ASC"]] },
-          { model: Landlord, include: [User] },
+          { model: Admin, include: [User] },
           { model: ListingQuestion }
         ]
       }

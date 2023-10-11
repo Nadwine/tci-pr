@@ -20,7 +20,7 @@ async function initialiseModels() {
   if (process.env.NODE_ENV === "development" && shouldAutoSync) {
     const syncOrder = [
       "user.ts",
-      "landlord.ts",
+      "admin.ts",
       "listing.ts",
       "listing_enquiry.ts",
       "listing_question.ts",
