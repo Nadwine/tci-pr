@@ -1,6 +1,6 @@
 # Development Setup
 ==================================================
-* Require Node v14.17.6
+* Require Node v14.18.0
 
 * Require Local Postgres v12
 
