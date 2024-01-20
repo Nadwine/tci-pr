@@ -44,6 +44,9 @@ declare global {
       AWS_S3_SECRET: string;
       AWS_S3_ENDPOINT: string;
       AWS_S3_BUCKET_NAME: string;
+      AWS_SDK_JS_SUPPRESS_MAINTENANCE_MODE_MESSAGE: string;
+      STRIPE_PUBLIC_KEY: string;
+      STRIPE_SECRET_KEY: string;
     }
   }
 }

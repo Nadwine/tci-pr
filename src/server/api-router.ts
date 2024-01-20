@@ -24,6 +24,7 @@ import {
 } from "./routes/listing-route";
 import { createEnquiryRoute, getLatestEnquiry } from "./routes/enquiry-route";
 import { getMessagesByEnquiryConversationId, sendMessageToConversation } from "./routes/message-chat-route";
+import { createNewSubscription } from "./routes/payments";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -70,6 +71,7 @@ router.get("/enquiry/latest", ensureAuthentication, getLatestEnquiry);
 router.get("/message/enquiry/:enquiryConversationId", ensureAuthentication, getMessagesByEnquiryConversationId);
 router.post("/message/enquiry", ensureAuthentication, sendMessageToConversation);
 
-// /api/media  routes
+// /api/payments  routes
+router.post("/payments/start-subscription/:listingId", ensureAuthentication, createNewSubscription);
 
 export default router;

@@ -35,6 +35,7 @@ import { setActiveConversation, setConversations } from "./redux/reducers/messag
 import { RootState, store } from "./redux/store";
 import AdminViewListings from "./pages/AdminViewListings";
 import EditRentListing from "./pages/EditRentListing";
+import ListingPayment from "./pages/ListingPayment";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -141,6 +142,7 @@ const Main = () => {
             <Route path="search/rent" element={<SearchRentResults />} />
             <Route path="help" element={<Help />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
+            <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
             <Route path="enquiries" element={<RequireLogin view={<MessageEnquiries />} />} />
             <Route path="admin/listings" element={<RequirePermission view={<AdminViewListings />} roles={["landlord", "admin"]} />} />
             <Route path="*" element={<h1 className="text-center pt-5">Theres nothing here: 404!</h1>} />

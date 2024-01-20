@@ -55,7 +55,7 @@ function Navbar() {
               </span>
             </span>
           </div> */}
-            <div className="nav-item nav-link pe-4 text-muted">
+            <div className="nav-item nav-link pe-5 text-muted">
               <span onClick={() => navigate("enquiries")} className="bi bi-chat-dots-fill fs-5 position-relative point">
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
                   {numberOfNewMessages > 0 && numberOfNewMessages}

@@ -24,6 +24,10 @@ const AdminViewListings = props => {
     navigate(`/edit-listing/rent/${id}`);
   };
 
+  const goToPaymentsPage = (id: number) => {
+    navigate(`/property/rent/${id}/payments`);
+  };
+
   const deleteListing = async () => {
     const res = await axios.delete(`/api/listing/rent/${idToDelete}`);
     if (res.status === 200) {
@@ -73,6 +77,9 @@ const AdminViewListings = props => {
               <div>Enquiries: {l.EnquiryConversations?.length}</div>
             </div>
             <div className="d-flex actions ms-auto">
+              <button onClick={() => goToPaymentsPage(l.id)} className="btn btn-white">
+                <i className="bi bi-cash-coin" />
+              </button>
               <button onClick={() => goToEditPage(l.id)} className="btn btn-white">
                 <i className="bi bi-pencil" />
               </button>

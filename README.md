@@ -26,3 +26,5 @@ the ./dist folder is the production bundle of the application
 # known issues
 sharp package might error upon nmp install:  "npm install --unsafe-perm" may work
 Also package version and node combo had to be exact node 14.17.6 and sharp 0.29.1
+
+ ß
