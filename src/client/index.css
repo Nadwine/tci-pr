@@ -138,8 +138,25 @@ body {
   width: 100%;
   height: 100%;
   filter: sepia(40%) saturate(150%) brightness(70%) hue-rotate(341deg);
+}
 
+.homepage-autocomplete{
+  @media (min-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */ width: 73%; }
+  @media (min-width:375px)  { /* smartphones, iPhone, portrait 480x320 phones */ width: 76%; }
+  @media (min-width:425px)  { /* smartphones, iPhone, portrait 480x320 phones */ width: 79%; }
+  @media (min-width:530px)  { /* smartphones, iPhone, portrait 480x320 phones */ width: 83%; }
+  @media (min-width:600px)  { /* smartphones, iPhone, portrait 480x320 phones */ width: 85%; }
+  @media (min-width:641px)  { /* portrait tablets, portrait iPad */     width: 87% }
+  @media (min-width:768px)  { /* smartphones, iPhone, portrait 480x320 phones */ width: 82%; }
+  @media (min-width:870px)  { /* smartphones, iPhone, portrait 480x320 phones */ width: 85%; }
+  @media (min-width:970px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ width: 86%; }
+  @media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ width: 88%; }
+  @media (min-width:1250px) { /* big landscape tablets, laptops, and desktops */ width: 89%; }
+  @media (min-width:1363px) { /* hi-res laptops and desktops */ width: 90% }
+}
 
+.autocomplete-highlight:hover{
+  color: rgb(40, 103, 249);
 }
 
 

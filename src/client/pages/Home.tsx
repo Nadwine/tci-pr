@@ -4,6 +4,14 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { LoadingSpinnerWholePage } from "../components/LoadingSpinners";
 import axios from "axios";
 import Listing from "../../database/models/listing";
+import islands from "../../utils/islandsData.json";
+
+let islandAndSettlements: string[] = [];
+
+islands.forEach(i => {
+  islandAndSettlements.push(i.name);
+  islandAndSettlements = [...islandAndSettlements, ...i.settlements];
+});
 
 const Home = props => {
   const navigate = useNavigate();
@@ -24,6 +32,8 @@ const Home = props => {
     navigate(`/search/rent?searchText=${searchTextTransform}&page=0`);
   };
 
+  useEffect(() => {}, [searchText]);
+
   const searchSale = async () => {
     let searchTextTransform = searchText;
     if (searchText.toLowerCase() === "provo") {
@@ -40,6 +50,9 @@ const Home = props => {
     }
   }
 
+  const autoCompleteFilterWithSearch = islandAndSettlements.filter(c => c.toLowerCase().includes(searchText.toLowerCase()));
+  const showAutoComplete = searchText && autoCompleteFilterWithSearch.length !== 0;
+
   return (
     <div className="home justify-content-center align-items-center" style={{ paddingLeft: "0px", paddingTop: "0px", paddingRight: "0px" }}>
       <div className="welcome-search justify-content-center">
@@ -54,9 +67,10 @@ const Home = props => {
           </h1>
         </div>
         <div className="col-12 d-flex justify-content-center">
-          <div className="col-12 col-md-8 mt-5 border border-light px-2 pt-3" style={{ zIndex: +1, position: "relative", borderRadius: "15px" }}>
-            <div className="input-group mb-3">
+          <div className="col-12 col-md-8 mt-5 border border-light px-2 p-3" style={{ zIndex: +1, position: "relative", borderRadius: "15px" }}>
+            <div className="input-group">
               <input
+                value={searchText}
                 onKeyUp={handleKeyUp}
                 onChange={e => setSearchText(e.target.value)}
                 type="text"
@@ -74,6 +88,15 @@ const Home = props => {
                 </button>
               </div> */}
             </div>
+            {showAutoComplete && (
+              <div className="homepage-autocomplete bg-light mb-3 position-absolute p-3 rounded" style={{ opacity: 0.9 }}>
+                {autoCompleteFilterWithSearch.map((c, i) => (
+                  <div key={i} className="autocomplete-item point autocomplete-highlight" onClick={() => setSearchText(c)}>
+                    {c}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
         {/**Small screen -------------------------------------------------------------> */}
