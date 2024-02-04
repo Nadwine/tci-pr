@@ -11,7 +11,8 @@ import { faBed, faBath, faPerson } from "@fortawesome/free-solid-svg-icons";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { RootState, store } from "../redux/store";
+import { Navigate, useNavigate } from "react-router-dom";
 import Carousel from "../components/Carousel";
 
 const ViewRentProperty = props => {
@@ -23,6 +24,7 @@ const ViewRentProperty = props => {
   const enquiryRef = useRef<HTMLFormElement>(null);
   const user = useSelector((root: RootState) => root.auth.user);
   const isOwner = user?.id === listing?.Admin.userId;
+  const navigate = useNavigate();
 
   const initialFetch = async () => {
     const res = await axios.get(`/api/listing/rent/${id}`);
@@ -43,6 +45,15 @@ const ViewRentProperty = props => {
       toast.success("Enquiry Sent", { theme: "colored" });
     } else {
       toast.error("Failed to send enquiry. Try again", { theme: "colored" });
+    }
+  };
+
+  const handleRedirect = () => {
+    const authState = store.getState().auth;
+    if (!authState.user) {
+      navigate("/login");
+    } else {
+      setShowEnquiryModal(true);
     }
   };
 
@@ -175,7 +186,7 @@ const ViewRentProperty = props => {
                   <div>Phone: {listing.Admin.phone || "N/A"}</div> */}
                   </div>
                   <div className="mt-4">
-                    <button onClick={() => setShowEnquiryModal(true)} className="btn btn-success">
+                    <button onClick={() => handleRedirect()} className="btn btn-success">
                       Submit online enquiry
                     </button>
                   </div>

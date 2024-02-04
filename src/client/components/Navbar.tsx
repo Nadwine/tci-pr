@@ -70,8 +70,8 @@ function Navbar() {
         <div className={dynamicClassName} id="navbarCollapse">
           {/* <!-- Nav --> */}
           <div className="navbar-nav mx-lg-auto">
-            <a className="nav-item nav-link active" href="/" aria-current="page">
-              Search
+            <a className="nav-item nav-link active" href="/products" aria-current="page">
+              Products & Services
             </a>
             {/*<a className="nav-item nav-link" href="#">
               Product
