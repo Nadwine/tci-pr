@@ -24,7 +24,7 @@ import {
 } from "./routes/listing-route";
 import { createEnquiryRoute, getLatestEnquiry } from "./routes/enquiry-route";
 import { getMessagesByEnquiryConversationId, sendMessageToConversation } from "./routes/message-chat-route";
-import { createNewSubscription } from "./routes/payments";
+import { createNewRentMonthly, stripeWebhook } from "./routes/payments";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -72,6 +72,7 @@ router.get("/message/enquiry/:enquiryConversationId", ensureAuthentication, getM
 router.post("/message/enquiry", ensureAuthentication, sendMessageToConversation);
 
 // /api/payments  routes
-router.post("/payments/start-subscription/:listingId", ensureAuthentication, createNewSubscription);
+router.post("/payment/single-payment/:listingId", ensureAuthentication, createNewRentMonthly);
+router.post("/payment/webhook", express.raw({ type: "application/json" }), stripeWebhook);
 
 export default router;

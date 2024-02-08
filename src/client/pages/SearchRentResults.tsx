@@ -47,6 +47,7 @@ const SearchRentResults = props => {
       setTotalResults(res.data.count);
     }
     if (res.status !== 200) setServerError("Error getting results");
+    window.scrollTo(0, 0);
   };
 
   const goToPrevPage = async () => {
@@ -59,6 +60,7 @@ const SearchRentResults = props => {
       setTotalResults(res.data.count);
     }
     if (res.status !== 200) setServerError("Error getting results");
+    window.scrollTo(0, 0);
   };
 
   const searchRent = async () => {

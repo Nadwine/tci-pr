@@ -8,6 +8,7 @@ import PropertyForRent from "./property_for_rent";
 import PropertyForSale from "./property_for_sale";
 import ListingMedia from "./listing_media";
 import ListingQuestion from "./listing_question";
+import ListingLandlord from "./listing_landlord";
 
 // for typeScript typing
 export default class Listing extends Model<InferAttributes<Listing>, InferCreationAttributes<Listing>> {
@@ -62,3 +63,4 @@ Listing.init(
   }
 );
 Listing.belongsTo(Admin, { foreignKey: "adminId", foreignKeyConstraint: true });
+Listing.belongsTo(ListingLandlord, { foreignKey: "landlordId", foreignKeyConstraint: true });

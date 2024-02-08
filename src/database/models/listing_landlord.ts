@@ -1,0 +1,71 @@
+import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
+import Listing from "./listing";
+import User from "./user";
+import sequelize from "../sequelize-connection";
+
+// for typeScript typing
+export default class ListingLandlord extends Model<InferAttributes<ListingLandlord>, InferCreationAttributes<ListingLandlord>> {
+  // Only Used for typescript to pick up intellisense and types
+  // The Init function below are the actual DB columns
+  declare id: CreationOptional<string>;
+  declare firstName: string;
+  declare lastName: string;
+  declare phoneNumber: string;
+  declare homeIsland: string;
+  declare address: string;
+  declare cardDetails: string;
+  declare stripeConnectId: string;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
+}
+
+// allowNull defaults to true if not set
+ListingLandlord.init(
+  // @ts-ignore
+  {
+    // Model attributes are defined here
+    id: {
+      type: DataTypes.UUID,
+      // autoIncrement: true, // does not work with UUID
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    phoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    homeIsland: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    cardDetails: {
+      type: DataTypes.JSON,
+      allowNull: false
+    },
+    stripeConnectId: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  },
+  {
+    // Other model options
+    sequelize,
+    tableName: "listing_landlords",
+    timestamps: true,
+    modelName: "Landlord"
+  }
+);
+
+ListingLandlord.belongsTo(User, { foreignKey: { name: "userId", allowNull: false } });

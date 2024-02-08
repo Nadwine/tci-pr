@@ -22,6 +22,7 @@ async function initialiseModels() {
       "user.ts",
       "admin.ts",
       "listing.ts",
+      "listing_landlord.ts",
       "listing_enquiry.ts",
       "listing_question.ts",
       "listing_view.ts",
