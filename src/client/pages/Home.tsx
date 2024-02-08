@@ -58,8 +58,8 @@ const Home = props => {
       <div className="welcome-search justify-content-center">
         <div className="justify-content-center align-items-center">
           <img
-            src="/static/banner-img3.jpg"
-            style={{ position: "absolute", padding: "0px", maxHeight: "350px", marginLeft: "0px" }}
+            src="/static/home-photo.jpg"
+            style={{ position: "absolute", padding: "0px", maxHeight: "360px", marginLeft: "0px" }}
             className="banner-img"
           ></img>
           <h1 className="text-light" style={{ zIndex: +1, position: "relative", paddingTop: "80px", color: "white", textAlign: "center" }}>

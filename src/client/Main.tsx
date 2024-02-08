@@ -36,6 +36,7 @@ import { RootState, store } from "./redux/store";
 import AdminViewListings from "./pages/AdminViewListings";
 import EditRentListing from "./pages/EditRentListing";
 import ListingPayment from "./pages/ListingPayment";
+import Products from "./pages/Products";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -141,6 +142,7 @@ const Main = () => {
             <Route path="edit-listing/rent/:id" element={<RequirePermission view={<EditRentListing />} roles={["landlord", "admin"]} />} />
             <Route path="search/rent" element={<SearchRentResults />} />
             <Route path="help" element={<Help />} />
+            <Route path="products" element={<Products />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
             <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
             <Route path="enquiries" element={<RequireLogin view={<MessageEnquiries />} />} />
