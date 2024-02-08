@@ -137,16 +137,17 @@ const SearchRentResults = props => {
             </div>
           </div>
         ))}
+        {searchResults.length === 0 && <h6 className="text-center text-muted text-danger mt-5 pt-5">No more properties to display</h6>}
       </div>
       <div
-        style={{ zIndex: +1, backgroundColor: "#e5e5e5", borderBottomLeftRadius: "20px", borderBottomRightRadius: "20px" }}
+        style={{ zIndex: +1, borderBottomLeftRadius: "20px", borderBottomRightRadius: "20px", marginTop: "40px" }}
         className="paginate py-3 col-12 d-flex justify-content-center"
       >
         <button onClick={() => goToPrevPage()} disabled={page === "0"} className="btn btn-primary me-4">
-          Perv
+          Prev
         </button>
-        Page {page}
-        <button onClick={() => goToNextPage()} className="btn btn-primary ms-4">
+        Page {parseInt(page) + 1}
+        <button onClick={() => goToNextPage()} disabled={searchResults.length === 0} className="btn btn-primary ms-4">
           Next
         </button>
       </div>
