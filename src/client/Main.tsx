@@ -149,6 +149,15 @@ const Main = () => {
             <Route path="temp" element={<TempHome />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
             <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
+            <Route
+              path="payments/rent/success"
+              element={
+                <h5 className="text-center mt-5 text-success">
+                  Your reocurring payment is now setup <br />
+                  <i className="fs-2 bi bi-calendar-check-fill" />
+                </h5>
+              }
+            />
             <Route path="enquiries" element={<RequireLogin view={<MessageEnquiries />} />} />
             <Route path="admin/listings" element={<RequirePermission view={<AdminViewListings />} roles={["landlord", "admin"]} />} />
             <Route path="*" element={<h1 className="text-center pt-5">Theres nothing here: 404!</h1>} />

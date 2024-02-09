@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import Stripe from "stripe";
 import ListingLandlord from "../../database/models/listing_landlord";
+import Listing from "../../database/models/listing";
+import dayjs from "dayjs";
 
 export const createNewRentMonthly = async (req: Request, res: Response) => {
   if (req.session.user?.accountType !== "admin") return res.status(401).json({ message: "Unauthorized " });
@@ -14,27 +16,49 @@ export const createNewRentMonthly = async (req: Request, res: Response) => {
   //     cvv: cvv
 
   try {
-    const productName = req.body.productName;
     const USDCents = parseFloat(amountUSD) * 100;
     const stripeConnector = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2023-10-16" });
 
-    const newPrice = await stripeConnector.prices.create({
-      currency: "usd",
-      unit_amount: USDCents,
-      recurring: {
-        interval: "month"
-      },
-      product_data: {
-        name: `monthly_rent_${listingId}`
-      }
+    let foundProduct = await stripeConnector.products.search({
+      query: `name:'monthly_rent_${listingId}'`
     });
 
+    let newPrice;
+    if (foundProduct.data.length === 0) {
+      newPrice = await stripeConnector.prices.create({
+        currency: "usd",
+        unit_amount: USDCents,
+        recurring: {
+          interval: "month"
+        },
+        product_data: {
+          name: `monthly_rent_${listingId}`
+        }
+      });
+    } else {
+      newPrice = await stripeConnector.prices.search({
+        query: `product:'${foundProduct.data[0].id}'`
+      });
+    }
+
     const paymentSession = await stripeConnector.checkout.sessions.create({
-      line_items: [{ price: newPrice.id, quantity: 1 }],
+      line_items: [{ price: foundProduct.data.length === 0 ? newPrice.id : newPrice.data[0].id, quantity: 1 }],
       mode: "subscription",
-      success_url: "/payments/rent/success",
-      cancel_url: "/"
+      success_url: `${process.env.BASE_URL}/payments/rent/success`,
+      cancel_url: `${process.env.BASE_URL}/`
     });
+
+    const now = dayjs();
+    await Listing.update(
+      {
+        stripePaymentLink: {
+          url: paymentSession.url || "",
+          expiresAtUnixSeconds: paymentSession.expires_at,
+          generatedAt: now.format("YYYY-MM-DD HH:MM:ss:SSS ZZ")
+        }
+      },
+      { where: { id: listingId } }
+    );
 
     // TODO save recent PaymentURL in DB
     return res.json({ paymentURL: paymentSession.url });

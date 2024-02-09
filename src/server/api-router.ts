@@ -9,7 +9,7 @@ import {
   registerUser,
   resendVerificationToUserEmail
 } from "./routes/auth";
-import { ensureAuthentication, ensureLogout } from "./middlewareFunctions/auth-middleware";
+import { ensureAdmin, ensureAuthentication, ensureLogout } from "./middlewareFunctions/auth-middleware";
 import multer from "multer";
 import dayjs from "dayjs";
 import {
@@ -75,7 +75,7 @@ router.get("/message/enquiry/:enquiryConversationId", ensureAuthentication, getM
 router.post("/message/enquiry", ensureAuthentication, sendMessageToConversation);
 
 // /api/payments  routes
-router.post("/payment/single-payment/:listingId", ensureAuthentication, createNewRentMonthly);
+router.post("/payment/rent/create/monthly-payment-link", ensureAdmin, createNewRentMonthly);
 router.post("/payment/webhook", express.raw({ type: "application/json" }), stripeWebhook);
 
 // feedback

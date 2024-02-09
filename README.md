@@ -27,4 +27,8 @@ the ./dist folder is the production bundle of the application
 sharp package might error upon nmp install:  "npm install --unsafe-perm" may work
 Also package version and node combo had to be exact node 14.17.6 and sharp 0.29.1
 
- ß
+# Stripe
+- Test Credit Card Number
+ 4242 4242 4242 4242
+ Expire - any data in future
+ Cvv - any 3 digit

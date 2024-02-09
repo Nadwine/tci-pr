@@ -1,8 +1,11 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Accordion, Button, Card } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
+import Listing from "../../database/models/listing";
+import { toast } from "react-toastify";
+import dayjs from "dayjs";
 
 const ListingPayment = props => {
   const params = useParams();
@@ -13,19 +16,41 @@ const ListingPayment = props => {
   const [cardNumber, setCardNumber] = useState("");
   const [expiration, setExpiration] = useState("");
   const [cvv, setCvv] = useState("");
+  const [listing, setListing] = useState<Listing>();
+  const [loading, setLoading] = useState(true);
 
-  const submitPayment = async () => {
-    if (!amountUSD || !cardHolderName || cardNumber || !expiration || !cvv || !paymentReference) return;
-
-    await axios.post(`/payments/single-payment/${listingId}`, {
-      paymentReference: paymentReference,
-      amountUSD: Number(amountUSD).toFixed(2),
-      cardHolderName: cardHolderName,
-      cardNumber: cardNumber,
-      expiration: expiration,
-      cvv: cvv
-    });
+  const initialFetch = async () => {
+    const res = await axios.get(`/api/listing/rent/${listingId}`);
+    if (res.status === 200) {
+      setListing(res.data);
+      setLoading(false);
+    } else {
+      console.log(`/api/listing/rent/${listingId}`, res);
+    }
   };
+
+  useEffect(() => {
+    initialFetch();
+  }, []);
+
+  const submitPaymentLinkCreation = async () => {
+    if (!listing) return;
+
+    try {
+      const res = await axios.post("/api/payment/rent/create/monthly-payment-link", {
+        amountUSD: listing?.PropertyForRent.rentAmount,
+        listingId: listing?.id
+      });
+      if (res.status === 200) toast.success("Payment link successfully generated");
+    } catch {
+      toast.error("Error while generating this link");
+    }
+    initialFetch();
+  };
+
+  const now = dayjs();
+  const linkGeneratedAt = listing?.stripePaymentLink?.generatedAt;
+  const islinkExpired = dayjs(linkGeneratedAt).add(23, "hours").isBefore(now);
 
   return (
     <div className="listing-payment">
@@ -35,50 +60,33 @@ const ListingPayment = props => {
           <Card>
             <Card.Header>
               <Accordion.Toggle as={Button} variant="link" eventKey="0" style={{ width: "100%", display: "flex" }}>
-                Generate Payment Link
+                Payment Link
                 <i className="bi bi-chevron-down ms-auto" />
               </Accordion.Toggle>
             </Card.Header>
             <Accordion.Collapse eventKey="0">
               <Card.Body>
-                <div className="mb-3">
-                  <label htmlFor="exampleFormControlInput1" className="form-label pe-4">
-                    Payment reference
-                  </label>
-                  <input type="text" className="form-control-sm" value={paymentReference} onChange={e => setPaymentReference(e.target.value)} />
+                <h6 className="pb-3">Reoccurring Payment</h6>
+                <div>
+                  <div>
+                    Amount ${listing?.PropertyForRent.rentAmount}
+                    <br />
+                    Interval: Monthly
+                  </div>
                 </div>
-                <div className="mb-3">
-                  <label htmlFor="exampleFormControlInput1" className="form-label pe-3">
-                    Charge Amount USD
-                  </label>
-                  <input type="text" className="form-control-sm" value={amountUSD} onChange={e => setAmountUSD(e.target.value)} />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="exampleFormControlInput1" className="form-label">
-                    Card Holder Name
-                  </label>
-                  <input type="text" className="form-control border-2 border-dark" value={cardHolderName} onChange={e => setCardHolderName(e.target.value)} />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="exampleFormControlInput1" className="form-label">
-                    Card Number
-                  </label>
-                  <input type="text" className="form-control border-2" value={cardNumber} onChange={e => setCardNumber(e.target.value)} />
-                </div>
-                <div className="mb-3 mt-5">
-                  <label htmlFor="exampleFormControlInput1" className="form-label me-2">
-                    Expiration
-                  </label>
-                  <input type="text" className="form-control-sm border-dark" value={expiration} onChange={e => setExpiration(e.target.value)} />
-
-                  <label htmlFor="exampleFormControlInput1" className=" ms-5 form-label me-2">
-                    CVV
-                  </label>
-                  <input type="text" className="form-control-sm border-primary" value={cvv} onChange={e => setCvv(e.target.value)} />
-                </div>
+                {listing?.stripePaymentLink && (
+                  <div className="pt-5">
+                    Generated At: {dayjs(linkGeneratedAt).format("MMMM DD YYYY HH:MM:ss a")}
+                    <br />
+                    Link Status: {islinkExpired ? "Expired" : "Active"}
+                    <code className="card">
+                      <a href={listing.stripePaymentLink.url}>{listing.stripePaymentLink.url}</a>
+                    </code>
+                  </div>
+                )}
                 <div className="mt-5">
-                  <button onClick={() => submitPayment()} className="btn btn-success">
-                    Process Payment
+                  <button disabled={linkGeneratedAt ? !islinkExpired : false} onClick={() => submitPaymentLinkCreation()} className="btn btn-success">
+                    Generate New Link
                   </button>
                 </div>
               </Card.Body>
