@@ -79,7 +79,7 @@ const Home = props => {
         <div className="justify-content-center align-items-center">
           <h1
             className="text-light position-absolute text-center w-100"
-            style={{ zIndex: +1, position: "relative", paddingTop: "80px", color: "white", textAlign: "center" }}
+            style={{ zIndex: +1, position: "relative", paddingTop: "60px", color: "white", textAlign: "center" }}
           >
             The Perfect Space Awaits
           </h1>
@@ -90,7 +90,7 @@ const Home = props => {
             <img src="/static/home-photo.jpg" style={{ padding: "0px", marginLeft: "0px", zIndex: 0, maxWidth: "1250px" }} className="banner-img"></img>
           </div>
         </div>
-        <div className="position-absolute col-12 d-flex justify-content-center" style={{ top: 180 }}>
+        <div className="position-absolute col-12 d-flex justify-content-center" style={{ top: 150 }}>
           <div className="col-12 col-md-8 mt-5 border border-light px-2 p-3" style={{ zIndex: +1, position: "relative", borderRadius: "15px" }}>
             <div className="input-group">
               <input
@@ -125,7 +125,7 @@ const Home = props => {
         </div>
         {/**Small screen -------------------------------------------------------------> */}
         {mobileView && (
-          <div className="suggestions text-center text-dark" style={{ zIndex: +1, position: "relative", marginTop: "130px" }}>
+          <div className="suggestions text-center text-dark" style={{ zIndex: +1, position: "relative", marginTop: "100px" }}>
             <div className="card shadow-sm" style={{ marginBottom: "10px" }}>
               <div className="card-body">
                 <i className="bi bi-house-fill"></i> Long Term Rentals {"(dummy)"}
