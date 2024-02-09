@@ -77,16 +77,20 @@ const Home = props => {
     <div className="home justify-content-center align-items-center" style={{ paddingLeft: "0px", paddingTop: "0px", paddingRight: "0px" }}>
       <div className="welcome-search justify-content-center">
         <div className="justify-content-center align-items-center">
-          <img
-            src="/static/home-photo.jpg"
-            style={{ position: "absolute", padding: "0px", maxHeight: "360px", marginLeft: "0px" }}
-            className="banner-img"
-          ></img>
-          <h1 className="text-light" style={{ zIndex: +1, position: "relative", paddingTop: "80px", color: "white", textAlign: "center" }}>
+          <h1
+            className="text-light position-absolute text-center w-100"
+            style={{ zIndex: +1, position: "relative", paddingTop: "80px", color: "white", textAlign: "center" }}
+          >
             The Perfect Space Awaits
           </h1>
+          <div
+            className="text-center"
+            style={{ maxHeight: "500px", overflow: "hidden", backgroundImage: `url(${"/static/home-photo.jpg"})`, filter: "blur(4px)" }}
+          >
+            <img src="/static/home-photo.jpg" style={{ padding: "0px", marginLeft: "0px", zIndex: 0, maxWidth: "1250px" }} className="banner-img"></img>
+          </div>
         </div>
-        <div className="col-12 d-flex justify-content-center">
+        <div className="position-absolute col-12 d-flex justify-content-center" style={{ top: 180 }}>
           <div className="col-12 col-md-8 mt-5 border border-light px-2 p-3" style={{ zIndex: +1, position: "relative", borderRadius: "15px" }}>
             <div className="input-group">
               <input
@@ -136,7 +140,7 @@ const Home = props => {
         )}
         {/**Big screen -------------------------------------------------------------> */}
         {!mobileView && (
-          <div className="col-12 d-flex justify-content-center" style={{ marginTop: "100px" }}>
+          <div className="col-12 d-flex justify-content-center" style={{ marginTop: "-70px" }}>
             <div className="card" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
               <img src={listing1?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
               <div className="card-body">
