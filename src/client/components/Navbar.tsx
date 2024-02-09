@@ -96,7 +96,7 @@ function Navbar() {
                   {user?.email.charAt(0).toUpperCase()}
                 </span>
                 <div className={`dropdown-menu dropdown-menu-light mt-3 ${shouldShowUserDropDown}`} style={{ left: "auto", right: 0 }}>
-                  <a href="/my-profile" className="dropdown-item">
+                  <a href="/user" className="dropdown-item">
                     My Profile
                   </a>
                   {user.accountType === "admin" && (
