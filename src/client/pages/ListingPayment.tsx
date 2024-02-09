@@ -84,7 +84,8 @@ const ListingPayment = props => {
                     </code>
                   </div>
                 )}
-                <div className="mt-5">
+                <div className="mt-5">{linkGeneratedAt && "Please send this link to the respected tenant"}</div>
+                <div className="mt-2">
                   <button disabled={linkGeneratedAt ? !islinkExpired : false} onClick={() => submitPaymentLinkCreation()} className="btn btn-success">
                     Generate New Link
                   </button>
