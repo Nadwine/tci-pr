@@ -13,6 +13,7 @@ import PropertyForSale from "../../database/models/property_for_sale";
 import User from "../../database/models/user";
 import ListingQuestion from "../../database/models/listing_question";
 import EnquiryConversation from "../../database/models/enquiry_conversation";
+import { current } from "@reduxjs/toolkit";
 
 const s3Bucket = new S3({
   s3ForcePathStyle: true,
@@ -666,6 +667,31 @@ export const deleteRentListingById = async (req: Request, res: Response) => {
     await Listing.destroy({ where: { id: listingId }, cascade: true });
 
     return res.status(200).json({ message: "Success" });
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
+export const getRandomListings = async (req: Request, res: Response) => {
+  try {
+    const listings = await Listing.findAll({
+      limit: 5000,
+      include: [
+        { model: Address },
+        { model: PropertyForRent },
+        { model: PropertyForSale },
+        { model: ListingMedia, order: [["id", "ASC"]] },
+        { model: Admin, include: [User] }
+      ]
+    });
+
+    const shuffled = listings
+      .map(value => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+
+    // randomize array results here before return
+    return res.status(200).json(shuffled);
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error", err });
   }

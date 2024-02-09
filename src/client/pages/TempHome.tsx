@@ -136,51 +136,8 @@ const Home = props => {
         )}
         {/**Big screen -------------------------------------------------------------> */}
         {!mobileView && (
-          <div className="col-12 d-flex justify-content-center" style={{ marginTop: "100px" }}>
-            <div className="card" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
-              <img src={listing1?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
-              <div className="card-body">
-                <h5 className="card-title">{listing1?.title}</h5>
-                <p>
-                  <a className="link-dark link-underline-light" href={`property/rent/${listing1?.id}`}>
-                    {listing1?.Address.addressLine1}
-                  </a>
-                </p>
-              </div>
-            </div>
-            <div className="card" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
-              <img src={listing2?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
-              <div className="card-body">
-                <h5 className="card-title">{listing2?.title}</h5>
-                <p className="card-text">
-                  <a className="link-dark link-underline-light" href={`property/rent/${listing2?.id}`}>
-                    {listing2?.Address.addressLine1}
-                  </a>
-                </p>
-              </div>
-            </div>
-            <div className="card" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
-              <img src={listing3?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
-              <div className="card-body">
-                <h5 className="card-title">{listing3?.title}</h5>
-                <p className="card-text">
-                  <a className="link-dark link-underline-light" href={`property/rent/${listing3?.id}`}>
-                    {listing3?.Address.addressLine1}
-                  </a>
-                </p>
-              </div>
-            </div>
-            <div className="card" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
-              <img src={listing4?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
-              <div className="card-body">
-                <h5 className="card-title">{listing4?.title}</h5>
-                <p className="card-text">
-                  <a className="link-dark link-underline-light" href={`property/rent/${listing4?.id}`}>
-                    {listing4?.Address.addressLine1}
-                  </a>
-                </p>
-              </div>
-            </div>
+          <div>
+            <p>Dummy</p>
           </div>
         )}
       </div>

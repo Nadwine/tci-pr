@@ -137,7 +137,7 @@ const SearchRentResults = props => {
             </div>
           </div>
         ))}
-        {searchResults.length === 0 && <h6 className="text-center text-muted text-danger mt-5 pt-5">No more properties to display</h6>}
+        {searchResults.length === 0 && <h6 className="text-center text-muted text-danger mt-5 pt-5">No properties to display</h6>}
       </div>
       <div
         style={{ zIndex: +1, borderBottomLeftRadius: "20px", borderBottomRightRadius: "20px", marginTop: "40px" }}

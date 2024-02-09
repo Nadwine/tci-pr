@@ -35,7 +35,8 @@ async function initialiseModels() {
       "profile.ts",
       "profile_media.ts",
       "enquiry_conversation.ts",
-      "message.ts"
+      "message.ts",
+      "feedback.ts"
     ];
     const files = await fs.readdir("./src/database/models");
     files.sort(function (a, b) {

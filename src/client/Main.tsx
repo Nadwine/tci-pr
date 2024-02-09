@@ -37,6 +37,8 @@ import AdminViewListings from "./pages/AdminViewListings";
 import EditRentListing from "./pages/EditRentListing";
 import ListingPayment from "./pages/ListingPayment";
 import Products from "./pages/Products";
+import Feedback from "./pages/Feedback";
+import TempHome from "./pages/TempHome";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -143,6 +145,8 @@ const Main = () => {
             <Route path="search/rent" element={<SearchRentResults />} />
             <Route path="help" element={<Help />} />
             <Route path="products" element={<Products />} />
+            <Route path="feedback" element={<Feedback />} />
+            <Route path="temp" element={<TempHome />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
             <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
             <Route path="enquiries" element={<RequireLogin view={<MessageEnquiries />} />} />
