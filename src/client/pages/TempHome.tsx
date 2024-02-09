@@ -14,7 +14,7 @@ islands.forEach(i => {
   islandAndSettlements = [...islandAndSettlements, ...i.settlements];
 });
 
-const Home = props => {
+const TempHome = props => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchText, setSearchText] = useState("");
@@ -145,4 +145,4 @@ const Home = props => {
   );
 };
 
-export default connect()(Home);
+export default connect()(TempHome);
