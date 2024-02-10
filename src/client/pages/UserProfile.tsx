@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { connect } from "react-redux";
+import { RootState } from "../redux/store";
 const UserProfile = props => {
   return (
-    <div className="container">
+    <div className="container px-5 pt-5">
       <div>
-        <h3 style={{ margin: "30px", paddingLeft: "45px" }}>Hello User!</h3>
+        <h3 className="pb-3">User Profile</h3>
       </div>
-      <div className="d-flex flex-row">
-        <div className="card shadow-sm" style={{ width: "25%", height: "50%", marginLeft: "70px", padding: "10px", marginRight: "10px", borderRadius: "10px" }}>
-          <div className="card" style={{ margin: "2px" }}>
+
+      <div className="col-12 d-flex flex-wrap w-100">
+        <div className="col-12 col-md-3 col-lg-3 card shadow-sm p-2" style={{ borderRadius: "10px", height: "fit-content" }}>
+          <div className="card">
             <div className="card-body border-bottom">Profile Details</div>
           </div>
-          <div className="card" style={{ margin: "2px" }}>
+          <div className="card">
             <div className="card-body border-bottom">Account Details</div>
           </div>
         </div>
-        <div className="card shadow-sm" style={{ width: "65%", height: "60%", padding: "20px", borderRadius: "10px", marginBottom: "60px" }}>
+        <div className="col-12 col-md-9 col-lg-9 card shadow-sm" style={{ padding: "20px", borderRadius: "10px" }}>
           <div className="card" style={{ margin: "15px" }}>
             <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "10px" }}>
               <h5 className="card-title">Name</h5>
