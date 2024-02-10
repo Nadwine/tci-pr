@@ -1,28 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { connect } from "react-redux";
 import { RootState } from "../redux/store";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isCollapsed, setIsCollapse] = useState(true);
   const [userDropDownShow, setUserDropDownShow] = useState(false);
   const user: any = useSelector((reduxState: RootState) => reduxState.auth.user);
   const isLoggedIn = Boolean(user?.id);
   const numberOfNewMessages = useSelector((root: RootState) => root.message.numberOfNewMessages);
+  const [isHome, setIsHome] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setIsHome(true);
+    } else {
+      setIsHome(false);
+    }
+  }, [location.key]);
 
   const logout = async () => {
     await axios.get("/logout");
   };
 
   console.log("loggedIn", isLoggedIn);
+  console.log(location.pathname);
 
   const dynamicClassName = isCollapsed ? "collapse navbar-collapse" : "navbar-collapse";
   const shouldShowUserDropDown = isCollapsed === false ? "show" : userDropDownShow ? "show" : "";
   return (
-    <nav className="navbar navbar-expand-md navbar-light fixed-top bg-light px-0 shadow-sm">
+    <nav className={`${isHome && "nav-home"} navbar navbar-expand-md navbar-light fixed-top bg-light px-0 shadow-sm`}>
       <div className="container-xl">
         {/* <!-- Logo --> */}
         <a className="navbar-brand d-flex flex-row" href="/">
@@ -47,7 +58,7 @@ function Navbar() {
 
         {/* notification icons Start */}
         {isLoggedIn && (
-          <div className="d-flex" style={{ position: "fixed", display: "flex !important", top: "10px", right: "7%" }}>
+          <div className="d-flex" style={{ position: "fixed", display: "flex !important", top: "10px", right: "10%" }}>
             {/* <div className="nav-item nav-link  ms-2 text-muted">
             <span className="bi bi-bell-fill fs-5 position-relative">
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
@@ -55,7 +66,7 @@ function Navbar() {
               </span>
             </span>
           </div> */}
-            <div className="nav-item nav-link pe-5 text-muted">
+            <div className="pe-5 nav-item nav-link text-muted">
               <span onClick={() => navigate("enquiries")} className="bi bi-chat-dots-fill fs-5 position-relative point">
                 <span
                   className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"

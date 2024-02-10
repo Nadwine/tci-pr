@@ -12,7 +12,7 @@
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding-top: 4.5rem;
+  padding-top: 4.1rem;
   min-height: 100vh;
 }
 
@@ -136,6 +136,10 @@ body {
 |*====================================================*/
 .banner-img {
   width: 100%;
+}
+
+.nav-home {
+  background-color: #ffd05b !important;
 }
 
 .homepage-autocomplete{
