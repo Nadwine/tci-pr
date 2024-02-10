@@ -76,22 +76,18 @@ const Home = props => {
   return (
     <div className="home justify-content-center align-items-center" style={{ paddingLeft: "0px", paddingTop: "0px", paddingRight: "0px" }}>
       <div className="welcome-search justify-content-center">
-        <div className="justify-content-center align-items-center">
-          <h1
-            className="text-light position-absolute text-center w-100"
-            style={{ zIndex: +1, position: "relative", paddingTop: "60px", color: "white", textAlign: "center" }}
-          >
+        <div className="justify-content-center shadow-sm align-items-center" style={{ height: "300px", marginLeft: "0px", transform: "rotate(-1deg)" }}>
+          {/* <div
+            // src="/static/home-photo.jpg"
+            style={{ height: "300px", marginLeft: "0px", transform: "rotate(0deg)", backgroundColor: "blue" }}
+            className="banner-img"
+          ></div> */}
+          <h1 className="text-dark position-absolute text-center w-100" style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center" }}>
             The Perfect Space Awaits
           </h1>
-          <div
-            className="text-center"
-            style={{ maxHeight: "500px", overflow: "hidden", backgroundImage: `url(${"/static/home-photo.jpg"})`, filter: "blur(4px)" }}
-          >
-            <img src="/static/home-photo.jpg" style={{ padding: "0px", marginLeft: "0px", zIndex: 0, maxWidth: "1250px" }} className="banner-img"></img>
-          </div>
         </div>
         <div className="position-absolute col-12 d-flex justify-content-center" style={{ top: 150 }}>
-          <div className="col-12 col-md-8 mt-5 border border-light px-2 p-3" style={{ zIndex: +1, position: "relative", borderRadius: "15px" }}>
+          <div className="col-12 col-md-8 mt-5 border border-dark px-2 p-3" style={{ zIndex: +1, position: "relative", borderRadius: "15px" }}>
             <div className="input-group">
               <input
                 value={searchText}
@@ -125,7 +121,7 @@ const Home = props => {
         </div>
         {/**Small screen -------------------------------------------------------------> */}
         {mobileView && (
-          <div className="suggestions text-center text-dark" style={{ zIndex: +1, position: "relative", marginTop: "100px" }}>
+          <div className="suggestions text-center text-dark" style={{ zIndex: +1, position: "relative", marginTop: "130px" }}>
             <div className="card shadow-sm" style={{ marginBottom: "10px" }}>
               <div className="card-body">
                 <i className="bi bi-house-fill"></i> Long Term Rentals {"(dummy)"}
@@ -140,7 +136,7 @@ const Home = props => {
         )}
         {/**Big screen -------------------------------------------------------------> */}
         {!mobileView && (
-          <div className="col-12 d-flex justify-content-center" style={{ marginTop: "-70px" }}>
+          <div className="col-12 d-flex justify-content-center" style={{ marginTop: "150px" }}>
             <div className="card" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
               <img src={listing1?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
               <div className="card-body">

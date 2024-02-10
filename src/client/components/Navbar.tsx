@@ -47,7 +47,7 @@ function Navbar() {
 
         {/* notification icons Start */}
         {isLoggedIn && (
-          <div className="d-flex" style={{ position: "fixed", display: "flex !important", top: "10px", right: "12%" }}>
+          <div className="d-flex" style={{ position: "fixed", display: "flex !important", top: "10px", right: "7%" }}>
             {/* <div className="nav-item nav-link  ms-2 text-muted">
             <span className="bi bi-bell-fill fs-5 position-relative">
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
@@ -57,7 +57,10 @@ function Navbar() {
           </div> */}
             <div className="nav-item nav-link pe-5 text-muted">
               <span onClick={() => navigate("enquiries")} className="bi bi-chat-dots-fill fs-5 position-relative point">
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
+                <span
+                  className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                  style={{ fontSize: "0.6rem", float: "right" }}
+                >
                   {numberOfNewMessages > 0 && numberOfNewMessages}
                 </span>
               </span>
