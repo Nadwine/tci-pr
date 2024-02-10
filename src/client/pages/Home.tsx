@@ -76,18 +76,18 @@ const Home = props => {
   return (
     <div className="home justify-content-center align-items-center" style={{ paddingLeft: "0px", paddingTop: "0px", paddingRight: "0px" }}>
       <div className="welcome-search justify-content-center">
-        <div className="justify-content-center shadow-sm align-items-center" style={{ height: "300px", marginLeft: "0px", transform: "rotate(-1deg)" }}>
-          {/* <div
-            // src="/static/home-photo.jpg"
-            style={{ height: "300px", marginLeft: "0px", transform: "rotate(0deg)", backgroundColor: "blue" }}
-            className="banner-img"
-          ></div> */}
-          <h1 className="text-dark position-absolute text-center w-100" style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center" }}>
+        <div className="justify-content-center shadow-sm align-items-center" style={{ height: "300px", marginLeft: "0px" }}>
+          <img
+            src="/static/home-photo2.jpg"
+            style={{ position: "absolute", padding: "0px", maxHeight: "360px", marginLeft: "0px", width: "100%", filter: "blur(4px)" }}
+            className="home-photo.jpg"
+          ></img>
+          <h1 className="text-light position-absolute text-center w-100" style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center" }}>
             The Perfect Space Awaits
           </h1>
         </div>
         <div className="position-absolute col-12 d-flex justify-content-center" style={{ top: 150 }}>
-          <div className="col-12 col-md-8 mt-5 border border-dark px-2 p-3" style={{ zIndex: +1, position: "relative", borderRadius: "15px" }}>
+          <div className="col-12 col-md-8 mt-5 border border-light px-2 p-3" style={{ zIndex: +1, position: "relative", borderRadius: "15px" }}>
             <div className="input-group">
               <input
                 value={searchText}

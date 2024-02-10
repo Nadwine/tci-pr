@@ -138,9 +138,9 @@ body {
   width: 100%;
 }
 
-.nav-home {
-  background-color: #ffd05b !important;
-}
+/* .nav-home {
+  background-color: #346e9e !important;
+} */
 
 .homepage-autocomplete{
   @media (min-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */ width: 73%; }
