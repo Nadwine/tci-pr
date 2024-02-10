@@ -232,7 +232,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
     // username or email match query
     const foundUser: User | null = await User.findOne({
-      where: { email: nameOrEmail }
+      where: { email: nameOrEmail.toLowerCase() }
     });
 
     if (!foundUser) {
