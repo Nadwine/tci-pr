@@ -1,4 +1,5 @@
 import React from "react";
+import { Dropdown } from "react-bootstrap";
 import { connect } from "react-redux";
 
 type FilterSearchDesktopProps = {
@@ -6,6 +7,8 @@ type FilterSearchDesktopProps = {
   searchRent: () => void;
   searchText: string;
 };
+
+const getMultiples = (f: number, limit: number) => [...Array(Math.floor(limit / f))].map((_, i) => f * (i + 1));
 
 const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
   const { searchRent, setSearchText, searchText } = props;
@@ -25,6 +28,33 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
           className="form-control"
           placeholder="Search ......"
         />
+        <ul className="list-group">
+          <li className="list-group-item d-flex flex-column">
+            Price
+            <div className="d-flex flex-row justify-content-between">
+              <Dropdown>
+                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                  Max
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {getMultiples(100, 2000).map((v, i) => (
+                    <Dropdown.Item key={i}>{v}</Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+              <Dropdown>
+                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                  Min
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {getMultiples(100, 2000).map((v, i) => (
+                    <Dropdown.Item key={i}>{v}</Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   );
