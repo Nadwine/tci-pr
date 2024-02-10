@@ -76,19 +76,20 @@ const Home = props => {
     <div className="home justify-content-center align-items-center" style={{ paddingLeft: "0px", paddingTop: "0px", paddingRight: "0px" }}>
       <div className="welcome-search justify-content-center">
         <div className="justify-content-center shadow-sm align-items-center" style={{ height: "300px", marginLeft: "0px" }}>
-          <img
-            src="/static/home-photo2.jpg"
+          <div
+            className="image-container"
             style={{
               position: "absolute",
               padding: "0px",
               maxHeight: "360px",
               marginLeft: "0px",
               width: "100%",
-              filter: "blur(1px) brightness(74%)",
+              filter: "blur(2px) brightness(74%)",
               overflow: "hidden"
             }}
-            className="home-photo.jpg"
-          ></img>
+          >
+            <img src="/static/home-photo2.jpg" style={{ position: "relative", marginTop: "-2000px" }} className="home-photo.jpg"></img>
+          </div>
           <h1 className="text-light position-absolute text-center w-100" style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center" }}>
             The Perfect Space Awaits
           </h1>
