@@ -141,7 +141,6 @@ body {
 /* .nav-home {
   background-color: #346e9e !important;
 } */
-
 .homepage-autocomplete{
   @media (min-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */ width: 73%; }
   @media (min-width:375px)  { /* smartphones, iPhone, portrait 480x320 phones */ width: 76%; }

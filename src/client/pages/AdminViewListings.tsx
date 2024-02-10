@@ -62,7 +62,7 @@ const AdminViewListings = props => {
   );
 
   return (
-    <div>
+    <div style={{ paddingLeft: "45px" }}>
       <h3 className="ps-md-5 ms-md-5">Listings</h3>
       {idToDelete && <DeleteConfirmModal />}
       {listings.length === 0 && <h6 className="text-center pt-5">No Listings found</h6>}
@@ -70,7 +70,11 @@ const AdminViewListings = props => {
         {listings.map((l, i) => (
           <li key={i} className="list-group-item d-flex flex-row px-md-5">
             <div className="d-flex flex-column ps-md-5">
-              <div className="fw-bold">{l.title}</div>
+              <div className="fw-bold">
+                <a href={`/property/rent/${l.id}`} className="link-dark" style={{ position: "relative" }}>
+                  {l.title}
+                </a>
+              </div>
               {l.PropertyForRent && <div>Rent: ${l.PropertyForRent?.rentAmount}</div>}
               {l.PropertyForSale && <div>Sale: ${l.PropertyForSale?.saleAmount}</div>}
               <div>Location: {l.Address.settlement}</div>

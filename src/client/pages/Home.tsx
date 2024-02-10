@@ -23,7 +23,6 @@ const Home = props => {
   const listing1 = randListings && randListings[0];
   const listing2 = randListings && randListings[1];
   const listing3 = randListings && randListings[2];
-  const listing4 = randListings && randListings[3];
 
   const mql = window.matchMedia("(max-width: 600px)");
 
@@ -79,7 +78,15 @@ const Home = props => {
         <div className="justify-content-center shadow-sm align-items-center" style={{ height: "300px", marginLeft: "0px" }}>
           <img
             src="/static/home-photo2.jpg"
-            style={{ position: "absolute", padding: "0px", maxHeight: "360px", marginLeft: "0px", width: "100%", filter: "blur(4px) brightness(65%)" }}
+            style={{
+              position: "absolute",
+              padding: "0px",
+              maxHeight: "360px",
+              marginLeft: "0px",
+              width: "100%",
+              filter: "blur(1px) brightness(74%)",
+              overflow: "hidden"
+            }}
             className="home-photo.jpg"
           ></img>
           <h1 className="text-light position-absolute text-center w-100" style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center" }}>
@@ -166,17 +173,6 @@ const Home = props => {
                 <p className="card-text">
                   <a className="link-dark link-underline-light" href={`property/rent/${listing3?.id}`}>
                     {listing3?.Address.addressLine1}
-                  </a>
-                </p>
-              </div>
-            </div>
-            <div className="card" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
-              <img src={listing4?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
-              <div className="card-body">
-                <h5 className="card-title">{listing4?.title}</h5>
-                <p className="card-text">
-                  <a className="link-dark link-underline-light" href={`property/rent/${listing4?.id}`}>
-                    {listing4?.Address.addressLine1}
                   </a>
                 </p>
               </div>
