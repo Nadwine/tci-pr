@@ -1,7 +1,6 @@
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from "sequelize";
 import sequelize from "../sequelize-connection";
 import User from "./user";
-import Address from "./address";
 
 // for typeScript typing
 export default class Profile extends Model<InferAttributes<Profile>, InferCreationAttributes<Profile>> {
@@ -11,8 +10,14 @@ export default class Profile extends Model<InferAttributes<Profile>, InferCreati
   declare firstName: string;
   declare lastName: string;
   declare email: string;
-  declare phonenumber: number;
-  declare Address: CreationOptional<Address>;
+  declare phoneNumber: number;
+  declare addressLine1: string;
+  declare addressLine2?: string;
+  declare city: string;
+  declare settlement: string;
+  declare postcode: string;
+  declare country: string;
+  declare userId: number;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -39,9 +44,33 @@ Profile.init(
       type: DataTypes.STRING,
       allowNull: false
     },
-    phonenumber: {
+    phoneNumber: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    addressLine1: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    addressLine2: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    settlement: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    postcode: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   },
   {
@@ -54,4 +83,3 @@ Profile.init(
 );
 
 Profile.belongsTo(User, { foreignKey: "userId" });
-Address.hasOne(Profile, { foreignKey: "addressId" }); // reverse association

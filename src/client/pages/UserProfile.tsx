@@ -46,7 +46,7 @@ const UserProfile = props => {
           <div className="card" style={{ margin: "15px" }}>
             <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "10px" }}>
               <h5 className="card-title">Telephone</h5>
-              user.phonenumber
+              user.phoneNumber
               <button className="btn btn-white" style={{ float: "right" }}>
                 edit <i className="bi bi-pencil-square" />
               </button>
