@@ -135,7 +135,7 @@ const ViewRentProperty = props => {
                   </div>
                   <div className="beds pt-2">
                     <FontAwesomeIcon className="pe-1" icon={faBath} />
-                    Baths {listing.PropertyForRent.numOfRooms}
+                    Baths {listing.PropertyForRent.numOfBathRooms}
                   </div>
                   <div className="tenants pt-2">
                     <FontAwesomeIcon className="pe-1" icon={faPerson} />

@@ -32,3 +32,10 @@ Also package version and node combo had to be exact node 14.17.6 and sharp 0.29.
  4242 4242 4242 4242
  Expire - any data in future
  Cvv - any 3 digit
+
+# Monzo Card
+Card NO: 5351 9900 6539 4138
+exp: 02/29
+cvv: 297
+Name: Christma Jean-Louis
+Company TCI Homebase Property Management

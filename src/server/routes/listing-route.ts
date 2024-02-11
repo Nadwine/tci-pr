@@ -8,7 +8,7 @@ import PropertyForRent from "../../database/models/property_for_rent";
 import Address from "../../database/models/address";
 import { ListingTypeEnum } from "../../../types/enums";
 import ListingMedia from "../../database/models/listing_media";
-import { Op } from "sequelize";
+import { InferAttributes, Op, WhereOptions } from "sequelize";
 import PropertyForSale from "../../database/models/property_for_sale";
 import User from "../../database/models/user";
 import ListingQuestion from "../../database/models/listing_question";
@@ -360,9 +360,18 @@ export const getRentListingById = async (req: Request, res: Response) => {
 };
 
 export const searchRentListingRoute = async (req: Request, res: Response) => {
+  // TODO Validation opn query values
   const location = String(req.query.location);
   const page = Number(req.query.page || "0");
   const limit = Number(req.query.limit || "10");
+  const minPrice = req.query.minPrice;
+  const maxPrice = req.query.maxPrice;
+  const minBed = req.query.minBed;
+  const maxBed = req.query.maxBed;
+  const minBath = req.query.minBath;
+  const maxBath = req.query.maxBath;
+  const billsIncluded = req.query.bills === "true" ? true : false;
+  const furnished = req.query.furnished === "true" ? true : false;
 
   try {
     const offset = page * limit;
@@ -385,7 +394,18 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
             ]
           }
         },
-        { model: PropertyForRent },
+        {
+          model: PropertyForRent,
+          where: {
+            [Op.and]: [
+              minPrice || maxPrice ? { rentAmount: { [Op.between]: [Number(minPrice || 0), Number(maxPrice || 1000000)] } } : {},
+              minBed || maxBed ? { numOfRooms: { [Op.between]: [Number(minBed || 0), Number(maxBed || 1000000)] } } : {},
+              minBath || maxBath ? { numOfBathRooms: { [Op.between]: [Number(minBath || 0), Number(maxBath || 1000000)] } } : {},
+              req.query.bills !== undefined ? { billsIncluded: billsIncluded } : {},
+              req.query.furnished !== undefined ? { isFurnished: furnished } : {}
+            ]
+          }
+        },
         { model: ListingMedia, order: [["id", "ASC"]] },
         { model: Admin, include: [User] }
       ],

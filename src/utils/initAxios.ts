@@ -29,7 +29,7 @@ export default function initAxios() {
         window.location = error.response.data.redirect;
       }
 
-      return Promise.reject(error);
+      return error;
     }
   );
 
