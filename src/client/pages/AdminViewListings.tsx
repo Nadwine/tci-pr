@@ -62,14 +62,21 @@ const AdminViewListings = props => {
   );
 
   return (
-    <div style={{ paddingLeft: "45px" }}>
-      <h3 className="ps-md-5 ms-md-5">Listings</h3>
+    <div className="px-lg-5 px-md-5">
+      <h3 className="ps-md-5 ms-md-3 mt-5">Listings</h3>
+      <input
+        className="form-control mx-md-5 m-3 shadow-sm"
+        type="text"
+        placeholder="Search..."
+        aria-label="default input example"
+        style={{ width: "25%", borderRadius: "15px" }}
+      ></input>
       {idToDelete && <DeleteConfirmModal />}
       {listings.length === 0 && <h6 className="text-center pt-5">No Listings found</h6>}
-      <ul className="list-group">
+      <ul className="list-group shadow-lg mx-lg-5" style={{ borderRadius: "15px" }}>
         {listings.map((l, i) => (
-          <li key={i} className="list-group-item d-flex flex-row px-md-5">
-            <div className="d-flex flex-column ps-md-5">
+          <li key={i} className="list-group-item d-flex flex-row px-md-3">
+            <div className="d-flex flex-column ps-md-3">
               <div className="fw-bold">
                 <a href={`/property/rent/${l.id}`} className="link-dark" style={{ position: "relative" }}>
                   {l.title}

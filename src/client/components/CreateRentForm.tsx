@@ -96,7 +96,7 @@ const CreateRentForm = props => {
     <div className="create-rent-form d-flex justify-content-center row">
       <div className="col-md-6 col-sm-10 col-lg-5">
         <form onSubmit={handleSubmit} onKeyPress={e => e.key === "Enter" && e.preventDefault()} onKeyUp={e => e.key === "Enter" && e.preventDefault()}>
-          <h4 className="text-center pb-4 pt-3">Add property for rent</h4>
+          <h4 className="text-center pb-4 mt-5">Add property for rent</h4>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
               Island
@@ -307,9 +307,9 @@ const CreateRentForm = props => {
           <div className="mb-3">
             <p className="fs-5 w-100 mb-1">Questions</p>
           </div>
-          <div className="mb-3">
+          <div className="mb-3" style={{ alignItems: "baseline" }}>
             <label htmlFor="sqFt" className="form-label text-muted">
-              What would you like to ask your tenant?
+              What would you like to ask your future tenant?
             </label>
             <div className="d-flex flex-row">
               <input
@@ -320,7 +320,7 @@ const CreateRentForm = props => {
                 className="form-control w-75"
                 onKeyUp={e => e.key === "Enter" && appendQuestion()}
               />
-              <button type="button" onClick={() => appendQuestion()} className="btn btn-primary mt-2 float-end" style={{ marginLeft: "10px" }}>
+              <button type="button" onClick={() => appendQuestion()} className="btn btn-info mt-2 float-end" style={{ marginLeft: "10px" }}>
                 <i className="bi bi-plus" /> Add
               </button>
             </div>
@@ -337,7 +337,8 @@ const CreateRentForm = props => {
               </div>
             </div>
           ))}
-          <button type="submit" id="create-rent-submit-button" className="btn btn-primary" style={{ marginTop: "100px" }}>
+          <hr></hr>
+          <button type="submit" id="create-rent-submit-button" className="btn btn-info mt-3">
             Submit
           </button>
         </form>

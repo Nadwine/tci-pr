@@ -40,6 +40,7 @@ import Products from "./pages/Products";
 import Feedback from "./pages/Feedback";
 import TempHome from "./pages/TempHome";
 import UserProfile from "./pages/UserProfile";
+import AboutUs from "./pages/AboutUs";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -149,6 +150,7 @@ const Main = () => {
             <Route path="feedback" element={<Feedback />} />
             <Route path="temp" element={<TempHome />} />
             <Route path="user" element={<UserProfile />} />
+            <Route path="about" element={<AboutUs />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
             <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
             <Route

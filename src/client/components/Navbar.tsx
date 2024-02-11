@@ -38,9 +38,7 @@ function Navbar() {
         {/* <!-- Logo --> */}
         <a className="navbar-brand d-flex flex-row" href="/">
           <img src="/static/web-logo-cyan.png" style={{ width: "40px" }} className="h-8" alt="..." />
-          <span className="d-flex align-items-center ps-2" style={{ fontSize: "0.7em", fontWeight: "bold" }}>
-            TCI Homebase
-          </span>
+          <span className="d-flex align-items-center fw-bolder fs-6 ps-2">TCI Homebase</span>
         </a>
         {/* <!-- Navbar toggle --> */}
         <button
@@ -66,8 +64,12 @@ function Navbar() {
               </span>
             </span>
           </div> */}
-            <div className="pe-5 nav-item nav-link text-muted">
-              <span onClick={() => navigate("enquiries")} className="bi bi-chat-dots-fill fs-5 position-relative point">
+            {/* <div className="pe-5 nav-item nav-link text-cyan">
+              <span
+                onClick={() => navigate("enquiries")}
+                className="bi bi-chat-dots-fill fs-5 bs-info fw-bold position-relative point"
+                style={{ backgroundColor: "0dcaf0" }}
+              >
                 <span
                   className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                   style={{ fontSize: "0.6rem", float: "right" }}
@@ -75,7 +77,7 @@ function Navbar() {
                   {numberOfNewMessages > 0 && numberOfNewMessages}
                 </span>
               </span>
-            </div>
+            </div> */}
           </div>
         )}
         {/* notification icons End */}
@@ -84,13 +86,16 @@ function Navbar() {
         <div className={dynamicClassName} id="navbarCollapse">
           {/* <!-- Nav --> */}
           <div className="navbar-nav mx-lg-auto">
-            <a className="nav-item nav-link" href="/products" aria-current="page">
+            <a className="nav-item nav-link fw-bold" href="/products" aria-current="page" style={{ color: "#032830" }}>
               Products & Services
             </a>
-            <a className="nav-item nav-link" href="/feedback">
+            <a className="nav-item nav-link fw-bold text-dark" href="/about" style={{ color: "#032830" }}>
+              About Us
+            </a>
+            <a className="nav-item nav-link fw-bold text-dark" href="/feedback" style={{ color: "#032830" }}>
               Report
             </a>
-            <a className="nav-item nav-link" href="/help">
+            <a className="nav-item nav-link fw-bold text-dark" href="/help" style={{ color: "#032830" }}>
               Help
             </a>
           </div>
@@ -99,8 +104,8 @@ function Navbar() {
             <ul className="nav navbar-nav ms-auto pe-2">
               <li className="nav-item dropdown">
                 <span
-                  className="btn btn-link nav-link rounded-circle text-black fs-5"
-                  style={{ width: "45px", height: "45px", backgroundColor: "darkgrey" }}
+                  className="btn btn-link nav-link rounded-circle fw-bold text-dark fs-5"
+                  style={{ width: "45px", height: "45px", backgroundColor: "#0dcaf0" }}
                   onClick={() => {
                     setUserDropDownShow(!userDropDownShow);
                     setIsCollapse(true);
@@ -125,12 +130,9 @@ function Navbar() {
                   )}
                   {user.accountType === "admin" && (
                     <a href="/admin/listings" className="dropdown-item">
-                      Listings
+                      View Listings
                     </a>
                   )}
-                  <a href="#" className="dropdown-item">
-                    Settings
-                  </a>
                   <div className="dropdown-divider"></div>
                   <a href="/logout" className="dropdown-item">
                     Logout
@@ -141,7 +143,7 @@ function Navbar() {
           )}
           {!user && (
             <div className="navbar-nav ms-auto">
-              <a className="nav-item nav-link" href="/login">
+              <a className="nav-item nav-link fw-bold" href="/login" style={{ color: "#032830" }}>
                 Sign in
               </a>
             </div>
@@ -149,7 +151,7 @@ function Navbar() {
           {/* <!-- Action --> */}
           {!user && (
             <div className="d-flex align-items-lg-center mt-lg-0">
-              <a href="/register" className="btn btn-sm w-full w-lg-auto bg-primary text-white">
+              <a href="/register" className="btn btn-md w-full w-lg-auto bg-info fw-bold" style={{ borderRadius: "10px" }}>
                 Register
               </a>
             </div>
