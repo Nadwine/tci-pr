@@ -127,8 +127,8 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
               <Card.Body>
                 <ul className="list-group">
                   <li className="price-filter list-group-item d-flex flex-column">
-                    Price
                     <div className="d-flex flex-row justify-content-between px-lg-5">
+                      Price
                       <Dropdown onSelect={val => setMinPrice(val)}>
                         <Dropdown.Toggle variant="light" id="dropdown-basic">
                           {/* Min */}
@@ -158,8 +158,8 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
                     </div>
                   </li>
                   <li className="price-filter list-group-item d-flex flex-column">
-                    Bedroom
                     <div className="d-flex flex-row justify-content-between px-lg-5">
+                      Bedroom
                       <Dropdown onSelect={val => setMinBed(val)}>
                         <Dropdown.Toggle variant="light" id="dropdown-basic">
                           {/* Min */}
@@ -189,8 +189,8 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
                     </div>
                   </li>
                   <li className="price-filter list-group-item d-flex flex-column">
-                    Bathroom
                     <div className="d-flex flex-row justify-content-between px-lg-5">
+                      Bathroom
                       <Dropdown onSelect={val => setMinBath(val)}>
                         <Dropdown.Toggle variant="light" id="dropdown-basic">
                           {/* Min */}
