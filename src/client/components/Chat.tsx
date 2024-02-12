@@ -49,13 +49,18 @@ export const Chat = (props: Props) => {
         </div>
         <div className="d-flex flex-column col-12 col-md-10 chat-area" style={{ paddingBottom: "60px", height: "50vh", overflow: "scroll" }}>
           {chats.map((msg, i) => (
-            <div className="" key={i} style={{ marginLeft: msg.userId === loggedInUserId ? "auto" : "", marginBottom: "20px" }}>
+            <div className="d-flex" key={i} style={{ marginLeft: msg.userId === loggedInUserId ? "auto" : "", marginBottom: "20px" }}>
+              {msg.userId !== loggedInUserId && (
+                <div className="pe-1">
+                  <i className="bi bi-person-circle"></i>
+                </div>
+              )}
               <div
                 className="text-center"
                 style={{
                   borderRadius: "12px",
                   padding: "2px 20px",
-                  backgroundColor: msg.userId === loggedInUserId ? "#0082ff" : "#c1c1c1",
+                  backgroundColor: msg.userId === loggedInUserId ? "#0082ff" : "#eaecef",
                   color: msg.userId === loggedInUserId ? "white" : "black",
                   width: "fit-content"
                 }}
