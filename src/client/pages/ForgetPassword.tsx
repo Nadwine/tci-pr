@@ -110,9 +110,9 @@ const ForgetPassword = () => {
       {!forgetPasswordStatus && <div className="text-danger text-center">status query missing</div>}
       {forgetPasswordStatus === "pending" && (
         <div>
-          <h2>Please enter your email address</h2>
+          <h2 className="mt-4">Please enter your email address</h2>
           <br /> A password reset link will been sent to your inbox
-          <div className="pt-5 mt-4">
+          <div className="pt-2 mt-4">
             <br />
             <div className="text-danger">{emailValid === false && "Not a valid email"}</div>
             <div className="d-flex pt-3">
@@ -121,41 +121,44 @@ const ForgetPassword = () => {
                   type="text"
                   className=" form-control"
                   style={{ width: "20em", height: "3em" }}
-                  placeholder="email"
+                  placeholder="Email"
                   onChange={e => setEmail(e.target.value)}
                 />
-                <button className="btn btn-primary ms-3">Send</button>
+                <button className="btn btn-info fw-bold ms-3">Send</button>
               </form>
             </div>
           </div>
         </div>
       )}
       {forgetPasswordStatus === "sent" && (
-        <form onSubmit={handlePasswordReset}>
-          <input
-            type="password"
-            name="password"
-            className=" form-control"
-            style={{ width: "20em", height: "3em" }}
-            placeholder="password"
-            onChange={e => setPassword(e.target.value)}
-          />
-          <input
-            type="password"
-            name="confirmPassword"
-            className=" form-control"
-            style={{ width: "20em", height: "3em" }}
-            placeholder="confirm password"
-            onChange={e => setConfirmPassword(e.target.value)}
-          />
-          <button onClick={() => submitPasswordReset()} className="btn btn-primary ms-3">
-            Send
-          </button>
-        </form>
+        <div>
+          <h3 className="fw-bold mt-4 my-4">Enter New Password</h3>
+          <form onSubmit={handlePasswordReset}>
+            <input
+              type="password"
+              name="password"
+              className=" form-control"
+              style={{ width: "20em", height: "3em", marginBottom: "2px" }}
+              placeholder="New Password"
+              onChange={e => setPassword(e.target.value)}
+            />
+            <input
+              type="password"
+              name="confirmPassword"
+              className=" form-control"
+              style={{ width: "20em", height: "3em" }}
+              placeholder="Confirm Password"
+              onChange={e => setConfirmPassword(e.target.value)}
+            />
+            <button onClick={() => submitPasswordReset()} className="btn btn-info fw-bold my-3">
+              Send
+            </button>
+          </form>
+        </div>
       )}
       {forgetPasswordStatus === "completed" && (
         <h1 className="text-success">
-          Your Password Has not been change. Click here to <a href="/login">Login</a>
+          Your Password has now been changed. Click here to <a href="/login">Login</a>
         </h1>
       )}
     </div>

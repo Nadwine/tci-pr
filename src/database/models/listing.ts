@@ -19,6 +19,7 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare description: string;
   declare listingType: ListingTypeEnum; // sales, rent
   declare adminId: number;
+  declare isApproved: boolean;
   declare stripePaymentLink?: { url: string; expiresAtUnixSeconds: number; generatedAt: string };
   declare Admin: CreationOptional<Admin>;
   declare PropertyForRent: CreationOptional<PropertyForRent>;
@@ -52,6 +53,10 @@ Listing.init(
     },
     listingType: {
       type: DataTypes.STRING, // Sale , Rent
+      allowNull: false
+    },
+    isApproved: {
+      type: DataTypes.BOOLEAN,
       allowNull: false
     },
     stripePaymentLink: {
