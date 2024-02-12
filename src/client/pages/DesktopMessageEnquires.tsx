@@ -25,6 +25,12 @@ const MessageEnquiries = props => {
     }
   };
 
+  const submitSeen = async (enq: EnquiryConversation) => {
+    const res = await axios.post("/api/enquiry/set-seen", { enquiryId: enq.id });
+    if (res.status === 200) return;
+    console.log("fail to set msg as seen");
+  };
+
   const sendMessage = async (text: string) => {
     if (!activeConversation || !text) {
       toast.error("error sending message. try again");
@@ -54,7 +60,10 @@ const MessageEnquiries = props => {
     }
   };
 
-  const changeActiveConversation = () => {};
+  const onClickConvo = (enq: EnquiryConversation) => {
+    dispatch(setActiveConversation(enq));
+    submitSeen(enq);
+  };
 
   useEffect(() => {
     loadData();
@@ -70,20 +79,21 @@ const MessageEnquiries = props => {
         {/* Conversation List start */}
         {enquiries.map((enq, i) => {
           const lastMessage = enq.Messages[enq.Messages.length - 1];
+          const hasUnreadMessages = enq.Messages.filter(m => m.userId !== userId && m.seenAt == null).length > 0;
           return (
-            <div className="p-0" onClick={() => dispatch(setActiveConversation(enq))} key={i}>
+            <div className="p-0" onClick={() => onClickConvo(enq)} key={i}>
               {/* <hr style={{ color: "grey" }}></hr> */}
 
-              <div className="card-body border-bottom col-12 d-flex justify-content-start point">
+              <div className="card-body border-bottom col-12 d-flex justify-content-start point" style={{ color: hasUnreadMessages ? "black" : "grey" }}>
                 <div className="card-title col-1 d-flex justify-content-end">
-                  <img src={enq.Listing.ListingMedia.find(m => m.label === "1")?.mediaUrl} style={{ height: "30px", width: "40px" }} />
+                  <img src={enq.Listing.ListingMedia[0]?.mediaUrl} style={{ height: "30px", width: "40px" }} />
                 </div>
                 <div style={{ marginLeft: "10px", width: "100%" }} className="card-title pe-1">
                   <div className="d-flex flex-row">
                     <div style={{ fontWeight: "bold", whiteSpace: "nowrap", width: "13em", overflow: "hidden", textOverflow: "ellipsis", marginRight: "2em" }}>
                       {enq.Listing.title}
                     </div>
-                    <p className="card-text text-muted" style={{ width: "4em" }}>
+                    <p className="card-text text-muted ms-auto" style={{ width: "4em" }}>
                       <small>{dayjs(enq.createdAt).format("MMM D")}</small>
                     </p>
                   </div>
