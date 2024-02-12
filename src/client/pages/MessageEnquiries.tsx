@@ -9,6 +9,7 @@ import Message from "../../database/models/message";
 import { toast } from "react-toastify";
 import { cloneDeep } from "lodash";
 import dayjs from "dayjs";
+import DesktopMessageEnquires from "./DesktopMessageEnquires";
 
 const MessageEnquiries = props => {
   const dispatch = useDispatch();
@@ -16,6 +17,10 @@ const MessageEnquiries = props => {
   const activeConversation = useSelector((root: RootState) => root.message.activeConversation);
   const userId = useSelector((root: RootState) => root.auth.user!.id);
   const [chatTextbox, setChatTextbox] = useState("");
+
+  const mql = window.matchMedia("(max-width: 600px)");
+
+  let mobileView = mql.matches;
 
   const loadData = async () => {
     const res = await axios.get("/api/enquiry/latest");
@@ -61,42 +66,50 @@ const MessageEnquiries = props => {
   }, []);
 
   return enquiries.length > 0 ? (
-    <div className="message-view-wrapper">
-      {/* Conversation List start */}
-      {!activeConversation &&
-        enquiries.map((enq, i) => {
-          const lastMessage = enq.Messages[enq.Messages.length - 1];
-          return (
-            <div onClick={() => dispatch(setActiveConversation(enq))} key={i} className="row" style={{ height: "95px" }}>
-              <hr style={{ color: "grey" }}></hr>
-              <div className="col-12 d-flex justify-content-start me-5 mb-2 point" style={{ height: "60px" }}>
-                <div className="col-1 d-flex justify-content-end">
-                  <img src={enq.Listing.ListingMedia.find(m => m.label === "1")?.mediaUrl} style={{ height: "40px", width: "40px", borderRadius: "5px" }} />
+    <div>
+      {mobileView && (
+        <div className="message-view-wrapper d-md-none d-lg-none d-xl-none">
+          <h3 className="px-4 mt-4 ps-1 fw-bolder">Your Enquiries</h3>
+          <hr className="text-secondary"></hr>
+          {/* Conversation List start */}
+          {!activeConversation &&
+            enquiries.map((enq, i) => {
+              const lastMessage = enq.Messages[enq.Messages.length - 1];
+              return (
+                <div onClick={() => dispatch(setActiveConversation(enq))} key={i} className="row" style={{ height: "95px" }}>
+                  <div className="col-10 d-flex justify-content-start me-5 mt-2 mb-2 point" style={{ height: "60px" }}>
+                    <div className="col-1 d-flex justify-content-end">
+                      <img src={enq.Listing.ListingMedia.find(m => m.label === "1")?.mediaUrl} style={{ height: "40px", width: "40px", borderRadius: "5px" }} />
+                    </div>
+                    <div style={{ marginLeft: "25px", width: "100%" }} className=" pe-1 pe-md-5 pe-lg-5">
+                      <span style={{ fontWeight: "bold" }}>{enq.Listing.title}</span>
+                      <p className="pe-sm-2" style={{ float: "right" }}>
+                        <small>{dayjs(enq.createdAt).format("MMM D")}</small>
+                      </p>
+                      {/**todo: fix elipsis on bigger screen */}
+                      <p style={{ width: "300px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{lastMessage?.messageText}</p>
+                    </div>
+                  </div>
+                  <hr style={{ color: "grey" }}></hr>
                 </div>
-                <div style={{ marginLeft: "25px", width: "100%" }} className=" pe-1 pe-md-5 pe-lg-5">
-                  <span style={{ fontWeight: "bold" }}>{enq.Listing.title}</span>
-                  <p style={{ float: "right" }}>
-                    <small>{dayjs(enq.createdAt).format("MMM D")}</small>
-                  </p>
-                  {/**todo: fix elipsis on bigger screen */}
-                  <p style={{ width: "400px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{lastMessage?.messageText}</p>
-                </div>
-              </div>
-              <hr style={{ color: "grey" }}></hr>
+              );
+            })}
+          {/* Conversation List end */}
+          {activeConversation && (
+            <div className="d-flex flex-column">
+              <Chat onSend={sendMessage} textboxVal={chatTextbox} onChangeTextboxVal={setChatTextbox} />
             </div>
-          );
-        })}
-      {/* Conversation List end */}
-      {activeConversation && (
-        <div className="d-flex flex-column">
-          <Chat onSend={sendMessage} textboxVal={chatTextbox} onChangeTextboxVal={setChatTextbox} />
+          )}
         </div>
       )}
+      {!mobileView && <DesktopMessageEnquires />}
     </div>
   ) : (
-    <div style={{ justifyItems: "center" }}>
+    <div className="my-3 text-center" style={{ justifyItems: "center" }}>
       {" "}
-      <div>No Messages</div>
+      <div>
+        <h3 className="fw-bolder">No Enquiries</h3>
+      </div>
       <div>
         <img src="/static/no-message.png"></img>
       </div>{" "}

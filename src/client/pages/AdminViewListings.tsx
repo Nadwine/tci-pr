@@ -63,7 +63,7 @@ const AdminViewListings = props => {
 
   return (
     <div className="px-lg-5 px-md-5">
-      <h3 className="ps-md-5 ms-md-3 mt-5">Listings</h3>
+      <h3 className="ps-md-5 ms-md-3 mt-5 fw-bolder">Listings</h3>
       <input
         className="form-control mx-md-5 m-3 shadow-sm"
         type="text"

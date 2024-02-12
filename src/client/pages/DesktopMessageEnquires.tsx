@@ -61,10 +61,11 @@ const MessageEnquiries = props => {
   }, []);
 
   return enquiries.length > 0 ? (
-    <div className="d-flex flex-wrap">
+    <div className="d-flex flex-wrap justify-content-center">
+      <h3 className="w-100 my-4 ms-5 fw-bolder">Your Enquiries</h3>
       <div
-        className="card p-0 col-md-4 col-lg-3 ms-5 shadow-sm"
-        style={{ overflow: "scroll", height: "700px", marginTop: "120px", borderTopLeftRadius: "10px", borderBottomLeftRadius: "10px" }}
+        className="card p-0 col-md-4 col-lg-4 shadow-sm"
+        style={{ overflow: "scroll", height: "700px", borderTopLeftRadius: "10px", borderBottomLeftRadius: "10px" }}
       >
         {/* Conversation List start */}
         {enquiries.map((enq, i) => {
@@ -97,10 +98,12 @@ const MessageEnquiries = props => {
         })}
         {/* Conversation List end */}
       </div>
-      <div
-        className="card col-md-8 col-lg-8 shadow-sm"
-        style={{ height: "700px", marginTop: "120px", borderTopRightRadius: "10px", borderBottomRightRadius: "10px" }}
-      >
+      <div className="card col-md-7 col-lg-7 shadow-sm" style={{ height: "700px", borderTopRightRadius: "10px", borderBottomRightRadius: "10px" }}>
+        {!activeConversation && (
+          <div style={{ marginTop: "200px", marginLeft: "320px" }}>
+            <img src="/static/message.png" style={{ height: "200px", width: "160px" }}></img>
+          </div>
+        )}
         {activeConversation && (
           <div className="d-flex flex-column">
             <Chat onSend={sendMessage} textboxVal={chatTextbox} onChangeTextboxVal={setChatTextbox} />

@@ -6,7 +6,7 @@ const UserProfile = props => {
   return (
     <div className="container px-lg-5 px-md-5 pt-5">
       <div>
-        <h3 className="pb-3" style={{ color: "#032830" }}>
+        <h3 className="pb-3 fw-bolder" style={{ color: "#032830" }}>
           User Profile
         </h3>
       </div>

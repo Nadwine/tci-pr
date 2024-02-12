@@ -47,7 +47,7 @@ export const Chat = (props: Props) => {
           <strong>{activeConvoTitle}</strong>
           <button className="btn-close ms-auto" onClick={() => dispatch(setActiveConversation(null))}></button>
         </div>
-        <div className="d-flex flex-column col-12 col-md-10 chat-area" style={{ paddingBottom: "60px", height: "50vh", overflow: "scroll" }}>
+        <div className="d-flex flex-column col-12 col-md-10 chat-area" style={{ paddingBottom: "60px", height: "60vh", overflow: "scroll" }}>
           {chats.map((msg, i) => (
             <div className="d-flex" key={i} style={{ marginLeft: msg.userId === loggedInUserId ? "auto" : "", marginBottom: "20px" }}>
               {msg.userId !== loggedInUserId && (

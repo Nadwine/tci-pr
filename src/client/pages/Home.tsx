@@ -84,11 +84,11 @@ const Home = props => {
               maxHeight: "360px",
               marginLeft: "0px",
               width: "100%",
-              filter: "sepia(20%) saturate(150%) brightness(70%) hue-rotate(341deg) blur(2px)",
+              filter: "sepia(20%) saturate(150%) brightness(70%) hue-rotate(341deg)",
               overflow: "hidden"
             }}
           >
-            <img src="/static/home-photo3.jpg" style={{ position: "relative", marginTop: "-500px" }} className="home-photo.jpg"></img>
+            <img src="/static/home-photo3.jpg" style={{ position: "relative", marginTop: "-200px", width: 2000 }} className="home-photo.jpg"></img>
           </div>
           <h1 className="text-light position-absolute text-center w-100" style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center" }}>
             The Perfect Space Awaits
