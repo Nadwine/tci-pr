@@ -9,6 +9,7 @@ const RegisterConfirm = () => {
   const registerConfirmResult = searchParams.get("result");
   const [emailResender, setEmailResender] = useState("");
   const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [showResend, setShowResend] = useState(false);
 
   useEffect(() => {
     if (registerConfirmResult === "failed") {

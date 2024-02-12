@@ -17,7 +17,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [terms, setTerms] = useState(false);
-  const [registerReason, setRegisterReason] = useState("");
+  const [registerReason, setRegisterReason] = useState("tenant");
   const [touched, setTouched] = useState({});
   const [errors, setErrors]: any = useState({});
 
@@ -125,7 +125,7 @@ const Register = () => {
                 </h1>
               </div>
               <form action="/api/auth/register" method="POST" onSubmit={handleFormSubmit}>
-                {/* <div className="mb-4">
+                <div className="mb-4">
                   <label className="pe-3">What are you looking for</label>
                   <select
                     name="registerReason"
@@ -138,7 +138,7 @@ const Register = () => {
                     <option value="tenant">I am looking for a property</option>
                     <option value="landlord">I am a landlord</option>
                   </select>
-                </div> */}
+                </div>
                 <div className="mb-4">
                   <label className="form-label" htmlFor="email">
                     Email

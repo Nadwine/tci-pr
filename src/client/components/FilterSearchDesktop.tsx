@@ -114,7 +114,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
           <div>Reset filter</div>
         </div>
         <ul className="list-group">
-          <li className="price-filter list-group-item d-flex flex-column">
+          <li className="price-filter list-group-item d-flex flex-column px-lg-5">
             Price
             <div className="d-flex flex-row justify-content-between px-lg-5">
               <Dropdown onSelect={val => setMinPrice(val)}>
@@ -145,7 +145,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
               </Dropdown>
             </div>
           </li>
-          <li className="price-filter list-group-item d-flex flex-column">
+          <li className="price-filter list-group-item d-flex flex-column px-lg-5">
             Bedroom
             <div className="d-flex flex-row justify-content-between px-lg-5">
               <Dropdown onSelect={val => setMinBed(val)}>
@@ -176,7 +176,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
               </Dropdown>
             </div>
           </li>
-          <li className="price-filter list-group-item d-flex flex-column">
+          <li className="price-filter list-group-item d-flex flex-column px-lg-5">
             Bathroom
             <div className="d-flex flex-row justify-content-between px-lg-5">
               <Dropdown onSelect={val => setMinBath(val)}>
@@ -207,7 +207,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
               </Dropdown>
             </div>
           </li>
-          <li className="price-filter list-group-item d-flex flex-row justify-content-between">
+          <li className="price-filter list-group-item d-flex flex-row justify-content-between px-lg-5">
             Bills Included:
             <Dropdown className="px-lg-5" onSelect={(val: any) => setBillsIncluded(val)}>
               <Dropdown.Toggle variant="light" id="dropdown-basic">
@@ -220,7 +220,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
               </Dropdown.Menu>
             </Dropdown>
           </li>
-          <li className="furnished-filter list-group-item d-flex flex-row justify-content-between">
+          <li className="furnished-filter list-group-item d-flex flex-row justify-content-between px-lg-5">
             Furnished:
             <Dropdown className="px-lg-5" onSelect={(val: any) => setFurnished(val)}>
               <Dropdown.Toggle variant="light" id="dropdown-basic">

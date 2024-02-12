@@ -70,6 +70,9 @@ const Login = () => {
                     <label className="form-check-label" htmlFor="check_example">
                       Keep me logged in
                     </label>
+                    <a className="float-end" href="/forget-password/null?status=pending">
+                      Forgot Password?
+                    </a>
                   </div>
                 </div>
                 <div>

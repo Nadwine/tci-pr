@@ -1,12 +1,14 @@
 import express, { NextFunction, Request, Response } from "express";
 import { validate } from "express-yup";
 import {
+  changePasswordFromEmailToken,
   confirmUserAccountFromEmailToken,
   getUserCredentials,
   loginUser,
   logoutUser,
   refreshUserPermission,
   registerUser,
+  resendPasswordResetLinkToUserEmail,
   resendVerificationToUserEmail
 } from "./routes/auth";
 import { ensureAdmin, ensureAuthentication, ensureLogout } from "./middlewareFunctions/auth-middleware";
@@ -52,6 +54,8 @@ router.get("/auth/refresh-perms", refreshUserPermission);
 router.post("/auth/register", ensureLogout, registerUser);
 router.get("/auth/register-confirm/:token", confirmUserAccountFromEmailToken);
 router.post("/auth/resend-verification", resendVerificationToUserEmail);
+router.post("/auth/forget-password/send-email", resendPasswordResetLinkToUserEmail);
+router.post("/auth/forget-password/:token", changePasswordFromEmailToken);
 router.post("/auth/login", loginUser);
 router.get("/auth/logout", logoutUser);
 

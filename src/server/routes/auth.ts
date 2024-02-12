@@ -139,7 +139,7 @@ export const confirmUserAccountFromEmailToken = async (req, res) => {
   try {
     const hashSecret = process.env.EMAIL_TOKEN_HASH_SECRET || "";
     // @ts-ignore
-    const { userEmail } = jwt.verify(token, hashSecret);
+    const { userEmail } = jwt.verify(token, hashSecret); // throws to catch if failed to verify
     const foundUser = await User.findOne({ where: { email: userEmail } });
     if (foundUser) {
       // and he is not already verified
@@ -151,6 +151,36 @@ export const confirmUserAccountFromEmailToken = async (req, res) => {
         // else if he is already verified
         return res.redirect("/login?error=Verification failed. User already verified");
       }
+    } else {
+      // Else if user not found
+      return res.redirect("/register?error=Verification failed. Please complete registration");
+    }
+  } catch (error) {
+    console.log(error);
+    // res.status(400).json({ error: 'Invalid verification link -t' })
+    return res.redirect(`/register-confirm?error=Verification failed ${error}`);
+  }
+};
+
+export const changePasswordFromEmailToken = async (req: Request, res: Response) => {
+  const { token } = req.params;
+  const { password } = req.body;
+  if (!token || typeof token !== "string" || !password || typeof password !== "string") {
+    return res.redirect("/login?error=invalid request");
+  }
+
+  try {
+    const hashSecret = process.env.EMAIL_TOKEN_HASH_SECRET || "";
+    // @ts-ignore
+    const { userEmail } = jwt.verify(token, hashSecret); // throws to catch if failed to verify
+    const foundUser = await User.findOne({ where: { email: userEmail } });
+    if (foundUser) {
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(password, salt);
+      await foundUser.update({
+        password: hashedPassword
+      });
+      return res.redirect("/forget-password?status=complete&message=success");
     } else {
       // Else if user not found
       return res.redirect("/register?error=Verification failed. Please complete registration");
@@ -207,6 +237,53 @@ export const resendVerificationToUserEmail = async (req: Request, res: Response)
         return res.redirect(`/register-confirm?verification_sent=false&email=${email}`);
       } else {
         return res.redirect("/register-confirm?verification_sent=true");
+      }
+    }
+  );
+};
+
+export const resendPasswordResetLinkToUserEmail = async (req: Request, res: Response) => {
+  const email = req.body.email;
+  if (!email || typeof email !== "string") {
+    return res.redirect("/forget-password/null?message=invalid request");
+  }
+  const foundUser = await User.findOne({ where: { email: email } });
+  if (!foundUser) return res.status(200).json({ message: "success" });
+
+  const hashSecret = process.env.EMAIL_TOKEN_HASH_SECRET || "";
+  const emailToken = jwt.sign({ userEmail: email }, hashSecret, {
+    expiresIn: "5h"
+  });
+  const emailLink = `${process.env.BASE_URL}/forget-password/${emailToken}?status=sent`;
+  const html = `<html>Please click this link to reset your password <a href="${emailLink}">${emailLink}</a><html>`;
+
+  const AWS = require("aws-sdk");
+  const ses = new AWS.SES({
+    region: process.env.AWS_SES_REGION,
+    endpoint: process.env.AWS_SES_ENDPOINT,
+    credentials: { accessKeyId: process.env.AWS_SES_KEY, secretAccessKey: process.env.AWS_SES_SECRET }
+  });
+
+  ses.sendEmail(
+    {
+      Destination: { ToAddresses: [email] },
+      Message: {
+        Body: {
+          Html: { Data: html },
+          Text: { Data: html }
+        },
+        Subject: {
+          Data: "Account Verification"
+        }
+      },
+      Source: process.env.AWS_SES_EMAIL_ADDRESS
+    },
+    (emailFailedError, data) => {
+      if (emailFailedError?.message) {
+        console.log("Email Failed To Send Error", emailFailedError.message);
+        return res.redirect(`/forget-password/null?status=pending&message=error while sending email"`);
+      } else {
+        return res.redirect("/forget-password/null?status=pending&message=Email successfully sent");
       }
     }
   );
