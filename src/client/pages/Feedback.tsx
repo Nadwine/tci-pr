@@ -128,7 +128,7 @@ export const Feedback = props => {
                 <textarea className="form-control" value={values.additionalFeedback} name="additionalFeedback" onChange={handleChange} onBlur={handleBlur} />
               </div>
               <div className="w-100 text-center">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-info">
                   Submit
                 </button>
               </div>
