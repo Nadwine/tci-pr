@@ -118,6 +118,9 @@ function Navbar() {
                   <a href="/user" className="dropdown-item">
                     My Profile
                   </a>
+                  <a href="/enquiries" className="dropdown-item">
+                    Enquiries
+                  </a>
                   {user.accountType === "admin" && (
                     <a href="/dashboard" className="dropdown-item">
                       Dashboard
