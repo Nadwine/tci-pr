@@ -293,6 +293,7 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
                         <button
                           className="position-absolute btn-sm btn-danger"
                           type="button"
+                          style={{ zIndex: +1 }}
                           onClick={() => {
                             const filesLeftAfterRemove = cloneDeep(values.files); //values.files.filter((img, i) => i !== index);
                             //@ts-ignore
@@ -329,7 +330,6 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
                             className="letterbox-img"
                             data-file-index={index}
                             width={150}
-                            controls
                             draggable
                             src={f.mediaUrl || fileBlobRef[index]}
                             // onDragStart={e => {

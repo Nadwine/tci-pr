@@ -40,22 +40,43 @@ const Carousel = (props: Props) => {
 
   testImage(images[activeIndex].mediaUrl);
 
+  const currentImage = images[activeIndex];
+
   return (
-    <div id="carouselExample" className="carousel slide" style={{ minHeight: 200 }}>
+    <div id="carouselExample" className="carousel slide m-auto" style={{ minHeight: 200, maxWidth: 1000 }}>
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img src={images[activeIndex].mediaUrl} className="d-block w-100" alt="..." />
+          {currentImage.mediaType === "image" && <img src={images[activeIndex].mediaUrl} className="d-block w-100" alt="..." />}
+          {currentImage.mediaType === "video" && <video controls src={images[activeIndex].mediaUrl} className="d-block w-100" />}
           {!activeImageFound && <div className="text-center text-muted">Image failed to load</div>}
         </div>
       </div>
-      <button onClick={() => prevImage()} className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-        <span className="carousel-control-prev-icon" aria-hidden="true" style={{ backgroundColor: "#8080808f" }}></span>
-        <span className="visually-hidden">Previous</span>
-      </button>
-      <button onClick={() => nextImage()} className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-        <span className="carousel-control-next-icon" aria-hidden="true" style={{ backgroundColor: "#8080808f" }}></span>
-        <span className="visually-hidden">Next</span>
-      </button>
+      {activeIndex !== 0 && (
+        <button
+          onClick={() => prevImage()}
+          className="carousel-control-prev my-auto"
+          type="button"
+          data-bs-target="#carouselExample"
+          data-bs-slide="prev"
+          style={{ height: "50px" }}
+        >
+          <i className="bi bi-chevron-left fs-5 p-2 bg-white rounded" style={{ color: "black", WebkitTextStroke: "3px" }} />
+          <span className="visually-hidden">Previous</span>
+        </button>
+      )}
+      {activeIndex !== images.length - 1 && (
+        <button
+          onClick={() => nextImage()}
+          className="carousel-control-next my-auto"
+          type="button"
+          data-bs-target="#carouselExample"
+          data-bs-slide="next"
+          style={{ height: "50px" }}
+        >
+          <i className="bi bi-chevron-right fs-5 p-2 bg-white rounded" style={{ color: "black", WebkitTextStroke: "3px" }} />
+          <span className="visually-hidden">Next</span>
+        </button>
+      )}
     </div>
   );
 };

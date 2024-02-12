@@ -242,6 +242,7 @@ const CreateRentForm = props => {
                     <button
                       className="position-absolute btn-sm btn-danger"
                       type="button"
+                      style={{ zIndex: +1 }}
                       onClick={() => {
                         const filesLeftAfterRemove = values.files.filter((img, i) => i !== index);
                         // remove from fromik
@@ -272,7 +273,6 @@ const CreateRentForm = props => {
                         className="letterbox-img"
                         data-file-index={index}
                         width={150}
-                        controls
                         draggable
                         src={blob}
                         onDragStart={e => {
