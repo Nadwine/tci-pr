@@ -39,28 +39,28 @@ export const Chat = (props: Props) => {
   return (
     <div className="enquiry-message-wrapper">
       <div className="d-flex w-100 flex-column align-items-center">
-        <div
-          className="d-flex chat-header py-3 px-md-5 px-lg-5 w-100"
-          style={{ borderBottom: "1px solid #bebebe", borderTop: "1px solid #bebebe", marginBottom: "10px" }}
-        >
+        <div className="d-flex chat-header py-3 px-md-5 px-lg-5 w-100" style={{ borderBottom: "1px solid #eaecef", marginBottom: "10px" }}>
           <img
             src={listing?.ListingMedia.find(m => m.label === "1")?.mediaUrl}
             style={{ height: "40px", width: "40px", borderRadius: "5px", marginRight: "30px" }}
           />
           <strong>{activeConvoTitle}</strong>
-          <button className="btn btn-danger me-3 rounded-pill ms-auto" onClick={() => dispatch(setActiveConversation(null))}>
-            <i className="bi bi-x-lg" />
-          </button>
+          <button className="btn-close ms-auto" onClick={() => dispatch(setActiveConversation(null))}></button>
         </div>
-        <div className="d-flex flex-column col-12 col-md-8 chat-area" style={{ paddingBottom: "60px", height: "50vh", overflow: "scroll" }}>
+        <div className="d-flex flex-column col-12 col-md-10 chat-area" style={{ paddingBottom: "60px", height: "50vh", overflow: "scroll" }}>
           {chats.map((msg, i) => (
-            <div className="" key={i} style={{ marginLeft: msg.userId === loggedInUserId ? "auto" : "", marginBottom: "20px" }}>
+            <div className="d-flex" key={i} style={{ marginLeft: msg.userId === loggedInUserId ? "auto" : "", marginBottom: "20px" }}>
+              {msg.userId !== loggedInUserId && (
+                <div className="pe-1">
+                  <i className="bi bi-person-circle"></i>
+                </div>
+              )}
               <div
                 className="text-center"
                 style={{
                   borderRadius: "12px",
                   padding: "2px 20px",
-                  backgroundColor: msg.userId === loggedInUserId ? "#0082ff" : "#c1c1c1",
+                  backgroundColor: msg.userId === loggedInUserId ? "#0082ff" : "#eaecef",
                   color: msg.userId === loggedInUserId ? "white" : "black",
                   width: "fit-content"
                 }}
@@ -72,16 +72,13 @@ export const Chat = (props: Props) => {
           ))}
         </div>
         <div
-          className="d-flex p-3 text-sender"
+          className="d-flex text-sender py-3 px-md-5 px-lg-5 w-100"
           style={{
             position: "absolute",
             left: "10px",
             top: "73vh",
-            height: "70px",
-            border: "1px solid grey",
-            width: "95vw",
-            zIndex: +20,
-            borderRadius: "10px"
+            height: "80px",
+            zIndex: +20
           }}
         >
           <input
@@ -90,8 +87,8 @@ export const Chat = (props: Props) => {
             value={textboxVal}
             className="form-control"
             type="text"
-            placeholder="type new message"
-            style={{ width: "95%" }}
+            placeholder="Type new message"
+            style={{ width: "95%", borderRadius: "15px" }}
           />
           <button disabled={!textboxVal} onClick={() => textboxVal && onSend(textboxVal)} className="btn btn-primary ms-4">
             <i className="bi bi-send" />

@@ -110,13 +110,13 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
           className="form-control mb-4"
           placeholder="Search ......"
         />
-        <div onClick={() => resetFilter()} className="w-100 d-flex px-3 btn-link justify-content-end point">
+        <div onClick={() => resetFilter()} className="w-100 d-flex px-3 btn-link text-dark border-info mb-2 justify-content-center point">
           <div>Reset filter</div>
         </div>
         <ul className="list-group">
-          <li className="price-filter list-group-item d-flex flex-column px-lg-5">
-            Price
+          <li className="price-filter list-group-item d-flex flex-column">
             <div className="d-flex flex-row justify-content-between px-lg-5">
+              <p>Price</p>
               <Dropdown onSelect={val => setMinPrice(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                   {/* Min */}
@@ -145,9 +145,9 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
               </Dropdown>
             </div>
           </li>
-          <li className="price-filter list-group-item d-flex flex-column px-lg-5">
-            Bedroom
+          <li className="price-filter list-group-item d-flex flex-column">
             <div className="d-flex flex-row justify-content-between px-lg-5">
+              <p>Bedroom</p>
               <Dropdown onSelect={val => setMinBed(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                   {/* Min */}
@@ -176,9 +176,9 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
               </Dropdown>
             </div>
           </li>
-          <li className="price-filter list-group-item d-flex flex-column px-lg-5">
-            Bathroom
+          <li className="price-filter list-group-item d-flex flex-column">
             <div className="d-flex flex-row justify-content-between px-lg-5">
+              <p>Bathroom</p>
               <Dropdown onSelect={val => setMinBath(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                   {/* Min */}
@@ -207,31 +207,35 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
               </Dropdown>
             </div>
           </li>
-          <li className="price-filter list-group-item d-flex flex-row justify-content-between px-lg-5">
-            Bills Included:
-            <Dropdown className="px-lg-5" onSelect={(val: any) => setBillsIncluded(val)}>
-              <Dropdown.Toggle variant="light" id="dropdown-basic">
-                {formatBoolValueToYesNo(searchParams.get("bills"))}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item eventKey={"undefined"}>Any</Dropdown.Item>
-                <Dropdown.Item eventKey={"Yes"}>Yes</Dropdown.Item>
-                <Dropdown.Item eventKey={"No"}>No</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+          <li className="price-filter list-group-item d-flex flex-row justify-content-between">
+            <div className="d-flex flex-row justify-content-between px-lg-5">
+              Bills Included:
+              <Dropdown className="px-lg-5" onSelect={(val: any) => setBillsIncluded(val)}>
+                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                  {formatBoolValueToYesNo(searchParams.get("bills"))}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item eventKey={"undefined"}>Any</Dropdown.Item>
+                  <Dropdown.Item eventKey={"Yes"}>Yes</Dropdown.Item>
+                  <Dropdown.Item eventKey={"No"}>No</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
           </li>
-          <li className="furnished-filter list-group-item d-flex flex-row justify-content-between px-lg-5">
-            Furnished:
-            <Dropdown className="px-lg-5" onSelect={(val: any) => setFurnished(val)}>
-              <Dropdown.Toggle variant="light" id="dropdown-basic">
-                {formatBoolValueToYesNo(searchParams.get("furnished"))}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item eventKey={"undefined"}>Any</Dropdown.Item>
-                <Dropdown.Item eventKey={"Yes"}>Yes</Dropdown.Item>
-                <Dropdown.Item eventKey={"No"}>No</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+          <li className="furnished-filter list-group-item d-flex flex-row justify-content-between">
+            <div className="d-flex flex-row justify-content-between px-lg-5">
+              Furnished:
+              <Dropdown className="px-lg-5" onSelect={(val: any) => setFurnished(val)}>
+                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                  {formatBoolValueToYesNo(searchParams.get("furnished"))}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item eventKey={"undefined"}>Any</Dropdown.Item>
+                  <Dropdown.Item eventKey={"Yes"}>Yes</Dropdown.Item>
+                  <Dropdown.Item eventKey={"No"}>No</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
           </li>
         </ul>
       </div>
