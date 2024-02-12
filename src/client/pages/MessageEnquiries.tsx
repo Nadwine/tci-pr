@@ -30,6 +30,12 @@ const MessageEnquiries = props => {
     }
   };
 
+  const submitSeen = async (enq: EnquiryConversation) => {
+    const res = await axios.post("/api/enquiry/set-seen", { enquiryId: enq.id });
+    if (res.status === 200) return;
+    console.log("fail to set msg as seen");
+  };
+
   const sendMessage = async (text: string) => {
     if (!activeConversation || !text) {
       toast.error("error sending message. try again");
@@ -59,7 +65,10 @@ const MessageEnquiries = props => {
     }
   };
 
-  const changeActiveConversation = () => {};
+  const onClickCovo = (enq: EnquiryConversation) => {
+    dispatch(setActiveConversation(enq));
+    submitSeen(enq);
+  };
 
   useEffect(() => {
     loadData();
@@ -75,11 +84,15 @@ const MessageEnquiries = props => {
           {!activeConversation &&
             enquiries.map((enq, i) => {
               const lastMessage = enq.Messages[enq.Messages.length - 1];
+              const hasUnreadMessages = enq.Messages.filter(m => m.userId !== userId && m.seenAt == null).length > 0;
               return (
-                <div onClick={() => dispatch(setActiveConversation(enq))} key={i} className="row" style={{ height: "95px" }}>
-                  <div className="col-10 d-flex justify-content-start me-5 mt-2 mb-2 point" style={{ height: "60px" }}>
+                <div onClick={() => onClickCovo(enq)} key={i} className="row" style={{ height: "95px" }}>
+                  <div
+                    className="col-10 d-flex justify-content-start me-5 ms-2 mt-2 mb-2 point"
+                    style={{ height: "60px", color: hasUnreadMessages ? "black" : "grey" }}
+                  >
                     <div className="col-1 d-flex justify-content-end">
-                      <img src={enq.Listing.ListingMedia.find(m => m.label === "1")?.mediaUrl} style={{ height: "40px", width: "40px", borderRadius: "5px" }} />
+                      <img src={enq.Listing.ListingMedia[0]?.mediaUrl} style={{ height: "40px", width: "40px", borderRadius: "5px" }} />
                     </div>
                     <div style={{ marginLeft: "25px", width: "100%" }} className=" pe-1 pe-md-5 pe-lg-5">
                       <span style={{ fontWeight: "bold" }}>{enq.Listing.title}</span>

@@ -76,7 +76,7 @@ export const Chat = (props: Props) => {
           style={{
             position: "absolute",
             left: "10px",
-            top: "73vh",
+            bottom: "5vh",
             height: "80px",
             zIndex: +20
           }}

@@ -26,7 +26,7 @@ import {
   updateRentListingById
 } from "./routes/listing-route";
 import { createEnquiryRoute, getLatestEnquiry } from "./routes/enquiry-route";
-import { getMessagesByEnquiryConversationId, sendMessageToConversation } from "./routes/message-chat-route";
+import { getMessagesByEnquiryConversationId, sendMessageToConversation, setMessageAsSeen } from "./routes/message-chat-route";
 import { createNewRentMonthly, stripeWebhook } from "./routes/payments";
 import { submitFeedback } from "./routes/feedback";
 const memStorage = multer.memoryStorage();
@@ -71,6 +71,7 @@ router.get("/listing/listings", ensureAuthentication, landlordViewMyListings);
 router.get("/listing/random", getRandomListings);
 
 // /api/enquiry   routes
+router.post("/enquiry/set-seen", ensureAuthentication, setMessageAsSeen);
 router.post("/enquiry/:listingId", ensureAuthentication, createEnquiryRoute);
 router.get("/enquiry/latest", ensureAuthentication, getLatestEnquiry);
 
