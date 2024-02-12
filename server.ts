@@ -8,6 +8,7 @@ import compression from "compression";
 import serveStatic from "serve-static";
 import { createServer as createViteServer } from "vite";
 import { ModelDefined } from "sequelize";
+import ViewRentProperty from "./src/client/pages/ViewRentProperty";
 
 const isTest = process.env.NODE_ENV === "test" || !!process.env.VITE_TEST_BUILD;
 
@@ -186,7 +187,11 @@ async function createServer(isProd = process.env.NODE_ENV === "production") {
       console.log("vite console log", e.stack);
       // If an error is caught, let Vite fix the stack trace so it maps back to
       // your actual source code.
-      vite.ssrFixStacktrace(e);
+      if (process.env.NODE_ENV === "development") {
+        vite.ssrRewriteStacktrace(e);
+      } else {
+        vite.ssrFixStacktrace(e);
+      }
       next(e);
     }
   });
