@@ -43,6 +43,7 @@ import UserProfile from "./pages/UserProfile";
 import AboutUs from "./pages/AboutUs";
 import ForgetPassword from "./pages/ForgetPassword";
 import DesktopMessageEnquires from "./pages/DesktopMessageEnquires";
+import AdminUserTable from "./components/AdminUserTable";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -154,6 +155,7 @@ const Main = () => {
             <Route path="user" element={<UserProfile />} />
             <Route path="about" element={<AboutUs />} />
             <Route path="test" element={<DesktopMessageEnquires />} />
+            <Route path="test/table" element={<AdminUserTable />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
             <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
             <Route path="forget-password/:token" element={<RequireLogout view={<ForgetPassword />} />} />
