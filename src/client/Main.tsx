@@ -41,6 +41,7 @@ import Feedback from "./pages/Feedback";
 import TempHome from "./pages/TempHome";
 import UserProfile from "./pages/UserProfile";
 import AboutUs from "./pages/AboutUs";
+import DesktopMessageEnquires from "./pages/DesktopMessageEnquires";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -151,6 +152,7 @@ const Main = () => {
             <Route path="temp" element={<TempHome />} />
             <Route path="user" element={<UserProfile />} />
             <Route path="about" element={<AboutUs />} />
+            <Route path="test" element={<DesktopMessageEnquires />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
             <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
             <Route

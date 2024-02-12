@@ -61,43 +61,58 @@ const MessageEnquiries = props => {
   }, []);
 
   return enquiries.length > 0 ? (
-    <div className="message-view-wrapper">
-      {/* Conversation List start */}
-      {!activeConversation &&
-        enquiries.map((enq, i) => {
+    <div className="d-flex flex-wrap">
+      <div
+        className="card p-0 col-md-4 col-lg-3 ms-5 shadow-sm"
+        style={{ overflow: "scroll", height: "700px", marginTop: "120px", borderTopLeftRadius: "10px", borderBottomLeftRadius: "10px" }}
+      >
+        {/* Conversation List start */}
+        {enquiries.map((enq, i) => {
           const lastMessage = enq.Messages[enq.Messages.length - 1];
           return (
-            <div onClick={() => dispatch(setActiveConversation(enq))} key={i} className="row" style={{ height: "95px" }}>
-              <hr style={{ color: "grey" }}></hr>
-              <div className="col-12 d-flex justify-content-start me-5 mb-2 point" style={{ height: "60px" }}>
-                <div className="col-1 d-flex justify-content-end">
-                  <img src={enq.Listing.ListingMedia.find(m => m.label === "1")?.mediaUrl} style={{ height: "40px", width: "40px", borderRadius: "5px" }} />
+            <div className="p-0" onClick={() => dispatch(setActiveConversation(enq))} key={i}>
+              {/* <hr style={{ color: "grey" }}></hr> */}
+
+              <div className="card-body border-bottom col-12 d-flex justify-content-start point">
+                <div className="card-title col-1 d-flex justify-content-end">
+                  <img src={enq.Listing.ListingMedia.find(m => m.label === "1")?.mediaUrl} style={{ height: "30px", width: "40px" }} />
                 </div>
-                <div style={{ marginLeft: "25px", width: "100%" }} className=" pe-1 pe-md-5 pe-lg-5">
-                  <span style={{ fontWeight: "bold" }}>{enq.Listing.title}</span>
-                  <p style={{ float: "right" }}>
-                    <small>{dayjs(enq.createdAt).format("MMM D")}</small>
-                  </p>
+                <div style={{ marginLeft: "10px", width: "100%" }} className="card-title pe-1">
+                  <div className="d-flex flex-row">
+                    <div style={{ fontWeight: "bold", whiteSpace: "nowrap", width: "13em", overflow: "hidden", textOverflow: "ellipsis", marginRight: "2em" }}>
+                      {enq.Listing.title}
+                    </div>
+                    <p className="card-text text-muted" style={{ width: "4em" }}>
+                      <small>{dayjs(enq.createdAt).format("MMM D")}</small>
+                    </p>
+                  </div>
                   {/**todo: fix elipsis on bigger screen */}
-                  <p style={{ width: "400px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{lastMessage?.messageText}</p>
+                  <p className="card-text" style={{ width: "400px", overflow: "scroll", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+                    {lastMessage?.messageText}
+                  </p>
                 </div>
               </div>
-              <hr style={{ color: "grey" }}></hr>
             </div>
           );
         })}
-      {/* Conversation List end */}
-      {activeConversation && (
-        <div className="d-flex flex-column">
-          <Chat onSend={sendMessage} textboxVal={chatTextbox} onChangeTextboxVal={setChatTextbox} />
-        </div>
-      )}
+        {/* Conversation List end */}
+      </div>
+      <div
+        className="card col-md-8 col-lg-8 shadow-sm"
+        style={{ height: "700px", marginTop: "120px", borderTopRightRadius: "10px", borderBottomRightRadius: "10px" }}
+      >
+        {activeConversation && (
+          <div className="d-flex flex-column">
+            <Chat onSend={sendMessage} textboxVal={chatTextbox} onChangeTextboxVal={setChatTextbox} />
+          </div>
+        )}
+      </div>
     </div>
   ) : (
-    <div style={{ justifyItems: "center" }}>
+    <div style={{ justifyContent: "center" }}>
       {" "}
-      <div>No Messages</div>
-      <div>
+      <div style={{ justifyContent: "center" }}>No Messages</div>
+      <div style={{ justifyContent: "center" }}>
         <img src="/static/no-message.png"></img>
       </div>{" "}
     </div>
