@@ -109,14 +109,15 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
           type="text"
           className="form-control mb-4"
           placeholder="Search ......"
+          style={{ borderRadius: "10px" }}
         />
         <div onClick={() => resetFilter()} className="w-100 d-flex px-3 btn-link text-dark border-info mb-2 justify-content-center point">
           <div>Reset filter</div>
         </div>
-        <ul className="list-group">
+        <ul className="list-group" style={{ borderRadius: "10px" }}>
           <li className="price-filter list-group-item d-flex flex-column">
-            <div className="d-flex flex-row justify-content-between px-lg-5">
-              <p>Price</p>
+            <div className="d-flex flex-row justify-content-between px-lg-2">
+              <p className="fw-bold">Price</p>
               <Dropdown onSelect={val => setMinPrice(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                   {/* Min */}
@@ -146,8 +147,8 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
             </div>
           </li>
           <li className="price-filter list-group-item d-flex flex-column">
-            <div className="d-flex flex-row justify-content-between px-lg-5">
-              <p>Bedroom</p>
+            <div className="d-flex flex-row justify-content-between px-lg-2">
+              <p className="fw-bold">Bedroom</p>
               <Dropdown onSelect={val => setMinBed(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                   {/* Min */}
@@ -177,8 +178,8 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
             </div>
           </li>
           <li className="price-filter list-group-item d-flex flex-column">
-            <div className="d-flex flex-row justify-content-between px-lg-5">
-              <p>Bathroom</p>
+            <div className="d-flex flex-row justify-content-between px-lg-2">
+              <p className="fw-bold">Bathroom</p>
               <Dropdown onSelect={val => setMinBath(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                   {/* Min */}
@@ -208,7 +209,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
             </div>
           </li>
           <li className="price-filter list-group-item d-flex flex-row justify-content-between">
-            <div className="d-flex flex-row justify-content-between px-lg-5">
+            <div className="d-flex flex-row justify-content-between fw-bold px-lg-2">
               Bills Included:
               <Dropdown className="px-lg-5" onSelect={(val: any) => setBillsIncluded(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
@@ -223,7 +224,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
             </div>
           </li>
           <li className="furnished-filter list-group-item d-flex flex-row justify-content-between">
-            <div className="d-flex flex-row justify-content-between px-lg-5">
+            <div className="d-flex flex-row justify-content-between fw-bold px-lg-2">
               Furnished:
               <Dropdown className="px-lg-5" onSelect={(val: any) => setFurnished(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">

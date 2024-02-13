@@ -111,7 +111,7 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
           placeholder="Search ......"
         />
       </div>
-      <div onClick={() => resetFilter()} className="ms-auto px-3 btn btn-link">
+      <div onClick={() => resetFilter()} className="ms-auto px-3 btn btn-link text-dark">
         Reset filter
       </div>
       <div className="card">
