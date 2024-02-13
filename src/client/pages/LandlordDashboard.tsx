@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 export const LandlordDashboard = props => {
   return (
     <div>
-      <h3 className="fw-bold my-5 ms-5">Dashboard</h3>
+      <h3 className="fw-bold my-5 ms-5"> Dashboard</h3>
       {/**---------------------------------- Accordion ----------------------------------------------- */}
       <Accordion className=" px-md-5 mx-md-5">
         <Card>
