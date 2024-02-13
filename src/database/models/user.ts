@@ -3,6 +3,8 @@ import sequelize from "../sequelize-connection";
 import EnquiryConversation from "./enquiry_conversation";
 import { AccountTypeEnum } from "../../../types/enums";
 import Admin from "./admin";
+import ListingLandlord from "./listing_landlord";
+import Profile from "./profile";
 
 // for typeScript typing
 export default class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
@@ -15,7 +17,9 @@ export default class User extends Model<InferAttributes<User>, InferCreationAttr
   declare password: string;
   declare verified: boolean;
   declare accountType?: AccountTypeEnum; // landlord, admin, tenant/user
-  declare LandLord?: CreationOptional<Admin>;
+  declare Admin?: CreationOptional<Admin>;
+  declare ListingLandlord?: CreationOptional<ListingLandlord>;
+  declare Profile?: CreationOptional<Profile>;
   declare ProjectTenants: CreationOptional<EnquiryConversation[]>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;

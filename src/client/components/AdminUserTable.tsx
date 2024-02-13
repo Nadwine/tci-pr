@@ -1,62 +1,11 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import User from "../../database/models/user";
 import dayjs from "dayjs";
-
-const fakeData = [
-  {
-    id: 1,
-    username: "admin1",
-    password: "$2b$10$tvc8WYw278jhiSaKQOHVj.dU2cZvSGbY.WVlGuZcLinZls2GLfawO",
-    email: "admin@mail.com",
-    verified: true,
-    accountType: "admin",
-    createdAt: "2021-05-28T15:36:56.200",
-    updatedAt: "2021-08-28T13:40:02.200"
-  },
-  {
-    id: 2,
-    username: "user1",
-    password: "$2b$10$tvc8WYw278jhiSaKQOHVj.dU2cZvSGbY.WVlGuZcLinZls2GLfawO",
-    email: "user@mail.com",
-    verified: true,
-    accountType: "tenant",
-    createdAt: "2021-05-28T15:36:56.200",
-    updatedAt: "2021-08-28T13:40:02.200"
-  },
-  {
-    id: 3,
-    username: "user2",
-    password: "$2b$10$tvc8WYw278jhiSaKQOHVj.dU2cZvSGbY.WVlGuZcLinZls2GLfawO",
-    email: "user2@mail.com",
-    verified: true,
-    accountType: "tenant",
-    createdAt: "2021-05-28T15:36:56.200",
-    updatedAt: "2021-08-28T13:40:02.200"
-  },
-  {
-    id: 4,
-    username: "admin2",
-    password: "$2b$10$tvc8WYw278jhiSaKQOHVj.dU2cZvSGbY.WVlGuZcLinZls2GLfawO",
-    email: "admin2@mail.com",
-    verified: true,
-    accountType: "admin",
-    createdAt: "2021-05-28T15:36:56.200",
-    updatedAt: "2021-08-28T13:40:02.200"
-  },
-  {
-    id: 5,
-    username: "landlord5",
-    password: "$2b$10$tvc8WYw278jhiSaKQOHVj.dU2cZvSGbY.WVlGuZcLinZls2GLfawO",
-    email: "landlord2@mail.com",
-    verified: true,
-    accountType: "landlord",
-    createdAt: "2021-05-28T15:36:56.200",
-    updatedAt: "2021-08-28T13:40:02.200"
-  }
-];
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const columnHelper = createColumnHelper<User>();
 const columns = [
@@ -71,7 +20,7 @@ const columns = [
     footer: info => info.column.id
   }),
   columnHelper.accessor("email", {
-    header: () => "email",
+    header: () => "Email",
     cell: info => info.renderValue(),
     footer: info => info.column.id
   }),
@@ -80,23 +29,36 @@ const columns = [
     footer: info => info.column.id
   }),
   columnHelper.accessor("accountType", {
-    header: "AccountType",
+    header: "Account Type",
     footer: info => info.column.id
   }),
   columnHelper.accessor("createdAt", {
     cell: info => dayjs(info.renderValue()).fromNow(),
-    header: "Created",
+    header: "Date Created",
     footer: info => info.column.id
   })
 ];
 
 export const AdminUserTable = props => {
-  const [data, setData] = useState(() => [...fakeData]);
+  const [data, setData] = useState<User[]>([]);
+
+  const loadData = async () => {
+    const res = await axios.get("/api/users");
+    if (res.status !== 200) {
+      toast.error("error fetching /api/users");
+      return;
+    }
+    setData(res.data);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
   // @ts-ignore
   const table = useReactTable({ columns, data, getCoreRowModel: getCoreRowModel() });
   return (
     <div className="p-2">
-      <table>
+      <table className="table table-striped table-hover">
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>

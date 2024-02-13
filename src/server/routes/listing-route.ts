@@ -14,6 +14,7 @@ import User from "../../database/models/user";
 import ListingQuestion from "../../database/models/listing_question";
 import EnquiryConversation from "../../database/models/enquiry_conversation";
 import { current } from "@reduxjs/toolkit";
+import ListingLandlord from "../../database/models/listing_landlord";
 
 const s3Bucket = new S3({
   s3ForcePathStyle: true,
@@ -719,8 +720,33 @@ export const getRandomListings = async (req: Request, res: Response) => {
   }
 };
 
-// export const getAllListings = async (req: Request, res: Response) => {
+export const getAllListings = async (req: Request, res: Response) => {
+  try {
+    const listings = await Listing.findAll();
+    return res.json(listings);
+  } catch (err) {
+    res.status(500).json({ message: "Internal Server error 665", err });
+  }
+};
 
-// }
+export const getApproveFromListings = async (req: Request, res: Response) => {
+  try {
+    const listings = await Listing.findAll({
+      where: {
+        isApproved: false
+      },
+      include: [
+        { model: Address },
+        { model: PropertyForRent },
+        { model: PropertyForSale },
+        { model: ListingMedia, order: [["id", "ASC"]] },
+        { model: ListingLandlord }
+      ]
+    });
+    return res.json(listings);
+  } catch (err) {
+    res.status(500).json({ message: "Internal Server error 665", err });
+  }
+};
 
 // CREATE ROUTE FOR LANDLORD CREATING LISTING

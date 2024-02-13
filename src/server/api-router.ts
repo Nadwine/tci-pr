@@ -23,12 +23,16 @@ import {
   searchRentListingRoute,
   searchSaleListingRoute,
   getRandomListings,
-  updateRentListingById
+  updateRentListingById,
+  getAllListings,
+  getApproveFromListings
 } from "./routes/listing-route";
 import { createEnquiryRoute, getLatestEnquiry } from "./routes/enquiry-route";
 import { getMessagesByEnquiryConversationId, sendMessageToConversation, setMessageAsSeen } from "./routes/message-chat-route";
 import { createNewRentMonthly, stripeWebhook } from "./routes/payments";
 import { submitFeedback } from "./routes/feedback";
+import { getAllUsers } from "./routes/user";
+import { getAllLandlordsByUser } from "./routes/landlord";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -69,6 +73,8 @@ router.put("/listing/rent/:id", ensureAuthentication, uploadMemory.any(), update
 router.delete("/listing/rent/:id", ensureAuthentication, deleteRentListingById);
 router.get("/listing/listings", ensureAuthentication, landlordViewMyListings);
 router.get("/listing/random", getRandomListings);
+router.get("/listings", ensureAdmin, getAllListings);
+router.get("/listings/approve", ensureAdmin, getApproveFromListings);
 
 // /api/enquiry   routes
 router.post("/enquiry/set-seen", ensureAuthentication, setMessageAsSeen);
@@ -85,5 +91,11 @@ router.post("/payment/webhook", express.raw({ type: "application/json" }), strip
 
 // feedback
 router.post("/feedback/create", submitFeedback);
+
+// user
+router.get("/users", ensureAdmin, getAllUsers);
+
+// landlord
+router.get("/landlords", ensureAdmin, getAllLandlordsByUser);
 
 export default router;

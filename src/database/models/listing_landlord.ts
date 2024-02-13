@@ -69,3 +69,4 @@ ListingLandlord.init(
 );
 
 ListingLandlord.belongsTo(User, { foreignKey: { name: "userId", allowNull: false } });
+User.hasOne(ListingLandlord, { foreignKey: "userId" });

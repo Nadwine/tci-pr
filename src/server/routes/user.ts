@@ -48,7 +48,7 @@ export const getUserProfileById = async (req: Request, res: Response) => {
 
 export const updateUserProfileById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { firstName, lastName, email, address, phoneNumber } = req.body;
+  const { firstName, lastName, email, phoneNumber } = req.body;
   const { addressLine1, addressLine2, settlement, city, postcode, country } = req.body;
 
   try {
@@ -57,7 +57,7 @@ export const updateUserProfileById = async (req: Request, res: Response) => {
     if (!relatedProfile) return res.status(404).json({ message: "Not found" });
     // Auth
     if (relatedProfile?.userId !== req.session.user?.id) {
-      return res.status(401).json({ message: "unauthorized" });
+      if (req.session.user?.accountType !== "admin") return res.status(401).json({ message: "unauthorized" });
     }
 
     await relatedProfile.update({
@@ -97,6 +97,11 @@ export const deleteRentUserById = async (req: Request, res: Response) => {
   //   }
 };
 
-// export const getAllUsers = async (req: Request, res: Response) => {
-
-// }
+export const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await User.findAll();
+    return res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: "Internal Server error 301", err });
+  }
+};
