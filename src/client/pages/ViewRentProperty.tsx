@@ -121,8 +121,10 @@ const ViewRentProperty = props => {
             <div className="info col-10">
               <div className="title fw-bolder col-12">
                 {listing.title}
-                <div className="availability col-3 float-end" style={{ fontSize: "15px" }}>
-                  <span className="badge rounded-pill bg-primary">Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}</span>
+                <div className="availability col-3 float-end me-3" style={{ fontSize: "12px" }}>
+                  <span className="badge rounded-pill" style={{ backgroundColor: "#087990" }}>
+                    Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}
+                  </span>
                 </div>
               </div>
               <div className="location">{listing.Address.settlement.charAt(0).toUpperCase() + listing.Address.settlement.slice(1)}</div>
@@ -142,7 +144,7 @@ const ViewRentProperty = props => {
                     Tenants {listing.PropertyForRent.maxTenant}
                   </div>
                 </div>
-                <div style={{ fontSize: "16px" }} className="col-3 pt-5 mt-2 float-end">
+                <div style={{ fontSize: "13px" }} className="col-3 pt-5 mt-2 me-2 float-end">
                   <div className="fw-bold">Address</div>
                   <div>{listing.Address.addressLine1}</div>
                   <div>{listing.Address.addressLine2}</div>
