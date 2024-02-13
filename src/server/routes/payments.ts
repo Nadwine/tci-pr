@@ -1,8 +1,12 @@
 import { Request, Response } from "express";
 import Stripe from "stripe";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import ListingLandlord from "../../database/models/listing_landlord";
 import Listing from "../../database/models/listing";
 import dayjs from "dayjs";
+import User from "../../database/models/user";
+import messages from "../../database/fake-data/messages";
 
 export const createNewRentMonthly = async (req: Request, res: Response) => {
   if (req.session.user?.accountType !== "admin") return res.status(401).json({ message: "Unauthorized " });
@@ -67,7 +71,7 @@ export const createNewRentMonthly = async (req: Request, res: Response) => {
   }
 };
 
-export const createLandLordConnect = async (req: Request, res: Response) => {
+export const adminCreateLandLordForListing = async (req: Request, res: Response) => {
   // use stripe connect
   // we will link landlord to listing in DB and create a connected account for him
   // this stripe connected account will hold his card and we will store is connected Id in out DB
@@ -85,8 +89,71 @@ export const createLandLordConnect = async (req: Request, res: Response) => {
   // https://stackoverflow.com/questions/75545426/payment-with-stripe-node-js-send-money-in-another-bank-account
   try {
     const stripeConnector = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2023-10-16" });
-    const { landlordEmail, firstName, lastName, phoneNumber, homeIsland, address, cardDetails } = req.body;
+    const { landlordEmail, firstName, lastName, phoneNumber, homeIsland, address, cardDetails, listingId } = req.body;
     const { cardNumber, expMonth, expYear, cvv, account_holder_name } = req.body;
+
+    const user = await User.findOne({ where: { email: landlordEmail } });
+    let landlord = user && (await ListingLandlord.findOne({ where: { userId: user.id } }));
+
+    if (!landlord) {
+      // create him with a default password and send him a password reset link
+      const salt = await bcrypt.genSalt();
+      const defaultPassword = Math.random().toString(36).slice(2) + Math.random().toString(36).toUpperCase().slice(2);
+      const hashedPassword = await bcrypt.hash(defaultPassword, salt);
+      const createdUserCallback: User | null = await User.create({
+        email: landlordEmail.toLowerCase(),
+        password: hashedPassword,
+        company: "",
+        verified: true,
+        accountType: "landlord"
+      });
+
+      landlord = await ListingLandlord.create({
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
+        homeIsland: homeIsland,
+        address: address,
+        cardDetails: cardDetails
+      });
+
+      const hashSecret = process.env.EMAIL_TOKEN_HASH_SECRET || "";
+      const emailToken = jwt.sign({ userEmail: landlordEmail }, hashSecret, {
+        expiresIn: "5h"
+      });
+      const emailLink = `${process.env.BASE_URL}/forget-password/${emailToken}?status=sent`;
+      const html = `<html>Please click this link to reset your password <a href="${emailLink}">${emailLink}</a><html>`;
+
+      const AWS = require("aws-sdk");
+      const ses = new AWS.SES({
+        region: process.env.AWS_SES_REGION,
+        endpoint: process.env.AWS_SES_ENDPOINT,
+        credentials: { accessKeyId: process.env.AWS_SES_KEY, secretAccessKey: process.env.AWS_SES_SECRET }
+      });
+
+      ses.sendEmail(
+        {
+          Destination: { ToAddresses: [landlordEmail] },
+          Message: {
+            Body: {
+              Html: { Data: html },
+              Text: { Data: html }
+            },
+            Subject: {
+              Data: "Password Reset"
+            }
+          },
+          Source: process.env.AWS_SES_EMAIL_ADDRESS
+        },
+        (emailFailedError, data) => {
+          if (emailFailedError?.message) {
+            console.log("Email Failed To Send Error", emailFailedError.message);
+            return res.status(500).json({ message: "internal Server error. Email Failed" });
+          }
+        }
+      );
+    }
+
     // first register my stripe account https://dashboard.stripe.com/account/applications/settings
     const landlordStripeConnect = await stripeConnector.accounts.create({
       type: "custom",
@@ -155,7 +222,7 @@ export const createLandLordConnect = async (req: Request, res: Response) => {
       external_account: landlordCardToken.id
     });
 
-    await ListingLandlord.create({
+    await landlord.update({
       firstName: firstName,
       lastName: lastName,
       phoneNumber: phoneNumber,
@@ -164,6 +231,8 @@ export const createLandLordConnect = async (req: Request, res: Response) => {
       cardDetails: cardDetails,
       stripeConnectId: landlordStripeConnect.id
     });
+
+    return res.status(200).json({ messages: "success" });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error", err });
   }

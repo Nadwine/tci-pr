@@ -115,16 +115,14 @@ const Register = () => {
             <div className="col-lg-10 col-md-9 col-xl-6 mx-auto ms-xl-0">
               <div className="mt-10 mt-lg-5 mb-5 d-flex align-items-center d-lg-block">
                 {/* <span className="d-inline-block d-lg-block h1 mb-lg-6 me-3">👋</span> */}
-                <div className="text-danger" style={{ minHeight: "1em" }}>
-                  {serverError}
-                  {JSON.stringify(errors)}
-                </div>
+                <div className="flex text-danger text-sm">{serverError}</div>
                 <h1 className="ls-tight font-bolder h2">
                   {/* {t("register.welcome.text")} */}
                   Create an account
                 </h1>
               </div>
               <form action="/api/auth/register" method="POST" onSubmit={handleFormSubmit}>
+                <div className="text-danger text-sm">{errors.registerReason && errors.registerReason}</div>
                 <div className="mb-4">
                   <label className="pe-3">What are you looking for</label>
                   <select
@@ -139,6 +137,7 @@ const Register = () => {
                     <option value="landlord">I am a landlord</option>
                   </select>
                 </div>
+                <div className="text-danger text-sm">{errors.email && errors.email}</div>
                 <div className="mb-4">
                   <label className="form-label" htmlFor="email">
                     Email
@@ -153,6 +152,7 @@ const Register = () => {
                     value={email}
                   />
                 </div>
+                <div className="text-danger text-sm">{errors.password && errors.password}</div>
                 <div className="mb-4">
                   <label className="form-label" htmlFor="password">
                     Password
@@ -168,6 +168,7 @@ const Register = () => {
                     autoComplete="current-password"
                   />
                 </div>
+                <div className="text-danger text-sm">{errors.confirmPassword && errors.confirmPassword}</div>
                 <div className="mb-5">
                   <label className="form-label" htmlFor="confirm-password">
                     Confirm Password
@@ -183,6 +184,7 @@ const Register = () => {
                     autoComplete="current-password"
                   />
                 </div>
+                <div className="text-danger text-sm">{errors.terms && errors.terms}</div>
                 <div className="mb-5">
                   <div className="form-check">
                     <input

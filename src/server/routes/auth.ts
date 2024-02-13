@@ -13,6 +13,7 @@ import { registerRequestValidation } from "../../utils/validation-schemas/schema
 import { loginRequestValidation } from "../../utils/validation-schemas/schema-login";
 import dayjs from "dayjs";
 import Admin from "../../database/models/admin";
+import ListingLandlord from "../../database/models/listing_landlord";
 const router = express.Router();
 
 export const getUserCredentials = async (req: Request, res: Response, next: NextFunction) => {
@@ -75,13 +76,12 @@ export const registerUser = async (req: Request, res: Response) => {
     accountType: registerReason === "landlord" ? "landlord" : "tenant"
   });
 
-  if (isLandlord && createdUserCallback) {
-    await Admin.create({
-      verified: false,
-      email: email,
-      userId: createdUserCallback.id
-    });
-  }
+  // if (isLandlord && createdUserCallback) {
+  //   await ListingLandlord.create({
+  //     email: email,
+  //     userId: createdUserCallback.id
+  //   });
+  // }
 
   const hashSecret = process.env.EMAIL_TOKEN_HASH_SECRET || "";
   // creating email token/url
@@ -273,7 +273,7 @@ export const resendPasswordResetLinkToUserEmail = async (req: Request, res: Resp
           Text: { Data: html }
         },
         Subject: {
-          Data: "Account Verification"
+          Data: "Password Reset"
         }
       },
       Source: process.env.AWS_SES_EMAIL_ADDRESS

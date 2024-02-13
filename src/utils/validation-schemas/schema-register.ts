@@ -13,7 +13,7 @@ export const registerBodySchema: yup.AnyObjectSchema = yup.object({
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
-    .required(),
+    .required("Please enter a password"),
   terms: yup.boolean().isTrue("Please accept the terms of registration").required("Missing terms")
 });
 

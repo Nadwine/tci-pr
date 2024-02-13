@@ -1,5 +1,5 @@
 // @ts-nocheck
-import axios, { AxiosRequestConfig, AxiosRequestTransformer, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosRequestTransformer, AxiosResponse } from "axios";
 
 // https://lifesaver.codes/answer/need-some-advice-about-handling-302-redirects-from-ajax
 export default function initAxios() {
@@ -13,7 +13,7 @@ export default function initAxios() {
       }
       return response;
     },
-    error => {
+    (error: AxiosError) => {
       // handle a successfull login separately (coming in as an error because axios only recognizes status 200 as success callback)
       // if (error.response && error.response.data && error.response.data.successLoginRedirect) {
       //   // only will redirect  after some seconds to allow user some time to see success message
@@ -29,7 +29,7 @@ export default function initAxios() {
         window.location = error.response.data.redirect;
       }
 
-      return error;
+      return Promise.resolve(error.response);
     }
   );
 
@@ -55,8 +55,8 @@ export default function initAxios() {
 
       return request;
     },
-    error => {
-      return Promise.reject(error);
+    (error: AxiosError) => {
+      return Promise.resolve(error.response);
     }
   );
 }
