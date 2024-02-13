@@ -48,7 +48,7 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
   const files = req.files ?? [];
   const questions: string[] = JSON.parse(req.body.questions);
 
-  if (req.session.user?.accountType !== "landlord") return res.status(401).json({ message: "Unauthorized" });
+  if (req.session.user!.accountType !== "admin") return res.status(401).json({ message: "Unauthorized" });
 
   let createdListingId: number | null = null;
   let createdAddressId: number | null = null;
@@ -110,7 +110,7 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
       for (let i = 0; i < Number(files.length); i++) {
         const currentFile: Express.Multer.File = files[i];
         const filename = `${new Date().getTime()}_${currentFile.originalname}`;
-        const s3Key = `${req.session.user.id}/${newListing.id}/${filename}`;
+        const s3Key = `${req.session.user!.id}/${newListing.id}/${filename}`;
 
         // transform to small thumbnail and fix aspect ratio
         const imageBuffer = await sharp(currentFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer();

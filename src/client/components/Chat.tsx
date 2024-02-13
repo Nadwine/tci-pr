@@ -20,6 +20,10 @@ export const Chat = (props: Props) => {
   const listing = useSelector((r: RootState) => r.message.activeConversation?.Listing);
   const activeConvoTitle = useSelector((r: RootState) => r.message.activeConversation?.Listing.title);
 
+  const mql = window.matchMedia("(max-width: 600px)");
+
+  let mobileView = mql.matches;
+
   const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChangeTextboxVal(e.target.value);
   };
@@ -76,7 +80,7 @@ export const Chat = (props: Props) => {
           style={{
             position: "absolute",
             left: "10px",
-            bottom: "5vh",
+            bottom: mobileView ? "-2vh" : "7vh",
             height: "80px",
             zIndex: +20
           }}
