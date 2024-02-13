@@ -83,3 +83,4 @@ Profile.init(
 );
 
 Profile.belongsTo(User, { foreignKey: "userId" });
+User.hasOne(Profile, { foreignKey: "userId" });

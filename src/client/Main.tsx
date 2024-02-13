@@ -175,7 +175,15 @@ const Main = () => {
             />
             <Route path="enquiries" element={<RequireLogin view={<MessageEnquiries />} />} />
             <Route path="admin/listings" element={<RequirePermission view={<AdminViewListings />} roles={["landlord", "admin"]} />} />
-            <Route path="*" element={<h1 className="text-center pt-5">Theres nothing here: 404!</h1>} />
+            <Route
+              path="*"
+              element={
+                <div className="text-center">
+                  <h1 className="text-center pt-5">Theres nothing here: 404!</h1> <p>The page you are looking for does not exist or have been removed</p>
+                  <img src="/static/error.png"></img>
+                </div>
+              }
+            />
           </Routes>
         </div>
       </section>
