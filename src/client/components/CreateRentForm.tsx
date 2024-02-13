@@ -338,7 +338,7 @@ const CreateRentForm = props => {
             </div>
           ))}
           <hr></hr>
-          <button type="submit" id="create-rent-submit-button" className="btn btn-info mt-3">
+          <button type="submit" id="create-rent-submit-button" className="btn btn-info mt-3" onClick={() => navigate("/listing-message")}>
             Submit
           </button>
         </form>

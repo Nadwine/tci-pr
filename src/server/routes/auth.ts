@@ -337,8 +337,12 @@ export const loginUser = async (req: Request, res: Response) => {
         // req.session.cookie.maxAge = thirtyDays;   //  Max-age sets the time in seconds for when a cookie will be deleted
         console.log(`${foundUser.username} has signed in`);
         // Success redirect
-        res.redirect(`${req.session.returnTo || "/"}`);
         req.session.returnTo && delete req.session.returnTo;
+        if (foundUser.accountType === "admin") {
+          res.redirect("/admin/dash");
+        } else {
+          res.redirect(`${req.session.returnTo || "/"}`);
+        }
       } else {
         // password comparision failed
         return res.redirect("/login?error=Invalid Login");

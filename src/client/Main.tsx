@@ -45,6 +45,8 @@ import ForgetPassword from "./pages/ForgetPassword";
 import DesktopMessageEnquires from "./pages/DesktopMessageEnquires";
 import AdminUserTable from "./components/AdminUserTable";
 import LandlordDashboard from "./pages/LandlordDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import SubmitListingRedirect from "./pages/SubmitListingRedirect";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -154,9 +156,10 @@ const Main = () => {
             <Route path="feedback" element={<Feedback />} />
             <Route path="temp" element={<TempHome />} />
             <Route path="user" element={<UserProfile />} />
-            <Route path="dashboard" element={<LandlordDashboard />} />
+            <Route path="/listing-message" element={<SubmitListingRedirect />} />
+            <Route path="dashboard" element={<RequirePermission view={<LandlordDashboard />} roles={["landlord"]} />} />
             <Route path="about" element={<AboutUs />} />
-            <Route path="test" element={<DesktopMessageEnquires />} />
+            <Route path="admin/dash" element={<RequirePermission view={<AdminDashboard />} roles={["admin"]} />} />
             <Route path="test/table" element={<AdminUserTable />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
             <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
