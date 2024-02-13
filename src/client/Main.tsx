@@ -44,6 +44,7 @@ import AboutUs from "./pages/AboutUs";
 import ForgetPassword from "./pages/ForgetPassword";
 import DesktopMessageEnquires from "./pages/DesktopMessageEnquires";
 import AdminUserTable from "./components/AdminUserTable";
+import LandlordDashboard from "./pages/LandlordDashboard";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -153,6 +154,7 @@ const Main = () => {
             <Route path="feedback" element={<Feedback />} />
             <Route path="temp" element={<TempHome />} />
             <Route path="user" element={<UserProfile />} />
+            <Route path="dashboard" element={<LandlordDashboard />} />
             <Route path="about" element={<AboutUs />} />
             <Route path="test" element={<DesktopMessageEnquires />} />
             <Route path="test/table" element={<AdminUserTable />} />

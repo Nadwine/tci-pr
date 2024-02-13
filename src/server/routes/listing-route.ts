@@ -63,7 +63,8 @@ export const createRentListingRoute = async (req: Request, res: Response) => {
         title: title,
         description: description,
         listingType: ListingTypeEnum.RENT,
-        adminId: landlord!.id
+        adminId: landlord!.id,
+        isApproved: true
       });
       createdListingId = newListing.id;
 
@@ -221,7 +222,8 @@ export const createSaleListingRoute = async (req: Request, res: Response) => {
         title: title,
         description: description,
         listingType: ListingTypeEnum.SALE,
-        adminId: landlord!.id
+        adminId: landlord!.id,
+        isApproved: true
       });
       createdListingId = newListing.id;
 
@@ -716,3 +718,9 @@ export const getRandomListings = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Internal Server error", err });
   }
 };
+
+// export const getAllListings = async (req: Request, res: Response) => {
+
+// }
+
+// CREATE ROUTE FOR LANDLORD CREATING LISTING

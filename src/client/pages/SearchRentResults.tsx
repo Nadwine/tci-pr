@@ -137,7 +137,7 @@ const SearchRentResults = props => {
                   <div className="col-2 pt-5 mt-2 float-end">
                     <span
                       onClick={() => console.log("landlord")}
-                      className="btn btn-link bg-secondary rounded-circle text-black fs-5"
+                      className="btn btn-link bg-info rounded-circle text-black fs-5"
                       style={{ width: "45px", height: "45px" }}
                     >
                       {listing.Admin.User?.email?.charAt(0)}

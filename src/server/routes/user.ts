@@ -96,3 +96,7 @@ export const deleteRentUserById = async (req: Request, res: Response) => {
   //     return res.status(500).json({ message: "Internal Server error", err });
   //   }
 };
+
+// export const getAllUsers = async (req: Request, res: Response) => {
+
+// }
