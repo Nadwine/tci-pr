@@ -25,7 +25,8 @@ import {
   getRandomListings,
   updateRentListingById,
   getAllListings,
-  getApproveFromListings
+  getApproveFromListings,
+  setApprovalValueRoute
 } from "./routes/listing-route";
 import { createEnquiryRoute, getLatestEnquiry } from "./routes/enquiry-route";
 import { getMessagesByEnquiryConversationId, sendMessageToConversation, setMessageAsSeen } from "./routes/message-chat-route";
@@ -75,6 +76,7 @@ router.get("/listing/listings", ensureAuthentication, landlordViewMyListings);
 router.get("/listing/random", getRandomListings);
 router.get("/listings", ensureAdmin, getAllListings);
 router.get("/listings/approve", ensureAdmin, getApproveFromListings);
+router.post("/listing/approve-status", ensureAdmin, setApprovalValueRoute);
 
 // /api/enquiry   routes
 router.post("/enquiry/set-seen", ensureAuthentication, setMessageAsSeen);

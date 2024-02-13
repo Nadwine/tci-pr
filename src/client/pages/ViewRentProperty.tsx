@@ -119,10 +119,10 @@ const ViewRentProperty = props => {
               </div>
             </div>
             <div className="info col-10">
-              <div className="title fw-bold col-12">
+              <div className="title fw-bolder col-12">
                 {listing.title}
-                <div className="availability col-3 float-end" style={{ fontSize: "0.7em" }}>
-                  Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}
+                <div className="availability col-3 float-end" style={{ fontSize: "13px" }}>
+                  <span className="badge rounded-pill bg-primary">Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}</span>
                 </div>
               </div>
               <div className="location">{listing.Address.settlement.charAt(0).toUpperCase() + listing.Address.settlement.slice(1)}</div>
@@ -150,27 +150,31 @@ const ViewRentProperty = props => {
                 </div>
               </div>
               <hr />
-              <h5 className="text-secondary">Description</h5>
+              <h5 className="text-secondary fw-bolder">Description</h5>
               <div style={{ minHeight: "5rem" }} className="description card text-secondary p-2">
                 {listing.description}
               </div>
               <div className="bills text-secondary pt-3">
-                <h6>Inclusions</h6>
+                <h5 className="fw-bolder">Inclusions</h5>
                 <div className="furnished">
                   <span className="pe-2">Furnished:</span>
-                  {listing.PropertyForRent.isFurnished ? <i className=" bi-check-circle" /> : <i className=" bi-x-circle-fill" />}
+                  {listing.PropertyForRent.isFurnished ? <i className=" bi-check-circle text-success" /> : <i className=" bi-x-circle-fill text-danger" />}
                 </div>
                 <div className="internet">
                   <span className="pe-2">Internet:</span>
-                  {listing.PropertyForRent.internetIncluded ? <i className=" bi-check-circle" /> : <i className=" bi-x-circle-fill" />}
+                  {listing.PropertyForRent.internetIncluded ? <i className=" bi-check-circle text-success" /> : <i className=" bi-x-circle-fill text-danger" />}
                 </div>
                 <div className="water">
                   <span className="pe-2">Water:</span>
-                  {listing.PropertyForRent.waterIncluded ? <i className=" bi-check-circle" /> : <i className=" bi-x-circle-fill" />}
+                  {listing.PropertyForRent.waterIncluded ? <i className=" bi-check-circle text-success" /> : <i className=" bi-x-circle-fill text-danger" />}
                 </div>
                 <div className="electricity">
                   <span className="pe-2">Electricity:</span>
-                  {listing.PropertyForRent.electricityIncluded ? <i className=" bi-check-circle" /> : <i className=" bi-x-circle-fill" />}
+                  {listing.PropertyForRent.electricityIncluded ? (
+                    <i className=" bi-check-circle text-success" />
+                  ) : (
+                    <i className=" bi-x-circle-fill text-danger" />
+                  )}
                 </div>
               </div>
               <div className="sqft"></div>

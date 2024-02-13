@@ -383,7 +383,8 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
       limit: limit,
       subQuery: true,
       where: {
-        listingType: ListingTypeEnum.RENT
+        listingType: ListingTypeEnum.RENT,
+        isApproved: true
       },
       include: [
         {
@@ -692,6 +693,25 @@ export const deleteRentListingById = async (req: Request, res: Response) => {
     return res.status(200).json({ message: "Success" });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
+export const setApprovalValueRoute = async (req: Request, res: Response) => {
+  const { isApproved, id } = req.body;
+
+  if (isApproved == null || !id) return res.status(400).json({ message: "bad request" });
+
+  try {
+    await Listing.update(
+      {
+        isApproved: isApproved
+      },
+      { where: { id: Number(id) } }
+    );
+
+    res.status(200).json({ message: "success" });
+  } catch (err) {
+    return res.status(500).json({ message: "internal server error", err });
   }
 };
 

@@ -20,6 +20,13 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
   const [questionBeingTyped, setQuestionBeingTyped] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
 
+  const flipApprovalVal = async () => {
+    const value = listing.isApproved ? false : true;
+    const res = await axios.post("/api/listing/approve-status", { isApproved: value, id: listing.id });
+    if (res.status === 200) window.location.reload();
+    if (res.status !== 200) toast.error("Error: /api/listing/approve-status");
+  };
+
   const { values, errors, touched, handleSubmit, handleChange, handleBlur, setFieldValue } = useFormik({
     initialValues: {
       title: listing.title,
@@ -122,12 +129,18 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
   return (
     <div className="create-rent-form d-flex justify-content-center row">
       <div className="col-md-6 col-sm-10 col-lg-5">
+        <h4 className="text-center pb-4 mt-5">
+          Edit property <i className="bi bi-pencil-fill text-info px-1" style={{ fontSize: "20px" }}></i>
+          <button id="edit-rent-btn" onClick={() => setIsDisabled(!isDisabled)} className={`edit float-end btn btn-${isDisabled ? "primary" : "secondary"}`}>
+            {isDisabled ? "Edit" : "Cancel"}
+          </button>
+        </h4>
+        <div className="w-100 text-center mb-5">
+          <button onClick={() => flipApprovalVal()} className={`btn btn-lg btn-${!listing.isApproved ? "success" : "danger"}`}>
+            {!listing.isApproved ? "Approve" : "Revoke Approval"}
+          </button>
+        </div>
         <form onSubmit={handleSubmit} onKeyPress={e => e.key === "Enter" && e.preventDefault()} onKeyUp={e => e.key === "Enter" && e.preventDefault()}>
-          <h4 className="text-center pb-4 mt-5">
-            Edit property <i className="bi bi-pencil-fill text-info px-1" style={{ fontSize: "20px" }}></i>
-            <button id="edit-rent-btn" onClick={() => setIsDisabled(!isDisabled)} className={`edit float-end btn btn-${isDisabled ? "primary" : "danger"}`}>{isDisabled ? "Edit" : "Cancel"}</button>
-          </h4>
-          <div className="w-100 text-center mb-5"><button className="btn btn-lg btn-success">Approve</button></div>
           <div className={`${isDisabled && "disabled-section"}`} style={disableStyle}>
             <div className="mb-3">
               <label htmlFor="title" className="form-label">
