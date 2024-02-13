@@ -54,7 +54,7 @@ const Login = () => {
               <form action="/api/auth/login" method="POST">
                 <div className="mb-5">
                   <label className="form-label" htmlFor="nameOrEmail">
-                    Username/Email1
+                    Username/Email
                   </label>
                   <input type="text" className="form-control form-control-muted" id="nameOrEmail" name="nameOrEmail" required />
                 </div>
@@ -203,6 +203,7 @@ const Login = () => {
               <div className="my-6">
                 <small>{"Don't"} have an account?</small>
                 <a href="/register" className="text-primary text-sm font-semibold">
+                  {" "}
                   Sign up
                 </a>
               </div>
