@@ -6,6 +6,8 @@ import axios from "axios";
 import Listing from "../../database/models/listing";
 import islands from "../../utils/islandsData.json";
 import { toast } from "react-toastify";
+import { faClipboardList, faLayerGroup, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 let islandAndSettlements: string[] = [];
 
@@ -90,7 +92,10 @@ const Home = props => {
           >
             <img src="/static/home-photo3.jpg" style={{ position: "relative", marginTop: "-200px", width: 2000 }} className="home-photo.jpg"></img>
           </div>
-          <h1 className="text-light position-absolute text-center w-100" style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center" }}>
+          <h1
+            className="text-light position-absolute fw-bold text-center w-100"
+            style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center" }}
+          >
             The Perfect Space Awaits
           </h1>
         </div>
@@ -128,41 +133,21 @@ const Home = props => {
           </div>
         </div>
         <div className="text-center fs-6" style={{ marginTop: "90px" }}>
-          <p className="fst-italic fs-6">
-            The Number One destination for landlords advertising their rental property and residents looking to find their next rental home.
+          <h4 className="fw-bolder" style={{ color: "#055160" }}>
+            Search Properties for Rent in the Turks and Caicos Islands
+          </h4>
+        </div>
+        <div className="text-center fs-6" style={{ marginLeft: "10px", marginRight: "10px" }}>
+          <p className="fst-italic " style={{ fontSize: "15px" }}>
+            The{" "}
+            <span className="fw-bolder" style={{ fontSize: "18px" }}>
+              #1{" "}
+            </span>
+            destination for landlords advertising their rental property and residents looking to find their next rental home.
           </p>
-          <p className="fs-4">Search Properties for Rent in the Turks and Caicos Islands</p>
-          <hr className="text-secondary"></hr>
-          <p>FIND YOUR DREAM HOME WITH TCI HOMEBASE</p>
-          <div>
-            <div className="col-12 d-flex justify-content-center" style={{ marginTop: "25px" }}>
-              <div className="card" style={{ width: "18rem", marginRight: "20px" }}>
-                <div className="card-body">
-                  <h5 className="card-title">Free Registration</h5>
-                  <p>-Hassle-free registration </p>
-                  <p>-Guided one-on-one onboarding for landlords</p>
-                </div>
-              </div>
-              <div className="card" style={{ width: "18rem", marginRight: "20px" }}>
-                {/* <img src={listing2?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img> */}
-                <div className="card-body">
-                  <h5 className="card-title">No Dead Listings</h5>
-                  <p className="card-text">-Live updates on property availability </p>
-                  <p>-No fake adverts</p>
-                </div>
-              </div>
-              <div className="card" style={{ width: "18rem", marginRight: "20px" }}>
-                {/* <img src={listing3?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img> */}
-                <div className="card-body">
-                  <h5 className="card-title"> Island-Wide Coverage</h5>
-                  <p className="card-text">-We list properties available on all our sister islands.</p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         {/**Small screen -------------------------------------------------------------> */}
-        {mobileView && (
+        {/* {mobileView && (
           <div className="suggestions text-center text-dark" style={{ zIndex: +1, position: "relative", marginTop: "130px" }}>
             <div className="card shadow-sm" style={{ marginBottom: "10px" }}>
               <div className="card-body">
@@ -175,41 +160,149 @@ const Home = props => {
               </div>
             </div>
           </div>
+        )} */}
+        {mobileView && (
+          <div>
+            <p className="fs-4 px-3 text-center mt-5" style={{ color: "#055160" }}>
+              FIND YOUR DREAM HOME WITH TCI HOMEBASE
+            </p>
+            <div>
+              <div className="col-12 d-flex flex-column justify-content-center text-center" style={{ marginTop: "25px" }}>
+                <div className="card align-items-center border-0 justify-content-center" style={{ width: "100%", padding: "30px", backgroundColor: "#f8f9fa" }}>
+                  <div
+                    className="d-flex align-items-center justify-content-center"
+                    style={{ borderRadius: "100px", border: "9px solid #01acac", height: "8rem", width: "8rem", backgroundColor: "#01acac" }}
+                  >
+                    <FontAwesomeIcon icon={faLayerGroup} style={{ width: "3rem", height: "3rem" }} />
+                  </div>
+                  <div className="card-body">
+                    <h5 className="card-title fw-bolder">Free Registration</h5>
+                    <p>Hassle-free registration </p>
+                    <p>Guided one-on-one onboarding for landlords</p>
+                  </div>
+                </div>
+                <div className="card align-items-center border-0 justify-content-center" style={{ width: "100%", padding: "30px", backgroundColor: "#f8f9fa" }}>
+                  <div
+                    className="d-flex align-items-center justify-content-center"
+                    style={{ borderRadius: "100px", border: "9px solid #01acac", height: "8rem", width: "8rem", backgroundColor: "#01acac" }}
+                  >
+                    <FontAwesomeIcon icon={faClipboardList} style={{ width: "3rem", height: "3rem" }} />
+                  </div>
+                  <div className="card-body">
+                    <h5 className="card-title fw-bolder">No Dead Listings</h5>
+                    <p className="card-text">Live updates on property availability </p>
+                    <p>No fake adverts</p>
+                  </div>
+                  <div>--------------</div>
+                </div>
+                <div className="card align-items-center border-0 justify-content-center" style={{ width: "100%", padding: "30px", backgroundColor: "#f8f9fa" }}>
+                  <div
+                    className="d-flex align-items-center justify-content-center"
+                    style={{ borderRadius: "100px", border: "9px solid #01acac", height: "8rem", width: "8rem", backgroundColor: "#01acac" }}
+                  >
+                    <FontAwesomeIcon icon={faMapLocationDot} style={{ width: "3rem", height: "3rem" }} />
+                  </div>
+                  <div className="card-body">
+                    <h5 className="card-title fw-bolder">Island-Wide Coverage</h5>
+                    <p className="card-text">We list properties available on all our sister islands</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
         {/**Big screen -------------------------------------------------------------> */}
         {!mobileView && (
-          <div className="col-12 d-flex justify-content-center" style={{ marginTop: "150px" }}>
-            <div className="card" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
-              <img src={listing1?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
-              <div className="card-body">
-                <h5 className="card-title">{listing1?.title}</h5>
-                <p>
-                  <a className="link-dark link-underline-light" href={`property/rent/${listing1?.id}`}>
-                    {listing1?.Address.addressLine1}
-                  </a>
-                </p>
+          <div className="text-center">
+            <h5 className="mt-5 fw-bolder mb-2">Featured Properties</h5>
+            <div className="col-12 d-flex justify-content-center">
+              <div className="card shadow-sm" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
+                <img src={listing1?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
+                <div className="card-body shadow-lg">
+                  <h5 className="card-title">{listing1?.title}</h5>
+                  <p>
+                    <a className="link-dark link-underline-light" href={`property/rent/${listing1?.id}`}>
+                      {listing1?.Address.addressLine1}
+                    </a>
+                  </p>
+                </div>
+              </div>
+              <div className="card shadow-lg" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
+                <img src={listing2?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
+                <div className="card-body">
+                  <h5 className="card-title">{listing2?.title}</h5>
+                  <p className="card-text">
+                    <a className="link-dark link-underline-light" href={`property/rent/${listing2?.id}`}>
+                      {listing2?.Address.addressLine1}
+                    </a>
+                  </p>
+                </div>
+              </div>
+              <div className="card shadow-lg" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
+                <img src={listing3?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
+                <div className="card-body">
+                  <h5 className="card-title">{listing3?.title}</h5>
+                  <p className="card-text">
+                    <a className="link-dark link-underline-light" href={`property/rent/${listing3?.id}`}>
+                      {listing3?.Address.addressLine1}
+                    </a>
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="card" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
-              <img src={listing2?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
-              <div className="card-body">
-                <h5 className="card-title">{listing2?.title}</h5>
-                <p className="card-text">
-                  <a className="link-dark link-underline-light" href={`property/rent/${listing2?.id}`}>
-                    {listing2?.Address.addressLine1}
-                  </a>
-                </p>
-              </div>
-            </div>
-            <div className="card" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
-              <img src={listing3?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
-              <div className="card-body">
-                <h5 className="card-title">{listing3?.title}</h5>
-                <p className="card-text">
-                  <a className="link-dark link-underline-light" href={`property/rent/${listing3?.id}`}>
-                    {listing3?.Address.addressLine1}
-                  </a>
-                </p>
+            <p className="fs-4 mt-5" style={{ color: "#055160" }}>
+              FIND YOUR DREAM HOME WITH TCI HOMEBASE
+            </p>
+            <div>
+              <div className="col-12 d-flex justify-content-center" style={{ marginTop: "25px" }}>
+                <div
+                  className="card align-items-center border-0 justify-content-center"
+                  style={{ width: "18rem", marginRight: "20px", padding: "30px", backgroundColor: "#f8f9fa" }}
+                >
+                  <div
+                    className="d-flex align-items-center justify-content-center"
+                    style={{ borderRadius: "100px", border: "9px solid #01acac", height: "8rem", width: "8rem", backgroundColor: "#01acac" }}
+                  >
+                    <FontAwesomeIcon icon={faLayerGroup} style={{ width: "3rem", height: "3rem" }} />
+                  </div>
+                  <div className="card-body">
+                    <h5 className="card-title">Free Registration</h5>
+                    <p>Hassle-free registration </p>
+                    <p>Guided one-on-one onboarding for landlords</p>
+                  </div>
+                </div>
+                <div
+                  className="card align-items-center border-0 justify-content-center"
+                  style={{ width: "18rem", marginRight: "20px", padding: "30px", backgroundColor: "#f8f9fa" }}
+                >
+                  <div
+                    className="d-flex align-items-center justify-content-center"
+                    style={{ borderRadius: "100px", border: "9px solid #01acac", height: "8rem", width: "8rem", backgroundColor: "#01acac" }}
+                  >
+                    <FontAwesomeIcon icon={faClipboardList} style={{ width: "3rem", height: "3rem" }} />
+                  </div>
+                  <div className="card-body">
+                    <h5 className="card-title">No Dead Listings</h5>
+                    <p className="card-text">Live updates on property availability </p>
+                    <p>No fake adverts</p>
+                  </div>
+                  <div>--------------</div>
+                </div>
+                <div
+                  className="card align-items-center border-0 justify-content-center"
+                  style={{ width: "18rem", marginRight: "20px", padding: "30px", backgroundColor: "#f8f9fa" }}
+                >
+                  <div
+                    className="d-flex align-items-center justify-content-center"
+                    style={{ borderRadius: "100px", border: "9px solid #01acac", height: "8rem", width: "8rem", backgroundColor: "#01acac" }}
+                  >
+                    <FontAwesomeIcon icon={faMapLocationDot} style={{ width: "3rem", height: "3rem" }} />
+                  </div>
+                  <div className="card-body">
+                    <h5 className="card-title">Island-Wide Coverage</h5>
+                    <p className="card-text">We list properties available on all our sister islands</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
