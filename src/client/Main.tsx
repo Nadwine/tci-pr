@@ -47,6 +47,7 @@ import AdminUserTable from "./components/AdminUserTable";
 import LandlordDashboard from "./pages/LandlordDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import SubmitListingRedirect from "./pages/SubmitListingRedirect";
+import LandLordCreateListing from "./pages/LandLordCreateListing";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -144,7 +145,6 @@ const Main = () => {
             {/* Do not use Raw Strings as routes. Add it to enums stored in ./utils/enums */}
             {/* TODO add all URLS in the enum and replace them on server and client */}
             <Route index element={<Home />} />
-            <Route path={ReactRoutesEnum.ADMIN} element={<RequirePermission view={<h1>Hi Admin</h1>} roles={["admin"]} />} />
             <Route path={ReactRoutesEnum.REGISTERCONFIRM} element={<RegisterConfirm />} />
             <Route path={ReactRoutesEnum.REGISTER} element={<RequireLogout view={<Register />} />} />
             <Route path={ReactRoutesEnum.LOGIN} element={<RequireLogout view={<Login />} />} />
@@ -156,10 +156,11 @@ const Main = () => {
             <Route path="feedback" element={<Feedback />} />
             <Route path="temp" element={<TempHome />} />
             <Route path="user" element={<UserProfile />} />
-            <Route path="/listing-message" element={<SubmitListingRedirect />} />
-            <Route path="dashboard" element={<RequirePermission view={<LandlordDashboard />} roles={["landlord"]} />} />
+            <Route path="listing-success" element={<SubmitListingRedirect />} />
+            <Route path="landlord/dashboard" element={<RequirePermission view={<LandlordDashboard />} roles={["landlord"]} />} />
+            <Route path="landlord/create-listing" element={<RequirePermission view={<LandLordCreateListing />} roles={["landlord"]} />} />
             <Route path="about" element={<AboutUs />} />
-            <Route path="admin/dash" element={<RequirePermission view={<AdminDashboard />} roles={["admin"]} />} />
+            <Route path="admin/dashboard" element={<RequirePermission view={<AdminDashboard />} roles={["admin"]} />} />
             <Route path="test/table" element={<AdminUserTable />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
             <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />

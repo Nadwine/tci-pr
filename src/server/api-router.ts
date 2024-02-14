@@ -15,7 +15,7 @@ import { ensureAdmin, ensureAuthentication, ensureLogout } from "./middlewareFun
 import multer from "multer";
 import dayjs from "dayjs";
 import {
-  createRentListingRoute,
+  adminCreateRentListingRoute,
   createSaleListingRoute,
   deleteRentListingById,
   getRentListingById,
@@ -27,14 +27,15 @@ import {
   getAllListings,
   getApproveFromListings,
   setApprovalValueRoute,
-  getExpandedRentListingById
+  getExpandedRentListingById,
+  landLordSubmitRentListingRoute
 } from "./routes/listing-route";
 import { createEnquiryRoute, getLatestEnquiry } from "./routes/enquiry-route";
 import { getMessagesByEnquiryConversationId, sendMessageToConversation, setMessageAsSeen } from "./routes/message-chat-route";
 import { adminCreateLandLordForListing, createNewRentMonthly, stripeWebhook } from "./routes/payments";
 import { submitFeedback } from "./routes/feedback";
 import { getAllUsers } from "./routes/user";
-import { getAllLandlordsByUser } from "./routes/landlord";
+import { getAllLandlordsByUser, getSessionLandlordProfile } from "./routes/landlord";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -47,7 +48,10 @@ router.use("*", (req: Request, res: Response, next: NextFunction) => {
 
   // "/api/auth/credentials & refresh-perms is called too many times"
   if (!isAsset && req.originalUrl !== "/api/auth/credentials" && req.originalUrl !== "/api/auth/refresh-perms" && req.originalUrl !== "/api/enquiry/latest") {
-    console.log(req.method, req.originalUrl, `  --  ${dayjs().format("h:mm a")}`);
+    res.on("finish", () => {
+      // console.log(`Responded with status ${res.statusCode}`);
+      console.log(`${req.method}(${res.statusCode})`, req.originalUrl, `  --  ${dayjs().format("h:mm a")}`);
+    });
   }
   next();
 });
@@ -66,7 +70,8 @@ router.post("/auth/login", loginUser);
 router.get("/auth/logout", logoutUser);
 
 // /api/listing   routes
-router.post("/listing/rent/create", ensureAuthentication, uploadMemory.any(), createRentListingRoute);
+router.post("/listing/rent/create", ensureAdmin, uploadMemory.any(), adminCreateRentListingRoute);
+router.post("/listing/rent/landlord/create", ensureAuthentication, uploadMemory.any(), landLordSubmitRentListingRoute);
 router.post("/listing/sale/create", ensureAuthentication, uploadMemory.any(), createSaleListingRoute);
 router.get("/listing/rent/search", searchRentListingRoute);
 router.get("/listing/sale/search", searchSaleListingRoute);
@@ -102,5 +107,8 @@ router.get("/users", ensureAdmin, getAllUsers);
 
 // landlord
 router.get("/landlords", ensureAdmin, getAllLandlordsByUser);
+router.get("/landlord/profile", ensureAuthentication, getSessionLandlordProfile);
+
+// profile
 
 export default router;

@@ -18,7 +18,7 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare title: string;
   declare description: string;
   declare listingType: ListingTypeEnum; // sales, rent
-  declare adminId: number;
+  declare adminId?: number;
   declare isApproved: boolean;
   declare stripePaymentLink?: { url: string; expiresAtUnixSeconds: number; generatedAt: string };
   declare landlordId?: number;

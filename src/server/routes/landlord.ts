@@ -16,3 +16,15 @@ export const getAllLandlordsByUser = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal Server error 88", err });
   }
 };
+
+export const getSessionLandlordProfile = async (req: Request, res: Response) => {
+  const sessionUser = req.session.user;
+
+  try {
+    const profile = await Profile.findOne({ where: { userId: sessionUser!.id } });
+
+    return res.status(200).json({ profile: profile });
+  } catch (err) {
+    res.status(500).json({ message: "Internal Server error 88", err });
+  }
+};

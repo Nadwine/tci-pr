@@ -191,9 +191,6 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
         bank_transfer_payments: {
           requested: true
         },
-        card_issuing: {
-          requested: true
-        },
         link_payments: {
           requested: true
         }

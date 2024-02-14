@@ -122,7 +122,7 @@ function Navbar() {
                     Enquiries
                   </a>
                   {user.accountType === "landlord" && (
-                    <a href="/dashboard" className="dropdown-item">
+                    <a href="/landlord/dashboard" className="dropdown-item">
                       Dashboard
                     </a>
                   )}

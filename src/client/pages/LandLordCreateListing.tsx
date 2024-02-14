@@ -1,17 +1,32 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import islands from "../../utils/islandsData.json";
 import { useNavigate } from "react-router-dom";
 import { cloneDeep } from "lodash";
+import { toast } from "react-toastify";
 
 const axiosConfig = { headers: { "Content-Type": "multipart/form-data" } };
 
-const CreateRentForm = props => {
+const LandLordCreateListing = props => {
   const navigate = useNavigate();
   const [fileBlobRef, setFileBlobRef] = useState<string[]>([]);
   const [questionBeingTyped, setQuestionBeingTyped] = useState("");
+  const [hasProfile, setHasProfile] = useState(false);
+
+  const checkProfile = async () => {
+    const res = await axios.get("/api/landlord/profile");
+    if (res.status === 200) {
+      if (res.data.profile) setHasProfile(true);
+    } else {
+      toast.error(JSON.stringify(res.data));
+    }
+  };
+
+  useEffect(() => {
+    checkProfile();
+  }, []);
 
   const { values, errors, touched, handleSubmit, handleChange, handleBlur, setFieldValue } = useFormik({
     initialValues: {
@@ -38,6 +53,10 @@ const CreateRentForm = props => {
     },
     async onSubmit(formValues, formikHelpers) {
       const billsIncluded = formValues.electricityIncluded || formValues.internetIncluded || formValues.waterIncluded;
+      if (hasProfile === false) {
+        toast.error("Please complete your profile");
+        return;
+      }
       const body = {
         files: formValues.files,
         title: formValues.title,
@@ -62,8 +81,8 @@ const CreateRentForm = props => {
         questions: JSON.stringify(formValues.questions)
       };
       await axios
-        .post("/api/listing/rent/create", body, axiosConfig)
-        .then(res => navigate(`/property/rent/${res.data.id}`))
+        .post("/api/listing/rent/landlord/create", body, axiosConfig)
+        .then(res => navigate("/listing-success"))
         .catch(err => console.log("/api/listing/rent/create", err));
     },
     validate(values) {
@@ -96,7 +115,18 @@ const CreateRentForm = props => {
     <div className="create-rent-form d-flex justify-content-center row">
       <div className="col-md-6 col-sm-10 col-lg-5">
         <form onSubmit={handleSubmit} onKeyPress={e => e.key === "Enter" && e.preventDefault()} onKeyUp={e => e.key === "Enter" && e.preventDefault()}>
-          <h4 className="text-center pb-4 mt-5">Add property for rent</h4>
+          <h4 className="text-center pb-4 mt-5">Submit Proposal To List Your Property</h4>
+          {!hasProfile && (
+            <div>
+              <div className="mb-5 text-center" style={{ color: "#f86464" }}>
+                It seems you do not yet have a profile setup. You will not be able to submit your listing until this is complete.&nbsp;
+                <a href="/user" className="link">
+                  Click here
+                </a>{" "}
+                to complete your profile
+              </div>
+            </div>
+          )}
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
               Island
@@ -186,7 +216,7 @@ const CreateRentForm = props => {
           </div>
           <div className="mb-3">
             <label htmlFor="availability" className="form-label">
-              Availability
+              Available From
             </label>
             <input name="availability" value={values.availability} onChange={handleChange} className="form-control" type="date" />
           </div>
@@ -347,4 +377,4 @@ const CreateRentForm = props => {
   );
 };
 
-export default connect()(CreateRentForm);
+export default connect()(LandLordCreateListing);
