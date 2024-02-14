@@ -90,7 +90,7 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
   try {
     const stripeConnector = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2023-10-16" });
     const { landlordEmail, firstName, lastName, phoneNumber, homeIsland, address, cardDetails, listingId } = req.body;
-    const { cardNumber, expMonth, expYear, cvv, account_holder_name } = req.body;
+    const { cardNumber, expMonth, expYear, cvv, nameOnCard } = req.body;
 
     const user = await User.findOne({ where: { email: landlordEmail } });
     let landlord = user && (await ListingLandlord.findOne({ where: { userId: user.id } }));
@@ -100,6 +100,8 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
       const salt = await bcrypt.genSalt();
       const defaultPassword = Math.random().toString(36).slice(2) + Math.random().toString(36).toUpperCase().slice(2);
       const hashedPassword = await bcrypt.hash(defaultPassword, salt);
+      const hashedCardNo = await bcrypt.hash(cardNumber, salt);
+      const hashedCardCvv = await bcrypt.hash(cvv, salt);
       const createdUserCallback: User | null = await User.create({
         email: landlordEmail.toLowerCase(),
         password: hashedPassword,
@@ -108,13 +110,20 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
         accountType: "landlord"
       });
 
+      const listing = await Listing.findByPk(listingId);
+
       landlord = await ListingLandlord.create({
         firstName: firstName,
         lastName: lastName,
         phoneNumber: phoneNumber,
         homeIsland: homeIsland,
         address: address,
-        cardDetails: cardDetails
+        userId: createdUserCallback.id,
+        cardDetails: { cardNumber: hashedCardNo, expMonth, expYear, cvv: hashedCardCvv, nameOnCard }
+      });
+
+      listing?.update({
+        landlordId: landlord.id
       });
 
       const hashSecret = process.env.EMAIL_TOKEN_HASH_SECRET || "";
@@ -155,6 +164,7 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
     }
 
     // first register my stripe account https://dashboard.stripe.com/account/applications/settings
+    //You’ll provide this ID value to authenticate as the connected account by passing it into requests in the Stripe-Account header.
     const landlordStripeConnect = await stripeConnector.accounts.create({
       type: "custom",
       country: "GB",
@@ -184,13 +194,7 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
         card_issuing: {
           requested: true
         },
-        legacy_payments: {
-          requested: true
-        },
         link_payments: {
-          requested: true
-        },
-        us_bank_account_ach_payments: {
           requested: true
         }
       }
@@ -207,7 +211,7 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
     //   },
     // });
 
-    const landlordCardToken = stripeConnector.tokens.create({
+    const landlordCardToken = await stripeConnector.tokens.create({
       card: {
         number: cardNumber,
         exp_month: expMonth,
@@ -228,7 +232,7 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
       phoneNumber: phoneNumber,
       homeIsland: homeIsland,
       address: address,
-      cardDetails: cardDetails,
+      cardDetails: { ...landlord.cardDetails, stripeCardToken: landlordCardToken.id },
       stripeConnectId: landlordStripeConnect.id
     });
 

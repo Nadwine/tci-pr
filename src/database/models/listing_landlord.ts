@@ -7,7 +7,7 @@ import sequelize from "../sequelize-connection";
 export default class ListingLandlord extends Model<InferAttributes<ListingLandlord>, InferCreationAttributes<ListingLandlord>> {
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
-  declare id: CreationOptional<string>;
+  declare id: CreationOptional<number>;
   declare firstName: string;
   declare lastName: string;
   declare phoneNumber: string;
@@ -26,9 +26,8 @@ ListingLandlord.init(
   {
     // Model attributes are defined here
     id: {
-      type: DataTypes.UUID,
-      // autoIncrement: true, // does not work with UUID
-      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true
     },
     firstName: {
@@ -65,7 +64,7 @@ ListingLandlord.init(
     sequelize,
     tableName: "listing_landlords",
     timestamps: true,
-    modelName: "Landlord"
+    modelName: "ListingLandlord"
   }
 );
 

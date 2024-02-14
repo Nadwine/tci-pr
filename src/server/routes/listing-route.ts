@@ -362,6 +362,27 @@ export const getRentListingById = async (req: Request, res: Response) => {
   }
 };
 
+export const getExpandedRentListingById = async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  try {
+    const listing = await Listing.findByPk(id, {
+      include: [
+        { model: Address },
+        { model: PropertyForRent },
+        { model: ListingLandlord },
+        { model: ListingMedia, order: [["id", "ASC"]] },
+        { model: Admin, include: [User] },
+        { model: ListingQuestion }
+      ]
+    });
+
+    return res.status(200).json(listing);
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
 export const searchRentListingRoute = async (req: Request, res: Response) => {
   // TODO Validation opn query values
   const location = String(req.query.location);

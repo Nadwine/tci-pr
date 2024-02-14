@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Accordion, Button, Card } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -18,10 +18,12 @@ const ListingPayment = props => {
   const [cvv, setCvv] = useState("");
   const [listing, setListing] = useState<Listing>();
   const [loading, setLoading] = useState(true);
+  const landlordFormRef = useRef<HTMLFormElement>(null);
 
   const initialFetch = async () => {
-    const res = await axios.get(`/api/listing/rent/${listingId}`);
+    const res = await axios.get(`/api/listing/rent/expanded/${listingId}`);
     if (res.status === 200) {
+      console.log("/api/listing/rent/expanded", res.data);
       setListing(res.data);
       setLoading(false);
     } else {
@@ -48,6 +50,23 @@ const ListingPayment = props => {
     initialFetch();
   };
 
+  const submitNewLandLord = async e => {
+    //payment/rent/attach-landlord
+    // const { landlordEmail, firstName, lastName, phoneNumber, homeIsland, address, cardDetails, listingId } = req.body;
+    // const { cardNumber, expMonth, expYear, cvv, account_holder_name } = req.body;
+    e.preventDefault();
+    const formData = new FormData(landlordFormRef.current || undefined);
+    const body: any = {};
+    for (var pair of formData.entries()) {
+      body[pair[0]] = pair[1];
+    }
+    body.listingId = listing?.id;
+    const res = await axios.post("/api/payment/rent/attach-landlord", body);
+    toast.error(JSON.stringify(res.data.err));
+    console.log(res.data.err);
+    // submitEnquiry(body);
+  };
+
   const now = dayjs();
   const linkGeneratedAt = listing?.stripePaymentLink?.generatedAt;
   const islinkExpired = dayjs(linkGeneratedAt).add(23, "hours").isBefore(now);
@@ -60,7 +79,7 @@ const ListingPayment = props => {
           <Card>
             <Card.Header>
               <Accordion.Toggle as={Button} variant="link" eventKey="0" style={{ width: "100%", display: "flex" }}>
-                Payment Link
+                Tenant Payment Link
                 <i className="bi bi-chevron-down ms-auto" />
               </Accordion.Toggle>
             </Card.Header>
@@ -96,12 +115,62 @@ const ListingPayment = props => {
           <Card>
             <Card.Header>
               <Accordion.Toggle as={Button} variant="link" eventKey="1" style={{ width: "100%", display: "flex" }}>
-                Details
+                LandLord Details
                 <i className="bi bi-chevron-down ms-auto" />
               </Accordion.Toggle>
             </Card.Header>
             <Accordion.Collapse eventKey="1">
-              <Card.Body>No data</Card.Body>
+              <Card.Body>
+                {JSON.stringify(listing?.ListingLandlord)}
+                <h4>Create Landlord to pay</h4>
+                <form ref={landlordFormRef} onSubmit={submitNewLandLord}>
+                  <div className="mb-3 w-50">
+                    <label>First Name</label>
+                    <input name="firstName" className="form-control" defaultValue="Brutchsama" />
+                  </div>
+                  <div className="mb-3 w-50">
+                    <label>Last Name</label>
+                    <input name="lastName" className="form-control" defaultValue="Jean-Louis" />
+                  </div>
+                  <div className="mb-3 w-50">
+                    <label>Email</label>
+                    <input name="landlordEmail" className="form-control" defaultValue="brutchsama@mail.com" />
+                  </div>
+                  <div className="mb-3 w-50">
+                    <label>Phone</label>
+                    <input name="phoneNumber" className="form-control" defaultValue="+447535799721" />
+                  </div>
+                  <div className="mb-3 w-50">
+                    <label>Home Island</label>
+                    <input name="homeIsland" className="form-control" defaultValue="Providenciales" />
+                  </div>
+                  <div className="mb-3 w-50">
+                    <label>Address</label>
+                    <input name="address" className="form-control" defaultValue="Address, Test street, Five Cays" />
+                  </div>
+                  <div className="mb-3 w-50">
+                    <label>Card Number 4242424242424242</label>
+                    <input name="cardNumber" className="form-control" defaultValue="4242424242424242" />
+                  </div>
+                  <div className="mb-3 w-50">
+                    <label>Expiry Month</label>
+                    <input name="expMonth" className="form-control" defaultValue="12" />
+                  </div>
+                  <div className="mb-3 w-50">
+                    <label>Expiry Year</label>
+                    <input name="expYear" className="form-control" defaultValue="2027" />
+                  </div>
+                  <div className="mb-3 w-50">
+                    <label>Cvv</label>
+                    <input name="cvv" className="form-control" defaultValue="123" />
+                  </div>
+                  <div className="mb-3 w-50">
+                    <label>Name On Card</label>
+                    <input name="nameOnCard" className="form-control" defaultValue="Brutchsama" />
+                  </div>
+                  <button className="btn btn-primary">Submit</button>
+                </form>
+              </Card.Body>
             </Accordion.Collapse>
           </Card>
         </Accordion>

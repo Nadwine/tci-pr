@@ -21,6 +21,7 @@ const ViewRentProperty = props => {
   const [listing, setListing] = useState<Listing>();
   const [showEnquiryModal, setShowEnquiryModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [alreadySubmitted, setAlreadySubmitted] = useState(false);
   const enquiryRef = useRef<HTMLFormElement>(null);
   const user = useSelector((root: RootState) => root.auth.user);
   const isOwner = user?.id === listing?.Admin.userId;
@@ -54,6 +55,11 @@ const ViewRentProperty = props => {
       navigate("/login");
     } else {
       setShowEnquiryModal(true);
+      setInterval(() => {
+        const myEnquiries = store.getState().message.conversations;
+        const alreadySubmitted = myEnquiries.filter(e => e.listingId === listing?.id).length > 0;
+        setAlreadySubmitted(alreadySubmitted);
+      }, 300);
     }
   };
 
@@ -79,17 +85,24 @@ const ViewRentProperty = props => {
           <Modal.Header>
             <Modal.Title>Submit enquiry to landlord</Modal.Title>
           </Modal.Header>
-          <Modal.Body className="d-flex flex-column justify-content-center">
-            {listing?.ListingQuestions &&
-              listing.ListingQuestions.map((q, i) => (
-                <div key={i}>
-                  <label>{q.text}</label>
-                  <input required name={q.text} type="text" className="form-control" />
-                </div>
-              ))}
-            <h6 className="pt-5">Message</h6>
-            <textarea name="message" required className="form-control" />
-          </Modal.Body>
+          {!alreadySubmitted && (
+            <Modal.Body className="d-flex flex-column justify-content-center">
+              {listing?.ListingQuestions &&
+                listing.ListingQuestions.map((q, i) => (
+                  <div key={i}>
+                    <label>{q.text}</label>
+                    <input required name={q.text} type="text" className="form-control" />
+                  </div>
+                ))}
+              <h6 className="pt-5">Message</h6>
+              <textarea name="message" required className="form-control" />
+            </Modal.Body>
+          )}
+          {alreadySubmitted && (
+            <div className="p-5">
+              You have already submitted an enquiry for this property. Click <a href="/enquiries">here</a> to see your enquiry
+            </div>
+          )}
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowEnquiryModal(false)}>
               Cancel

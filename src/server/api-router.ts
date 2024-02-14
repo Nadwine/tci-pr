@@ -26,11 +26,12 @@ import {
   updateRentListingById,
   getAllListings,
   getApproveFromListings,
-  setApprovalValueRoute
+  setApprovalValueRoute,
+  getExpandedRentListingById
 } from "./routes/listing-route";
 import { createEnquiryRoute, getLatestEnquiry } from "./routes/enquiry-route";
 import { getMessagesByEnquiryConversationId, sendMessageToConversation, setMessageAsSeen } from "./routes/message-chat-route";
-import { createNewRentMonthly, stripeWebhook } from "./routes/payments";
+import { adminCreateLandLordForListing, createNewRentMonthly, stripeWebhook } from "./routes/payments";
 import { submitFeedback } from "./routes/feedback";
 import { getAllUsers } from "./routes/user";
 import { getAllLandlordsByUser } from "./routes/landlord";
@@ -70,6 +71,7 @@ router.post("/listing/sale/create", ensureAuthentication, uploadMemory.any(), cr
 router.get("/listing/rent/search", searchRentListingRoute);
 router.get("/listing/sale/search", searchSaleListingRoute);
 router.get("/listing/rent/:id", getRentListingById);
+router.get("/listing/rent/expanded/:id", getExpandedRentListingById);
 router.put("/listing/rent/:id", ensureAuthentication, uploadMemory.any(), updateRentListingById);
 router.delete("/listing/rent/:id", ensureAuthentication, deleteRentListingById);
 router.get("/listing/listings", ensureAuthentication, landlordViewMyListings);
@@ -89,6 +91,7 @@ router.post("/message/enquiry", ensureAuthentication, sendMessageToConversation)
 
 // /api/payments  routes
 router.post("/payment/rent/create/monthly-payment-link", ensureAdmin, createNewRentMonthly);
+router.post("/payment/rent/attach-landlord", ensureAdmin, adminCreateLandLordForListing);
 router.post("/payment/webhook", express.raw({ type: "application/json" }), stripeWebhook);
 
 // feedback
