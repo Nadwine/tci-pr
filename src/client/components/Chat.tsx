@@ -54,7 +54,7 @@ export const Chat = (props: Props) => {
         <div className="d-flex flex-column col-12 col-md-10 chat-area" style={{ paddingBottom: "60px", height: "60vh", overflow: "scroll" }}>
           {chats.map((msg, i) => (
             <div className="d-flex" key={i} style={{ marginLeft: msg.userId === loggedInUserId ? "auto" : "", marginBottom: "20px" }}>
-              {msg.userId !== loggedInUserId && <i className="bi bi-person-circle pe-1"></i>}
+              {msg.userId !== loggedInUserId && <i className="bi bi-person-circle pe-1" style={{ fontSize: "22px" }}></i>}
               <div className="text-and-time">
                 <div
                   className="d-flex flex-column justify-content-center"
