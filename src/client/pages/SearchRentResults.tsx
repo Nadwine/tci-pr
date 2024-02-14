@@ -102,7 +102,7 @@ const SearchRentResults = props => {
       </div>
       <div style={{ minHeight: "70vh" }} className="list col-12 col-md-8 col-lg-8 col-xl-8">
         {searchResults.map((listing, i) => (
-          <div key={i} className="card mb-3">
+          <div key={i} className="card mb-3 shadow-sm">
             <div className="card-body d-flex flex-wrap">
               <div onClick={() => viewProperty(listing.id)} className="image-container point col-12 col-md-5 me-2 pb-3">
                 {listing.ListingMedia[0].mediaType === "image" && <img width="100%" src={listing.ListingMedia[0]?.mediaUrl} />}
@@ -113,19 +113,24 @@ const SearchRentResults = props => {
                 </div>
               </div>
               <div className="info col-12 col-md-6 overflow-hidden">
-                <div onClick={() => viewProperty(listing.id)} className="title fw-bold col-12 point">
+                <div onClick={() => viewProperty(listing.id)} className="title fw-bold col-10 point">
                   {listing.title}
-                  <div className="availability col-3 float-end" style={{ fontSize: "0.7em" }}>
+                  {/* <div className="availability col-3 float-end" style={{ fontSize: "0.7em" }}>
                     Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}
-                  </div>
+                  </div> */}
                 </div>
-                <div onClick={() => viewProperty(listing.id)} className="location pt-4 point">
+                <div onClick={() => viewProperty(listing.id)} className="location pt-2 point">
                   {listing.Address.settlement.charAt(0).toUpperCase() + listing.Address.settlement.slice(1)}
                 </div>
 
                 <div className="foot d-flex flex-row pt-2">
                   <div onClick={() => viewProperty(listing.id)} className="col-10 point">
-                    <div className="beds pt-5">
+                    <div className="beds pt-1">
+                      <span className="badge rounded-pill" style={{ backgroundColor: "#087990" }}>
+                        Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}
+                      </span>
+                    </div>
+                    <div className="beds pt-2">
                       <FontAwesomeIcon className="pe-1" icon={faBed} />
                       Rooms {listing.PropertyForRent.numOfRooms}
                     </div>
@@ -133,12 +138,22 @@ const SearchRentResults = props => {
                       <FontAwesomeIcon className="pe-1" icon={faBath} />
                       Baths {listing.PropertyForRent.numOfBathRooms}
                     </div>
+                    <div className="beds pt-3 col-sm-4 col-md-9" style={{ overflow: "hidden", textOverflow: "ellipsis", height: "5.5em" }}>
+                      {listing.description}..
+                    </div>
+                    <div className="beds pt-3" style={{ color: "#087990" }}>
+                      {" "}
+                      Added {dayjs(listing.createdAt).fromNow()}
+                    </div>
                   </div>
                   <div className="col-2 pt-5 mt-2 float-end">
+                    <p className="fw-bold" style={{ color: "#087990", fontSize: "12px" }}>
+                      Posted by
+                    </p>
                     <span
                       onClick={() => console.log("landlord")}
-                      className="btn btn-link bg-info rounded-circle text-black fs-5"
-                      style={{ width: "45px", height: "45px" }}
+                      className="btn btn-link bg-white border-info rounded-circle text-black fs-5"
+                      style={{ width: "45px", height: "45px", marginLeft: "7px" }}
                     >
                       {listing.Admin.User?.email?.charAt(0)}
                     </span>

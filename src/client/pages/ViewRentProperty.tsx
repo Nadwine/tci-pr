@@ -122,11 +122,11 @@ const ViewRentProperty = props => {
     <div>
       <EnquiryModal />
       {listing && (
-        <div className="card mb-3">
+        <div className="card mb-3 shadow-sm">
           <div className="card-body d-flex flex-wrap justify-content-center">
             <div className="image-container col-10 me-2 pb-3">
               <Carousel images={listing.ListingMedia} />
-              <div className="price fw-bold fs-5" style={{ backgroundColor: "#ebf8ff", borderBottomLeftRadius: "7px", borderBottomRightRadius: "7px" }}>
+              <div className="price fw-bolder fs-5" style={{ backgroundColor: "#ebf8ff", borderBottomLeftRadius: "7px", borderBottomRightRadius: "7px" }}>
                 {"$"}
                 {listing?.PropertyForRent.rentAmount} <span style={{ fontSize: "0.6em" }}>Monthly</span>{" "}
               </div>
@@ -134,8 +134,10 @@ const ViewRentProperty = props => {
             <div className="info col-10">
               <div className="title fw-bolder col-12">
                 {listing.title}
-                <div className="availability col-3 float-end" style={{ fontSize: "13px" }}>
-                  <span className="badge rounded-pill bg-primary">Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}</span>
+                <div className="availability col-3 float-end me-3" style={{ fontSize: "12px" }}>
+                  <span className="badge rounded-pill" style={{ backgroundColor: "#087990" }}>
+                    Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}
+                  </span>
                 </div>
               </div>
               <div className="location">{listing.Address.settlement.charAt(0).toUpperCase() + listing.Address.settlement.slice(1)}</div>
@@ -155,7 +157,7 @@ const ViewRentProperty = props => {
                     Tenants {listing.PropertyForRent.maxTenant}
                   </div>
                 </div>
-                <div style={{ fontSize: "0.8rem" }} className="col-3 pt-5 mt-2 float-end">
+                <div style={{ fontSize: "13px" }} className="col-3 pt-5 mt-2 me-2 float-end">
                   <div className="fw-bold">Address</div>
                   <div>{listing.Address.addressLine1}</div>
                   <div>{listing.Address.addressLine2}</div>

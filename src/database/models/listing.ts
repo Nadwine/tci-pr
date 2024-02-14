@@ -30,8 +30,8 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare ListingMedia: CreationOptional<ListingMedia[]>;
   declare ListingLandlord: CreationOptional<ListingLandlord>;
   declare Address: CreationOptional<Address>;
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
+  declare createdAt: CreationOptional<string>;
+  declare updatedAt: CreationOptional<string>;
   // property type, rooms, price, advert type (rent, sale)
 }
 
