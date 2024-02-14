@@ -8,6 +8,7 @@ import FilterSearchDesktop from "../components/FilterSearchDesktop";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBed, faBath } from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
+import LandlordProfileModal from "../components/LandlordProfileModal";
 
 const SearchRentResults = props => {
   const navigate = useNavigate();
@@ -27,6 +28,8 @@ const SearchRentResults = props => {
   const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(pageFromURL);
   const [serverError, setServerError] = useState("");
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [viewListingProfile, setViewListingProfile] = useState<Listing>();
 
   const generateUrlQuery = () => {
     let urlQuery = `/api/listing/rent/search?location=${searchTextFromURL}&page=${pageFromURL}`;
@@ -73,8 +76,8 @@ const SearchRentResults = props => {
     window.scrollTo(0, 0);
   };
 
-  const searchRent = async () => {
-    let searchTextTransform = searchText;
+  const searchRent = async text => {
+    let searchTextTransform = text || searchText;
     if (searchText.toLowerCase() === "provo") {
       setSearchText("providenciales");
       searchTextTransform = "providenciales";
@@ -151,7 +154,10 @@ const SearchRentResults = props => {
                       Posted by
                     </p>
                     <span
-                      onClick={() => console.log("landlord")}
+                      onClick={() => {
+                        setViewListingProfile(listing);
+                        setShowProfileModal(true);
+                      }}
                       className="btn btn-link bg-white border-info rounded-circle text-black fs-5"
                       style={{ width: "45px", height: "45px", marginLeft: "7px" }}
                     >
@@ -178,6 +184,7 @@ const SearchRentResults = props => {
           Next
         </button>
       </div>
+      {viewListingProfile && <LandlordProfileModal setShow={setShowProfileModal} listing={viewListingProfile} show={showProfileModal} />}
     </div>
   );
 };

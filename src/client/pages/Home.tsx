@@ -127,6 +127,40 @@ const Home = props => {
             )}
           </div>
         </div>
+        <div className="text-center fs-6" style={{ marginTop: "90px" }}>
+          <p className="fst-italic fs-6">
+            The Number One destination for landlords advertising their rental property and residents looking to find their next rental home.
+          </p>
+          <p className="fs-4">Search Properties for Rent in the Turks and Caicos Islands</p>
+          <hr className="text-secondary"></hr>
+          <p>FIND YOUR DREAM HOME WITH TCI HOMEBASE</p>
+          <div>
+            <div className="col-12 d-flex justify-content-center" style={{ marginTop: "25px" }}>
+              <div className="card" style={{ width: "18rem", marginRight: "20px" }}>
+                <div className="card-body">
+                  <h5 className="card-title">Free Registration</h5>
+                  <p>-Hassle-free registration </p>
+                  <p>-Guided one-on-one onboarding for landlords</p>
+                </div>
+              </div>
+              <div className="card" style={{ width: "18rem", marginRight: "20px" }}>
+                {/* <img src={listing2?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img> */}
+                <div className="card-body">
+                  <h5 className="card-title">No Dead Listings</h5>
+                  <p className="card-text">-Live updates on property availability </p>
+                  <p>-No fake adverts</p>
+                </div>
+              </div>
+              <div className="card" style={{ width: "18rem", marginRight: "20px" }}>
+                {/* <img src={listing3?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img> */}
+                <div className="card-body">
+                  <h5 className="card-title"> Island-Wide Coverage</h5>
+                  <p className="card-text">-We list properties available on all our sister islands.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         {/**Small screen -------------------------------------------------------------> */}
         {mobileView && (
           <div className="suggestions text-center text-dark" style={{ zIndex: +1, position: "relative", marginTop: "130px" }}>

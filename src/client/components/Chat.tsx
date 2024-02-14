@@ -54,34 +54,38 @@ export const Chat = (props: Props) => {
         <div className="d-flex flex-column col-12 col-md-10 chat-area" style={{ paddingBottom: "60px", height: "60vh", overflow: "scroll" }}>
           {chats.map((msg, i) => (
             <div className="d-flex" key={i} style={{ marginLeft: msg.userId === loggedInUserId ? "auto" : "", marginBottom: "20px" }}>
-              {msg.userId !== loggedInUserId && (
-                <div className="pe-1">
-                  <i className="bi bi-person-circle"></i>
+              {msg.userId !== loggedInUserId && <i className="bi bi-person-circle pe-1" style={{ fontSize: "22px" }}></i>}
+              <div className="text-and-time">
+                <div
+                  className="d-flex flex-column justify-content-center"
+                  style={{
+                    borderBottomLeftRadius: "12px",
+                    borderBottomRightRadius: "12px",
+                    borderTopRightRadius: msg.userId !== loggedInUserId ? "12px" : "",
+                    borderTopLeftRadius: msg.userId === loggedInUserId ? "12px" : "",
+                    padding: "2px 20px",
+                    backgroundColor: msg.userId === loggedInUserId ? "#0082ff" : "#eaecef",
+                    color: msg.userId === loggedInUserId ? "white" : "black",
+                    width: "fit-content"
+                  }}
+                >
+                  {msg.messageText}
                 </div>
-              )}
-              <div
-                className="text-center"
-                style={{
-                  borderRadius: "12px",
-                  padding: "2px 20px",
-                  backgroundColor: msg.userId === loggedInUserId ? "#0082ff" : "#eaecef",
-                  color: msg.userId === loggedInUserId ? "white" : "black",
-                  width: "fit-content"
-                }}
-              >
-                {msg.messageText}
+                <div className="row-3" style={{ fontSize: "0.7em", marginLeft: "10px" }}>
+                  {dayjs(msg.createdAt).fromNow()}
+                </div>
               </div>
-              <div style={{ fontSize: "0.7em", marginLeft: "10px" }}>{dayjs(msg.createdAt).fromNow()}</div>
             </div>
           ))}
         </div>
         <div
-          className="d-flex text-sender py-3 px-md-5 px-lg-5 w-100"
+          className="d-flex text-sender py-3 px-md-5 px-lg-5"
           style={{
             position: "absolute",
             left: "10px",
             bottom: mobileView ? "-2vh" : "7vh",
             height: "80px",
+            width: "95%",
             zIndex: +20
           }}
         >
@@ -89,12 +93,12 @@ export const Chat = (props: Props) => {
             onKeyUp={handleKeyPress}
             onChange={onChangeText}
             value={textboxVal}
-            className="form-control"
+            className="form-control mb-3"
             type="text"
-            placeholder="Type new message"
+            placeholder="Type new message..."
             style={{ width: "95%", borderRadius: "15px" }}
           />
-          <button disabled={!textboxVal} onClick={() => textboxVal && onSend(textboxVal)} className="btn btn-primary ms-4">
+          <button disabled={!textboxVal} onClick={() => textboxVal && onSend(textboxVal)} className="btn btn-primary ms-1 mb-3">
             <i className="bi bi-send" />
           </button>
         </div>
