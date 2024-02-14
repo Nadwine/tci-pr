@@ -48,6 +48,8 @@ import LandlordDashboard from "./pages/LandlordDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import SubmitListingRedirect from "./pages/SubmitListingRedirect";
 import LandLordCreateListing from "./pages/LandLordCreateListing";
+import LandlordProposalButton from "./components/LandlordProposalButton";
+import AboutLandlord from "./pages/AboutLandlord";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -159,6 +161,7 @@ const Main = () => {
             <Route path="listing-success" element={<SubmitListingRedirect />} />
             <Route path="landlord/dashboard" element={<RequirePermission view={<LandlordDashboard />} roles={["landlord"]} />} />
             <Route path="landlord/create-listing" element={<RequirePermission view={<LandLordCreateListing />} roles={["landlord"]} />} />
+            <Route path="about/landlord" element={<AboutLandlord />} />
             <Route path="about" element={<AboutUs />} />
             <Route path="admin/dashboard" element={<RequirePermission view={<AdminDashboard />} roles={["admin"]} />} />
             <Route path="test/table" element={<AdminUserTable />} />
@@ -188,6 +191,7 @@ const Main = () => {
           </Routes>
         </div>
       </section>
+      <LandlordProposalButton />
       <Footer />
       {/* <LanguageSelector /> */}
     </div>
