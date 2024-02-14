@@ -8,6 +8,7 @@ import islands from "../../utils/islandsData.json";
 import { toast } from "react-toastify";
 import { faClipboardList, faLayerGroup, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import LandlordProposalButton from "../components/LandlordProposalButton";
 
 let islandAndSettlements: string[] = [];
 
@@ -308,6 +309,7 @@ const Home = props => {
           </div>
         )}
       </div>
+      <LandlordProposalButton />
     </div>
   );
 };

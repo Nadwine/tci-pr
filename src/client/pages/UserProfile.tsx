@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+import LandlordProposalButton from "../components/LandlordProposalButton";
+import { RootState } from "../redux/store";
 
 const UserProfile = props => {
   const [currentView, setCurrentView] = useState("PersonalDetails");
+  const loggedInUsr = useSelector((r: RootState) => r.auth.user);
   return (
     <div className="container px-lg-5 px-md-5 pt-5">
       <div>
@@ -104,6 +107,7 @@ const UserProfile = props => {
           </div>
         )}
       </div>
+      {loggedInUsr?.accountType === "landlord" && <LandlordProposalButton />}
     </div>
   );
 };

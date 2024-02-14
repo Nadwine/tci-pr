@@ -339,7 +339,7 @@ export const loginUser = async (req: Request, res: Response) => {
         // Success redirect
         req.session.returnTo && delete req.session.returnTo;
         if (foundUser.accountType === "admin") {
-          res.redirect("/admin/dash");
+          res.redirect("/admin/dashboard");
         } else {
           res.redirect(`${req.session.returnTo || "/"}`);
         }

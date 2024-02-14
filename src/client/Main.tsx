@@ -42,13 +42,11 @@ import TempHome from "./pages/TempHome";
 import UserProfile from "./pages/UserProfile";
 import AboutUs from "./pages/AboutUs";
 import ForgetPassword from "./pages/ForgetPassword";
-import DesktopMessageEnquires from "./pages/DesktopMessageEnquires";
 import AdminUserTable from "./components/AdminUserTable";
 import LandlordDashboard from "./pages/LandlordDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import SubmitListingRedirect from "./pages/SubmitListingRedirect";
 import LandLordCreateListing from "./pages/LandLordCreateListing";
-import LandlordProposalButton from "./components/LandlordProposalButton";
 import AboutLandlord from "./pages/AboutLandlord";
 const threeMinute = 180000;
 
@@ -191,7 +189,6 @@ const Main = () => {
           </Routes>
         </div>
       </section>
-      <LandlordProposalButton />
       <Footer />
       {/* <LanguageSelector /> */}
     </div>
