@@ -1,19 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import islands from "../../utils/islandsData.json";
 
 type FilterSearchDesktopProps = {
   setSearchText: (string) => void;
-  searchRent: () => void;
+  searchRent: (string?) => void;
   searchText: string;
 };
+
+let islandAndSettlements: string[] = [];
+
+islands.forEach(i => {
+  islandAndSettlements.push(i.name);
+  islandAndSettlements = [...islandAndSettlements, ...i.settlements];
+});
 
 const getMultiples = (f: number, limit: number) => [...Array(Math.floor(limit / f))].map((_, i) => f * (i + 1));
 
 const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
   const { searchRent, setSearchText, searchText } = props;
   const [searchParams, setSearchParams] = useSearchParams();
+  const [fieldActive, setFieldActive] = useState(false);
+
+  const autoCompleteFilterWithSearch = islandAndSettlements.filter(c => c.toLowerCase().includes(searchText.toLowerCase()));
+
+  const showAutoComplete = searchText && autoCompleteFilterWithSearch.length !== 0;
+
+  const handleSearch = (e: any) => {
+    setSearchText(e.target.value);
+    setFieldActive(true);
+  };
 
   const setMaxPrice = price => {
     let updatedSearchParams = new URLSearchParams(searchParams.toString());
@@ -104,19 +122,40 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
               searchRent();
             }
           }}
-          onChange={e => setSearchText(e.target.value)}
+          onChange={e => handleSearch(e)}
           value={searchText}
           type="text"
-          className="form-control mb-4"
-          placeholder="Search ......"
-          style={{ borderRadius: "10px" }}
+          className="form-control"
+          placeholder="Search...."
         />
-        <div onClick={() => resetFilter()} className="w-100 d-flex px-3 btn-link text-dark border-info mb-2 justify-content-center point">
+        {showAutoComplete && fieldActive && (
+          <div className="homepage-autocomplete bg-light mb-3 position-absolute p-3 rounded" style={{ zIndex: 2 }}>
+            {autoCompleteFilterWithSearch.map((c, i) => (
+              <div
+                tabIndex={0}
+                // onKeyUp={e => {
+                //   if (e.key === "Enter") {
+                //     searchRent();
+                //   }
+                // }}
+                key={i}
+                className="autocomplete-item point autocomplete-highlight"
+                onClick={() => {
+                  setSearchText(c);
+                  searchRent(c);
+                }}
+              >
+                {c}
+              </div>
+            ))}
+          </div>
+        )}
+        <div onClick={() => resetFilter()} className="w-100 d-flex px-3 btn-link mt-5 text-dark border-info mb-2 justify-content-center point">
           <div>Reset filter</div>
         </div>
-        <ul className="list-group" style={{ borderRadius: "10px" }}>
+        <ul className="list-group mx-lg-5 shadow-sm" style={{ borderRadius: "10px" }}>
           <li className="price-filter list-group-item d-flex flex-column">
-            <div className="d-flex flex-row justify-content-between px-lg-2">
+            <div className="d-flex flex-row justify-content-between">
               <p className="fw-bold">Price</p>
               <Dropdown onSelect={val => setMinPrice(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
@@ -147,7 +186,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
             </div>
           </li>
           <li className="price-filter list-group-item d-flex flex-column">
-            <div className="d-flex flex-row justify-content-between px-lg-2">
+            <div className="d-flex flex-row justify-content-between">
               <p className="fw-bold">Bedroom</p>
               <Dropdown onSelect={val => setMinBed(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
@@ -178,7 +217,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
             </div>
           </li>
           <li className="price-filter list-group-item d-flex flex-column">
-            <div className="d-flex flex-row justify-content-between px-lg-2">
+            <div className="d-flex flex-row justify-content-between">
               <p className="fw-bold">Bathroom</p>
               <Dropdown onSelect={val => setMinBath(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
@@ -209,7 +248,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
             </div>
           </li>
           <li className="price-filter list-group-item d-flex flex-row justify-content-between">
-            <div className="d-flex flex-row justify-content-between fw-bold px-lg-2">
+            <div className="d-flex flex-row justify-content-between fw-bold">
               Bills Included:
               <Dropdown className="px-lg-5" onSelect={(val: any) => setBillsIncluded(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
@@ -224,7 +263,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
             </div>
           </li>
           <li className="furnished-filter list-group-item d-flex flex-row justify-content-between">
-            <div className="d-flex flex-row justify-content-between fw-bold px-lg-2">
+            <div className="d-flex flex-row justify-content-between fw-bold">
               Furnished:
               <Dropdown className="px-lg-5" onSelect={(val: any) => setFurnished(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">

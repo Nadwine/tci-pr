@@ -1,17 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { Accordion, Button, Card, Dropdown } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import islands from "../../utils/islandsData.json";
 
 type MobileFilterSearchProps = {
   setSearchText: (string) => void;
-  searchRent: () => void;
+  searchRent: (string?) => void;
   searchText: string;
 };
+
+let islandAndSettlements: string[] = [];
+
+islands.forEach(i => {
+  islandAndSettlements.push(i.name);
+  islandAndSettlements = [...islandAndSettlements, ...i.settlements];
+});
 
 const FilterSearchMobile = (props: MobileFilterSearchProps) => {
   const { searchRent, searchText, setSearchText } = props;
   const [searchParams, setSearchParams] = useSearchParams();
+  const [fieldActive, setFieldActive] = useState(false);
+
+  const autoCompleteFilterWithSearch = islandAndSettlements.filter(c => c.toLowerCase().includes(searchText.toLowerCase()));
+
+  const showAutoComplete = searchText && autoCompleteFilterWithSearch.length !== 0;
+
+  const handleSearch = (e: any) => {
+    setSearchText(e.target.value);
+    setFieldActive(true);
+  };
 
   const getMultiples = (f: number, limit: number) => [...Array(Math.floor(limit / f))].map((_, i) => f * (i + 1));
 
@@ -104,12 +122,34 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
               searchRent();
             }
           }}
-          onChange={e => setSearchText(e.target.value)}
+          onChange={e => handleSearch(e)}
           value={searchText}
           type="text"
           className="form-control"
           placeholder="Search ......"
         />
+        {showAutoComplete && fieldActive && (
+          <div className="w-100 bg-light mb-3 position-absolute p-3 rounded" style={{ zIndex: 2 }}>
+            {autoCompleteFilterWithSearch.map((c, i) => (
+              <div
+                tabIndex={0}
+                onKeyUp={e => {
+                  if (e.key === "Enter") {
+                    searchRent();
+                  }
+                }}
+                key={i}
+                className="autocomplete-item point autocomplete-highlight"
+                onClick={() => {
+                  setSearchText(c);
+                  searchRent(c);
+                }}
+              >
+                {c}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <div onClick={() => resetFilter()} className="ms-auto px-3 btn btn-link text-dark">
         Reset filter

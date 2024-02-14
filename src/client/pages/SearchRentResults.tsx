@@ -76,8 +76,8 @@ const SearchRentResults = props => {
     window.scrollTo(0, 0);
   };
 
-  const searchRent = async () => {
-    let searchTextTransform = searchText;
+  const searchRent = async text => {
+    let searchTextTransform = text || searchText;
     if (searchText.toLowerCase() === "provo") {
       setSearchText("providenciales");
       searchTextTransform = "providenciales";

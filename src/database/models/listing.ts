@@ -23,7 +23,6 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare stripePaymentLink?: { url: string; expiresAtUnixSeconds: number; generatedAt: string };
   declare landlordId?: number;
   declare Admin: CreationOptional<Admin>;
-  declare ListingLandlord: CreationOptional<ListingLandlord>;
   declare PropertyForRent: CreationOptional<PropertyForRent>;
   declare PropertyForSale: CreationOptional<PropertyForSale>;
   declare EnquiryConversations?: CreationOptional<EnquiryConversation[]>;
