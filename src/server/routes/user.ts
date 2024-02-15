@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import Profile from "../../database/models/profile";
 import Address from "../../database/models/address";
 import User from "../../database/models/user";
+import ListingLandlord from "../../database/models/listing_landlord";
 
 export const createSessionUserProfileRoute = async (req: Request, res: Response) => {
   const userId = req.session.user!.id;
@@ -29,20 +30,6 @@ export const createSessionUserProfileRoute = async (req: Request, res: Response)
     return res.status(200).json({ message: "Successful profile" });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error 201", err });
-  }
-};
-
-export const getUserProfileById = async (req: Request, res: Response) => {
-  const id = req.params.id;
-
-  try {
-    const user = await Profile.findByPk(id, {
-      include: [{ model: User }, { model: Address }]
-    });
-
-    return res.status(200).json(user);
-  } catch (err) {
-    return res.status(500).json({ message: "Internal Server error 207", err });
   }
 };
 

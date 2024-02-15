@@ -35,6 +35,7 @@
     "generate-first-migration": "NODE_ENV=development GENERATE_MIG=true npx ts-node ./src/database/generate-migrations.ts",
     "copy-db": "cd ./src/database && NODE_ENV=development npx sequelize-cli migration:generate --name init_db",
     "seed-db": "cd ./src/database && NODE_ENV=development npx sequelize-cli db:seed --seed 20211014122917-seedData.js",
+    "seed-db:sqlite": "cd ./src/database && NODE_ENV=development SQLITE=true npx sequelize-cli db:seed --seed 20211014122917-seedData.js",
     "drop-db": "cd ./src/database && NODE_ENV=development npx sequelize-cli db:seed --seed drop-all.js",
     "clear-db": "cd ./src/database && NODE_ENV=development npx sequelize-cli db:seed --seed clear-all.js",
     "create-db": "cd ./src/database && NODE_ENV=development npx sequelize-cli db:create",
@@ -42,7 +43,8 @@
     "s3-local": "serverless offline start",
     "kill-ports": "node kill-ports.js",
     "stripe-login": "./stripe login --api-key sk_test_51OYZbBIGvo7mWPbtFcewnwMjiylTPjrPygn74hDT6TqjcKOtm1X3Uxou0vWlGsjaG4YN1wh4DUYTbWr37Lvw16hm00VxcoJANw",
-    "stripe-listen": "./stripe listen --forward-to localhost:8080/api/payment/webhook"
+    "stripe-listen": "./stripe listen --forward-to localhost:8080/api/payment/webhook",
+    "ssh-tunnel": "ssh -R 80:localhost:8080 serveo.net"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "6.4.0",

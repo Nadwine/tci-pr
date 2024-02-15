@@ -16,7 +16,7 @@ if (process.env.NODE_ENV) {
 }
 module.exports = process.env.SQLITE
   ? {
-      storage: "./tcipr.db",
+      storage: "../../tcipr.db",
       dialect: "sqlite",
       logging: process.env.DB_QUERY_LOG === "true" ? true : false
     }

@@ -11,7 +11,7 @@ const CookieConsentModal = props => {
   const handleShow = () => setShow(true);
 
   const handleAcceptAll = event => {
-    sessionStorage.setItem("makit_cookie_consent", "true");
+    localStorage.setItem("makit_cookie_consent", "true");
     setShow(false);
   };
 

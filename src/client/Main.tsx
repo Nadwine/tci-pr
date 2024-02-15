@@ -114,7 +114,7 @@ const Main = () => {
 
   useEffect(() => {
     // Cookie
-    const consent = window && window.sessionStorage.getItem("makit_cookie_consent");
+    const consent = window && window.localStorage.getItem("makit_cookie_consent");
     if (!consent) setShowCookieConsent(true);
 
     // visitor Id (used to track logged out users)

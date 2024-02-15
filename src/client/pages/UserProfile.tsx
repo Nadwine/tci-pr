@@ -2,10 +2,27 @@ import React, { useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import LandlordProposalButton from "../components/LandlordProposalButton";
 import { RootState } from "../redux/store";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const UserProfile = props => {
   const [currentView, setCurrentView] = useState("PersonalDetails");
+  const [profile, setProfile] = useState(false);
   const loggedInUsr = useSelector((r: RootState) => r.auth.user);
+
+  const fetchProfile = async () => {
+    const res = await axios.get("/api/profile/my-profile/");
+    if (res.status === 200) {
+      if (res.data.profile) setProfile(res.data.profile);
+    } else {
+      toast.error(JSON.stringify(res.data));
+    }
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
   return (
     <div className="container px-lg-5 px-md-5 pt-5">
       <div>
