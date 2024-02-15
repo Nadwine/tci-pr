@@ -28,12 +28,13 @@ const UserProfile = props => {
     if (res.status === 200) toast.success("Success");
     if (res.status !== 200) toast.error("Error updating");
     console.log(res.data);
+    setProfile(res.data);
   };
 
   const fetchProfile = async () => {
     const res = await axios.get("/api/profile/my-profile/");
     if (res.status === 200) {
-      if (res.data?.profile) setProfile(res.data.profile);
+      if (res.data) setProfile(res.data);
     } else {
       toast.error(JSON.stringify(res.data));
     }
@@ -86,7 +87,7 @@ const UserProfile = props => {
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Name</h5>
-                profile.firstName - profile.lastName
+                {profile?.firstName + "-" + profile?.lastName}
                 <button className="btn btn-white" style={{ float: "right", color: "#087990" }}>
                   edit <i className="bi bi-pencil-square" />
                 </button>
@@ -113,7 +114,7 @@ const UserProfile = props => {
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Telephone</h5>
-                profile.phoneNumber
+                {profile?.phoneNumber}
                 <button className="btn btn-white" style={{ float: "right", color: "#087990" }}>
                   edit <i className="bi bi-pencil-square" />
                 </button>
@@ -140,7 +141,7 @@ const UserProfile = props => {
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title text-muted">Account Type</h5>
-                user.accountType
+                {profile?.User.accountType}
               </div>
             </div>
           </div>

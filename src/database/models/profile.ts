@@ -18,6 +18,7 @@ export default class Profile extends Model<InferAttributes<Profile>, InferCreati
   declare postcode: string;
   declare country: string;
   declare userId: number;
+  declare User: CreationOptional<User>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
