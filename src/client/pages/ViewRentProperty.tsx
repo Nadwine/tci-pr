@@ -33,6 +33,7 @@ const ViewRentProperty = props => {
       setListing(res.data);
       setLoading(false);
     } else {
+      setLoading(false);
       console.log(`/api/listing/rent/${id}`, res);
     }
   };
@@ -118,6 +119,7 @@ const ViewRentProperty = props => {
 
   console.log(listing);
   if (loading) return <LoadingSpinnerWholePage />;
+  if (!loading && !listing) return <h3 className="text-muted pt-5 text-center">The Property You Are Looking For No Longer Exists</h3>;
   return (
     <div>
       <EnquiryModal />

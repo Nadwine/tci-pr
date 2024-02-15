@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useAppContext } from "../Context";
 import { useSearchParams } from "react-router-dom";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { name, setName } = useAppContext();
@@ -15,6 +16,11 @@ const Login = () => {
     if (urlQuery.has("error")) {
       setServerError(urlQuery.get("error") || "");
       urlQuery.delete("error");
+      setUrlQuery(urlQuery);
+    }
+    if (urlQuery.get("success")) {
+      toast.success(urlQuery.get("success"));
+      urlQuery.delete("success");
       setUrlQuery(urlQuery);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

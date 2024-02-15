@@ -7,7 +7,7 @@ export default function initAxios() {
 
   axios.interceptors.response.use(
     (response: AxiosResponse) => {
-      if (response.data.redirect) {
+      if (response.data?.redirect) {
         window.location = response.data.redirect;
         return;
       }

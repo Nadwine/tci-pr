@@ -48,6 +48,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import SubmitListingRedirect from "./pages/SubmitListingRedirect";
 import LandLordCreateListing from "./pages/LandLordCreateListing";
 import AboutLandlord from "./pages/AboutLandlord";
+import NotFound from "./pages/NotFound";
 const threeMinute = 180000;
 
 function initTranslations() {
@@ -134,6 +135,13 @@ const Main = () => {
     return <LoadingSpinnerWholePage />;
   }
 
+  const ReoccurringPaymentNotify = () => (
+    <h5 className="text-center mt-5 text-success">
+      Your reoccurring payment is now setup <br />
+      <i className="fs-2 bi bi-calendar-check-fill" />
+    </h5>
+  );
+
   return (
     <div className="d-flex flex-column bg-light" style={{ minHeight: "95vh" }}>
       <Navbar />
@@ -148,7 +156,7 @@ const Main = () => {
             <Route path={ReactRoutesEnum.REGISTERCONFIRM} element={<RegisterConfirm />} />
             <Route path={ReactRoutesEnum.REGISTER} element={<RequireLogout view={<Register />} />} />
             <Route path={ReactRoutesEnum.LOGIN} element={<RequireLogout view={<Login />} />} />
-            <Route path="create-listing" element={<RequirePermission view={<CreateListing />} roles={["landlord", "admin"]} />} />
+            <Route path="create-listing" element={<RequirePermission view={<CreateListing />} roles={["admin"]} />} />
             <Route path="edit-listing/rent/:id" element={<RequirePermission view={<EditRentListing />} roles={["landlord", "admin"]} />} />
             <Route path="search/rent" element={<SearchRentResults />} />
             <Route path="help" element={<Help />} />
@@ -166,26 +174,10 @@ const Main = () => {
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
             <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
             <Route path="forget-password/:token" element={<RequireLogout view={<ForgetPassword />} />} />
-            <Route
-              path="payments/rent/success"
-              element={
-                <h5 className="text-center mt-5 text-success">
-                  Your reocurring payment is now setup <br />
-                  <i className="fs-2 bi bi-calendar-check-fill" />
-                </h5>
-              }
-            />
+            <Route path="payments/rent/success" element={<ReoccurringPaymentNotify />} />
             <Route path="enquiries" element={<RequireLogin view={<MessageEnquiries />} />} />
             <Route path="admin/listings" element={<RequirePermission view={<AdminViewListings />} roles={["landlord", "admin"]} />} />
-            <Route
-              path="*"
-              element={
-                <div className="text-center">
-                  <h1 className="text-center pt-5">Theres nothing here: 404!</h1> <p>The page you are looking for does not exist or has been removed</p>
-                  <img src="/static/error.png"></img>
-                </div>
-              }
-            />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </section>
