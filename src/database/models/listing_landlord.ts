@@ -15,7 +15,7 @@ export default class ListingLandlord extends Model<InferAttributes<ListingLandlo
   declare address: string;
   declare cardDetails: any;
   declare stripeConnectId?: string;
-  declare userId: CreationOptional<number>;
+  declare userId: number;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }

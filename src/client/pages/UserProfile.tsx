@@ -4,19 +4,40 @@ import LandlordProposalButton from "../components/LandlordProposalButton";
 import { RootState } from "../redux/store";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Profile from "../../database/models/profile";
 
 const UserProfile = props => {
   const [currentView, setCurrentView] = useState("PersonalDetails");
-  const [profile, setProfile] = useState(false);
+  const [profile, setProfile] = useState<Profile>();
   const loggedInUsr = useSelector((r: RootState) => r.auth.user);
+
+  const updateProfile = async () => {
+    // TESTING WITH RANDOMLY GENERATED VALUES PLEASE UPDATE TO STATE VALUES FROM TEXT BOXES
+    const body = {
+      firstName: "firsttest" + (Math.random() + 1).toString(36).substring(7),
+      lastName: "lasttest" + (Math.random() + 1).toString(36).substring(7),
+      phoneNumber: "1234567" + (Math.random() + 1).toString(36).substring(7),
+      addressLine1: "addl1" + (Math.random() + 1).toString(36).substring(7),
+      addressLine2: "assl2" + (Math.random() + 1).toString(36).substring(7),
+      city: "cty" + (Math.random() + 1).toString(36).substring(7),
+      settlement: "seltment" + (Math.random() + 1).toString(36).substring(7),
+      postcode: "postc" + (Math.random() + 1).toString(36).substring(7),
+      country: "count" + (Math.random() + 1).toString(36).substring(7)
+    };
+    const res = await axios.put("/api/profile/my-profile", body);
+    if (res.status === 200) toast.success("Success");
+    if (res.status !== 200) toast.error("Error updating");
+    console.log(res.data);
+  };
 
   const fetchProfile = async () => {
     const res = await axios.get("/api/profile/my-profile/");
     if (res.status === 200) {
-      if (res.data.profile) setProfile(res.data.profile);
+      if (res.data?.profile) setProfile(res.data.profile);
     } else {
       toast.error(JSON.stringify(res.data));
     }
+    console.log(res.data);
   };
 
   useEffect(() => {
@@ -27,7 +48,8 @@ const UserProfile = props => {
     <div className="container px-lg-5 px-md-5 pt-5">
       <div>
         <h3 className="pb-3 fw-bolder" style={{ color: "#032830" }}>
-          User Profile
+          User Profile <br />
+          <button onClick={() => updateProfile()}>Test Random Update</button>
         </h3>
       </div>
 
@@ -64,7 +86,7 @@ const UserProfile = props => {
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Name</h5>
-                user.name
+                profile.firstName - profile.lastName
                 <button className="btn btn-white" style={{ float: "right", color: "#087990" }}>
                   edit <i className="bi bi-pencil-square" />
                 </button>
@@ -73,7 +95,7 @@ const UserProfile = props => {
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Email</h5>
-                user.email
+                profile.User.email
                 <button className="btn btn-white" style={{ float: "right", color: "#087990" }}>
                   edit <i className="bi bi-pencil-square" />
                 </button>
@@ -82,7 +104,7 @@ const UserProfile = props => {
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Address</h5>
-                user.address
+                profile.address
                 <button className="btn btn-white" style={{ float: "right", color: "#087990" }}>
                   edit <i className="bi bi-pencil-square" />
                 </button>
@@ -91,7 +113,7 @@ const UserProfile = props => {
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Telephone</h5>
-                user.phoneNumber
+                profile.phoneNumber
                 <button className="btn btn-white" style={{ float: "right", color: "#087990" }}>
                   edit <i className="bi bi-pencil-square" />
                 </button>

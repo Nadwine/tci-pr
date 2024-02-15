@@ -36,7 +36,7 @@ import { adminCreateLandLordForListing, createNewRentMonthly, stripeWebhook } fr
 import { submitFeedback } from "./routes/feedback";
 import { getAllUsers } from "./routes/user";
 import { getAllLandlordsByUser, getSessionLandlordProfile } from "./routes/landlord";
-import { getProfileForLoggedInUser } from "./routes/profile";
+import { getProfileForLoggedInUser, updateSessionUrsProfile } from "./routes/profile";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -112,5 +112,6 @@ router.get("/landlord/profile", ensureAuthentication, getSessionLandlordProfile)
 
 // profile
 router.get("/profile/my-profile/", ensureAuthentication, getProfileForLoggedInUser);
+router.put("/profile/my-profile/", ensureAuthentication, updateSessionUrsProfile);
 
 export default router;

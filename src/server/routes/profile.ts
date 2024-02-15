@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../../database/models/user";
 import Profile from "../../database/models/profile";
 import ListingLandlord from "../../database/models/listing_landlord";
+import { where } from "sequelize";
 
 export const getProfileForLoggedInUser = async (req: Request, res: Response) => {
   const sessionUsr = req.session.user;
@@ -12,6 +13,67 @@ export const getProfileForLoggedInUser = async (req: Request, res: Response) => 
     });
 
     return res.status(200).json(user);
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error 207", err });
+  }
+};
+
+export const updateSessionUrsProfile = async (req: Request, res: Response) => {
+  const sessionUsr = req.session.user;
+  const accountType = sessionUsr?.accountType;
+  const { firstName, lastName, phoneNumber, addressLine1, addressLine2, city, settlement, postcode, country } = req.body;
+
+  try {
+    const found = await Profile.findOne({ where: { userId: sessionUsr!.id }, include: [{ model: User, include: [ListingLandlord] }] });
+    const newRec = !found
+      ? await Profile.create({
+          firstName: firstName,
+          lastName: lastName,
+          phoneNumber: phoneNumber,
+          addressLine1: addressLine1,
+          addressLine2: addressLine2,
+          city: city,
+          settlement: settlement,
+          postcode: postcode,
+          country: country,
+          email: sessionUsr!.email,
+          userId: sessionUsr!.id
+        })
+      : null;
+
+    if (found) {
+      await found.update({
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
+        addressLine1: addressLine1,
+        addressLine2: addressLine2,
+        city: city,
+        settlement: settlement,
+        postcode: postcode,
+        country: country
+      });
+
+      // keep the landlord private profile in sync with his public profile
+      if (accountType === "landlord") {
+        await ListingLandlord.update(
+          {
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phoneNumber,
+            homeIsland: city,
+            address: `${settlement && settlement + ","}${city && city + ","}${postcode && postcode + ","}${country && country}`
+          },
+          { where: { userId: sessionUsr?.id } }
+        );
+      }
+    }
+
+    await found?.reload();
+    await newRec?.reload();
+
+    //@ts-ignore
+    return res.json(found || newRec);
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error 207", err });
   }
