@@ -5,26 +5,28 @@ import { RootState } from "../redux/store";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Profile from "../../database/models/profile";
+import { cloneDeep } from "lodash";
 
 const UserProfile = props => {
   const [currentView, setCurrentView] = useState("PersonalDetails");
   const [profile, setProfile] = useState<Profile>();
   const loggedInUsr = useSelector((r: RootState) => r.auth.user);
+  const [editingFields, setEditingFields] = useState<any>({});
 
-  const updateProfile = async () => {
-    // TESTING WITH RANDOMLY GENERATED VALUES PLEASE UPDATE TO STATE VALUES FROM TEXT BOXES
-    const body = {
-      firstName: "firsttest" + (Math.random() + 1).toString(36).substring(7),
-      lastName: "lasttest" + (Math.random() + 1).toString(36).substring(7),
-      phoneNumber: "1234567" + (Math.random() + 1).toString(36).substring(7),
-      addressLine1: "addl1" + (Math.random() + 1).toString(36).substring(7),
-      addressLine2: "assl2" + (Math.random() + 1).toString(36).substring(7),
-      city: "cty" + (Math.random() + 1).toString(36).substring(7),
-      settlement: "seltment" + (Math.random() + 1).toString(36).substring(7),
-      postcode: "postc" + (Math.random() + 1).toString(36).substring(7),
-      country: "count" + (Math.random() + 1).toString(36).substring(7)
-    };
-    const res = await axios.put("/api/profile/my-profile", body);
+  const setFieldEditStatus = (field: string, status: boolean) => {
+    const stateClone = cloneDeep(editingFields);
+    stateClone[field] = status;
+    setEditingFields(stateClone);
+  };
+
+  const setFieldVal = (field: string, val: string) => {
+    const stateClone: any = cloneDeep(profile);
+    stateClone[field] = val;
+    setProfile(stateClone);
+  };
+
+  const submitUpdate = async () => {
+    const res = await axios.put("/api/profile/my-profile", profile);
     if (res.status === 200) toast.success("Success");
     if (res.status !== 200) toast.error("Error updating");
     console.log(res.data);
@@ -49,8 +51,7 @@ const UserProfile = props => {
     <div className="container px-lg-5 px-md-5 pt-5">
       <div>
         <h3 className="pb-3 fw-bolder" style={{ color: "#032830" }}>
-          User Profile <br />
-          <button onClick={() => updateProfile()}>Test Random Update</button>
+          User Profile
         </h3>
       </div>
 
@@ -87,37 +88,134 @@ const UserProfile = props => {
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Name</h5>
-                {profile?.firstName + "-" + profile?.lastName}
+                {!editingFields.firstName && profile?.firstName + " " + profile?.lastName}
+                {editingFields.firstName && (
+                  <div className="name-edit">
+                    <label>First Name</label>
+                    <input
+                      onChange={e => setFieldVal("firstName", e.target.value)}
+                      value={profile?.firstName}
+                      className="form-control mb-3"
+                      type="text"
+                      required
+                    />
+                    <label>Last Name</label>
+                    <input onChange={e => setFieldVal("lastName", e.target.value)} value={profile?.lastName} className="form-control" type="text" required />
+                  </div>
+                )}
                 <button className="btn btn-white" style={{ float: "right", color: "#087990" }}>
-                  edit <i className="bi bi-pencil-square" />
-                </button>
-              </div>
-            </div>
-            <div className="card" style={{ margin: "15px" }}>
-              <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
-                <h5 className="card-title">Email</h5>
-                profile.User.email
-                <button className="btn btn-white" style={{ float: "right", color: "#087990" }}>
-                  edit <i className="bi bi-pencil-square" />
+                  {editingFields.firstName ? (
+                    <p
+                      onClick={() => {
+                        setFieldEditStatus("firstName", false);
+                        submitUpdate();
+                      }}
+                    >
+                      save
+                      <i className="bi bi-pencil-square" />
+                    </p>
+                  ) : (
+                    <p onClick={() => setFieldEditStatus("firstName", true)}>
+                      edit
+                      <i className="bi bi-pencil-square" />
+                    </p>
+                  )}
                 </button>
               </div>
             </div>
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Address</h5>
-                profile.address
+                {!editingFields?.addressLine1 && `${profile?.addressLine1}, ${profile?.addressLine2}, ${profile?.settlement}, ${profile?.city}`}
+                {editingFields.addressLine1 && (
+                  <div className="name-edit">
+                    <label>Line 1</label>
+                    <input
+                      onChange={e => setFieldVal("addressLine1", e.target.value)}
+                      value={profile?.addressLine1}
+                      className="form-control mb-3"
+                      type="text"
+                      required
+                    />
+                    <label>Line 2</label>
+                    <input
+                      onChange={e => setFieldVal("addressLine2", e.target.value)}
+                      value={profile?.addressLine2}
+                      className="form-control"
+                      type="text"
+                      required
+                    />
+                    <label>Settlement</label>
+                    <input
+                      onChange={e => setFieldVal("settlement", e.target.value)}
+                      value={profile?.settlement}
+                      className="form-control"
+                      type="text"
+                      required
+                    />
+                    <label>City</label>
+                    <input onChange={e => setFieldVal("city", e.target.value)} value={profile?.city} className="form-control" type="text" required />
+                  </div>
+                )}
                 <button className="btn btn-white" style={{ float: "right", color: "#087990" }}>
-                  edit <i className="bi bi-pencil-square" />
+                  {editingFields.addressLine1 ? (
+                    <p
+                      onClick={() => {
+                        setFieldEditStatus("addressLine1", false);
+                        submitUpdate();
+                      }}
+                    >
+                      save
+                      <i className="bi bi-pencil-square" />
+                    </p>
+                  ) : (
+                    <p onClick={() => setFieldEditStatus("addressLine1", true)}>
+                      edit
+                      <i className="bi bi-pencil-square" />
+                    </p>
+                  )}
                 </button>
               </div>
             </div>
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Telephone</h5>
-                {profile?.phoneNumber}
+                {!editingFields.phoneNumber && profile?.phoneNumber}
+                {editingFields.phoneNumber && (
+                  <div className="phone-edit">
+                    <input
+                      onChange={e => setFieldVal("phoneNumber", e.target.value)}
+                      value={profile?.phoneNumber}
+                      className="form-control"
+                      required
+                      type="number"
+                    />
+                  </div>
+                )}
                 <button className="btn btn-white" style={{ float: "right", color: "#087990" }}>
-                  edit <i className="bi bi-pencil-square" />
+                  {editingFields.phoneNumber ? (
+                    <p
+                      onClick={() => {
+                        setFieldEditStatus("phoneNumber", false);
+                        submitUpdate();
+                      }}
+                    >
+                      save
+                      <i className="bi bi-pencil-square" />
+                    </p>
+                  ) : (
+                    <p onClick={() => setFieldEditStatus("phoneNumber", true)}>
+                      edit
+                      <i className="bi bi-pencil-square" />
+                    </p>
+                  )}
                 </button>
+              </div>
+            </div>
+            <div className="card" style={{ margin: "15px" }}>
+              <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
+                <h5 className="card-title">Email</h5>
+                {profile?.User.email || loggedInUsr?.email}
               </div>
             </div>
           </div>

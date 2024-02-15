@@ -78,23 +78,23 @@ const Home = props => {
   return (
     <div className="home justify-content-center align-items-center" style={{ paddingLeft: "0px", paddingTop: "0px", paddingRight: "0px" }}>
       <div className="welcome-search justify-content-center">
-        <div className="justify-content-center shadow-sm align-items-center" style={{ height: "300px", marginLeft: "0px" }}>
+        <div className="justify-content-center shadow-sm align-items-center" style={{ height: "270px", marginLeft: "0px" }}>
           <div
             className="image-container"
             style={{
               position: "absolute",
               padding: "0px",
-              maxHeight: "360px",
+              maxHeight: "350px",
               marginLeft: "0px",
               width: "100%",
-              filter: "sepia(20%) saturate(150%) brightness(70%) hue-rotate(341deg)",
+              filter: "sepia(7%) saturate(150%) brightness(70%) hue-rotate(341deg)",
               overflow: "hidden"
             }}
           >
-            <img src="/static/home-photo3.jpg" style={{ position: "relative", marginTop: "-200px", width: 2000 }} className="home-photo.jpg"></img>
+            <img src="/static/home-photo3.jpg" style={{ position: "relative", marginTop: "-250px", width: 2000 }} className="home-photo.jpg"></img>
           </div>
           <h1
-            className="text-light position-absolute fw-bold text-center w-100"
+            className="text-light position-absolute fw-bold text-center w-100 mb-lg-3 mt-lg-3 mt-sm-5 mb-sm-2"
             style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center" }}
           >
             The Perfect Space Awaits
@@ -133,10 +133,10 @@ const Home = props => {
             )}
           </div>
         </div>
-        <div className="text-center fs-6" style={{ marginTop: "90px" }}>
-          <h4 className="fw-bolder" style={{ color: "#055160" }}>
+        <div className="text-center fs-6" style={{ marginTop: "130px" }}>
+          <h3 className="fw-bolder" style={{ color: "#055160" }}>
             Search Properties for Rent in the Turks and Caicos Islands
-          </h4>
+          </h3>
         </div>
         <div className="text-center fs-6" style={{ marginLeft: "10px", marginRight: "10px" }}>
           <p className="fst-italic " style={{ fontSize: "15px" }}>
@@ -194,7 +194,6 @@ const Home = props => {
                     <p className="card-text">Live updates on property availability </p>
                     <p>No fake adverts</p>
                   </div>
-                  <div>--------------</div>
                 </div>
                 <div className="card align-items-center border-0 justify-content-center" style={{ width: "100%", padding: "30px", backgroundColor: "#f8f9fa" }}>
                   <div
