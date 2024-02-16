@@ -116,7 +116,7 @@ function Navbar() {
                 </span>
                 <div className={`dropdown-menu dropdown-menu-light mt-3 ${shouldShowUserDropDown}`} style={{ left: "auto", right: 0 }}>
                   <a href="/user" className="dropdown-item">
-                    My Profile
+                    Profile & Settings
                   </a>
                   <a href="/enquiries" className="dropdown-item">
                     Enquiries

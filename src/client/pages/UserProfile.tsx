@@ -33,6 +33,8 @@ const UserProfile = props => {
     setProfile(res.data);
   };
 
+  const submitPaymentMethodChange = async () => {};
+
   const fetchProfile = async () => {
     const res = await axios.get("/api/profile/my-profile/");
     if (res.status === 200) {
@@ -72,11 +74,23 @@ const UserProfile = props => {
             style={{ color: currentView === "AccountDetails" ? "#087990" : undefined }}
             className="card border-white"
           >
-            <div className="card-body fw-bold">
+            <div className="card-body border-bottom fw-bold">
               Account Details
               {currentView == "AccountDetails" && <i className="bi bi-arrow-right" style={{ float: "right", fontWeight: "200px" }}></i>}
             </div>
           </div>
+          {loggedInUsr?.accountType === "landlord" && (
+            <div className="card border-white">
+              <div
+                onClick={() => setCurrentView("Payment")}
+                className="card-body border-bottom fw-bolder"
+                style={{ color: currentView === "Payment" ? "#087990" : undefined }}
+              >
+                Receive Payments
+                {currentView == "Payment" && <i className="bi bi-arrow-right" style={{ float: "right", fontWeight: "200px" }}></i>}
+              </div>
+            </div>
+          )}
         </div>
         {/*--------------------------------- PERSONAL DETAILS CARD --------------------------------------------------------*/}
         {currentView === "PersonalDetails" && (
@@ -240,6 +254,49 @@ const UserProfile = props => {
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title text-muted">Account Type</h5>
                 {profile?.User.accountType}
+              </div>
+            </div>
+          </div>
+        )}
+        {currentView === "Payment" && (
+          <div
+            className="col-12 col-md-9 col-lg-8 pl-2 ml-3 card ms-lg-3 ms-md-3 shadow-lg"
+            style={{ padding: "20px", borderRadius: "20px", paddingLeft: "10px" }}
+          >
+            <div className="card" style={{ margin: "15px" }}>
+              <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
+                <h5 className="card-title">Link You Bank Account</h5>
+                {!editingFields.payment && "details...."}
+                {editingFields.payment && (
+                  <div className="name-edit">
+                    <label>Bank Account Type</label>
+                    <input className="form-control mb-3" type="text" required />
+                    <label>Account Holder Name</label>
+                    <input className="form-control" type="text" required />
+                    <label>Routing Number</label>
+                    <input className="form-control" type="text" required />
+                    <label>Account Number</label>
+                    <input className="form-control" type="text" required />
+                  </div>
+                )}
+                <button className="btn btn-white" style={{ float: "right", color: "#087990" }}>
+                  {editingFields.payment ? (
+                    <p
+                      onClick={() => {
+                        setFieldEditStatus("payment", false);
+                        submitPaymentMethodChange();
+                      }}
+                    >
+                      save
+                      <i className="bi bi-pencil-square" />
+                    </p>
+                  ) : (
+                    <p onClick={() => setFieldEditStatus("payment", true)}>
+                      edit
+                      <i className="bi bi-pencil-square" />
+                    </p>
+                  )}
+                </button>
               </div>
             </div>
           </div>
