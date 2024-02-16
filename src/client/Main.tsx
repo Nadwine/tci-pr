@@ -49,7 +49,9 @@ import SubmitListingRedirect from "./pages/SubmitListingRedirect";
 import LandLordCreateListing from "./pages/LandLordCreateListing";
 import AboutLandlord from "./pages/AboutLandlord";
 import NotFound from "./pages/NotFound";
-const threeMinute = 180000;
+import { useSelector } from "react-redux";
+import AdminSidebar from "./components/AdminSidebar";
+const tenMinute = 600000;
 
 function initTranslations() {
   i18n
@@ -79,6 +81,8 @@ const Main = () => {
   const { name, setName } = useAppContext();
   const [loadingCredentials, setLoadingCredentials] = useState(true);
   const [showCookieConsent, setShowCookieConsent] = useState(false);
+  const loginUsr = useSelector((r: RootState) => r.auth.user);
+  const isAdmin = loginUsr?.accountType === "admin";
 
   useEffect(() => {
     // initTranslations();
@@ -89,7 +93,7 @@ const Main = () => {
     const interval = setInterval(async () => {
       const now = new Date(Date.now());
       await axios.get("/api/auth/refresh-perms").then(() => console.log(`${now.toISOString()} - refresh user permissions`));
-    }, threeMinute);
+    }, tenMinute);
 
     return () => clearInterval(interval);
   }, []);
@@ -146,8 +150,11 @@ const Main = () => {
     <div className="d-flex flex-column bg-light" style={{ minHeight: "95vh" }}>
       <Navbar />
       {showCookieConsent && <CookieConsentModal />}
-      <section className="container-fluid" style={{ flex: 1 }}>
+      <section className="container-fluid" style={{ flex: 1, paddingLeft: `${isAdmin ? "50px" : ""}` }}>
+        {" "}
+        {/** Padding for sidebar */}
         <div className="row">
+          {isAdmin && <AdminSidebar />}
           <ToastContainer hideProgressBar />
           <Routes>
             {/* Do not use Raw Strings as routes. Add it to enums stored in ./utils/enums */}
