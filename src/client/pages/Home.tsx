@@ -76,7 +76,7 @@ const Home = props => {
   const showAutoComplete = searchText && autoCompleteFilterWithSearch.length !== 0;
 
   return (
-    <div className="home justify-content-center align-items-center" style={{ paddingLeft: "0px", paddingTop: "0px", paddingRight: "0px" }}>
+    <div className="home justify-content-center align-items-center" style={{ paddingLeft: "0px", paddingTop: "0px", paddingRight: "0px", backgroundColor:"white" }}>
       <div className="welcome-search justify-content-center">
         <div className="justify-content-center shadow-sm align-items-center" style={{ height: "270px", marginLeft: "0px" }}>
           <div
@@ -87,7 +87,7 @@ const Home = props => {
               maxHeight: "350px",
               marginLeft: "0px",
               width: "100%",
-              filter: "sepia(7%) saturate(150%) brightness(70%) hue-rotate(341deg)",
+              filter: "sepia(5%) saturate(150%) brightness(70%) hue-rotate(341deg)",
               overflow: "hidden"
             }}
           >
@@ -169,14 +169,14 @@ const Home = props => {
             </p>
             <div>
               <div className="col-12 d-flex flex-column justify-content-center text-center" style={{ marginTop: "25px" }}>
-                <div className="card align-items-center border-0 justify-content-center" style={{ width: "100%", padding: "30px", backgroundColor: "#f8f9fa" }}>
+                <div className="card align-items-center border-0 justify-content-center" style={{ width: "100%", padding: "30px", backgroundColor: "white" }}>
                   <div
                     className="d-flex align-items-center justify-content-center"
                     style={{ borderRadius: "100px", border: "9px solid #01acac", height: "8rem", width: "8rem", backgroundColor: "#01acac" }}
                   >
                     <FontAwesomeIcon icon={faLayerGroup} style={{ width: "3rem", height: "3rem" }} />
                   </div>
-                  <div className="card-body">
+                  <div className="card-body" style={{backgroundColor: "white"}}>
                     <h5 className="card-title fw-bolder">Free Registration</h5>
                     <p>Hassle-free registration </p>
                     <p>Guided one-on-one onboarding for landlords</p>
