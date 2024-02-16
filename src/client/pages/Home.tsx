@@ -21,24 +21,24 @@ const Home = props => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchText, setSearchText] = useState("");
-  const [randListings, setRandListings] = useState<Listing[]>();
+  // const [randListings, setRandListings] = useState<Listing[]>();
 
-  const listing1 = randListings && randListings[0];
-  const listing2 = randListings && randListings[1];
-  const listing3 = randListings && randListings[2];
+  // const listing1 = randListings && randListings[0];
+  // const listing2 = randListings && randListings[1];
+  // const listing3 = randListings && randListings[2];
 
   const mql = window.matchMedia("(max-width: 600px)");
 
   let mobileView = mql.matches;
 
-  const loadRandListings = async () => {
-    const res = await axios.get("/api/listing/random");
-    if (res.status == 200) {
-      setRandListings(res.data);
-    } else {
-      toast.error(`Internal Server Error 101`);
-    }
-  };
+  // const loadRandListings = async () => {
+  //   const res = await axios.get("/api/listing/random");
+  //   if (res.status == 200) {
+  //     setRandListings(res.data);
+  //   } else {
+  //     toast.error(`Internal Server Error 101`);
+  //   }
+  // };
 
   const searchRent = async () => {
     let searchTextTransform = searchText;
@@ -69,14 +69,17 @@ const Home = props => {
   }
 
   useEffect(() => {
-    loadRandListings();
+    // loadRandListings();
   }, []);
 
   const autoCompleteFilterWithSearch = islandAndSettlements.filter(c => c.toLowerCase().includes(searchText.toLowerCase()));
   const showAutoComplete = searchText && autoCompleteFilterWithSearch.length !== 0;
 
   return (
-    <div className="home justify-content-center align-items-center" style={{ paddingLeft: "0px", paddingTop: "0px", paddingRight: "0px", backgroundColor:"white" }}>
+    <div
+      className="home justify-content-center align-items-center"
+      style={{ paddingLeft: "0px", paddingTop: "0px", paddingRight: "0px", backgroundColor: "white" }}
+    >
       <div className="welcome-search justify-content-center">
         <div className="justify-content-center shadow-sm align-items-center" style={{ height: "270px", marginLeft: "0px" }}>
           <div
@@ -94,8 +97,8 @@ const Home = props => {
             <img src="/static/home-photo3.jpg" style={{ position: "relative", marginTop: "-250px", width: 2000 }} className="home-photo.jpg"></img>
           </div>
           <h1
-            className="text-light position-absolute fw-bold text-center w-100 mb-lg-3 mt-lg-3 mt-sm-5 mb-sm-2"
-            style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center" }}
+            className="position-absolute fw-bold text-center w-100 mb-lg-3 mt-lg-3 mt-sm-5 mb-sm-2"
+            style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center", color:'white' }}
           >
             The Perfect Space Awaits
           </h1>
@@ -176,7 +179,7 @@ const Home = props => {
                   >
                     <FontAwesomeIcon icon={faLayerGroup} style={{ width: "3rem", height: "3rem" }} />
                   </div>
-                  <div className="card-body" style={{backgroundColor: "white"}}>
+                  <div className="card-body" style={{ backgroundColor: "white" }}>
                     <h5 className="card-title fw-bolder">Free Registration</h5>
                     <p>Hassle-free registration </p>
                     <p>Guided one-on-one onboarding for landlords</p>
@@ -217,34 +220,32 @@ const Home = props => {
             <h5 className="mt-5 fw-bolder mb-2">Featured Properties</h5>
             <div className="col-12 d-flex justify-content-center">
               <div className="card shadow-sm" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
-                <img src={listing1?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
+                <img src="/static/home4.jpg" className="card-img-top" alt="..."></img>
                 <div className="card-body shadow-lg">
-                  <h5 className="card-title">{listing1?.title}</h5>
+                  <h5 className="card-title">Search for properties</h5>
                   <p>
-                    <a className="link-dark link-underline-light" href={`property/rent/${listing1?.id}`}>
-                      {listing1?.Address.addressLine1}
+                    <a className="link-dark link-underline-light" href="">
+                      
                     </a>
                   </p>
                 </div>
               </div>
               <div className="card shadow-lg" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
-                <img src={listing2?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
+                <img src="/static/home1.jpg" className="card-img-top" alt="..."></img>
                 <div className="card-body">
-                  <h5 className="card-title">{listing2?.title}</h5>
+                  <h5 className="card-title"></h5>
                   <p className="card-text">
-                    <a className="link-dark link-underline-light" href={`property/rent/${listing2?.id}`}>
-                      {listing2?.Address.addressLine1}
+                    <a className="link-dark link-underline-light" href="">
                     </a>
                   </p>
                 </div>
               </div>
               <div className="card shadow-lg" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
-                <img src={listing3?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
+                <img src="/static/home3.jpg" className="card-img-top" alt="..."></img>
                 <div className="card-body">
-                  <h5 className="card-title">{listing3?.title}</h5>
+                  <h5 className="card-title"></h5>
                   <p className="card-text">
-                    <a className="link-dark link-underline-light" href={`property/rent/${listing3?.id}`}>
-                      {listing3?.Address.addressLine1}
+                    <a className="link-dark link-underline-light" href="">
                     </a>
                   </p>
                 </div>
@@ -257,7 +258,7 @@ const Home = props => {
               <div className="col-12 d-flex justify-content-center" style={{ marginTop: "25px" }}>
                 <div
                   className="card align-items-center border-0 justify-content-center"
-                  style={{ width: "18rem", marginRight: "20px", padding: "30px", backgroundColor: "#f8f9fa" }}
+                  style={{ width: "18rem", marginRight: "20px", padding: "30px", backgroundColor: "white" }}
                 >
                   <div
                     className="d-flex align-items-center justify-content-center"
@@ -273,7 +274,7 @@ const Home = props => {
                 </div>
                 <div
                   className="card align-items-center border-0 justify-content-center"
-                  style={{ width: "18rem", marginRight: "20px", padding: "30px", backgroundColor: "#f8f9fa" }}
+                  style={{ width: "18rem", marginRight: "20px", padding: "30px", backgroundColor: "white" }}
                 >
                   <div
                     className="d-flex align-items-center justify-content-center"
@@ -281,16 +282,15 @@ const Home = props => {
                   >
                     <FontAwesomeIcon icon={faClipboardList} style={{ width: "3rem", height: "3rem" }} />
                   </div>
-                  <div className="card-body">
+                  <div className="card-body" style={{ backgroundColor: "white" }}>
                     <h5 className="card-title">No Dead Listings</h5>
                     <p className="card-text">Live updates on property availability </p>
                     <p>No fake adverts</p>
                   </div>
-                  <div>--------------</div>
                 </div>
                 <div
                   className="card align-items-center border-0 justify-content-center"
-                  style={{ width: "18rem", marginRight: "20px", padding: "30px", backgroundColor: "#f8f9fa" }}
+                  style={{ width: "18rem", marginRight: "20px", padding: "30px", backgroundColor: "white" }}
                 >
                   <div
                     className="d-flex align-items-center justify-content-center"
