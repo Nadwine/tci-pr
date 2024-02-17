@@ -57,6 +57,8 @@ router.use("*", (req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
+router.get("/environment", (req, res) => res.send(process.env.NODE_ENV));
+
 // TODO: Secure all Routes with auth
 
 //  api/auth    routes

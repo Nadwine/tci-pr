@@ -43,3 +43,9 @@ Company TCI Homebase Property Management
 # Gmail
 tci.homebase.tc@gmail.com
 Password:  P!z3winnerz
+
+# Deployment steps
+- RUN: npm run build
+- Select All Files in root and wrap in zip (excluding node_modules, stripe, ngrok, local ses and s3 folders)
+- Run necessary Migrations using sequelize cli (IMPORTANT)
+- Go To Elastic Beanstalk on aws. Click upload and deploy and deploy > select zip file.
