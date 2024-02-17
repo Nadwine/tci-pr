@@ -31,7 +31,7 @@ const EditRentListing = props => {
   }, []);
 
   if (loading || !listing) return <LoadingSpinnerWholePage />;
-  if (!isOwner || (accountType !== "admin" && accountType !== "landlord")) return <h6 className="text-center">Unauthorized</h6>;
+  if (accountType !== "admin") return <h6 className="text-center">Unauthorized</h6>;
   return (
     <div>
       <EditRentForm listing={listing} />

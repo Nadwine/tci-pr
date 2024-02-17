@@ -59,17 +59,17 @@ export const Chat = (props: Props) => {
                 <div
                   className="d-flex flex-column justify-content-center"
                   style={{
-                    borderBottomLeftRadius: "12px",
+                    borderBottomLeftRadius: msg.userId == loggedInUserId ? "12px" : "",
                     borderBottomRightRadius: "12px",
                     borderTopRightRadius: msg.userId !== loggedInUserId ? "12px" : "",
-                    borderTopLeftRadius: msg.userId === loggedInUserId ? "12px" : "",
+                    borderTopLeftRadius: "12px",
                     padding: "2px 20px",
                     backgroundColor: msg.userId === loggedInUserId ? "#0082ff" : "#eaecef",
                     color: msg.userId === loggedInUserId ? "white" : "black",
                     width: "fit-content"
                   }}
                 >
-                  {msg.messageText}
+                  {msg.messageText} <div className="row-3" style={{ fontSize: "0.7em", marginLeft: "10px" }}></div>
                 </div>
                 <div className="row-3" style={{ fontSize: "0.7em", marginLeft: "10px" }}>
                   {dayjs(msg.createdAt).fromNow()}

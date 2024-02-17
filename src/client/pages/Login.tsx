@@ -50,7 +50,7 @@ const Login = () => {
             <div className="col-lg-10 col-md-9 col-xl-6 mx-auto ms-xl-0">
               <div className="mt-10 mt-lg-5 mb-5 d-flex align-items-center d-lg-block">
                 <span className="d-inline-block d-lg-block h1 mb-lg-6 me-3">
-                  <i className="bi bi-person-circle text-primary" />
+                  <i className="bi bi-person-circle" style={{color: '#077990'}} />
                 </span>
                 <div className="text-danger" style={{ minHeight: "1em" }}>
                   {serverError}
