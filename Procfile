@@ -1,0 +1,1 @@
+web: sh -c 'npm run build && yarn ts-node ./server'
