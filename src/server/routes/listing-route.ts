@@ -23,6 +23,7 @@ const s3Bucket = new S3({
   secretAccessKey: process.env.AWS_S3_SECRET,
   endpoint: new AWS.Endpoint(process.env.AWS_S3_ENDPOINT ?? "")
 });
+const isProd = process.env.NODE_ENV === "production";
 
 export const adminCreateRentListingRoute = async (req: Request, res: Response) => {
   const {
@@ -122,7 +123,7 @@ export const adminCreateRentListingRoute = async (req: Request, res: Response) =
               Bucket: String(process.env.AWS_S3_BUCKET_NAME),
               Key: s3Key,
               Body: imageBuffer,
-              ACL: "bucket-owner-full-control"
+              ACL: isProd ? "public-read" : "bucket-owner-full-control"
             },
             (err, data) => {
               if (data) {
@@ -286,7 +287,7 @@ export const landLordSubmitRentListingRoute = async (req: Request, res: Response
               Bucket: String(process.env.AWS_S3_BUCKET_NAME),
               Key: s3Key,
               Body: imageBuffer,
-              ACL: "bucket-owner-full-control"
+              ACL: isProd ? "public-read" : "bucket-owner-full-control"
             },
             (err, data) => {
               if (data) {
@@ -440,7 +441,7 @@ export const createSaleListingRoute = async (req: Request, res: Response) => {
               Bucket: String(process.env.AWS_S3_BUCKET_NAME),
               Key: s3Key,
               Body: imageBuffer,
-              ACL: "bucket-owner-full-control"
+              ACL: isProd ? "public-read" : "bucket-owner-full-control"
             },
             (err, data) => {
               if (data) {
@@ -826,7 +827,7 @@ export const updateRentListingById = async (req: Request, res: Response) => {
               Bucket: String(process.env.AWS_S3_BUCKET_NAME),
               Key: s3Key,
               Body: imageBuffer,
-              ACL: "bucket-owner-full-control"
+              ACL: isProd ? "public-read" : "bucket-owner-full-control"
             },
             (err, data) => {
               if (data) {
