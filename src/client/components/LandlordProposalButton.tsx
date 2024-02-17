@@ -12,7 +12,7 @@ const LandlordProposalButton = props => {
       onClick={() => navigate("/about/landlord")}
       style={{ zIndex: 500, position: "fixed", bottom: 0, right: 0, width: "200px", backgroundColor: "#013672", borderTopLeftRadius: "20px" }}
     >
-      Have A Property? <br /> Click Here To Begin
+      Have A Property? <br /> Click here for more info
     </div>
   );
 };

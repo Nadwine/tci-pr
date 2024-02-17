@@ -19,6 +19,7 @@ export default class PropertyForRent extends Model<InferAttributes<PropertyForRe
   declare rentAmount: number;
   declare availability: string;
   declare listingId: number;
+  declare tenancyLength: number;
   declare Listing: CreationOptional<Listing>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -78,6 +79,10 @@ PropertyForRent.init(
     },
     rentAmount: {
       type: DataTypes.DECIMAL(20, 2),
+      allowNull: false
+    },
+    tenancyLength: {
+      type: DataTypes.INTEGER,
       allowNull: false
     }
   },

@@ -156,7 +156,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
         <ul className="list-group mx-lg-5 shadow-sm" style={{ borderRadius: "10px" }}>
           <li className="price-filter list-group-item d-flex flex-column">
             <div className="d-flex flex-row justify-content-between">
-              <p className="fw-bold">Price</p>
+              <p className="fw-bold me-4">Price</p>
               <Dropdown onSelect={val => setMinPrice(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                   {/* Min */}
@@ -249,7 +249,9 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
           </li>
           <li className="price-filter list-group-item d-flex flex-row justify-content-between">
             <div className="d-flex flex-row justify-content-between fw-bold">
-              Bills Included:
+              <p className="fw-bold" style={{ marginRight: "5px" }}>
+                Bills Included:
+              </p>
               <Dropdown className="px-lg-5" onSelect={(val: any) => setBillsIncluded(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                   {formatBoolValueToYesNo(searchParams.get("bills"))}
@@ -264,7 +266,9 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
           </li>
           <li className="furnished-filter list-group-item d-flex flex-row justify-content-between">
             <div className="d-flex flex-row justify-content-between fw-bold">
-              Furnished:
+              <p className="fw-bold" style={{ marginRight: "30px" }}>
+                Furnished:
+              </p>
               <Dropdown className="px-lg-5" onSelect={(val: any) => setFurnished(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                   {formatBoolValueToYesNo(searchParams.get("furnished"))}

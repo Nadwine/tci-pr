@@ -6,6 +6,7 @@ import islands from "../../utils/islandsData.json";
 import { useNavigate } from "react-router-dom";
 import { cloneDeep } from "lodash";
 import { toast } from "react-toastify";
+import { OverlayTrigger, Popover } from "react-bootstrap";
 
 const axiosConfig = { headers: { "Content-Type": "multipart/form-data" } };
 
@@ -108,6 +109,12 @@ const LandLordCreateListing = props => {
     newQuestions.splice(index, 1);
     setFieldValue("questions", newQuestions);
   };
+
+  const popOver = (
+    <Popover id="popover-basic" placement="right">
+      FFFFFFF
+    </Popover>
+  );
 
   const selectedIsland = islands.find(i => i.name === values.city);
 
@@ -255,6 +262,18 @@ const LandLordCreateListing = props => {
               Furnished
             </label>
           </div>
+          <div className="managment type">
+            <div className="overlay d-flex pb-2">
+              <OverlayTrigger trigger="click" overlay={popOver}>
+                <span className="ms-auto badge rounded-pill bg-primary text-bg-info">Info</span>
+              </OverlayTrigger>
+            </div>
+            <select className="col-10 form-select" aria-label="Default select example">
+              <option selected>Would you like us to manage this property for you?</option>
+              <option value="1">Yes</option>
+              <option value="2">No</option>
+            </select>
+          </div>
           <div className="inclusions">
             <p className="fs-5 w-100 pt-2 mb-1">Photos/Videos</p>
           </div>
@@ -350,7 +369,7 @@ const LandLordCreateListing = props => {
                 className="form-control w-75"
                 onKeyUp={e => e.key === "Enter" && appendQuestion()}
               />
-              <button type="button" onClick={() => appendQuestion()} className="btn btn-info mt-2 float-end" style={{ marginLeft: "10px" }}>
+              <button type="button" onClick={() => appendQuestion()} className="btn btn-dark mt-2 float-end" style={{ marginLeft: "10px" }}>
                 <i className="bi bi-plus" /> Add
               </button>
             </div>
@@ -368,7 +387,7 @@ const LandLordCreateListing = props => {
             </div>
           ))}
           <hr></hr>
-          <button type="submit" id="create-rent-submit-button" className="btn btn-info mt-3">
+          <button type="submit" id="create-rent-submit-button" className="btn btn-dark mt-3">
             Submit
           </button>
         </form>

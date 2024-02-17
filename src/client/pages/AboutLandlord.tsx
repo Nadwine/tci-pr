@@ -31,15 +31,15 @@ const steps = [
   },
   {
     label: "Finding a tenant",
-    description: `Try out different ad text to see what brings in the most customers,
-              and learn how to enhance your ads using features like ad extensions.
-              If you run into any problems with your ads, find out how to tell if
-              they're running and how to resolve approval issues.`
+    description: `If you choose to rent through us, its time to relax and have a piece of mind. Its our turn now. During this stage we will be screening potential tenants for you by 
+              checking their details, employment status, etc. To ensure we find you the right tenant.`
   },
   {
     label: "Payments",
-    description: `If you choose to rent through us, its time to relax and have a piece of mind. Its our turn now. During this stage we will be screening potential tenants for you by 
-    checking their details, employment status, etc. To ensure we find you the right tenant.`
+    description: `Try out different ad text to see what brings in the most customers,
+    and learn how to enhance your ads using features like ad extensions.
+    If you run into any problems with your ads, find out how to tell if
+    they're running and how to resolve approval issues.`
   }
 ];
 
@@ -75,7 +75,7 @@ const AboutLandlord = props => {
                 <Typography>{step.description}</Typography>
                 <Box sx={{ mb: 2 }}>
                   <div>
-                    <Button variant="contained" onClick={handleNext} sx={{ mt: 1, mr: 1 }}>
+                    <Button variant="contained" onClick={handleNext} sx={{ mt: 1, mr: 1, backgroundColor: "#087990" }}>
                       {index === steps.length - 1 ? "Finish" : "Continue"}
                     </Button>
                     <Button disabled={index === 0} onClick={handleBack} sx={{ mt: 1, mr: 1 }}>

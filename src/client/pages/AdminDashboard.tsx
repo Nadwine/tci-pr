@@ -5,15 +5,13 @@ import AdminUserTable from "../components/AdminUserTable";
 import AdminListingsTable from "../components/AdminListingsTable";
 import AdminLandlordTable from "../components/AdminLandlordTable";
 import { AdminApproveListingTable } from "../components/AdminApproveListingsTable";
+import AdminChart from "../components/AdminChart";
 
 export const AdminDashboard = props => {
   return (
     <div>
-      <h3 className="fw-bold my-5 ms-5">Admin Dashboard</h3>
-      <AdminUserTable />
-      <AdminListingsTable />
-      <AdminLandlordTable />
-      <AdminApproveListingTable />
+      <h3 className="fw-bold m-5">Admin Dashboard</h3>
+      <AdminChart />
     </div>
   );
 };

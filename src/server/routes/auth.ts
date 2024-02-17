@@ -313,8 +313,7 @@ export const loginUser = async (req: Request, res: Response) => {
     });
 
     if (!foundUser) {
-      console.log("Username not Found");
-      return res.redirect("/login?error=Invalid Login");
+      return res.redirect("/login?error=Please enter a correct username and password");
     }
 
     if (foundUser.verified === false) {
@@ -345,7 +344,7 @@ export const loginUser = async (req: Request, res: Response) => {
         }
       } else {
         // password comparision failed
-        return res.redirect("/login?error=Invalid Login");
+        return res.redirect("/login?error=Please enter a correct username and password");
       }
     });
   } catch (error) {

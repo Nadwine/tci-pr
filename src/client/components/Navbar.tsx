@@ -96,7 +96,10 @@ function Navbar() {
               Help
             </a>
             <a className="nav-item nav-link fw-bold text-dark" href="/feedback" style={{ color: "#032830" }}>
-              Report Feedback
+              Feedback
+            </a>
+            <a className="nav-item nav-link fw-bold text-dark" href="/feedback" style={{ color: "#032830" }}>
+              Contact
             </a>
           </div>
           {/* <!-- Right navigation --> */}
@@ -118,6 +121,11 @@ function Navbar() {
                   <a href="/user" className="dropdown-item">
                     Profile & Settings
                   </a>
+                  {user.accountType === "landlord" && (
+                    <a href="/landlord/create-listing" className="dropdown-item">
+                      Create a Listing
+                    </a>
+                  )}
                   <a href="/enquiries" className="dropdown-item">
                     Enquiries
                   </a>

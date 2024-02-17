@@ -9,7 +9,7 @@ import { Button, Modal } from "react-bootstrap";
 const AdminViewListings = props => {
   const navigate = useNavigate();
   const [listings, setListings] = useState<Listing[]>([]);
-  const [idToDelete, setIdToDelete] = useState<number>();
+  // const [idToDelete, setIdToDelete] = useState<number>();
 
   const loadData = async () => {
     const res = await axios.get("/api/listing/listings");
@@ -28,38 +28,38 @@ const AdminViewListings = props => {
     navigate(`/property/rent/${id}/payments`);
   };
 
-  const deleteListing = async () => {
-    const res = await axios.delete(`/api/listing/rent/${idToDelete}`);
-    if (res.status === 200) {
-      toast.success("success");
-      loadData();
-    } else {
-      toast.error("Error deleting. Try again");
-    }
+  // const deleteListing = async () => {
+  //   const res = await axios.delete(`/api/listing/rent/${idToDelete}`);
+  //   if (res.status === 200) {
+  //     toast.success("success");
+  //     loadData();
+  //   } else {
+  //     toast.error("Error deleting. Try again");
+  //   }
 
-    setIdToDelete(undefined);
-  };
+  //   setIdToDelete(undefined);
+  // };
 
   useEffect(() => {
     loadData();
   }, []);
 
-  const DeleteConfirmModal = () => (
-    <Modal show={idToDelete !== undefined} onHide={() => setIdToDelete(undefined)}>
-      <Modal.Header>
-        <Modal.Title>Confirm</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>Are you sure you want to delete this listing?</Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={() => setIdToDelete(undefined)}>
-          Cancel
-        </Button>
-        <Button variant="danger" onClick={() => deleteListing()}>
-          Delete
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  );
+  // const DeleteConfirmModal = () => (
+  //   <Modal show={idToDelete !== undefined} onHide={() => setIdToDelete(undefined)}>
+  //     <Modal.Header>
+  //       <Modal.Title>Confirm</Modal.Title>
+  //     </Modal.Header>
+  //     <Modal.Body>Are you sure you want to delete this listing?</Modal.Body>
+  //     <Modal.Footer>
+  //       <Button variant="secondary" onClick={() => setIdToDelete(undefined)}>
+  //         Cancel
+  //       </Button>
+  //       <Button variant="danger" onClick={() => deleteListing()}>
+  //         Delete
+  //       </Button>
+  //     </Modal.Footer>
+  //   </Modal>
+  // );
 
   return (
     <div className="px-lg-5 px-md-5">
@@ -71,7 +71,7 @@ const AdminViewListings = props => {
         aria-label="default input example"
         style={{ width: "25%", borderRadius: "15px" }}
       ></input>
-      {idToDelete && <DeleteConfirmModal />}
+      {/* {idToDelete && <DeleteConfirmModal />} */}
       {listings.length === 0 && <h6 className="text-center pt-5">No Listings found</h6>}
       <ul className="list-group shadow-lg mx-lg-5" style={{ borderRadius: "15px" }}>
         {listings.map((l, i) => (
@@ -94,9 +94,9 @@ const AdminViewListings = props => {
               <button onClick={() => goToEditPage(l.id)} className="btn btn-white">
                 <i className="bi bi-pencil" />
               </button>
-              <button onClick={() => setIdToDelete(l.id)} className="btn btn-white">
+              {/* <button onClick={() => setIdToDelete(l.id)} className="btn btn-white">
                 <i className="bi bi-trash3" />
-              </button>
+              </button> */}
             </div>
           </li>
         ))}

@@ -179,11 +179,11 @@ const Main = () => {
             <Route path="landlord/create-listing" element={<RequirePermission view={<LandLordCreateListing />} roles={["landlord"]} />} />
             <Route path="about/landlord" element={<AboutLandlord />} />
             <Route path="about" element={<AboutUs />} />
-            <Route path="admin/dashboard" element={<RequirePermission view={<AdminDashboard />} roles={["admin"]} />} />
             <Route path="admin/dashboard/listing-for-aproval" element={<RequirePermission view={<AdminApproveListingTable />} roles={["admin"]} />} />
             <Route path="admin/dashboard/users" element={<RequirePermission view={<AdminUserTable />} roles={["admin"]} />} />
             <Route path="admin/dashboard/landlords" element={<RequirePermission view={<AdminLandlordTable />} roles={["admin"]} />} />
             <Route path="admin/dashboard/listings" element={<RequirePermission view={<AdminListingsTable />} roles={["admin"]} />} />
+            <Route path="admin/dashboard" element={<RequirePermission view={<AdminDashboard />} roles={["admin"]} />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
             <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
             <Route path="forget-password/:token" element={<RequireLogout view={<ForgetPassword />} />} />

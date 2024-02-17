@@ -320,7 +320,7 @@ const CreateRentForm = props => {
                 className="form-control w-75"
                 onKeyUp={e => e.key === "Enter" && appendQuestion()}
               />
-              <button type="button" onClick={() => appendQuestion()} className="btn btn-info mt-2 float-end" style={{ marginLeft: "10px" }}>
+              <button type="button" onClick={() => appendQuestion()} className="btn btn-dark mt-2 float-end" style={{ marginLeft: "10px" }}>
                 <i className="bi bi-plus" /> Add
               </button>
             </div>
@@ -338,7 +338,7 @@ const CreateRentForm = props => {
             </div>
           ))}
           <hr></hr>
-          <button type="submit" id="create-rent-submit-button" className="btn btn-info mt-3">
+          <button type="submit" id="create-rent-submit-button" className="btn btn-dark mt-3">
             Submit
           </button>
         </form>

@@ -74,7 +74,7 @@ const UserProfile = props => {
             style={{ color: currentView === "AccountDetails" ? "#087990" : undefined }}
             className="card border-white"
           >
-            <div className="card-body border-bottom fw-bold">
+            <div className="card-body fw-bold">
               Account Details
               {currentView == "AccountDetails" && <i className="bi bi-arrow-right" style={{ float: "right", fontWeight: "200px" }}></i>}
             </div>

@@ -21,17 +21,20 @@ const AdminSidebar = props => {
       {isOpen && (
         <div>
           <ul className="list-group mt-3 bg-dark">
-            <li className="list-group-item bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard/listing-for-aproval")}>
+            <li className="list-group-item bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard/listing-for-aproval")}>
               <i className="bi bi-check-square-fill"></i> Approve listing
             </li>
-            <li className="list-group-item bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard/listings")}>
+            <li className="list-group-item bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard/listings")}>
               <i className="bi bi-card-list"></i> View Listings
             </li>
-            <li className="list-group-item bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard/landlords")}>
+            <li className="list-group-item bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard/landlords")}>
               <i className="bi bi-house-fill"></i> View Landlords
             </li>
-            <li className="list-group-item bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard/users")}>
+            <li className="list-group-item bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard/users")}>
               <i className="bi bi-people-fill"></i> View Users{" "}
+            </li>
+            <li className="list-group-item bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard")}>
+              <i className="bi bi-graph-up text-light"></i> Dashboard
             </li>
           </ul>
         </div>
@@ -50,6 +53,9 @@ const AdminSidebar = props => {
             </li>
             <li className="list-group-item pe-2 ps-1 bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard/users")}>
               <i className="bi bi-people-fill text-light"></i>
+            </li>
+            <li className="list-group-item pe-2 ps-1 bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard")}>
+              <i className="bi bi-graph-up text-light"></i>
             </li>
           </ul>
         </div>

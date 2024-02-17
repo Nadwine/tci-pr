@@ -23,6 +23,7 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare stripePaymentLink?: { url: string; expiresAtUnixSeconds: number; generatedAt: string };
   declare landlordId?: number;
   declare Admin: CreationOptional<Admin>;
+  declare listingManager: "landlord" | "admin";
   declare PropertyForRent: CreationOptional<PropertyForRent>;
   declare PropertyForSale: CreationOptional<PropertyForSale>;
   declare EnquiryConversations?: CreationOptional<EnquiryConversation[]>;
@@ -54,6 +55,10 @@ Listing.init(
       allowNull: false
     },
     listingType: {
+      type: DataTypes.STRING, // Sale , Rent
+      allowNull: false
+    },
+    listingManager: {
       type: DataTypes.STRING, // Sale , Rent
       allowNull: false
     },

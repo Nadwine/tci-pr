@@ -13,7 +13,7 @@ export const ensureAuthentication = (req: Request, res: Response, next: NextFunc
   if (returnTo !== "/" || returnTo !== "/register-confirm" || returnTo !== "/register" || returnTo !== "/login") {
     req.session.returnTo = returnTo;
   }
-  return res.status(302).json({ redirect: "/login?error=please login to complete operation", error: "Login to complete operation" });
+  return res.status(302).json({ redirect: "/login?error=Please login to complete operation", error: "Login to complete operation" });
 };
 
 export const ensureAdmin = (req: Request, res: Response, next: NextFunction) => {
@@ -28,7 +28,7 @@ export const ensureAdmin = (req: Request, res: Response, next: NextFunction) => 
   if (returnTo !== "/" || returnTo !== "/register-confirm" || returnTo !== "/register" || returnTo !== "/login") {
     req.session.returnTo = returnTo;
   }
-  return res.status(302).json({ redirect: "/login?error=please login to complete operation", error: "Login to complete operation" });
+  return res.status(302).json({ redirect: "/login?error=Please login to complete operation", error: "Login to complete operation" });
 };
 
 export const ensureLogout = (req: Request, res: Response, next: NextFunction) => {

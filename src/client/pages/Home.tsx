@@ -101,7 +101,7 @@ const Home = props => {
             <img src="/static/home-photo3.jpg" style={{ position: "relative", marginTop: "-250px", width: 2000 }} className="home-photo.jpg"></img>
           </div>
           <h1
-            className="position-absolute fw-bold text-center w-100 mb-lg-3 mt-lg-3 mt-sm-5 mb-sm-2"
+            className="position-absolute fw-bold text-center w-100 mb-lg-3 mt-lg-2 mt-sm-5 mb-sm-2"
             style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center", color: "white" }}
           >
             The Perfect Space Awaits
@@ -228,7 +228,7 @@ const Home = props => {
                 <img src="/static/home4.jpg" className="card-img-top" alt="..."></img>
                 <div className="card-body shadow-lg">
                   <h6 className="card-title fw-bold" style={{ color: "#087990" }}>
-                    Long & short term rentals <i className="bi bi-arrow-right" />
+                    Long & short term rentals
                   </h6>
                   <p>
                     <a className="link-dark link-underline-light" href=""></a>
@@ -239,7 +239,7 @@ const Home = props => {
                 <img src="/static/home1.jpg" className="card-img-top" alt="..."></img>
                 <div className="card-body">
                   <h6 className="card-title fw-bolder" style={{ color: "#087990" }}>
-                    List a property <i className="bi bi-arrow-right" />
+                    List a property
                   </h6>
                   <p className="card-text">
                     <a className="link-dark link-underline-light" href=""></a>
@@ -250,7 +250,7 @@ const Home = props => {
                 <img src="/static/home3.jpg" className="card-img-top" alt="..."></img>
                 <div className="card-body">
                   <h6 className="card-title fw-bolder" style={{ color: "#087990" }}>
-                    Commercial Properties for rent <i className="bi bi-arrow-right" />
+                    Commercial Properties for rent
                   </h6>
                   <p className="card-text">
                     <a className="link-dark link-underline-light" href=""></a>
