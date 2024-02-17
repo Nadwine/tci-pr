@@ -69,16 +69,30 @@ const UserProfile = props => {
               {currentView == "PersonalDetails" && <i className="bi bi-arrow-right" style={{ float: "right", fontWeight: "200px" }}></i>}
             </div>
           </div>
-          <div
-            onClick={() => setCurrentView("AccountDetails")}
-            style={{ color: currentView === "AccountDetails" ? "#087990" : undefined }}
-            className="card border-white"
-          >
-            <div className="card-body fw-bold">
-              Account Details
-              {currentView == "AccountDetails" && <i className="bi bi-arrow-right" style={{ float: "right", fontWeight: "200px" }}></i>}
+          {loggedInUsr?.accountType !== "landlord" && (
+            <div className="card border-white">
+              <div
+                onClick={() => setCurrentView("AccountDetails")}
+                className="card-body fw-bolder"
+                style={{ color: currentView === "AccountDetails" ? "#087990" : undefined }}
+              >
+                Account Details
+                {currentView == "AccountDetails" && <i className="bi bi-arrow-right" style={{ float: "right", fontWeight: "200px" }}></i>}
+              </div>
             </div>
-          </div>
+          )}
+          {loggedInUsr?.accountType === "landlord" && (
+            <div className="card border-white">
+              <div
+                onClick={() => setCurrentView("AccountDetails")}
+                className="card-body border-bottom fw-bolder"
+                style={{ color: currentView === "AccountDetails" ? "#087990" : undefined }}
+              >
+                Account Details
+                {currentView == "AccountDetails" && <i className="bi bi-arrow-right" style={{ float: "right", fontWeight: "200px" }}></i>}
+              </div>
+            </div>
+          )}
           {loggedInUsr?.accountType === "landlord" && (
             <div className="card border-white">
               <div
@@ -265,7 +279,7 @@ const UserProfile = props => {
           >
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
-                <h5 className="card-title">Link You Bank Account</h5>
+                <h5 className="card-title">Link Your Bank Account</h5>
                 {!editingFields.payment && "details...."}
                 {editingFields.payment && (
                   <div className="name-edit">
