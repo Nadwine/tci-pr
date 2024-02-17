@@ -104,8 +104,8 @@ function Navbar() {
             <ul className="nav navbar-nav ms-auto pe-2">
               <li className="nav-item dropdown">
                 <span
-                  className="btn btn-link nav-link rounded-circle fw-bold text-dark fs-5"
-                  style={{ width: "45px", height: "45px", backgroundColor: "#0dcaf0" }}
+                  className="btn btn-link nav-link rounded-circle fw-bold text-light fs-5"
+                  style={{ width: "45px", height: "45px", backgroundColor: "#087990" }}
                   onClick={() => {
                     setUserDropDownShow(!userDropDownShow);
                     setIsCollapse(true);
@@ -154,7 +154,7 @@ function Navbar() {
           {/* <!-- Action --> */}
           {!user && (
             <div className="d-flex align-items-lg-center mt-lg-0">
-              <a href="/register" className="btn btn-md w-full w-lg-auto bg-info fw-bold" style={{ borderRadius: "10px" }}>
+              <a href="/register" className="btn btn-md w-full w-lg-auto text-light fw-bold" style={{ borderRadius: "10px", backgroundColor: "#087990" }}>
                 Register
               </a>
             </div>

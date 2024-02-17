@@ -51,6 +51,9 @@ import AboutLandlord from "./pages/AboutLandlord";
 import NotFound from "./pages/NotFound";
 import { useSelector } from "react-redux";
 import AdminSidebar from "./components/AdminSidebar";
+import AdminApproveListingsTable, { AdminApproveListingTable } from "./components/AdminApproveListingsTable";
+import { AdminLandlordTable } from "./components/AdminLandlordTable";
+import AdminListingsTable from "./components/AdminListingsTable";
 const tenMinute = 600000;
 
 function initTranslations() {
@@ -177,7 +180,10 @@ const Main = () => {
             <Route path="about/landlord" element={<AboutLandlord />} />
             <Route path="about" element={<AboutUs />} />
             <Route path="admin/dashboard" element={<RequirePermission view={<AdminDashboard />} roles={["admin"]} />} />
-            <Route path="test/table" element={<AdminUserTable />} />
+            <Route path="admin/dashboard/listing-for-aproval" element={<RequirePermission view={<AdminApproveListingTable />} roles={["admin"]} />} />
+            <Route path="admin/dashboard/users" element={<RequirePermission view={<AdminUserTable />} roles={["admin"]} />} />
+            <Route path="admin/dashboard/landlords" element={<RequirePermission view={<AdminLandlordTable />} roles={["admin"]} />} />
+            <Route path="admin/dashboard/listings" element={<RequirePermission view={<AdminListingsTable />} roles={["admin"]} />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
             <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
             <Route path="forget-password/:token" element={<RequireLogout view={<ForgetPassword />} />} />

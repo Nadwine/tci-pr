@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Listing from "../../database/models/listing";
+import { useNavigate } from "react-router-dom";
 
 const columnHelper = createColumnHelper<Listing>();
 const columns = [
@@ -45,6 +46,7 @@ const columns = [
 
 export const AdminListingTable = props => {
   const [data, setData] = useState<Listing[]>([]);
+  const navigate = useNavigate();
 
   const loadData = async () => {
     const res = await axios.get("/api/listings");
@@ -63,26 +65,31 @@ export const AdminListingTable = props => {
   const table = useReactTable({ columns, data, getCoreRowModel: getCoreRowModel() });
   return (
     <div className="p-2">
-      <table className="table table-striped table-hover">
-        <thead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-                <th key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map(row => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map(cell => (
-                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <h3 className="m-5"> Listings</h3>
+      <div className="ms-5">
+        <table className="table table-striped table-hover">
+          <thead>
+            {table.getHeaderGroups().map(headerGroup => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map(header => (
+                  <th key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map(row => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map(cell => (
+                  <td onClick={() => navigate(`/edit-listing/rent/${row.original.id}`)} key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

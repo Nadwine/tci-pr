@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ListingLandlord from "../../database/models/listing_landlord";
+import { useNavigate } from "react-router-dom";
 
 const columnHelper = createColumnHelper<User>();
 const columns = [
@@ -46,6 +47,7 @@ const columns = [
 
 export const AdminLandlordTable = props => {
   const [data, setData] = useState<User[]>([]);
+  const navigate = useNavigate();
 
   const loadData = async () => {
     const res = await axios.get("/api/landlords");
@@ -63,26 +65,31 @@ export const AdminLandlordTable = props => {
   const table = useReactTable({ columns, data, getCoreRowModel: getCoreRowModel() });
   return (
     <div className="p-2">
-      <table className="table table-striped table-hover">
-        <thead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-                <th key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map(row => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map(cell => (
-                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <h3 className="m-5"> Landlords</h3>
+      <div className="ms-5">
+        <table className="table table-striped table-hover">
+          <thead>
+            {table.getHeaderGroups().map(headerGroup => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map(header => (
+                  <th key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map(row => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map(cell => (
+                  <td onClick={() => navigate(`/property/rent/${row.original.id}/payments`)} key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

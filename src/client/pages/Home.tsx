@@ -68,6 +68,10 @@ const Home = props => {
     }
   }
 
+  function clickSearchCard() {
+    document.getElementById("home-search-input")?.focus();
+  }
+
   useEffect(() => {
     // loadRandListings();
   }, []);
@@ -98,7 +102,7 @@ const Home = props => {
           </div>
           <h1
             className="position-absolute fw-bold text-center w-100 mb-lg-3 mt-lg-3 mt-sm-5 mb-sm-2"
-            style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center", color:'white' }}
+            style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center", color: "white" }}
           >
             The Perfect Space Awaits
           </h1>
@@ -113,6 +117,7 @@ const Home = props => {
                 type="text"
                 className="form-control"
                 placeholder="Try 'provo' or 'Providenciales'"
+                id="home-search-input"
               />
               <div className="input-group-append">
                 <button onClick={() => searchRent()} className="btn btn-dark">
@@ -217,36 +222,38 @@ const Home = props => {
         {/**Big screen -------------------------------------------------------------> */}
         {!mobileView && (
           <div className="text-center">
-            <h5 className="mt-5 fw-bolder mb-2">Featured Properties</h5>
+            <h5 className="mt-5 fw-bolder mb-2">Take a Look</h5>
             <div className="col-12 d-flex justify-content-center">
-              <div className="card shadow-sm" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
+              <div onClick={() => clickSearchCard()} className="card shadow-sm point" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
                 <img src="/static/home4.jpg" className="card-img-top" alt="..."></img>
                 <div className="card-body shadow-lg">
-                  <h5 className="card-title">Search for properties</h5>
+                  <h6 className="card-title fw-bold" style={{ color: "#087990" }}>
+                    Long & short term rentals <i className="bi bi-arrow-right" />
+                  </h6>
                   <p>
-                    <a className="link-dark link-underline-light" href="">
-                      
-                    </a>
+                    <a className="link-dark link-underline-light" href=""></a>
                   </p>
                 </div>
               </div>
-              <div className="card shadow-lg" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
+              <div className="card shadow-lg point" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
                 <img src="/static/home1.jpg" className="card-img-top" alt="..."></img>
                 <div className="card-body">
-                  <h5 className="card-title"></h5>
+                  <h6 className="card-title fw-bolder" style={{ color: "#087990" }}>
+                    List a property <i className="bi bi-arrow-right" />
+                  </h6>
                   <p className="card-text">
-                    <a className="link-dark link-underline-light" href="">
-                    </a>
+                    <a className="link-dark link-underline-light" href=""></a>
                   </p>
                 </div>
               </div>
-              <div className="card shadow-lg" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
+              <div onClick={() => clickSearchCard()} className="card shadow-lg point" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
                 <img src="/static/home3.jpg" className="card-img-top" alt="..."></img>
                 <div className="card-body">
-                  <h5 className="card-title"></h5>
+                  <h6 className="card-title fw-bolder" style={{ color: "#087990" }}>
+                    Commercial Properties for rent <i className="bi bi-arrow-right" />
+                  </h6>
                   <p className="card-text">
-                    <a className="link-dark link-underline-light" href="">
-                    </a>
+                    <a className="link-dark link-underline-light" href=""></a>
                   </p>
                 </div>
               </div>

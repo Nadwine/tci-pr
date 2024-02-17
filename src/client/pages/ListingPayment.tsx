@@ -73,12 +73,12 @@ const ListingPayment = props => {
 
   return (
     <div className="listing-payment">
-      <div className="d-flex flex-column justify-content-center">
-        <h6>Listing payment</h6>
+      <div className="d-flex flex-column justify-content-center mx-5">
+        <h3 className="m-5">Listing Payment</h3>
         <Accordion>
           <Card>
             <Card.Header>
-              <Accordion.Toggle as={Button} variant="link" eventKey="0" style={{ width: "100%", display: "flex" }}>
+              <Accordion.Toggle as={Button} variant="link" eventKey="0" style={{ width: "100%", display: "flex", color: "black" }}>
                 Tenant Payment Link
                 <i className="bi bi-chevron-down ms-auto" />
               </Accordion.Toggle>
@@ -114,15 +114,14 @@ const ListingPayment = props => {
           </Card>
           <Card>
             <Card.Header>
-              <Accordion.Toggle as={Button} variant="link" eventKey="1" style={{ width: "100%", display: "flex" }}>
+              <Accordion.Toggle as={Button} variant="link" eventKey="1" style={{ width: "100%", display: "flex", color: "black" }}>
                 LandLord Details
                 <i className="bi bi-chevron-down ms-auto" />
               </Accordion.Toggle>
             </Card.Header>
             <Accordion.Collapse eventKey="1">
               <Card.Body>
-                {JSON.stringify(listing?.ListingLandlord)}
-                <h4>Create Landlord to pay</h4>
+                <h4>Create Landlord to Pay</h4>
                 <form ref={landlordFormRef} onSubmit={submitNewLandLord}>
                   <div className="mb-3 w-50">
                     <label>First Name</label>
