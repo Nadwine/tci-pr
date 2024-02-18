@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import { Chart as Chartjs } from "chart.js/auto";
-import { Bar } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
 import { CategoryScale } from "chart.js";
 
 Chartjs.register(CategoryScale);
@@ -22,6 +22,19 @@ export const AdminChart = props => {
             ]
           }}
         ></Bar>
+      </div>
+      <div className="card ms-5" style={{ height: "490px", width: "910px" }}>
+        <Pie
+          data={{
+            labels: ["Total $ made", "Expenses"],
+            datasets: [
+              {
+                label: "New Users",
+                data: [10, 20]
+              }
+            ]
+          }}
+        ></Pie>
       </div>
     </div>
   );

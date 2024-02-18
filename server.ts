@@ -8,7 +8,6 @@ import compression from "compression";
 import serveStatic from "serve-static";
 import { createServer as createViteServer } from "vite";
 import { ModelDefined } from "sequelize";
-import ViewRentProperty from "./src/client/pages/ViewRentProperty";
 
 const isTest = process.env.NODE_ENV === "test" || !!process.env.VITE_TEST_BUILD;
 
@@ -37,7 +36,9 @@ async function initialiseModels() {
       "profile_media.ts",
       "enquiry_conversation.ts",
       "message.ts",
-      "feedback.ts"
+      "feedback.ts",
+      "tenant_property.ts",
+      "expense.ts"
     ];
     const files = await fs.readdir("./src/database/models");
     files.sort(function (a, b) {

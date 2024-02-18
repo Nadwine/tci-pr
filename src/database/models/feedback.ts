@@ -35,6 +35,6 @@ Feedback.init(
     sequelize,
     tableName: "feedback",
     timestamps: true,
-    modelName: "feedback"
+    modelName: "Feedback"
   }
 );
