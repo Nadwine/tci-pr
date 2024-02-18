@@ -35,8 +35,8 @@ const AboutUs = props => {
         in using digital solutions to pair the right property with the right customer. We list properties for landlords and homeowners within the Turks and
         Caicos Islands and bring the perfect tenant to you.
       </div>
-      <div className="d-flex">
-        <div className="card w-sm-100 m-lg-5" style={{ width: "500px", backgroundColor: "#055160", boxShadow: "10px 10px 5px 0px rgba(0,0,0,0.37)" }}>
+      <div className="d-flex flex-row flex-wrap justify-content-start">
+        <div className="card col-md-4 w-sm-100 m-lg-5" style={{ backgroundColor: "#055160", boxShadow: "10px 10px 5px 0px rgba(0,0,0,0.37)" }}>
           <div className="card-body">
             <p className="ms-3 text-light fw-bolder" style={{ fontSize: "40px" }}>
               CONTACT US!
@@ -74,7 +74,7 @@ const AboutUs = props => {
             </div>
           </div>
         </div>
-        <div className="mt-5">
+        <div className="mt-5 col-md-4">
           <p className="fs-4 mt-5 fw-bold mx-lg-5" style={{ color: "#055160" }}>
             Helping the residents of the Turks and Caicos Islands find their next home!{" "}
           </p>
