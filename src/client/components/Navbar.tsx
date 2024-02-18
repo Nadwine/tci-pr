@@ -98,7 +98,7 @@ function Navbar() {
             <a className="nav-item nav-link fw-bold text-dark" href="/feedback" style={{ color: "#032830" }}>
               Feedback
             </a>
-            <a className="nav-item nav-link fw-bold text-dark" href="/feedback" style={{ color: "#032830" }}>
+            <a className="nav-item nav-link fw-bold text-dark" href="/" style={{ color: "#032830" }}>
               Contact
             </a>
           </div>

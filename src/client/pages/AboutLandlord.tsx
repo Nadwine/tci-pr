@@ -59,9 +59,9 @@ const AboutLandlord = props => {
   };
   return (
     <div>
-      <h3 className="fw-bolder mt-5 mx-5 my-5">How-to Guide</h3>
+      <h2 className="fw-bolder mt-5 mx-5 my-5">How-to Guide</h2>
       <div className="mt-2 my-5 mx-5">
-        <p className="me-5">
+        <p className="me-5 fs-6" style={{ color: "#032830" }}>
           We find you reliable tenants and ensure your proprietary stays in good condition. At TCI Homebase, we offer more than simply listing your properties.
           Browse our list of services available here. (Make “here” a Hyperlink that takes them to the Products and Services Page) Register Now (Make this a
           clickable button that take them to the sign up form)

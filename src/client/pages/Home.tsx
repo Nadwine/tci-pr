@@ -258,7 +258,7 @@ const Home = props => {
                 </div>
               </div>
             </div>
-            <p className="fs-4 mt-5" style={{ color: "#055160" }}>
+            <p className="fs-3 mt-5" style={{ color: "#055160" }}>
               FIND YOUR DREAM HOME WITH TCI HOMEBASE
             </p>
             <div>
@@ -314,6 +314,9 @@ const Home = props => {
             </div>
           </div>
         )}
+        <div className="text-center text-light mt-5" style={{ backgroundColor: "#055160", height: "3rem" }}>
+          <p className="py-2">Interested in promoting your business on our website? Contact us on tci.homebase.tc@gmail.com or at +1(649) 348-4021</p>
+        </div>
       </div>
       <LandlordProposalButton />
     </div>
