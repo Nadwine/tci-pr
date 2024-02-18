@@ -11,7 +11,7 @@ import {
   resendPasswordResetLinkToUserEmail,
   resendVerificationToUserEmail
 } from "./routes/auth";
-import { ensureAdmin, ensureAuthentication, ensureLogout } from "./middlewareFunctions/auth-middleware";
+import { ensureAdmin, ensureAuthentication, ensureLandlord, ensureLogout } from "./middlewareFunctions/auth-middleware";
 import multer from "multer";
 import dayjs from "dayjs";
 import {
@@ -27,7 +27,8 @@ import {
   getApproveFromListings,
   setApprovalValueRoute,
   getExpandedRentListingById,
-  landLordSubmitRentListingRoute
+  landLordSubmitRentListingRoute,
+  getLandlordListings
 } from "./routes/listing-route";
 import { createEnquiryRoute, getLatestEnquiry } from "./routes/enquiry-route";
 import { getMessagesByEnquiryConversationId, sendMessageToConversation, setMessageAsSeen } from "./routes/message-chat-route";
@@ -85,6 +86,7 @@ router.get("/listing/random", getRandomListings);
 router.get("/listings", ensureAdmin, getAllListings);
 router.get("/listings/approve", ensureAdmin, getApproveFromListings);
 router.post("/listing/approve-status", ensureAdmin, setApprovalValueRoute);
+router.get("/listing/landlord/my-listings", ensureLandlord, getLandlordListings);
 
 // /api/enquiry   routes
 router.post("/enquiry/set-seen", ensureAuthentication, setMessageAsSeen);
