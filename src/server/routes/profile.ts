@@ -8,7 +8,8 @@ export const getProfileForLoggedInUser = async (req: Request, res: Response) => 
   const sessionUsr = req.session.user;
 
   try {
-    const user = await Profile.findByPk(sessionUsr!.id, {
+    const user = await Profile.findOne({
+      where: { userId: sessionUsr!.id },
       include: [{ model: User, include: [ListingLandlord] }]
     });
 
