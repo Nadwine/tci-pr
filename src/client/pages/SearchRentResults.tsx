@@ -161,7 +161,7 @@ const SearchRentResults = props => {
                       className="btn btn-link bg-white border-info rounded-circle text-black fs-5"
                       style={{ width: "45px", height: "45px", marginLeft: "7px" }}
                     >
-                      {listing.Admin.User?.email?.charAt(0)}
+                      {listing?.Admin?.User?.email?.charAt(0) || listing?.ListingLandlord?.firstName?.charAt(0)}
                     </span>
                   </div>
                 </div>

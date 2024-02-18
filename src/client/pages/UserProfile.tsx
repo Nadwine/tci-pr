@@ -26,7 +26,8 @@ const UserProfile = props => {
   };
 
   const submitUpdate = async () => {
-    const res = await axios.put("/api/profile/my-profile", profile);
+    const profileObj = cloneDeep(profile);
+    const res = await axios.put("/api/profile/my-profile", profileObj);
     if (res.status === 200) toast.success("Success");
     if (res.status !== 200) toast.error("Error updating");
     console.log(res.data);
@@ -49,6 +50,10 @@ const UserProfile = props => {
     fetchProfile();
   }, []);
 
+  const nameDisplay = (profile?.firstName || "Incomplete") + " " + (profile?.lastName ? profile.lastName : "");
+  const addressDisplay = `${profile?.addressLine1 || ""}, ${profile?.addressLine2 || "Incomplete"}, ${profile?.settlement || "Incomplete"}, ${
+    profile?.city || "Incomplete"
+  }`;
   return (
     <div className="container px-lg-5 px-md-5 pt-5">
       <div>
@@ -116,7 +121,7 @@ const UserProfile = props => {
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Name</h5>
-                {!editingFields.firstName && profile?.firstName + " " + profile?.lastName}
+                {!editingFields.firstName && nameDisplay}
                 {editingFields.firstName && (
                   <div className="name-edit">
                     <label>First Name</label>
@@ -135,8 +140,8 @@ const UserProfile = props => {
                   {editingFields.firstName ? (
                     <p
                       onClick={() => {
-                        setFieldEditStatus("firstName", false);
                         submitUpdate();
+                        setFieldEditStatus("firstName", false);
                       }}
                     >
                       save
@@ -154,7 +159,7 @@ const UserProfile = props => {
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Address</h5>
-                {!editingFields?.addressLine1 && `${profile?.addressLine1}, ${profile?.addressLine2}, ${profile?.settlement}, ${profile?.city}`}
+                {!editingFields?.addressLine1 && addressDisplay}
                 {editingFields.addressLine1 && (
                   <div className="name-edit">
                     <label>Line 1</label>
@@ -189,8 +194,8 @@ const UserProfile = props => {
                   {editingFields.addressLine1 ? (
                     <p
                       onClick={() => {
-                        setFieldEditStatus("addressLine1", false);
                         submitUpdate();
+                        setFieldEditStatus("addressLine1", false);
                       }}
                     >
                       save
@@ -208,7 +213,7 @@ const UserProfile = props => {
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Telephone</h5>
-                {!editingFields.phoneNumber && profile?.phoneNumber}
+                {(!editingFields.phoneNumber && profile?.phoneNumber) || "Incomplete"}
                 {editingFields.phoneNumber && (
                   <div className="phone-edit">
                     <input
@@ -224,8 +229,8 @@ const UserProfile = props => {
                   {editingFields.phoneNumber ? (
                     <p
                       onClick={() => {
-                        setFieldEditStatus("phoneNumber", false);
                         submitUpdate();
+                        setFieldEditStatus("phoneNumber", false);
                       }}
                     >
                       save
@@ -297,8 +302,8 @@ const UserProfile = props => {
                   {editingFields.payment ? (
                     <p
                       onClick={() => {
-                        setFieldEditStatus("payment", false);
                         submitPaymentMethodChange();
+                        setFieldEditStatus("payment", false);
                       }}
                     >
                       save

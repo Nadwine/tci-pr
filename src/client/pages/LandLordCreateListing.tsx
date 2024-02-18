@@ -21,7 +21,7 @@ const LandLordCreateListing = props => {
     if (res.status === 200) {
       if (res.data.profile) setHasProfile(true);
     } else {
-      toast.error(JSON.stringify(res.data));
+      console.log("error: /api/landlord/profile", res);
     }
   };
 
@@ -49,6 +49,8 @@ const LandLordCreateListing = props => {
       city: "",
       postcode: "",
       country: "",
+      tenancyLength: "",
+      listingManager: "",
       files: [] as File[],
       questions: [] as string[]
     },
@@ -77,14 +79,18 @@ const LandLordCreateListing = props => {
         addressLine2: formValues.addressLine2,
         settlement: formValues.settlement,
         city: formValues.city,
+        tenancyLength: formValues.tenancyLength,
+        listingManager: formValues.listingManager,
         postcode: "TKCA 1ZZ",
-        country: "Turks & Caicos Islands",
+        country: "Turks and Caicos Islands",
         questions: JSON.stringify(formValues.questions)
       };
-      await axios
-        .post("/api/listing/rent/landlord/create", body, axiosConfig)
-        .then(res => navigate("/listing-success"))
-        .catch(err => console.log("/api/listing/rent/create", err));
+      const res = await axios.post("/api/listing/rent/landlord/create", body, axiosConfig);
+      if (res.status === 200) navigate("/listing-success");
+      if (res.status !== 200) {
+        toast.error("Oops something went wrong");
+        console.log("/api/listing/rent/landlord/create", res);
+      }
     },
     validate(values) {
       //
@@ -112,7 +118,10 @@ const LandLordCreateListing = props => {
 
   const popOver = (
     <Popover id="popover-basic" placement="right">
-      FFFFFFF
+      <div className="p-2">
+        We can manage your property for you. This is an optional service where we handle all internal affairs such as rental collections, maintenance and many
+        more.
+      </div>
     </Popover>
   );
 
@@ -227,6 +236,22 @@ const LandLordCreateListing = props => {
             </label>
             <input name="availability" value={values.availability} onChange={handleChange} className="form-control" type="date" />
           </div>
+          <div className="mb-3">
+            <label htmlFor="tenancyLength" className="form-label">
+              Rental Length {"(Days)"}
+            </label>
+            <div className="d-flex flex-row">
+              <input
+                placeholder="Example:  Enter 365 for 12 months"
+                name="tenancyLength"
+                value={values.tenancyLength}
+                onChange={handleChange}
+                type="number"
+                className="form-control"
+                required
+              />
+            </div>
+          </div>
           <div className="input-group mb-3">
             <label htmlFor="rentAmount" className="form-label w-100">
               Rent per month
@@ -265,13 +290,21 @@ const LandLordCreateListing = props => {
           <div className="managment type">
             <div className="overlay d-flex pb-2">
               <OverlayTrigger trigger="click" overlay={popOver}>
-                <span className="ms-auto badge rounded-pill bg-primary text-bg-info">Info</span>
+                <span className="ms-auto badge rounded-pill bg-primary text-bg-info">?</span>
               </OverlayTrigger>
             </div>
-            <select className="col-10 form-select" aria-label="Default select example">
-              <option selected>Would you like us to manage this property for you?</option>
-              <option value="1">Yes</option>
-              <option value="2">No</option>
+            <select
+              value={values.listingManager}
+              onChange={e => setFieldValue("listingManager", e.target.value)}
+              className="col-10 form-select"
+              aria-label="Default select example"
+              required
+            >
+              <option value="" selected>
+                Would you like us to manage this property for you?
+              </option>
+              <option value="admin">Yes</option>
+              <option value="landlord">No</option>
             </select>
           </div>
           <div className="inclusions">

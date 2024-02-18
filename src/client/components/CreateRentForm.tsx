@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import islands from "../../utils/islandsData.json";
 import { useNavigate } from "react-router-dom";
 import { cloneDeep } from "lodash";
+import { toast } from "react-toastify";
 
 const axiosConfig = { headers: { "Content-Type": "multipart/form-data" } };
 
@@ -33,6 +34,8 @@ const CreateRentForm = props => {
       city: "",
       postcode: "",
       country: "",
+      tenancyLength: "",
+      listingManager: "admin",
       files: [] as File[],
       questions: [] as string[]
     },
@@ -57,14 +60,18 @@ const CreateRentForm = props => {
         addressLine2: formValues.addressLine2,
         settlement: formValues.settlement,
         city: formValues.city,
+        tenancyLength: formValues.tenancyLength,
+        listingManager: formValues.listingManager,
         postcode: "TKCA 1ZZ",
-        country: "Turks & Caicos Islands",
+        country: "Turks and Caicos Islands",
         questions: JSON.stringify(formValues.questions)
       };
-      await axios
-        .post("/api/listing/rent/create", body, axiosConfig)
-        .then(res => navigate(`/property/rent/${res.data.id}`))
-        .catch(err => console.log("/api/listing/rent/create", err));
+      const res = await axios.post("/api/listing/rent/create", body, axiosConfig);
+      if (res.status === 200) navigate("/admin/dashboard/listings");
+      if (res.status !== 200) {
+        toast.error("Oops something went wrong");
+        console.log("/api/listing/rent/create", res);
+      }
     },
     validate(values) {
       //
@@ -190,6 +197,22 @@ const CreateRentForm = props => {
             </label>
             <input name="availability" value={values.availability} onChange={handleChange} className="form-control" type="date" />
           </div>
+          <div className="mb-3">
+            <label htmlFor="tenancyLength" className="form-label">
+              Rental Length {"(Days)"}
+            </label>
+            <div className="d-flex flex-row">
+              <input
+                placeholder="Example:  Enter 365 for 12 months"
+                name="tenancyLength"
+                value={values.tenancyLength}
+                onChange={handleChange}
+                type="number"
+                className="form-control"
+                required
+              />
+            </div>
+          </div>
           <div className="input-group mb-3">
             <label htmlFor="rentAmount" className="form-label w-100">
               Rent per month
@@ -224,6 +247,21 @@ const CreateRentForm = props => {
             <label className="form-check-label" htmlFor="isFurnished">
               Furnished
             </label>
+          </div>
+          <div className="managment type">
+            <div className="pb-2">Managed By Admin?</div>
+            <select
+              value={values.listingManager}
+              onChange={e => setFieldValue("listingManager", e.target.value)}
+              className="col-10 form-select"
+              aria-label="Default select example"
+            >
+              <option value="" selected>
+                Would you like us to manage this property for you?
+              </option>
+              <option value="admin">Yes</option>
+              <option value="landlord">No</option>
+            </select>
           </div>
           <div className="inclusions">
             <p className="fs-5 w-100 pt-2 mb-1">Photos/Videos</p>

@@ -21,7 +21,9 @@ export const getProfileForLoggedInUser = async (req: Request, res: Response) => 
 export const updateSessionUrsProfile = async (req: Request, res: Response) => {
   const sessionUsr = req.session.user;
   const accountType = sessionUsr?.accountType;
-  const { firstName, lastName, phoneNumber, addressLine1, addressLine2, city, settlement, postcode, country } = req.body;
+  const { firstName, lastName, phoneNumber, addressLine1, addressLine2, city, settlement } = req.body;
+  const postcode = "TKCA 1ZZ";
+  const country = "Turks and Caicos Islands";
 
   try {
     const found = await Profile.findOne({ where: { userId: sessionUsr!.id }, include: [{ model: User, include: [ListingLandlord] }] });
@@ -56,16 +58,28 @@ export const updateSessionUrsProfile = async (req: Request, res: Response) => {
 
       // keep the landlord private profile in sync with his public profile
       if (accountType === "landlord") {
-        await ListingLandlord.update(
-          {
+        const foundLandLord = await ListingLandlord.findOne({ where: { userId: sessionUsr!.id } });
+        if (foundLandLord) {
+          await ListingLandlord.update(
+            {
+              firstName: firstName,
+              lastName: lastName,
+              phoneNumber: phoneNumber,
+              homeIsland: city,
+              address: `${settlement && settlement + ","}${city && city + ","}${postcode && postcode + ","}${country && country}`
+            },
+            { where: { userId: sessionUsr?.id } }
+          );
+        } else {
+          await ListingLandlord.create({
             firstName: firstName,
             lastName: lastName,
             phoneNumber: phoneNumber,
             homeIsland: city,
+            userId: sessionUsr!.id,
             address: `${settlement && settlement + ","}${city && city + ","}${postcode && postcode + ","}${country && country}`
-          },
-          { where: { userId: sessionUsr?.id } }
-        );
+          });
+        }
       }
     }
 

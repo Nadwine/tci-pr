@@ -13,6 +13,9 @@ type Props = {
 export const LandlordProfileModal = (props: Props) => {
   const { show, listing, setShow } = props;
 
+  const isPostByAdmin = listing.adminId != null;
+  const landlordPostButProfileIncomplete = listing.adminId == null && listing.ListingLandlord == null;
+  const showHomeBase = isPostByAdmin || landlordPostButProfileIncomplete;
   return (
     <Modal show={show}>
       <Modal.Header>
@@ -24,10 +27,12 @@ export const LandlordProfileModal = (props: Props) => {
         </Button>
       </Modal.Header>
       <Modal.Body className="d-flex flex-column justify-content-center">
-        <h6>
-          Posted by <span className="fw-bold">TCI HOMEBASE PROPERTY MANAGEMENT</span>
-        </h6>
-        {listing.ListingLandlord && (
+        {showHomeBase && (
+          <h6>
+            Posted by <span className="fw-bold">TCI HOMEBASE PROPERTY MANAGEMENT</span>
+          </h6>
+        )}
+        {!isPostByAdmin && listing.ListingLandlord && (
           <div>
             <h6 className="fw-bolder">Date Joined</h6>
             <p>{dayjs(listing.ListingLandlord?.createdAt).fromNow()}</p>

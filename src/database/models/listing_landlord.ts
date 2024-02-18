@@ -8,12 +8,12 @@ export default class ListingLandlord extends Model<InferAttributes<ListingLandlo
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
-  declare firstName: string;
-  declare lastName: string;
-  declare phoneNumber: string;
-  declare homeIsland: string;
-  declare address: string;
-  declare cardDetails: any;
+  declare firstName?: string;
+  declare lastName?: string;
+  declare phoneNumber?: string;
+  declare homeIsland?: string;
+  declare address?: string;
+  declare cardDetails?: any;
   declare stripeConnectId?: string;
   declare userId: number;
   declare createdAt: CreationOptional<Date>;
@@ -32,27 +32,27 @@ ListingLandlord.init(
     },
     firstName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     lastName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     phoneNumber: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     homeIsland: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     address: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     cardDetails: {
       type: DataTypes.JSON,
-      allowNull: false
+      allowNull: true
     },
     stripeConnectId: {
       type: DataTypes.STRING,

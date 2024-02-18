@@ -1,5 +1,8 @@
 // @ts-nocheck
 import axios, { AxiosError, AxiosRequestConfig, AxiosRequestTransformer, AxiosResponse } from "axios";
+import React from "react";
+import { toast } from "react-toastify";
+import JsonView from "@uiw/react-json-view";
 
 // https://lifesaver.codes/answer/need-some-advice-about-handling-302-redirects-from-ajax
 export default function initAxios() {
@@ -27,6 +30,29 @@ export default function initAxios() {
         // if server send redirect. change the browser url location
         // To ignore this and do something before a redirect (recommend using fetch for those cases)
         window.location = error.response.data.redirect;
+      }
+      if (import.meta.env.DEV && error.message !== "Network Error") {
+        const hoveInfo = React.createElement("div", { className: "text-center", style: { fontSize: "20px" }}, "Click inside to close");
+        const devInfo = React.createElement(
+          "div",
+          { className: "py-3", style: { fontSize: "10px" } },
+          "This is a Dev Mode Error appearing because the app is in Dev Mode"
+        );
+        const urlInfo = React.createElement("div", { className: "text-danger py-3" }, error.config.url);
+        // const code = React.createElement("code", { className: "" }, `Error: ${error?.message} - ${JSON.stringify(error?.response?.data)}`)
+        const jsonV = React.createElement(JsonView, {
+          value: { requestMsg: error.message, ...error.response?.data },
+          enableClipboard: false,
+          indentWidth: 1,
+          shortenTextAfterLength: 0,
+          displayDataTypes: false
+        });
+        const codeDiv = React.createElement("div", { className: "bg-white", style: { maxHeight: "300px", overflow: "scroll" } }, jsonV);
+        const scroll = React.createElement("div", { style: { fontSize: "10px" } }, "Scroll");
+        const El = React.createElement("div", { className: "flex-column text-white" }, [hoveInfo, devInfo, urlInfo, scroll, codeDiv]);
+
+        toast.dark(El, { autoClose: 60000, closeOnClick: true });
+        console.error("Axios Error", error);
       }
 
       return Promise.resolve(error.response);

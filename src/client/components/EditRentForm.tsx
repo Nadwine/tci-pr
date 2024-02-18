@@ -47,6 +47,8 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
       city: listing.Address.city,
       postcode: listing.Address.postcode,
       country: listing.Address.country,
+      tenancyLength: listing.PropertyForRent.tenancyLength,
+      listingManager: listing.listingManager,
       files: listing.ListingMedia.sort((a, b) => Number(a.label) - Number(b.label)) as ListingMedia[],
       questions: listing.ListingQuestions as ListingQuestion[],
       fullFiles: null
@@ -73,8 +75,10 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
         addressLine2: formValues.addressLine2,
         settlement: formValues.settlement,
         city: formValues.city,
+        tenancyLength: formValues.tenancyLength,
+        listingManager: formValues.listingManager,
         postcode: "TKCA 1ZZ",
-        country: "Turks & Caicos Islands",
+        country: "Turks and Caicos Islands",
         questions: JSON.stringify(formValues.questions),
         fullFiles: JSON.stringify(formValues.fullFiles)
       };
@@ -229,6 +233,22 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
               </label>
               <input name="availability" value={values.availability} onChange={handleChange} className="form-control" type="date" />
             </div>
+            <div className="mb-3">
+              <label htmlFor="tenancyLength" className="form-label">
+                Rental Length {"(Days)"}
+              </label>
+              <div className="d-flex flex-row">
+                <input
+                  placeholder="Example:  Enter 365 for 12 months"
+                  name="tenancyLength"
+                  value={values.tenancyLength}
+                  onChange={handleChange}
+                  type="number"
+                  className="form-control"
+                  required
+                />
+              </div>
+            </div>
             <div className="input-group mb-3">
               <label htmlFor="rentAmount" className="form-label w-100">
                 Rent per month
@@ -291,6 +311,20 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
               <label className="form-check-label" htmlFor="isFurnished">
                 Furnished
               </label>
+            </div>
+            <div className="managment type">
+              <select
+                value={values.listingManager}
+                onChange={e => setFieldValue("listingManager", e.target.value)}
+                className="col-10 form-select"
+                aria-label="Default select example"
+              >
+                <option value="" selected>
+                  Would you like us to manage this property for you?
+                </option>
+                <option value="admin">Yes</option>
+                <option value="landlord">No</option>
+              </select>
             </div>
             <div className="inclusions">
               <p className="fs-5 w-100 pt-2 mb-1">Photos/Videos</p>

@@ -7,16 +7,16 @@ export default class Profile extends Model<InferAttributes<Profile>, InferCreati
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
-  declare firstName: string;
-  declare lastName: string;
-  declare email: string;
-  declare phoneNumber: number;
-  declare addressLine1: string;
+  declare firstName?: string;
+  declare lastName?: string;
+  declare email?: string;
+  declare phoneNumber?: number;
+  declare addressLine1?: string;
   declare addressLine2?: string;
-  declare city: string;
-  declare settlement: string;
-  declare postcode: string;
-  declare country: string;
+  declare city?: string;
+  declare settlement?: string;
+  declare postcode?: string;
+  declare country?: string;
   declare userId: number;
   declare User: CreationOptional<User>;
   declare createdAt: CreationOptional<Date>;
@@ -35,19 +35,19 @@ Profile.init(
     },
     firstName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     lastName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     phoneNumber: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     addressLine1: {
       type: DataTypes.STRING,

@@ -58,6 +58,7 @@
     "@tanstack/react-query": "4.24.4",
     "@tanstack/react-query-devtools": "4.24.4",
     "@tanstack/react-table": "^8.11.8",
+    "@uiw/react-json-view": "^2.0.0-alpha.12",
     "@vitejs/plugin-react": "3.0.0",
     "autoprefixer": "10.4.5",
     "aws-sdk": "2.1299.0",

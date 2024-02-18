@@ -16,7 +16,6 @@ import multer from "multer";
 import dayjs from "dayjs";
 import {
   adminCreateRentListingRoute,
-  createSaleListingRoute,
   deleteRentListingById,
   getRentListingById,
   landlordViewMyListings,
@@ -75,7 +74,6 @@ router.get("/auth/logout", logoutUser);
 // /api/listing   routes
 router.post("/listing/rent/create", ensureAdmin, uploadMemory.any(), adminCreateRentListingRoute);
 router.post("/listing/rent/landlord/create", ensureAuthentication, uploadMemory.any(), landLordSubmitRentListingRoute);
-router.post("/listing/sale/create", ensureAuthentication, uploadMemory.any(), createSaleListingRoute);
 router.get("/listing/rent/search", searchRentListingRoute);
 router.get("/listing/sale/search", searchSaleListingRoute);
 router.get("/listing/rent/:id", getRentListingById);

@@ -82,7 +82,7 @@ PropertyForRent.init(
       allowNull: false
     },
     tenancyLength: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false
     }
   },

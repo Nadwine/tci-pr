@@ -6,6 +6,8 @@ module.exports = [
     listingType: "rent",
     adminId: 1,
     isApproved: true,
+    listingStatus: "approved",
+    listingManager: "admin",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -15,6 +17,8 @@ module.exports = [
     description: "This is really good for people with many belongings to store away",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -25,6 +29,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "sale",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -35,6 +41,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "sale",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -45,6 +53,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events. This is only available for 1 tenant",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -55,6 +65,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -65,6 +77,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -75,6 +89,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -85,6 +101,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -95,6 +113,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -105,6 +125,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -115,6 +137,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -125,6 +149,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -135,6 +161,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -145,6 +173,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -155,6 +185,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -165,6 +197,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -175,6 +209,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -185,6 +221,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -195,6 +233,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 1,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -205,6 +245,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 2,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -215,6 +257,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 2,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -225,6 +269,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 2,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -235,6 +281,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 2,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -245,6 +293,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 2,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -255,6 +305,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 2,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -265,6 +317,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 2,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -275,6 +329,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 2,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -285,6 +341,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 2,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -295,6 +353,8 @@ module.exports = [
     description: "The living room is very spacious and bright. Big enough for parties and social events",
     listingType: "rent",
     adminId: 2,
+    listingStatus: "approved",
+    listingManager: "admin",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"

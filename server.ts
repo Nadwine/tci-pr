@@ -200,10 +200,10 @@ async function createServer(isProd = process.env.NODE_ENV === "production") {
   app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     if (error instanceof yup.ValidationError) {
       console.log("server validation error", req.originalUrl);
-      return res.status(400).json({ message: error.message, errors: error.errors }); // status code is 400 by default
+      return res.status(400).json({ message: error?.message, err: error?.errors }); // status code is 400 by default
     }
 
-    return res.status(500).json({ message: "Internal Server Error", error: error });
+    return res.status(500).json({ message: "Server Validation Err", err: error });
   });
   const port = process.env.SERVER_PORT || 8080;
   app.listen(Number(port), "0.0.0.0", () => {

@@ -24,7 +24,7 @@ const ViewRentProperty = props => {
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
   const enquiryRef = useRef<HTMLFormElement>(null);
   const user = useSelector((root: RootState) => root.auth.user);
-  const isOwner = user?.id === listing?.Admin.userId;
+  const isOwner = user?.id === listing?.Admin?.userId || listing?.ListingLandlord?.userId;
   const navigate = useNavigate();
 
   const initialFetch = async () => {

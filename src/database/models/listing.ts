@@ -9,6 +9,7 @@ import PropertyForSale from "./property_for_sale";
 import ListingMedia from "./listing_media";
 import ListingQuestion from "./listing_question";
 import ListingLandlord from "./listing_landlord";
+import { ListingStatusEnum } from "../../utils/listingStatusSequence";
 
 // for typeScript typing
 export default class Listing extends Model<InferAttributes<Listing>, InferCreationAttributes<Listing>> {
@@ -24,6 +25,7 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare landlordId?: number;
   declare Admin: CreationOptional<Admin>;
   declare listingManager: "landlord" | "admin";
+  declare listingStatus: ListingStatusEnum;
   declare PropertyForRent: CreationOptional<PropertyForRent>;
   declare PropertyForSale: CreationOptional<PropertyForSale>;
   declare EnquiryConversations?: CreationOptional<EnquiryConversation[]>;
@@ -59,7 +61,11 @@ Listing.init(
       allowNull: false
     },
     listingManager: {
-      type: DataTypes.STRING, // Sale , Rent
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    listingStatus: {
+      type: DataTypes.STRING,
       allowNull: false
     },
     isApproved: {
