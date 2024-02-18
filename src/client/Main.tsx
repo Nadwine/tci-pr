@@ -173,7 +173,7 @@ const Main = () => {
             <Route path="products" element={<Products />} />
             <Route path="feedback" element={<Feedback />} />
             <Route path="temp" element={<TempHome />} />
-            <Route path="user" element={<UserProfile />} />
+            <Route path="user" element={<RequireLogin view={<UserProfile />} />} />
             <Route path="listing-success" element={<SubmitListingRedirect />} />
             <Route path="landlord/dashboard" element={<RequirePermission view={<LandlordDashboard />} roles={["landlord"]} />} />
             <Route path="landlord/create-listing" element={<RequirePermission view={<LandLordCreateListing />} roles={["landlord"]} />} />

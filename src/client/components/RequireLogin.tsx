@@ -12,11 +12,12 @@ interface ComponentProps {
 const RequireLogin: React.FC<ComponentProps> = ({ view }: { view: ReactElement<any> }) => {
   // const user = useSelector((rootState: RootState) => rootState.auth.user);
   const [loading, setLoading] = useState(true);
+  const returnPath = window.location.pathname;
 
   const authState = store.getState().auth;
 
   if (!authState.user) {
-    return <Navigate to="/login?error=login to complete operation" replace />;
+    return <Navigate to={`/login?error=login to complete operation&returnUrl=${returnPath}`} replace />;
   }
 
   return view;

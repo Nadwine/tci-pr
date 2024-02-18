@@ -295,16 +295,17 @@ export const resendPasswordResetLinkToUserEmail = async (req: Request, res: Resp
  |
  *===================================================================*/
 export const loginUser = async (req: Request, res: Response) => {
+  const returnUrl = req.body.returnUrl;
   const isValidRequest = loginRequestValidation(req);
   if (!isValidRequest) {
-    return res.redirect("/login/?error=invalid request");
+    return res.redirect(`/login/?error=invalid request${returnUrl ? "&returnUrl=" + returnUrl : ""}`);
   }
 
   const { nameOrEmail, password } = req.body;
   try {
     const isUserLoggedIn = req?.session?.user ? true : false;
     if (isUserLoggedIn) {
-      return res.redirect(`${req.session.returnTo || "/"}`);
+      return res.redirect(`${returnUrl || "/"}`);
     }
 
     // username or email match query
@@ -313,7 +314,7 @@ export const loginUser = async (req: Request, res: Response) => {
     });
 
     if (!foundUser) {
-      return res.redirect("/login?error=Please enter a correct username and password");
+      return res.redirect(`/login?error=Please enter a correct username and password${returnUrl ? "&returnUrl=" + returnUrl : ""}`);
     }
 
     if (foundUser.verified === false) {
@@ -338,18 +339,18 @@ export const loginUser = async (req: Request, res: Response) => {
         // Success redirect
         req.session.returnTo && delete req.session.returnTo;
         if (foundUser.accountType === "admin") {
-          res.redirect("/admin/dashboard");
+          res.redirect(returnUrl || "/admin/dashboard");
         } else {
-          res.redirect(`${req.session.returnTo || "/"}`);
+          res.redirect(`${returnUrl || "/"}`);
         }
       } else {
         // password comparision failed
-        return res.redirect("/login?error=Please enter a correct username and password");
+        return res.redirect(`/login?error=Please enter a correct username and password${returnUrl ? "&returnUrl=" + returnUrl : ""}`);
       }
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).redirect(`/login?error=${error}"`);
+    return res.status(500).redirect(`/login?error=${error}${returnUrl ? "&returnUrl=" + returnUrl : ""}`);
   }
 };
 

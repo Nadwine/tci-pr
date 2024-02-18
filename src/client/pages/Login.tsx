@@ -52,10 +52,11 @@ const Login = () => {
                 <span className="d-inline-block d-lg-block h1 mb-lg-6 me-3">
                   <i className="bi bi-person-circle" style={{ color: "#077990" }} />
                 </span>
-                <div className="text-danger" style={{ minHeight: "1em" }}>
+                <h1 className="ls-tight font-bolder h2">Login</h1>
+                <div className="text-danger pt-5" style={{ minHeight: "1em" }}>
+                  <br />
                   {serverError}
                 </div>
-                <h1 className="ls-tight font-bolder h2">Login</h1>
               </div>
               <form action="/api/auth/login" method="POST">
                 <div className="mb-5">
@@ -82,6 +83,7 @@ const Login = () => {
                   </div>
                 </div>
                 <div>
+                  <input name="returnUrl" value={urlQuery.get("returnUrl") || ""} type="hidden" />
                   <button type="submit" className="btn btn-dark w-full">
                     Sign in
                   </button>
