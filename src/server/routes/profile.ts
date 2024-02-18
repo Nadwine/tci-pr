@@ -28,21 +28,22 @@ export const updateSessionUrsProfile = async (req: Request, res: Response) => {
 
   try {
     const found = await Profile.findOne({ where: { userId: sessionUsr!.id }, include: [{ model: User, include: [ListingLandlord] }] });
-    const newRec = !found
-      ? await Profile.create({
-          firstName: firstName,
-          lastName: lastName,
-          phoneNumber: phoneNumber,
-          addressLine1: addressLine1,
-          addressLine2: addressLine2,
-          city: city,
-          settlement: settlement,
-          postcode: postcode,
-          country: country,
-          email: sessionUsr!.email,
-          userId: sessionUsr!.id
-        })
-      : null;
+    const newRec =
+      found == null
+        ? await Profile.create({
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phoneNumber,
+            addressLine1: addressLine1,
+            addressLine2: addressLine2,
+            city: city,
+            settlement: settlement,
+            postcode: postcode,
+            country: country,
+            email: sessionUsr!.email,
+            userId: sessionUsr!.id
+          })
+        : null;
 
     if (found) {
       await found.update({
@@ -88,7 +89,7 @@ export const updateSessionUrsProfile = async (req: Request, res: Response) => {
     await newRec?.reload();
 
     //@ts-ignore
-    return res.json(found || newRec);
+    return res.status(200).json(found || newRec);
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error 207", err });
   }

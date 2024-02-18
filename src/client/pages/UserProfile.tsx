@@ -20,7 +20,7 @@ const UserProfile = props => {
   };
 
   const setFieldVal = (field: string, val: string) => {
-    const stateClone: any = cloneDeep(profile);
+    const stateClone: any = cloneDeep(profile) || {};
     stateClone[field] = val;
     setProfile(stateClone);
   };
@@ -248,7 +248,7 @@ const UserProfile = props => {
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Email</h5>
-                {profile?.User.email || loggedInUsr?.email}
+                {profile?.User?.email || loggedInUsr?.email}
               </div>
             </div>
           </div>

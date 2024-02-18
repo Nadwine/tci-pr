@@ -1,7 +1,6 @@
 import { Request } from "express";
 import * as yup from "yup";
 import _ from "lodash";
-import { ListingStatusEnum, ListingStatusEnum2 } from "../listingStatusSequence";
 
 export const createListingSchema: yup.AnyObjectSchema = yup.object({
   title: yup.string().required(),

@@ -196,6 +196,24 @@ export const adminCreateRentListingRoute = async (req: Request, res: Response) =
   }
 };
 
+export const getLandlordListings = async (req: Request, res: Response) => {
+  const sessionUsr = req.session!.user;
+
+  try {
+    const landord = await ListingLandlord.findOne({ where: { userId: sessionUsr?.id } });
+    if (!landord) return res.status(200).json([]);
+
+    const listings = await Listing.findAll({
+      where: { landlordId: landord.id },
+      include: [{ model: PropertyForRent }, { model: ListingMedia }, { model: Address }]
+    });
+
+    return res.status(200).json(listings);
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
 export const landLordSubmitRentListingRoute = async (req: Request, res: Response) => {
   const {
     title,
@@ -242,7 +260,7 @@ export const landLordSubmitRentListingRoute = async (req: Request, res: Response
         landlordId: landlord.id,
         listingStatus: "awaiting approval",
         listingManager: listingManager,
-        isApproved: true
+        isApproved: false
       });
       createdListingId = newListing.id;
 
@@ -749,7 +767,8 @@ export const setApprovalValueRoute = async (req: Request, res: Response) => {
   try {
     await Listing.update(
       {
-        isApproved: isApproved
+        isApproved: isApproved,
+        listingStatus: "approved"
       },
       { where: { id: Number(id) } }
     );

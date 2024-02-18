@@ -36,7 +36,7 @@ const AboutUs = props => {
         Caicos Islands and bring the perfect tenant to you.
       </div>
       <div className="d-flex flex-row flex-wrap justify-content-start">
-        <div className="card col-md-4 w-sm-100 m-lg-5" style={{ backgroundColor: "#055160", boxShadow: "10px 10px 5px 0px rgba(0,0,0,0.37)" }}>
+        <div className="card col-md-5 w-sm-100 m-lg-5" style={{ backgroundColor: "#055160", boxShadow: "10px 10px 5px 0px rgba(0,0,0,0.37)" }}>
           <div className="card-body">
             <p className="ms-3 text-light fw-bolder" style={{ fontSize: "40px" }}>
               CONTACT US!
