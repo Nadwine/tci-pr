@@ -203,6 +203,9 @@ export const resendVerificationToUserEmail = async (req: Request, res: Response)
   if (!email || typeof email !== "string") {
     return res.redirect("/register?error=invalid request");
   }
+  const user = await User.findOne({ where: { email: email } });
+  if (!user) return res.redirect("/register-confirm?verification_sent=true");
+
   const hashSecret = process.env.EMAIL_TOKEN_HASH_SECRET || "";
   const emailToken = jwt.sign({ userEmail: email }, hashSecret, {
     expiresIn: "5h"
