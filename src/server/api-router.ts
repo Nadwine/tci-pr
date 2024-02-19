@@ -37,6 +37,7 @@ import { submitFeedback } from "./routes/feedback";
 import { getAllUsers } from "./routes/user";
 import { getAllLandlordsByUser, getSessionLandlordProfile } from "./routes/landlord";
 import { getProfileForLoggedInUser, updateSessionUrsProfile } from "./routes/profile";
+import { sendContactUsMail } from "./routes/mailing-route";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -115,5 +116,8 @@ router.get("/landlord/profile", ensureAuthentication, getSessionLandlordProfile)
 // profile
 router.get("/profile/my-profile/", ensureAuthentication, getProfileForLoggedInUser);
 router.put("/profile/my-profile/", ensureAuthentication, updateSessionUrsProfile);
+
+//Mailing
+router.post("/mailing/contact-us", sendContactUsMail);
 
 export default router;

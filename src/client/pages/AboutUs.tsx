@@ -1,6 +1,7 @@
 import React from "react";
 
 const AboutUs = props => {
+  // TODO  /api/mailing/contact-us - { email, firstName, lastName, message, phone }
   return (
     <div className="about p-5 w-sm-100">
       {/* <div className="py-4" style={{ backgroundColor: "white", height: "5rem" }}>

@@ -10,12 +10,17 @@ export default class PropertyTenant extends Model<InferAttributes<PropertyTenant
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
+  declare firstName: string;
+  declare lastName: string;
+  declare email: string;
+  declare phoneNumber: string;
   declare rentalAgreementDate: string;
   declare deposit: number;
   declare isDepositPaid: bool;
   declare outstandingRent?: number;
   declare isDepositReleased: bool;
-  // Add User, Property and Landlord
+  declare PropertyForRent: CreationOptional<PropertyForRent>;
+  declare propertyForRentId: number;
   declare userId: number;
   declare User: CreationOptional<User>;
   declare createdAt: CreationOptional<Date>;

@@ -38,7 +38,9 @@ async function initialiseModels() {
       "message.ts",
       "feedback.ts",
       "tenant_property.ts",
-      "expense.ts"
+      "expense.ts",
+      "offer.ts",
+      "property_document.ts"
     ];
     const files = await fs.readdir("./src/database/models");
     files.sort(function (a, b) {
