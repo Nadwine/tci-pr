@@ -54,6 +54,7 @@ import AdminSidebar from "./components/AdminSidebar";
 import AdminApproveListingsTable, { AdminApproveListingTable } from "./components/AdminApproveListingsTable";
 import { AdminLandlordTable } from "./components/AdminLandlordTable";
 import AdminListingsTable from "./components/AdminListingsTable";
+import Landlord from "./pages/Landlord";
 const tenMinute = 600000;
 
 function initTranslations() {
@@ -173,6 +174,7 @@ const Main = () => {
             <Route path="products" element={<Products />} />
             <Route path="feedback" element={<Feedback />} />
             <Route path="temp" element={<TempHome />} />
+            <Route path="/about/us/landlord" element={<Landlord />} />
             <Route path="user" element={<RequireLogin view={<UserProfile />} />} />
             <Route path="listing-success" element={<SubmitListingRedirect />} />
             <Route path="landlord/dashboard" element={<RequirePermission view={<LandlordDashboard />} roles={["landlord"]} />} />
