@@ -1302,6 +1302,7 @@ module.exports = {
           console.log("[#" + index + "] execute: " + command.fn);
           index++;
           queryInterface[command.fn].apply(queryInterface, command.params).then(next, reject);
+          // @ts-ignore
         } else resolve();
       }
 
@@ -1318,6 +1319,7 @@ module.exports = {
           console.log("[#" + index + "] execute: " + command.fn);
           index++;
           queryInterface[command.fn].apply(queryInterface, command.params).then(next, reject);
+          // @ts-ignore
         } else resolve();
       }
 
