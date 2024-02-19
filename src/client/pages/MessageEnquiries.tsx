@@ -15,8 +15,10 @@ const MessageEnquiries = props => {
   const dispatch = useDispatch();
   const enquiries = useSelector((root: RootState) => root.message.conversations);
   const activeConversation = useSelector((root: RootState) => root.message.activeConversation);
-  const userId = useSelector((root: RootState) => root.auth.user!.id);
+  const loginUsr = useSelector((r: RootState) => r.auth.user);
   const [chatTextbox, setChatTextbox] = useState("");
+  const userId = loginUsr!.id;
+  const isAdmin = loginUsr?.accountType === "admin";
 
   const mql = window.matchMedia("(max-width: 600px)");
 
@@ -85,6 +87,7 @@ const MessageEnquiries = props => {
             enquiries.map((enq, i) => {
               const lastMessage = enq.Messages[enq.Messages.length - 1];
               const hasUnreadMessages = enq.Messages.filter(m => m.userId !== userId && m.seenAt == null).length > 0;
+              const landlordManaged = enq.Listing.listingManager === "landlord";
               return (
                 <div onClick={() => onClickCovo(enq)} key={i} className="row" style={{ height: "95px" }}>
                   <div
@@ -101,6 +104,7 @@ const MessageEnquiries = props => {
                       </p>
                       {/**todo: fix elipsis on bigger screen */}
                       <p style={{ width: "300px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{lastMessage?.messageText}</p>
+                      {isAdmin && landlordManaged && <span className="text-danger">Managed by Landlord</span>}
                     </div>
                   </div>
                   <hr style={{ color: "grey" }}></hr>

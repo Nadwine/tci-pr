@@ -14,8 +14,10 @@ const MessageEnquiries = props => {
   const dispatch = useDispatch();
   const enquiries = useSelector((root: RootState) => root.message.conversations);
   const activeConversation = useSelector((root: RootState) => root.message.activeConversation);
-  const userId = useSelector((root: RootState) => root.auth.user!.id);
+  const loginUsr = useSelector((r: RootState) => r.auth.user);
   const [chatTextbox, setChatTextbox] = useState("");
+  const userId = loginUsr!.id;
+  const isAdmin = loginUsr?.accountType === "admin";
 
   const loadData = async () => {
     const res = await axios.get("/api/enquiry/latest");
@@ -78,8 +80,10 @@ const MessageEnquiries = props => {
       >
         {/* Conversation List start */}
         {enquiries.map((enq, i) => {
-          const lastMessage = enq.Messages[enq.Messages.length - 1];
-          const hasUnreadMessages = enq.Messages.filter(m => m.userId !== userId && m.seenAt == null).length > 0;
+          const hasMessages = enq?.Messages?.length > 0;
+          const lastMessage = hasMessages && enq.Messages[enq.Messages.length - 1];
+          const hasUnreadMessages = enq.Messages?.filter(m => m.userId !== userId && m.seenAt == null).length > 0;
+          const landlordManaged = enq.Listing.listingManager === "landlord";
           return (
             <div className="p-0" onClick={() => onClickConvo(enq)} key={i}>
               {/* <hr style={{ color: "grey" }}></hr> */}
@@ -99,8 +103,9 @@ const MessageEnquiries = props => {
                   </div>
                   {/**todo: fix elipsis on bigger screen */}
                   <p className="card-text" style={{ width: "400px", overflow: "scroll", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
-                    {lastMessage?.messageText}
+                    {lastMessage && lastMessage?.messageText}
                   </p>
+                  {isAdmin && landlordManaged && <span className="text-danger">Managed by Landlord</span>}
                 </div>
               </div>
             </div>

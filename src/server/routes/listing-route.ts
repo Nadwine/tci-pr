@@ -625,7 +625,7 @@ export const updateRentListingById = async (req: Request, res: Response) => {
     const relatedListing = await Listing.findByPk(id, { include: [Admin, Address, PropertyForRent] });
 
     if (!relatedListing) return res.status(404).json({ message: "Not found" });
-    if (relatedListing?.Admin.userId !== req.session.user?.id) {
+    if (relatedListing?.Admin?.userId !== req.session.user?.id) {
       return res.status(401).json({ message: "unauthorized" });
     }
     const relatedAddress = await Address.findByPk(relatedListing?.Address.id);
@@ -693,7 +693,7 @@ export const updateRentListingById = async (req: Request, res: Response) => {
         const matchedFile = files.find(f => f.size === currentFullFile.size && f.originalname === currentFullFile.name);
 
         const filename = `${new Date().getTime()}_${matchedFile.originalname}`;
-        const s3Key = `${req.session.user.id}/${relatedListing.id}/${filename}`;
+        const s3Key = `${req.session.user!.id}/${relatedListing.id}/${filename}`;
 
         // transform to small thumbnail and fix aspect ratio
         const imageBuffer = await sharp(matchedFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer();
@@ -747,7 +747,7 @@ export const deleteRentListingById = async (req: Request, res: Response) => {
 
   try {
     const listing = await Listing.findByPk(listingId, { include: [Admin] });
-    if (!listing && listing!.Admin.userId !== userId) {
+    if (!listing || listing!.Admin!.userId !== userId) {
       return res.status(410).json({ message: "unauthorized" });
     }
 
