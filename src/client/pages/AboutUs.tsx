@@ -1,7 +1,39 @@
-import React from "react";
+import axios from "axios";
+import dayjs from "dayjs";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 const AboutUs = props => {
-  // TODO  /api/mailing/contact-us - { email, firstName, lastName, message, phone }
+  const formRef = useRef<HTMLFormElement>(null);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const now = dayjs();
+    const lastSuccessfulSent = localStorage.getItem("contact_us_sent_at_1");
+    const timeAdded = dayjs(lastSuccessfulSent).add(12, "hour");
+    const coolDownPassed = dayjs(timeAdded).isBefore(now);
+
+    if (coolDownPassed === false && lastSuccessfulSent != null) {
+      toast.error("Please wait to send another form");
+      formRef.current?.reset();
+      return;
+    }
+
+    const formData = new FormData(formRef.current || undefined);
+    const body: any = {};
+    for (var pair of formData.entries()) {
+      body[pair[0]] = pair[1];
+    }
+    const res = await axios.post("/api/mailing/contact-us", body);
+    if (res.status === 200) {
+      toast.success("Message sent");
+      localStorage.setItem("contact_us_sent_at_1", dayjs().toString());
+      formRef.current?.reset();
+    } else {
+      toast.error(res.data.message);
+    }
+  }
+
   return (
     <div className="about-us ps-3 w-sm-100">
       {/* <div className="py-4" style={{ backgroundColor: "white", height: "5rem" }}>
@@ -41,37 +73,39 @@ const AboutUs = props => {
             <p className="ms-3 text-light fw-bolder" style={{ fontSize: "40px" }}>
               CONTACT US!
             </p>
-            <div className="card-body">
-              <div className="mb-1">
-                <label htmlFor="exampleFormControlInput1" className="form-label text-light">
-                  First Name
-                </label>
-                <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="" />
+            <form ref={formRef} onSubmit={handleSubmit}>
+              <div className="card-body">
+                <div className="mb-1">
+                  <label htmlFor="exampleFormControlInput1" className="form-label text-light">
+                    First Name
+                  </label>
+                  <input name="firstName" type="text" className="form-control" id="exampleFormControlInput1" placeholder="" required />
+                </div>
+                <div className="mb-1">
+                  <label htmlFor="exampleFormControlInput1" className="form-label text-light">
+                    Last Name
+                  </label>
+                  <input name="lastName" type="text" className="form-control" id="exampleFormControlInput1" placeholder="" required />
+                </div>
+                <div className="mb-1">
+                  <label htmlFor="exampleFormControlInput1" className="form-label text-light">
+                    Email
+                  </label>
+                  <input name="email" type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" required />
+                </div>
+                <div className="mb-1">
+                  <label htmlFor="exampleFormControlTextarea1" className="form-label text-light">
+                    Message
+                  </label>
+                  <textarea name="message" className="form-control" id="exampleFormControlTextarea1" required></textarea>
+                </div>
+                <div className="d-grid gap-2">
+                  <button className="btn btn text-light fw-bold" type="submit" style={{ backgroundColor: "#0aa2c0" }}>
+                    Contact Our Agents Now!
+                  </button>
+                </div>
               </div>
-              <div className="mb-1">
-                <label htmlFor="exampleFormControlInput1" className="form-label text-light">
-                  Last Name
-                </label>
-                <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="" />
-              </div>
-              <div className="mb-1">
-                <label htmlFor="exampleFormControlInput1" className="form-label text-light">
-                  Email
-                </label>
-                <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
-              </div>
-              <div className="mb-1">
-                <label htmlFor="exampleFormControlTextarea1" className="form-label text-light">
-                  Message
-                </label>
-                <textarea className="form-control" id="exampleFormControlTextarea1"></textarea>
-              </div>
-              <div className="d-grid gap-2">
-                <button className="btn btn text-light fw-bold" type="button" style={{ backgroundColor: "#0aa2c0" }}>
-                  Contact Our Agents Now!
-                </button>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
         <div className="mt-3 col-md-6">

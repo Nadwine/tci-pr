@@ -15,6 +15,13 @@ export const sendContactUsMail = async (req: Request, res: Response) => {
   Phone: ${phone || ""}
   Email: ${email || ""}
   `;
+  const mailHtml = `<html>
+  Contact us form message:<br></br>
+  ${message}<br></br>
+  Name: ${firstName || ""} ${lastName || ""}<br></br>
+  Phone: ${phone || ""}<br></br>
+  Email: ${email || ""}
+  </html>`;
   const AWS = require("aws-sdk");
   const ses = new AWS.SES({
     region: process.env.AWS_SES_REGION,
@@ -27,7 +34,7 @@ export const sendContactUsMail = async (req: Request, res: Response) => {
       Destination: { ToAddresses: ["tci.homebase.tc@gmail.com"] },
       Message: {
         Body: {
-          Html: { Data: mailText },
+          Html: { Data: mailHtml },
           Text: { Data: mailText }
         },
         Subject: {
