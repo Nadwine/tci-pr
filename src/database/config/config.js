@@ -2,7 +2,7 @@ const path = require("path");
 if (process.env.NODE_ENV) {
   if (process.env.GENERATE_MIG) {
     require("dotenv").config({
-      path: path.join(__dirname, `../../../../.env.${process.env.NODE_ENV}`)
+      path: path.join(__dirname, `../../../.env.${process.env.NODE_ENV}`)
     });
   } else {
     require("dotenv").config({
