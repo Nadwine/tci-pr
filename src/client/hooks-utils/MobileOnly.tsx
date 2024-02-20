@@ -1,8 +1,17 @@
 import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 
-const MobileOnly: React.FC<any> = ({ children }: { children: ReactElement<any> }) => {
-  return <div className="mobile-only d-md-none d-lg-none d-xl-none">{children}</div>;
+type Props = {
+  style?: React.CSSProperties;
+  children: ReactElement<any>;
+};
+
+const MobileOnly: React.FC<Props> = (props: Props) => {
+  return (
+    <div style={props.style} className="mobile-only d-md-none d-lg-none d-xl-none">
+      {props.children}
+    </div>
+  );
 };
 
 export default connect()(MobileOnly);
