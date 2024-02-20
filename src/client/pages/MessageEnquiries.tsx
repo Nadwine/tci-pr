@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { cloneDeep } from "lodash";
 import dayjs from "dayjs";
 import DesktopMessageEnquires from "./DesktopMessageEnquires";
+import { Button, Modal, ModalProps } from "react-bootstrap";
 
 const MessageEnquiries = props => {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ const MessageEnquiries = props => {
   const activeConversation = useSelector((root: RootState) => root.message.activeConversation);
   const loginUsr = useSelector((r: RootState) => r.auth.user);
   const [chatTextbox, setChatTextbox] = useState("");
+  const [showMobileOptionsMenu, setShowMobileOptionsMenu] = useState(false);
+  const [showMobileOfferModal, setShowMobileOfferModal] = useState(false);
   const userId = loginUsr!.id;
   const isAdmin = loginUsr?.accountType === "admin";
 
@@ -80,7 +83,34 @@ const MessageEnquiries = props => {
     <div>
       {mobileView && (
         <div className="message-view-wrapper d-md-none d-lg-none d-xl-none">
-          <h3 className="px-4 mt-4 ps-1 fw-bolder">Your Enquiries</h3>
+          <div className="d-flex align-items-center">
+            <h3 className="px-4 mt-4 ps-1 fw-bolder">Your Enquiries</h3>
+            {activeConversation && (
+              <div className="ms-auto pe-2 fs-5">
+                <i className="bi bi-three-dots point" onClick={() => setShowMobileOptionsMenu(!showMobileOptionsMenu)} />
+                {showMobileOptionsMenu && (
+                  <div
+                    className="options-menu rounded"
+                    style={{ backgroundColor: "#46778399", marginLeft: "-150px", width: "170px", position: "absolute", zIndex: +10 }}
+                  >
+                    <ul className="list-group">
+                      <li
+                        onClick={() => {
+                          setShowMobileOfferModal(!showMobileOfferModal);
+                          setShowMobileOptionsMenu(false);
+                        }}
+                        className="list-group-item"
+                      >
+                        Make an offer
+                      </li>
+                      <li className="list-group-item">View Property</li>
+                      <li className="list-group-item">Add to Favorites</li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
           <hr className="text-secondary"></hr>
           {/* Conversation List start */}
           {!activeConversation &&
@@ -92,14 +122,14 @@ const MessageEnquiries = props => {
                 <div onClick={() => onClickCovo(enq)} key={i} className="row" style={{ height: "95px" }}>
                   <div
                     className="col-10 d-flex justify-content-start me-5 ms-2 mt-2 mb-2 point"
-                    style={{ height: "60px", color: hasUnreadMessages ? "black" : "grey" }}
+                    style={{ height: "70px", color: hasUnreadMessages ? "black" : "grey" }}
                   >
                     <div className="col-1 d-flex justify-content-end">
                       <img src={enq.Listing.ListingMedia[0]?.mediaUrl} style={{ height: "40px", width: "40px", borderRadius: "5px" }} />
                     </div>
                     <div style={{ marginLeft: "25px", width: "100%" }} className=" pe-1 pe-md-5 pe-lg-5">
                       <span style={{ fontWeight: "bold" }}>{enq.Listing.title}</span>
-                      <p className="pe-sm-2" style={{ float: "right" }}>
+                      <p className="pe-sm-2 mb-0" style={{ float: "right", minWidth: "3rem" }}>
                         <small>{dayjs(enq.createdAt).format("MMM D")}</small>
                       </p>
                       {/**todo: fix elipsis on bigger screen */}
@@ -120,6 +150,30 @@ const MessageEnquiries = props => {
         </div>
       )}
       {!mobileView && <DesktopMessageEnquires />}
+
+      {/* Offer Modal */}
+      <Modal show={showMobileOfferModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+        <Modal.Header>
+          <Modal.Title id="contained-modal-title-vcenter">Submit an Offer</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="mb-3">
+            <input className="form-control" type="text" placeholder="Default input" />
+          </div>
+          <div className="mb-3">
+            <input className="form-control" type="text" placeholder="Default input" />
+          </div>
+          <div className="mb-3">
+            <input className="form-control" type="text" placeholder="Default input" />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowMobileOfferModal(false)}>
+            Cancel
+          </Button>
+          <Button onClick={() => null}>Submit</Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   ) : (
     <div className="my-3 text-center" style={{ justifyItems: "center" }}>

@@ -154,7 +154,7 @@ const Main = () => {
     <div className="d-flex flex-column bg-light" style={{ minHeight: "95vh" }}>
       <Navbar />
       {showCookieConsent && <CookieConsentModal />}
-      <section className="container-fluid" style={{ flex: 1, paddingLeft: `${isAdmin ? "50px" : ""}` }}>
+      <section id="root-div" className="container-fluid" style={{ flex: 1, paddingLeft: `${isAdmin ? "50px" : ""}` }}>
         {" "}
         {/** Padding for sidebar */}
         <div className="row">
