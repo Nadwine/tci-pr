@@ -117,7 +117,7 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
         lastName: lastName,
         phoneNumber: phoneNumber,
         homeIsland: homeIsland,
-        address: address,
+        addressString: address,
         userId: createdUserCallback.id,
         cardDetails: { cardNumber: hashedCardNo, expMonth, expYear, cvv: hashedCardCvv, nameOnCard }
       });
@@ -228,7 +228,7 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
       lastName: lastName,
       phoneNumber: phoneNumber,
       homeIsland: homeIsland,
-      address: address,
+      addressString: address,
       cardDetails: { ...landlord.cardDetails, stripeCardToken: landlordCardToken.id },
       stripeConnectId: landlordStripeConnect.id
     });

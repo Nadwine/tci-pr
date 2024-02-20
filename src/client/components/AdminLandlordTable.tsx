@@ -34,7 +34,7 @@ const columns = [
     header: "Home Island",
     footer: info => info.column.id
   }),
-  columnHelper.accessor("ListingLandlord.address", {
+  columnHelper.accessor("ListingLandlord.addressString", {
     header: "Address",
     footer: info => info.column.id
   }),

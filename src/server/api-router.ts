@@ -28,7 +28,9 @@ import {
   setApprovalValueRoute,
   getExpandedRentListingById,
   landLordSubmitRentListingRoute,
-  getLandlordListings
+  getLandlordListings,
+  toggleASaveListing,
+  getMySavedListings
 } from "./routes/listing-route";
 import { createEnquiryRoute, getLatestEnquiry } from "./routes/enquiry-route";
 import { getMessagesByEnquiryConversationId, sendMessageToConversation, setMessageAsSeen } from "./routes/message-chat-route";
@@ -88,6 +90,8 @@ router.get("/listings", ensureAdmin, getAllListings);
 router.get("/listings/approve", ensureAdmin, getApproveFromListings);
 router.post("/listing/approve-status", ensureAdmin, setApprovalValueRoute);
 router.get("/listing/landlord/my-listings", ensureLandlord, getLandlordListings);
+router.post("/listing/:listingId/save-unsave", ensureAuthentication, toggleASaveListing);
+router.get("/listing/my-saved", ensureAuthentication, getMySavedListings);
 
 // /api/enquiry   routes
 router.post("/enquiry/set-seen", ensureAuthentication, setMessageAsSeen);

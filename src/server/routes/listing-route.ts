@@ -8,7 +8,7 @@ import PropertyForRent from "../../database/models/property_for_rent";
 import Address from "../../database/models/address";
 import { ListingTypeEnum } from "../../../types/enums";
 import ListingMedia from "../../database/models/listing_media";
-import { InferAttributes, Op, WhereOptions } from "sequelize";
+import { InferAttributes, Op, WhereOptions, where } from "sequelize";
 import PropertyForSale from "../../database/models/property_for_sale";
 import User from "../../database/models/user";
 import ListingQuestion from "../../database/models/listing_question";
@@ -16,6 +16,7 @@ import EnquiryConversation from "../../database/models/enquiry_conversation";
 import { current } from "@reduxjs/toolkit";
 import ListingLandlord from "../../database/models/listing_landlord";
 import { createListingRouteSchema, createListingSchema } from "../../utils/validation-schemas/schema-listings";
+import ListingSaved from "../../database/models/listing_saved";
 
 const s3Bucket = new S3({
   s3ForcePathStyle: true,
@@ -837,4 +838,40 @@ export const getApproveFromListings = async (req: Request, res: Response) => {
   }
 };
 
-// CREATE ROUTE FOR LANDLORD CREATING LISTING
+export const toggleASaveListing = async (req: Request, res: Response) => {
+  const sessionUsrId = req.session.user!.id;
+  const { listingId } = req.params;
+
+  try {
+    const found = await ListingSaved.findOne({ where: { userId: sessionUsrId, listingId: listingId } });
+
+    if (found) {
+      await ListingSaved.destroy({ where: { userId: sessionUsrId, listingId: listingId } });
+    } else {
+      await ListingSaved.create({
+        userId: sessionUsrId,
+        listingId: listingId
+      });
+    }
+
+    const savedListings = await ListingSaved.findAll({
+      where: { userId: sessionUsrId },
+      include: { model: Listing, include: [PropertyForRent, ListingMedia, Address] }
+    });
+    return res.status(200).json(savedListings);
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
+export const getMySavedListings = async (req: Request, res: Response) => {
+  try {
+    const savedListings = await ListingSaved.findAll({
+      where: { userId: req.session.user!.id },
+      include: { model: Listing, include: [PropertyForRent, ListingMedia, Address] }
+    });
+    return res.status(200).json(savedListings);
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error", err });
+  }
+};

@@ -3,6 +3,7 @@ import User from "../../database/models/user";
 import Profile from "../../database/models/profile";
 import ListingLandlord from "../../database/models/listing_landlord";
 import { where } from "sequelize";
+import PropertyTenant from "../../database/models/tenant_property";
 
 export const getProfileForLoggedInUser = async (req: Request, res: Response) => {
   const sessionUsr = req.session.user;
@@ -27,7 +28,7 @@ export const updateSessionUrsProfile = async (req: Request, res: Response) => {
   const country = "Turks and Caicos Islands";
 
   try {
-    const found = await Profile.findOne({ where: { userId: sessionUsr!.id }, include: [{ model: User, include: [ListingLandlord] }] });
+    const found = await Profile.findOne({ where: { userId: sessionUsr!.id }, include: [{ model: User, include: [ListingLandlord, PropertyTenant] }] });
     const newRec =
       found == null
         ? await Profile.create({
@@ -68,7 +69,7 @@ export const updateSessionUrsProfile = async (req: Request, res: Response) => {
               lastName: lastName,
               phoneNumber: phoneNumber,
               homeIsland: city,
-              address: `${settlement && settlement + ","}${city && city + ","}${postcode && postcode + ","}${country && country}`
+              addressString: `${settlement && settlement + ","}${city && city + ","}${postcode && postcode + ","}${country && country}`
             },
             { where: { userId: sessionUsr?.id } }
           );
@@ -79,7 +80,7 @@ export const updateSessionUrsProfile = async (req: Request, res: Response) => {
             phoneNumber: phoneNumber,
             homeIsland: city,
             userId: sessionUsr!.id,
-            address: `${settlement && settlement + ","}${city && city + ","}${postcode && postcode + ","}${country && country}`
+            addressString: `${settlement && settlement + ","}${city && city + ","}${postcode && postcode + ","}${country && country}`
           });
         }
       }

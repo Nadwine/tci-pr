@@ -1,5 +1,4 @@
 import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
-import Listing from "./listing";
 import User from "./user";
 import sequelize from "../sequelize-connection";
 
@@ -12,7 +11,7 @@ export default class ListingLandlord extends Model<InferAttributes<ListingLandlo
   declare lastName?: string;
   declare phoneNumber?: string;
   declare homeIsland?: string;
-  declare address?: string;
+  declare addressString?: string;
   declare cardDetails?: any;
   declare stripeConnectId?: string;
   declare userId: number;
@@ -46,7 +45,7 @@ ListingLandlord.init(
       type: DataTypes.STRING,
       allowNull: true
     },
-    address: {
+    addressString: {
       type: DataTypes.STRING,
       allowNull: true
     },

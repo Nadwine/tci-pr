@@ -8,9 +8,8 @@ export default class ListingSaved extends Model<InferAttributes<ListingSaved>, I
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<string>;
-  declare ipAddress: string;
-  declare visitorId: string;
-  declare projectId: number;
+  declare userId: number;
+  declare listingId: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -25,14 +24,6 @@ ListingSaved.init(
       // autoIncrement: true, // does not work with UUID
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
-    },
-    ipAddress: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    visitorId: {
-      type: DataTypes.UUID,
-      allowNull: false
     }
   },
   {
