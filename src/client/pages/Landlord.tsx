@@ -2,29 +2,42 @@ import React from "react";
 
 const AboutUs = props => {
   return (
-    <div className="about" style={{ minHeight: "97vh", backgroundColor: "#0c161f" }}>
-      {/* <div className="py-4" style={{ backgroundColor: "white", height: "5rem" }}>
-        <h4 className="ps-5 fw-bolder">About TCI Homebase Property Management</h4>{" "}
-      </div> */}
-      <div className="d-flex col-12 w-100 flex-wrap justify-content-start" style={{ paddingTop: "10vh", alignItems: "center" }}>
-        <div className="card">
+    <div className="about" style={{ minHeight: "97vh" }}>
+      <div
+        className="image-container"
+        style={{
+          position: "absolute",
+          padding: "0px",
+          maxHeight: "800px",
+          marginLeft: "0px",
+          width: "100%",
+          filter: "sepia(5%) saturate(160%) brightness(70%) hue-rotate(341deg)",
+          overflow: "hidden"
+        }}
+      >
+        <img src="/static/about.jpg" style={{ marginTop: "-40px", width: 2000 }} className="home-photo.jpg"></img>
+      </div>
+      <div className="d-flex col-12 w-100 flex-wrap justify-content-start" style={{ paddingTop: "10vh", alignItems: "center", borderRadius: "0px" }}>
+        <div className="card col-md-4 m-5" style={{ borderRadius: "0px" }}>
           <img src="/static/example.jpeg" className="card-img-top" alt="..." />
         </div>
-        <div className="card col-md-6 ms-md-5 p-5 shadow-sm">
+        <div className="card col-md-6 p-5 ml-mb-5" style={{ borderRadius: "0px" }}>
           <div className="card-body">
-            {/* <h5 className="card-title">Card title</h5>
-            <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6> */}
             <p className="card-text">
-              At TCI Homebase, we pride ourselves on being more than just a property management company, With a commitment to excellence and innovation at the
+              At TCI Homebase, we pride ourselves on being more than just a property management company, with a commitment to excellence and innovation at the
               forefront of everything we do, we go above and beyond to ensure your peace of mind and the utmost satisfaction.
               <p className="mt-3">
                 Our bespoke approach begins with understanding your unique needs and objectives. Whether you{"'"}re a seasoned landlord or a homeowner venturing
-                into the rental market for the first time, our experienced team takes the time to craft personalized strategies tailored to your goals.{" "}
+                into the rental market for the first time, our experienced team takes the time to craft personalised strategies tailored to your goals.{" "}
               </p>
               <p>
-                From strategically marketing your property to conducting thorough tenant screenings and managing lease agreements, we handle every aspect of the
-                rental process with precision and care. Our extensive network and cutting-edge digital platforms enable us to attract high-quality tenants who
-                not only meet your criteria but also respect your property as if it were their own.
+                From strategically marketing your property on our site to conducting thorough tenant screenings and managing lease agreements, we handle every
+                aspect of the rental process with precision and care. Our cutting-edge digital platform enable us to attract high-quality tenants who not only
+                meet your criteria but also respect your property as if it were their own.{" "}
+                <span className="fw-bolder" style={{ color: "#032830", fontStyle: "italic" }}>
+                  {" "}
+                  Browse our list of services available here.
+                </span>
               </p>
             </p>
           </div>

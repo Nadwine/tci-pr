@@ -38,7 +38,7 @@ function Navbar() {
         {/* <!-- Logo --> */}
         <a className="navbar-brand d-flex flex-row" href="/">
           <img src="/static/web-logo-cyan.png" style={{ width: "40px" }} className="h-8" alt="..." />
-          <span className="d-flex align-items-center fw-bolder fs-6 ps-2">TCI Homebase</span>
+          <span className="d-flex align-items-center fw-bolder caption-bold fs-6 ps-2">TCI Homebase</span>
         </a>
         {/* <!-- Navbar toggle --> */}
         <button
@@ -88,6 +88,9 @@ function Navbar() {
           <div className="navbar-nav mx-lg-auto">
             <a className="nav-item nav-link fw-bold" href="/products" aria-current="page" style={{ color: "#032830" }}>
               Products & Services
+            </a>
+            <a className="nav-item nav-link fw-bold" href="/about/us/landlord" aria-current="page" style={{ color: "#032830" }}>
+              Landlord
             </a>
             <a className="nav-item nav-link fw-bold text-dark" href="/about" style={{ color: "#032830" }}>
               About Us
