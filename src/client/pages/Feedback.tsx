@@ -25,7 +25,7 @@ export const Feedback = props => {
     <Modal data-testid="feedback-modal" show={true}>
       <Modal.Header>
         <Modal.Title data-testid="feedback-header" style={{ textAlign: "center", width: "100%", fontWeight: "bold" }}>
-          <i style={{ color: "#c562c6", fontSize: "20px" }} className="bi bi-chat-square-heart-fill" /> Send us your feedback!
+          <i style={{ color: "green", fontSize: "20px" }} className="bi bi-chat-square-heart-fill" /> Send us your feedback!
         </Modal.Title>
         <button onClick={() => navigate("/")} type="button" className="btn-close" />
       </Modal.Header>

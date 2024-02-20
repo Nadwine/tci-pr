@@ -156,7 +156,9 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
         <ul className="list-group mx-lg-5 shadow-sm" style={{ borderRadius: "10px" }}>
           <li className="price-filter list-group-item d-flex flex-column">
             <div className="d-flex flex-row justify-content-between">
-              <p className="fw-bold me-4">Price</p>
+              <p className="fw-bold" style={{ marginRight: "32px" }}>
+                Price
+              </p>
               <Dropdown onSelect={val => setMinPrice(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                   {/* Min */}

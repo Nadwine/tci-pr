@@ -76,7 +76,7 @@ const AboutUs = props => {
             <form ref={formRef} onSubmit={handleSubmit}>
               <div className="card-body">
                 <div className="mb-1">
-                  <label htmlFor="exampleFormControlInput1" className="form-label text-light">
+                  <label htmlFor="exampleFormControlInput1" id="contact-us-form" className="form-label text-light">
                     First Name
                   </label>
                   <input name="firstName" type="text" className="form-control" id="exampleFormControlInput1" placeholder="" required />

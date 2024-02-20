@@ -15,6 +15,13 @@ function Navbar() {
   const numberOfNewMessages = useSelector((root: RootState) => root.message.numberOfNewMessages);
   const [isHome, setIsHome] = useState(false);
 
+  const contactClick = () => {
+    if (window.location.pathname === "/about") {
+      document.getElementById("contact-us-form")?.focus();
+    } else {
+      navigate("/about");
+    }
+  };
   useEffect(() => {
     if (location.pathname === "/") {
       setIsHome(true);
@@ -22,13 +29,6 @@ function Navbar() {
       setIsHome(false);
     }
   }, [location.key]);
-
-  const logout = async () => {
-    await axios.get("/logout");
-  };
-
-  console.log("loggedIn", isLoggedIn);
-  console.log(location.pathname);
 
   const dynamicClassName = isCollapsed ? "collapse navbar-collapse" : "navbar-collapse";
   const shouldShowUserDropDown = isCollapsed === false ? "show" : userDropDownShow ? "show" : "";
@@ -55,31 +55,7 @@ function Navbar() {
         </button>
 
         {/* notification icons Start */}
-        {isLoggedIn && (
-          <div className="d-flex" style={{ position: "fixed", display: "flex !important", top: "10px", right: "10%" }}>
-            {/* <div className="nav-item nav-link  ms-2 text-muted">
-            <span className="bi bi-bell-fill fs-5 position-relative">
-              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: "0.6rem" }}>
-                12
-              </span>
-            </span>
-          </div> */}
-            {/* <div className="pe-5 nav-item nav-link text-cyan">
-              <span
-                onClick={() => navigate("enquiries")}
-                className="bi bi-chat-dots-fill fs-5 bs-info fw-bold position-relative point"
-                style={{ backgroundColor: "0dcaf0" }}
-              >
-                <span
-                  className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                  style={{ fontSize: "0.6rem", float: "right" }}
-                >
-                  {numberOfNewMessages > 0 && numberOfNewMessages}
-                </span>
-              </span>
-            </div> */}
-          </div>
-        )}
+        {isLoggedIn && <div className="d-flex" style={{ position: "fixed", display: "flex !important", top: "10px", right: "10%" }}></div>}
         {/* notification icons End */}
 
         {/* <!-- Collapse --> */}
@@ -101,7 +77,7 @@ function Navbar() {
             <a className="nav-item nav-link fw-bold text-dark" href="/feedback" style={{ color: "#032830" }}>
               Feedback
             </a>
-            <a className="nav-item nav-link fw-bold text-dark" href="/" style={{ color: "#032830" }}>
+            <a className="nav-item nav-link fw-bold text-dark" onClick={() => contactClick()} style={{ color: "#032830" }}>
               Contact
             </a>
           </div>

@@ -95,7 +95,7 @@ const ViewRentProperty = props => {
                     <input required name={q.text} type="text" className="form-control" />
                   </div>
                 ))}
-              <h6 className="pt-5">Message</h6>
+              <h6 className="pt-2">Message</h6>
               <textarea name="message" required className="form-control" />
             </Modal.Body>
           )}
@@ -108,7 +108,7 @@ const ViewRentProperty = props => {
             <Button variant="secondary" onClick={() => setShowEnquiryModal(false)}>
               Cancel
             </Button>
-            <Button variant="info" type="submit">
+            <Button style={{ backgroundColor: "#087990" }} type="submit">
               Submit
             </Button>
           </Modal.Footer>
@@ -202,11 +202,11 @@ const ViewRentProperty = props => {
                 <>
                   <hr />
                   <div className="text-secondary">
-                    <h6>Contact</h6>
+                    <h5>Contact</h5>
                     {/* <div>Email: {listing.Admin.User?.email}</div>
                   <div>Phone: {listing.Admin.phone || "N/A"}</div> */}
                   </div>
-                  <div className="mt-4">
+                  <div className="mt-4 mb-4">
                     <button onClick={() => handleRedirect()} className="btn btn-success">
                       Submit online enquiry
                     </button>
