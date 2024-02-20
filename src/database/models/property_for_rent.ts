@@ -19,6 +19,9 @@ export default class PropertyForRent extends Model<InferAttributes<PropertyForRe
   declare rentAmount: number;
   declare availability: string;
   declare listingId: number;
+  /**
+   * Tenancy Length in Days
+   */
   declare tenancyLength: number;
   declare Listing: CreationOptional<Listing>;
   declare createdAt: CreationOptional<Date>;

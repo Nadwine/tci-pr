@@ -594,7 +594,7 @@ export const landlordViewMyListings = async (req: Request, res: Response) => {
   }
 };
 
-export const updateRentListingById = async (req: Request, res: Response) => {
+export const adminUpdateRentListingById = async (req: Request, res: Response) => {
   const { id } = req.params;
   const {
     title,
@@ -615,7 +615,9 @@ export const updateRentListingById = async (req: Request, res: Response) => {
     city,
     postcode,
     country,
-    rentAmount
+    rentAmount,
+    listingManager,
+    tenancyLength
   } = req.body;
   const files = req.files ?? [];
   const questions: ListingQuestion[] = JSON.parse(req.body.questions);
@@ -623,9 +625,9 @@ export const updateRentListingById = async (req: Request, res: Response) => {
 
   try {
     const relatedListing = await Listing.findByPk(id, { include: [Admin, Address, PropertyForRent] });
-
+    const isAdmin = req.session.user!.accountType === "admin";
     if (!relatedListing) return res.status(404).json({ message: "Not found" });
-    if (relatedListing?.Admin?.userId !== req.session.user?.id) {
+    if (!isAdmin) {
       return res.status(401).json({ message: "unauthorized" });
     }
     const relatedAddress = await Address.findByPk(relatedListing?.Address.id);
@@ -633,7 +635,8 @@ export const updateRentListingById = async (req: Request, res: Response) => {
 
     await relatedListing.update({
       title: title,
-      description: description
+      description: description,
+      listingManager: listingManager
     });
 
     await relatedProperty?.update({
@@ -647,7 +650,8 @@ export const updateRentListingById = async (req: Request, res: Response) => {
       waterIncluded: waterIncluded,
       isFurnished: isFurnished,
       availability: availability,
-      rentAmount: rentAmount
+      rentAmount: rentAmount,
+      tenancyLength: tenancyLength
     });
 
     await relatedAddress?.update({
@@ -659,7 +663,7 @@ export const updateRentListingById = async (req: Request, res: Response) => {
       country: country
     });
 
-    for (let i = 0; i < Number(questions.length); i++) {
+    for (let i = 0; i < Number(questions?.length); i++) {
       const currentQuestion = questions[i];
 
       // @ts-ignore
@@ -675,7 +679,7 @@ export const updateRentListingById = async (req: Request, res: Response) => {
       }
     }
 
-    for (let i = 0; i < Number(fullFiles.length); i++) {
+    for (let i = 0; i < Number(fullFiles?.length); i++) {
       const currentFullFile = fullFiles[i];
 
       if (currentFullFile.action === "delete") {

@@ -22,7 +22,7 @@ import {
   searchRentListingRoute,
   searchSaleListingRoute,
   getRandomListings,
-  updateRentListingById,
+  adminUpdateRentListingById,
   getAllListings,
   getApproveFromListings,
   setApprovalValueRoute,
@@ -80,7 +80,7 @@ router.get("/listing/rent/search", searchRentListingRoute);
 router.get("/listing/sale/search", searchSaleListingRoute);
 router.get("/listing/rent/:id", getRentListingById);
 router.get("/listing/rent/expanded/:id", getExpandedRentListingById);
-router.put("/listing/rent/:id", ensureAuthentication, uploadMemory.any(), updateRentListingById);
+router.put("/listing/rent/:id", ensureAuthentication, uploadMemory.any(), adminUpdateRentListingById);
 router.delete("/listing/rent/:id", ensureAuthentication, deleteRentListingById);
 router.get("/listing/listings", ensureAuthentication, landlordViewMyListings);
 router.get("/listing/random", getRandomListings);

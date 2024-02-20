@@ -10,7 +10,7 @@
   "license": "MIT",
   "scripts": {
     "first-setup": "yarn && npm run create-db && npm run build && npm link serverless",
-    "start": "npm-run-all --parallel s3-local ses-local server",
+    "start": "npm-run-all --parallel s3-local server",
     "start:test": "npm-run-all --parallel s3-local ses-local server:test",
     "start:sqlite": "npm-run-all --parallel s3-local ses-local server:sqlite",
     "ngrok": "npx ngrok config add-authtoken 2STUeKMco4dlY3Vd0QajM6fvc9i_4ToAQB8URXxss2H1px2GK && npx ngrok http --domain=9b3d3dfc4bbc-18146847073628103158.ngrok-free.app 8080",
