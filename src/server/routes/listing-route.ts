@@ -395,7 +395,8 @@ export const getRentListingById = async (req: Request, res: Response) => {
         { model: PropertyForRent },
         { model: ListingMedia, order: [["id", "ASC"]] },
         { model: Admin, include: [User] },
-        { model: ListingQuestion }
+        { model: ListingQuestion },
+        { model: ListingLandlord }
       ]
     });
 

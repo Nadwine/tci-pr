@@ -40,6 +40,7 @@ import { getAllUsers } from "./routes/user";
 import { getAllLandlordsByUser, getSessionLandlordProfile } from "./routes/landlord";
 import { getProfileForLoggedInUser, updateSessionUrsProfile } from "./routes/profile";
 import { sendContactUsMail } from "./routes/mailing-route";
+import { sendOffer } from "./routes/offer-route";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -107,21 +108,24 @@ router.post("/payment/rent/create/monthly-payment-link", ensureAdmin, createNewR
 router.post("/payment/rent/attach-landlord", ensureAdmin, adminCreateLandLordForListing);
 router.post("/payment/webhook", express.raw({ type: "application/json" }), stripeWebhook);
 
-// feedback
+// /api/feedback
 router.post("/feedback/create", submitFeedback);
 
-// user
+// /api/user
 router.get("/users", ensureAdmin, getAllUsers);
 
-// landlord
+// /api/landlord
 router.get("/landlords", ensureAdmin, getAllLandlordsByUser);
 router.get("/landlord/profile", ensureAuthentication, getSessionLandlordProfile);
 
-// profile
+// /api/profile
 router.get("/profile/my-profile/", ensureAuthentication, getProfileForLoggedInUser);
 router.put("/profile/my-profile/", ensureAuthentication, updateSessionUrsProfile);
 
-//Mailing
+// /api/mailing
 router.post("/mailing/contact-us", sendContactUsMail);
+
+// /api/offer
+router.post("/offer/send", ensureAuthentication, sendOffer);
 
 export default router;

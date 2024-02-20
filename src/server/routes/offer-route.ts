@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import Offer from "../../database/models/offer";
 import Profile from "../../database/models/profile";
 
-export const sendOfferToProperty = async (req: Request, res: Response) => {
+export const sendOffer = async (req: Request, res: Response) => {
   const sessionUsr = req.session.user;
   const userId = sessionUsr!.id;
   const { amount, tenancyLengthDays, preferredStartDate, listingId } = req.body;
