@@ -53,10 +53,9 @@ const Login = () => {
                   <i className="bi bi-person-circle" style={{ color: "#077990" }} />
                 </span>
                 <h1 className="ls-tight font-bolder h2">Login</h1>
-                <div className="text-danger" style={{ minHeight: "1em" }}>
-                  <br />
-                  {serverError}
-                </div>
+              </div>
+              <div className="text-danger text-center w-100" style={{ minHeight: "1em", fontSize: "12px" }}>
+                {serverError}
               </div>
               <form action="/api/auth/login" method="POST">
                 <div className="mb-5">

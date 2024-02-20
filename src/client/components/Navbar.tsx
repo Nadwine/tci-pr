@@ -18,8 +18,10 @@ function Navbar() {
   const contactClick = () => {
     if (window.location.pathname === "/about") {
       document.getElementById("contact-us-form")?.focus();
+      setIsCollapse(true);
     } else {
       navigate("/about");
+      setIsCollapse(true);
     }
   };
   useEffect(() => {
@@ -77,7 +79,7 @@ function Navbar() {
             <a className="nav-item nav-link fw-bold text-dark" href="/feedback" style={{ color: "#032830" }}>
               Feedback
             </a>
-            <a className="nav-item nav-link fw-bold text-dark" onClick={() => contactClick()} style={{ color: "#032830" }}>
+            <a className="nav-item nav-link fw-bold text-dark point" onClick={() => contactClick()} style={{ color: "#032830" }}>
               Contact
             </a>
           </div>

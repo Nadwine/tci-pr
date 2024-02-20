@@ -40,8 +40,8 @@ const Home = props => {
   //   }
   // };
 
-  const searchRent = async () => {
-    let searchTextTransform = searchText;
+  const searchRent = async (text?: string) => {
+    let searchTextTransform = text || searchText;
     if (searchText.toLowerCase() === "provo") {
       setSearchText("providenciales");
       searchTextTransform = "providenciales";
@@ -133,7 +133,14 @@ const Home = props => {
             {showAutoComplete && (
               <div className="homepage-autocomplete bg-light mb-3 position-absolute p-3 rounded" style={{ opacity: 0.9 }}>
                 {autoCompleteFilterWithSearch.map((c, i) => (
-                  <div key={i} className="autocomplete-item point autocomplete-highlight" onClick={() => setSearchText(c)}>
+                  <div
+                    key={i}
+                    className="autocomplete-item point autocomplete-highlight"
+                    onClick={() => {
+                      setSearchText(c);
+                      searchRent(c);
+                    }}
+                  >
                     {c}
                   </div>
                 ))}
