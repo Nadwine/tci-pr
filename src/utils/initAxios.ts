@@ -32,7 +32,7 @@ export default function initAxios() {
         window.location = error.response.data.redirect;
       }
       if (import.meta.env.DEV && error.message !== "Network Error") {
-        const hoveInfo = React.createElement("div", { className: "text-center", style: { fontSize: "20px" }}, "Click inside to close");
+        const hoveInfo = React.createElement("div", { className: "text-center", style: { fontSize: "20px" } }, "Click inside to close");
         const devInfo = React.createElement(
           "div",
           { className: "py-3", style: { fontSize: "10px" } },
@@ -65,15 +65,15 @@ export default function initAxios() {
       // if there was no previous url to send the user back to
       // if (!document.referrer) return request;
 
-      let currentBrowserPath = window.location.pathname;
+      let currentBrowserPath = window.location.href.replace(window.location.origin, "");
       const lastBrowserPath = document.referrer.substring(window.location.origin.length);
       if (currentBrowserPath === "/login") currentBrowserPath = lastBrowserPath;
 
       const myheaders = {
         // Doing both for old and new http protocol (old require X-prefix)
-        "currentbrowserpath": currentBrowserPath,
+        currentbrowserpath: currentBrowserPath,
         "x-currentbrowserpath": currentBrowserPath,
-        "lastbrowserpath": lastBrowserPath,
+        lastbrowserpath: lastBrowserPath,
         "x-lastbrowserpath": lastBrowserPath
       };
 

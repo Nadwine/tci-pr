@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import Profile from "../../database/models/profile";
 import { cloneDeep } from "lodash";
+import { AccountTypeEnum } from "../../../types/enums";
 
 const UserProfile = props => {
   const [currentView, setCurrentView] = useState("PersonalDetails");
@@ -44,6 +45,11 @@ const UserProfile = props => {
       toast.error(JSON.stringify(res.data));
     }
     console.log(res.data);
+  };
+
+  const getAcctTypeDescription = (accountType: AccountTypeEnum | undefined) => {
+    if (accountType === "tenant") return "Looking for a property";
+    return accountType;
   };
 
   useEffect(() => {
@@ -272,7 +278,7 @@ const UserProfile = props => {
             <div className="card" style={{ margin: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title text-muted">Account Type</h5>
-                {profile?.User.accountType}
+                {getAcctTypeDescription(profile?.User.accountType || loggedInUsr?.accountType)}
               </div>
             </div>
           </div>

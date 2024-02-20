@@ -26,7 +26,7 @@ const ForgetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [errors, setErrors] = useState(searchParams.get("message") || {});
+  const [errors, setErrors] = useState(searchParams.get("message") || Object);
   const [touched, setTouched] = useState({});
   const [emailValid, setEmailValid] = useState<boolean | undefined>();
 
@@ -65,7 +65,10 @@ const ForgetPassword = () => {
       .post(`/api/auth/forget-password/${token}`, { password: password })
       .then(() => {
         // navigate
-        window.alert("success");
+        toast.success("success");
+        setPassword("");
+        setConfirmPassword("");
+        searchParams.set("status", "completed");
       })
       .catch(() => {
         toast.error("Sorry an error has occurred");
@@ -97,7 +100,7 @@ const ForgetPassword = () => {
       if (res.status === 200) {
         toast.success("Successfully sent");
       } else {
-        window.alert("error while sending");
+        toast.error("error while sending");
       }
     }
   };
@@ -114,7 +117,11 @@ const ForgetPassword = () => {
           <br /> A password reset link will been sent to your inbox
           <div className="pt-2 mt-4">
             <br />
-            <div className="text-danger">{emailValid === false && "Not a valid email"}</div>
+            <div className="text-danger">
+              {emailValid === false && "Not a valid email"}
+              {typeof errors === "string" && errors}
+              {typeof errors === "object" ? errors?.password || errors?.confirmPassword : ""}
+            </div>
             <div className="d-flex pt-3">
               <form className="d-flex flex-lg-row" onSubmit={handleEmailSend}>
                 <input
@@ -137,6 +144,7 @@ const ForgetPassword = () => {
             <input
               type="password"
               name="password"
+              value={password}
               className=" form-control"
               style={{ width: "20em", height: "3em", marginBottom: "2px" }}
               placeholder="New Password"
@@ -145,6 +153,7 @@ const ForgetPassword = () => {
             <input
               type="password"
               name="confirmPassword"
+              value={confirmPassword}
               className=" form-control"
               style={{ width: "20em", height: "3em" }}
               placeholder="Confirm Password"
