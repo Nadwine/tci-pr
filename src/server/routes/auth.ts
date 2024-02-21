@@ -298,7 +298,7 @@ export const resendPasswordResetLinkToUserEmail = async (req: Request, res: Resp
  |
  *===================================================================*/
 export const loginUser = async (req: Request, res: Response) => {
-  const returnUrl = req.body.returnUrl;
+  let returnUrl = req.body.returnUrl;
   const isValidRequest = loginRequestValidation(req);
   if (!isValidRequest) {
     return res.redirect(`/login/?error=invalid request${returnUrl ? "&returnUrl=" + returnUrl : ""}`);
@@ -342,10 +342,12 @@ export const loginUser = async (req: Request, res: Response) => {
         // Success redirect
         req.session.returnTo && delete req.session.returnTo;
         if (foundUser.accountType === "admin") {
-          res.redirect(returnUrl || "/admin/dashboard");
-        } else {
-          res.redirect(`${returnUrl || "/"}`);
+          return res.redirect(returnUrl || "/admin/dashboard");
         }
+        if (foundUser.accountType === "landlord") {
+          return res.redirect(returnUrl || "/landlord/dashboard");
+        }
+        return res.redirect(`${returnUrl || "/"}`);
       } else {
         // password comparision failed
         return res.redirect(`/login?error=Please enter a correct email/password${returnUrl ? "&returnUrl=" + returnUrl : ""}`);
