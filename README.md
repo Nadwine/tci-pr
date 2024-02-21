@@ -34,6 +34,8 @@ Also package version and node combo had to be exact node 14.17.6 and sharp 0.29.
  Cvv - any 3 digit
  LOGIN BACKUP CODE - OLD mbpp-dazx-wpoj-sfbv-twug
  NEW Code - fkhi-rcnl-mxil-sedv-tncy
+ email: info@tcihomebase.com
+ password smb9+@/($bB#KtJ
 
 # Monzo Card
 Card NO: 5351 9900 6539 4138
