@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
-import LandlordProposalButton from "../components/LandlordProposalButton";
+import LandlordProposalButton from "../components/landlord/LandlordProposalButton";
 import { RootState } from "../redux/store";
 import { toast } from "react-toastify";
 import axios from "axios";

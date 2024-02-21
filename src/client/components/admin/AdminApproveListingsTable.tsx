@@ -2,35 +2,31 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import User from "../../database/models/user";
+import User from "../../../database/models/user";
 import dayjs from "dayjs";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Listing from "../../../database/models/listing";
 import { useNavigate } from "react-router-dom";
 
-const columnHelper = createColumnHelper<User>();
+const columnHelper = createColumnHelper<Listing>();
 const columns = [
   columnHelper.accessor("id", {
     cell: info => info.getValue(),
     footer: info => info.column.id
   }),
-  columnHelper.accessor(row => row.username, {
-    id: "username",
+  columnHelper.accessor(row => row.title, {
+    id: "title",
     cell: info => <i>{info.getValue()}</i>,
-    header: () => <span>Username</span>,
+    header: () => <span>Title</span>,
     footer: info => info.column.id
   }),
-  columnHelper.accessor("email", {
-    header: () => "Email",
-    cell: info => info.renderValue(),
+  columnHelper.accessor("listingType", {
+    header: () => <span>Listing Type</span>,
     footer: info => info.column.id
   }),
-  columnHelper.accessor("verified", {
-    header: () => <span>Verified</span>,
-    footer: info => info.column.id
-  }),
-  columnHelper.accessor("accountType", {
-    header: "Account Type",
+  columnHelper.accessor("Address.addressLine1", {
+    header: "Address Line1",
     footer: info => info.column.id
   }),
   columnHelper.accessor("createdAt", {
@@ -40,14 +36,14 @@ const columns = [
   })
 ];
 
-export const AdminUserTable = props => {
-  const [data, setData] = useState<User[]>([]);
+export const AdminApproveListingTable = props => {
+  const [data, setData] = useState<Listing[]>([]);
   const navigate = useNavigate();
 
   const loadData = async () => {
-    const res = await axios.get("/api/users");
+    const res = await axios.get("/api/listings/approve");
     if (res.status !== 200) {
-      toast.error("error fetching /api/users");
+      toast.error("error fetching /api/listings/approve");
       return;
     }
     setData(res.data);
@@ -60,7 +56,7 @@ export const AdminUserTable = props => {
   const table = useReactTable({ columns, data, getCoreRowModel: getCoreRowModel() });
   return (
     <div className="p-2">
-      <h3 className="m-5"> Users</h3>
+      <h3 className="m-5"> Listings to Approve</h3>
       <div className="ms-5">
         <table className="table table-striped table-hover">
           <thead>
@@ -74,11 +70,9 @@ export const AdminUserTable = props => {
           </thead>
           <tbody>
             {table.getRowModel().rows.map(row => (
-              <tr key={row.id}>
+              <tr onClick={() => navigate(`/edit-listing/rent/${row.original.id}`)} key={row.id}>
                 {row.getVisibleCells().map(cell => (
-                  <td onClick={() => navigate(`/user/${row.original.id}`)} key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
+                  <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
                 ))}
               </tr>
             ))}
@@ -93,4 +87,4 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminUserTable);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminApproveListingTable);

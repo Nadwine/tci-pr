@@ -2,7 +2,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import islands from "../../utils/islandsData.json";
+import islands from "../../../utils/islandsData.json";
 import { useNavigate } from "react-router-dom";
 import { cloneDeep } from "lodash";
 import { toast } from "react-toastify";

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Accordion, Button, Card } from "react-bootstrap";
 import { connect } from "react-redux";
-import Listing from "../../database/models/listing";
+import Listing from "../../../database/models/listing";
 import { toast } from "react-toastify";
 
 export const LandlordDashboard = props => {

@@ -2,11 +2,11 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import User from "../../database/models/user";
+import User from "../../../database/models/user";
 import dayjs from "dayjs";
 import axios from "axios";
 import { toast } from "react-toastify";
-import ListingLandlord from "../../database/models/listing_landlord";
+import ListingLandlord from "../../../database/models/listing_landlord";
 import { useNavigate } from "react-router-dom";
 
 const columnHelper = createColumnHelper<User>();
