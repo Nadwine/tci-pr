@@ -17,7 +17,7 @@ const RequireLogin: React.FC<ComponentProps> = ({ view }: { view: ReactElement<a
   const authState = store.getState().auth;
 
   if (!authState.user) {
-    return <Navigate to={`/login?error=login to complete operation&returnUrl=${returnPath}`} replace />;
+    return <Navigate to={`/login?error=Login to complete operation.&returnUrl=${returnPath}`} replace />;
   }
 
   return view;

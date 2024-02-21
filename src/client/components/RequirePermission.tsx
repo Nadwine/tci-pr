@@ -16,7 +16,7 @@ const RequirePermission: React.FC<ComponentProps> = ({ view, roles }: { view: Re
   const returnPath = window.location.pathname;
 
   if (!user || !userType) {
-    return <Navigate to={`/login?error=login to complete operation&returnUrl=${returnPath}`} replace />;
+    return <Navigate to={`/login?error=Login to complete operation.&returnUrl=${returnPath}`} replace />;
   }
 
   if (roles.includes(userType)) {

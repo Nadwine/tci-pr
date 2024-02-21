@@ -15,7 +15,7 @@ export const ensureAuthentication = (req: Request, res: Response, next: NextFunc
   }
   return res
     .status(302)
-    .json({ redirect: `/login?error=Please login to complete operation${returnTo ? "&returnUrl=" + returnTo : ""}`, error: "Login to complete operation" });
+    .json({ redirect: `/login?error=Login to complete operation${returnTo ? "&returnUrl=" + returnTo : ""}`, error: "Login to complete operation" });
 };
 
 export const ensureAdmin = (req: Request, res: Response, next: NextFunction) => {
@@ -32,7 +32,7 @@ export const ensureAdmin = (req: Request, res: Response, next: NextFunction) => 
   }
   return res
     .status(302)
-    .json({ redirect: `/login?error=Please login to complete operation${returnTo ? "&returnUrl=" + returnTo : ""}`, error: "Login to complete operation" });
+    .json({ redirect: `/login?error=Login to complete operation${returnTo ? "&returnUrl=" + returnTo : ""}`, error: "Login to complete operation" });
 };
 
 export const ensureLandlord = (req: Request, res: Response, next: NextFunction) => {
@@ -49,7 +49,7 @@ export const ensureLandlord = (req: Request, res: Response, next: NextFunction) 
   }
   return res
     .status(302)
-    .json({ redirect: `/login?error=Please login to complete operation${returnTo ? "&returnUrl=" + returnTo : ""}`, error: "Login to complete operation" });
+    .json({ redirect: `/login?error=Login to complete operation${returnTo ? "&returnUrl=" + returnTo : ""}`, error: "Login to complete operation" });
 };
 
 export const ensureTenant = (req: Request, res: Response, next: NextFunction) => {
@@ -66,7 +66,7 @@ export const ensureTenant = (req: Request, res: Response, next: NextFunction) =>
   }
   return res
     .status(302)
-    .json({ redirect: `/login?error=Please login to complete operation${returnTo ? "&returnUrl=" + returnTo : ""}`, error: "Login to complete operation" });
+    .json({ redirect: `/login?error=Login to complete operation${returnTo ? "&returnUrl=" + returnTo : ""}`, error: "Login to complete operation" });
 };
 
 export const ensureLogout = (req: Request, res: Response, next: NextFunction) => {

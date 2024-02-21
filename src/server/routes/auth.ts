@@ -166,7 +166,7 @@ export const changePasswordFromEmailToken = async (req: Request, res: Response) 
   const { token } = req.params;
   const { password } = req.body;
   if (!token || typeof token !== "string" || !password || typeof password !== "string") {
-    return res.redirect("/login?error=invalid request");
+    return res.redirect("/login?error=Invalid request");
   }
 
   try {
@@ -317,7 +317,7 @@ export const loginUser = async (req: Request, res: Response) => {
     });
 
     if (!foundUser) {
-      return res.redirect(`/login?error=Please enter a correct username and password${returnUrl ? "&returnUrl=" + returnUrl : ""}`);
+      return res.redirect(`/login?error=Please enter a correct email/password${returnUrl ? "&returnUrl=" + returnUrl : ""}`);
     }
 
     if (foundUser.verified === false) {
@@ -348,7 +348,7 @@ export const loginUser = async (req: Request, res: Response) => {
         }
       } else {
         // password comparision failed
-        return res.redirect(`/login?error=Please enter a correct username and password${returnUrl ? "&returnUrl=" + returnUrl : ""}`);
+        return res.redirect(`/login?error=Please enter a correct email/password${returnUrl ? "&returnUrl=" + returnUrl : ""}`);
       }
     });
   } catch (error) {

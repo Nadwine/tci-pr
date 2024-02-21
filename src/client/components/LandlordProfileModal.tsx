@@ -16,6 +16,7 @@ export const LandlordProfileModal = (props: Props) => {
   const isPostByAdmin = listing.adminId != null;
   const landlordPostButProfileIncomplete = listing.adminId == null && listing.ListingLandlord == null;
   const showHomeBase = isPostByAdmin || landlordPostButProfileIncomplete;
+
   return (
     <Modal show={show}>
       <Modal.Header>
@@ -34,11 +35,13 @@ export const LandlordProfileModal = (props: Props) => {
         )}
         {!isPostByAdmin && listing.ListingLandlord && (
           <div>
-            <h6 className="fw-bolder">Date Joined</h6>
+            <h6 style={{ fontWeight: "700px" }}>Date Joined</h6>
             <p>{dayjs(listing.ListingLandlord?.createdAt).fromNow()}</p>
-            <h6 className="fw-bolder">Home Island</h6>
+            <h6 style={{ fontWeight: "700px" }}>Home Island</h6>
             <p>{listing.ListingLandlord?.homeIsland}</p>
-            <h6 className="fw-bolder">Contact</h6>
+            <h6 style={{ fontWeight: "700px" }}>Contact</h6>
+            <p>{listing.ListingLandlord?.phoneNumber}</p>
+            <h6 style={{ fontWeight: "700px" }}>Posted Properties</h6>
             <p>{listing.ListingLandlord?.phoneNumber}</p>
           </div>
         )}
