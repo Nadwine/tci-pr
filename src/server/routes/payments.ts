@@ -182,16 +182,13 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
         }
       },
       capabilities: {
-        card_payments: {
-          requested: true
-        },
+        // card_payments: {
+        //   requested: true
+        // },
         transfers: {
           requested: true
         },
         bank_transfer_payments: {
-          requested: true
-        },
-        link_payments: {
           requested: true
         }
       }

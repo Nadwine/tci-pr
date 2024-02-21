@@ -32,6 +32,8 @@ Also package version and node combo had to be exact node 14.17.6 and sharp 0.29.
  4242 4242 4242 4242
  Expire - any data in future
  Cvv - any 3 digit
+ LOGIN BACKUP CODE - OLD mbpp-dazx-wpoj-sfbv-twug
+ NEW Code - fkhi-rcnl-mxil-sedv-tncy
 
 # Monzo Card
 Card NO: 5351 9900 6539 4138
