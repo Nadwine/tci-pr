@@ -24,6 +24,7 @@ export const Chat = (props: Props) => {
   const listing = useSelector((r: RootState) => r.message.activeConversation?.Listing);
   const activeConversation = useSelector((r: RootState) => r.message.activeConversation);
   const activeConvoTitle = useSelector((r: RootState) => r.message.activeConversation?.Listing.title);
+  const introMessage = useSelector((r: RootState) => r.message.activeConversation?.intro_message);
 
   const mql = window.matchMedia("(max-width: 600px)");
 
@@ -84,6 +85,7 @@ export const Chat = (props: Props) => {
           )}
         </div>
         <div className="d-flex flex-column col-12 col-md-10 chat-area" style={{ paddingBottom: "60px", height: "60vh", overflow: "scroll" }}>
+          <div className="intro-msg rounded-pill ms-5 mb-5 ps-3 text-muted">{introMessage}</div>
           {chats.map((msg, i) => (
             <div className="d-flex" key={i} style={{ marginLeft: msg.userId === loggedInUserId ? "auto" : "", marginBottom: "20px" }}>
               {msg.userId !== loggedInUserId && <i className="bi bi-person-circle pe-1" style={{ fontSize: "22px" }}></i>}
@@ -103,7 +105,7 @@ export const Chat = (props: Props) => {
                 >
                   {msg.messageText} <div className="row-3" style={{ fontSize: "0.7em", marginLeft: "10px" }}></div>
                 </div>
-                <div className="row-3" style={{ fontSize: "0.7em", marginLeft: "10px" }}>
+                <div className="row-3" style={{ fontSize: "0.5em", marginLeft: "10px" }}>
                   {dayjs(msg.createdAt).fromNow()}
                 </div>
               </div>
