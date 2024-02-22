@@ -1,22 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import Offer from "../../../database/models/offer";
 import Accordion from "@mui/material/Accordion";
-import AccordionActions from "@mui/material/AccordionActions";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Button from "@mui/material/Button";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
+import { Button, Modal } from "react-bootstrap";
 dayjs.extend(duration);
 
 type Props = {
   offers?: Offer[];
-  onClickViewEnquiry: (number) => void;
+  onClickViewEnquiry: (userId: number) => void;
+  onSubmitOffer: (offerId: number, status: string) => void;
 };
 const OfferList = (props: Props) => {
-  const { offers, onClickViewEnquiry } = props;
+  const { offers, onClickViewEnquiry, onSubmitOffer } = props;
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [offerAction, setOfferAction] = useState({ offerId: 0, status: "" });
   const noOffers = offers?.length === 0;
   return (
     <div className="offer-list">
@@ -59,14 +60,56 @@ const OfferList = (props: Props) => {
               </div>
               <div className="pt-4 d-flex">
                 <div className="ms-auto">
-                  <button className="btn text-danger">Decline</button>
-                  <button className="btn text-success">Accept</button>
+                  <button
+                    onClick={() => {
+                      setOfferAction({ offerId: currOffer.id, status: "declined" });
+                      setShowConfirmationModal(true);
+                    }}
+                    className="btn text-danger"
+                  >
+                    Decline
+                  </button>
+                  <button
+                    onClick={() => {
+                      setOfferAction({ offerId: currOffer.id, status: "accepted" });
+                      setShowConfirmationModal(true);
+                    }}
+                    className="btn text-success"
+                  >
+                    Accept
+                  </button>
                 </div>
               </div>
             </AccordionDetails>
           </Accordion>
         );
       })}
+      <Modal show={showConfirmationModal} onHide={() => setShowConfirmationModal(false)}>
+        <Modal.Header>
+          <Modal.Title>Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to {offerAction.status === "accepted" ? "accept" : "decline"} this offer?
+          <div className="pt-3">
+            {offerAction.status === "accepted" &&
+              `Accepting this offer will begin initiating the tenancy for ${offers?.find(f => f.id === offerAction.offerId)?.User.Profile?.firstName}`}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowConfirmationModal(false)}>
+            Cancel
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              onSubmitOffer(offerAction.offerId, offerAction.status);
+              setShowConfirmationModal(false);
+            }}
+          >
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

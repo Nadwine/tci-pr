@@ -13,6 +13,7 @@ import OfferList from "../../components/landlord-n-admin/OfferList";
 import DocumentList from "../../components/landlord-n-admin/DocumentList";
 import { setActiveConversation } from "../../redux/reducers/messagesReducer";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const ManageSingleProperty = props => {
   const dispatch = useDispatch();
@@ -37,6 +38,10 @@ const ManageSingleProperty = props => {
     setListing(res.data);
   };
 
+  const onSubmitOffer = (offerId, status) => {
+    toast.info("Test Dummy Submit");
+  };
+
   const onClickViewEnquiry = (userId: number) => {
     const foundEnquiry = listing?.EnquiryConversations?.find(enq => enq.userId === userId);
     if (foundEnquiry) {
@@ -55,7 +60,7 @@ const ManageSingleProperty = props => {
       <h4 className="pt-2 text-center">Manage Property</h4>
       <div className="pt-5 pb-5">
         <h5>Offers</h5>
-        <OfferList offers={offers} onClickViewEnquiry={onClickViewEnquiry} />
+        <OfferList offers={offers} onSubmitOffer={onSubmitOffer} onClickViewEnquiry={onClickViewEnquiry} />
       </div>
       <div className="pt-5 pb-5">
         <h5>Attached Documents</h5>
