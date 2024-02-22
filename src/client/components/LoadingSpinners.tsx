@@ -3,7 +3,7 @@ import React from "react";
 export function LoadingSpinnerWholePage() {
   return (
     <div className="d-flex w-100 h-100 justify-content-center">
-      <div className="spinner-border text-danger" role="status" />
+      <div className="spinner-border text-black" role="status" />
     </div>
   );
 }
@@ -18,7 +18,7 @@ export function LoadingSpinnerComponent() {
   return (
     <div className="d-block col justify-content-center" style={styles}>
       <div className="w-100"></div>
-      <div className="spinner-border text-danger" role="status" />
+      <div className="spinner-border text-black" role="status" />
     </div>
   );
 }

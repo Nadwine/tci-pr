@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { LoadingSpinnerComponent } from "./LoadingSpinners";
 dayjs.extend(relativeTime);
 
 type Props = {
@@ -21,6 +22,7 @@ export const Chat = (props: Props) => {
   const navigate = useNavigate();
   const [showDesktopOptionsMenu, setShowDesktopOptionsMenu] = useState(false);
   const [showDesktopOfferModal, setShowDesktopOfferModal] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { textboxVal, onChangeTextboxVal, onSend } = props;
   const logInUsr = useSelector((r: RootState) => r.auth.user);
   const loggedInUserId = logInUsr?.id;
@@ -73,8 +75,13 @@ export const Chat = (props: Props) => {
   };
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
     return () => {
       dispatch(setActiveConversation(null));
+      clearTimeout(timer);
     };
   }, []);
 
@@ -120,6 +127,11 @@ export const Chat = (props: Props) => {
         </div>
         <div className="d-flex flex-column col-12 col-md-10 chat-area" style={{ paddingBottom: "60px", height: "60vh", overflow: "scroll" }}>
           <div className="intro-msg rounded-pill ms-5 mb-5 ps-3 text-muted">{introMessage}</div>
+          {loading && (
+            <div className="text-center">
+              <LoadingSpinnerComponent />
+            </div>
+          )}
           {chats.map((msg, i) => (
             <div className="d-flex" key={i} style={{ marginLeft: msg.userId === loggedInUserId ? "auto" : "", marginBottom: "20px" }}>
               {msg.userId !== loggedInUserId && <i className="bi bi-person-circle pe-1" style={{ fontSize: "22px" }}></i>}
