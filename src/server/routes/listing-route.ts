@@ -21,6 +21,7 @@ import Offer from "../../database/models/offer";
 import PropertyTenant from "../../database/models/tenant_property";
 import PropertyDocument from "../../database/models/property_document";
 import Expense from "../../database/models/expense";
+import Profile from "../../database/models/profile";
 
 const s3Bucket = new S3({
   s3ForcePathStyle: true,
@@ -424,7 +425,7 @@ export const getExpandedRentListingById = async (req: Request, res: Response) =>
         { model: ListingMedia, order: [["id", "ASC"]] },
         { model: Admin, include: [User] },
         { model: ListingQuestion },
-        { model: Offer, include: [User] }
+        { model: Offer, include: [{ model: User, include: [Profile] }] }
       ]
     });
 

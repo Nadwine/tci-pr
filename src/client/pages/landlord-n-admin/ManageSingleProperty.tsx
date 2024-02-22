@@ -9,6 +9,8 @@ import { RootState } from "../../redux/store";
 import Listing from "../../../database/models/listing";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import OfferList from "../../components/landlord-n-admin/OfferList";
+import DocumentList from "../../components/landlord-n-admin/DocumentList";
 
 const ManageSingleProperty = props => {
   const params = useParams();
@@ -37,7 +39,16 @@ const ManageSingleProperty = props => {
 
   if (!allowedToView && listing) return <h3>You do not have permission to view this page</h3>;
   return (
-    <div>
+    <div className="p-md-5">
+      <h4 className="pt-2 text-center">Manage Property</h4>
+      <div className="pt-5 pb-5">
+        <h5>Offers</h5>
+        <OfferList offers={offers} />
+      </div>
+      <div className="pt-5 pb-5">
+        <h5>Attached Documents</h5>
+        <DocumentList documents={[]} />
+      </div>
       <div className="d-flex">
         <div className="ms-auto btn">
           <i className="bi bi-pencil pe-1" />

@@ -14,6 +14,7 @@ export default class Offer extends Model<InferAttributes<Offer>, InferCreationAt
   declare status: "pending" | "accepted" | "declined" | "counter-offer";
   declare listingId: CreationOptional<number>;
   declare userId: CreationOptional<number>;
+  declare User: CreationOptional<User>;
 }
 
 Offer.init(
