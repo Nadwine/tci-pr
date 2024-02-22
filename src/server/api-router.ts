@@ -83,7 +83,7 @@ router.post("/listing/rent/landlord/create", ensureAuthentication, uploadMemory.
 router.get("/listing/rent/search", searchRentListingRoute);
 router.get("/listing/sale/search", searchSaleListingRoute);
 router.get("/listing/rent/:id", getRentListingById);
-router.get("/listing/rent/expanded/:id", getExpandedRentListingById);
+router.get("/listing/rent/expanded/:id", ensureAuthentication, getExpandedRentListingById);
 router.put("/listing/rent/:id", ensureAuthentication, uploadMemory.any(), adminUpdateRentListingById);
 router.delete("/listing/rent/:id", ensureAuthentication, deleteRentListingById);
 router.get("/listing/listings", ensureAuthentication, landlordViewMyListings);

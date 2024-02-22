@@ -1,6 +1,9 @@
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, CreationAttributes } from "sequelize";
 import sequelize from "../sequelize-connection";
 import Listing from "./listing";
+import PropertyTenant from "./tenant_property";
+import Expense from "./expense";
+import PropertyDocument from "./property_document";
 
 // for typeScript typing
 export default class PropertyForRent extends Model<InferAttributes<PropertyForRent>, InferCreationAttributes<PropertyForRent>> {
@@ -24,6 +27,9 @@ export default class PropertyForRent extends Model<InferAttributes<PropertyForRe
    */
   declare tenancyLength: number;
   declare Listing: CreationOptional<Listing>;
+  declare PropertyTenants: CreationOptional<PropertyTenant[]>;
+  declare Expenses: CreationOptional<Expense[]>;
+  declare PropertyDocuments: CreationOptional<PropertyDocument[]>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }

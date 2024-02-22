@@ -56,6 +56,7 @@ import { AdminLandlordTable } from "./components/admin/AdminLandlordTable";
 import AdminListingsTable from "./components/admin/AdminListingsTable";
 import Landlord from "./pages/Landlord";
 import MyTenancy from "./pages/MyTenancy";
+import ManageSingleProperty from "./pages/landlord-n-admin/ManageSingleProperty";
 const tenMinute = 600000;
 
 function initTranslations() {
@@ -183,6 +184,7 @@ const Main = () => {
             <Route path="about/landlord" element={<AboutLandlord />} />
             <Route path="my-tenancy" element={<MyTenancy />} />
             <Route path="about" element={<AboutUs />} />
+            <Route path="manage-property/rent/:id" element={<RequirePermission view={<ManageSingleProperty />} roles={["landlord", "admin"]} />} />
             <Route path="admin/dashboard/listing-for-aproval" element={<RequirePermission view={<AdminApproveListingTable />} roles={["admin"]} />} />
             <Route path="admin/dashboard/users" element={<RequirePermission view={<AdminUserTable />} roles={["admin"]} />} />
             <Route path="admin/dashboard/landlords" element={<RequirePermission view={<AdminLandlordTable />} roles={["admin"]} />} />

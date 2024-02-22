@@ -54,7 +54,11 @@ const Carousel = (props: Props) => {
         <div className="carousel-item active">
           {currentImage.mediaType === "image" && <img src={images[activeIndex].mediaUrl} className="d-block w-100" alt="..." />}
           {currentImage.mediaType === "video" && <video controls src={images[activeIndex].mediaUrl} className="d-block w-100" />}
-          {!activeImageFound && <div className="text-center text-muted">Image failed to load</div>}
+          {!activeImageFound && (
+            <div className="text-center text-muted" style={{ fontSize: "12px" }}>
+              Experiencing issues loading this media..
+            </div>
+          )}
         </div>
       </div>
 

@@ -17,6 +17,10 @@ import { current } from "@reduxjs/toolkit";
 import ListingLandlord from "../../database/models/listing_landlord";
 import { createListingRouteSchema, createListingSchema } from "../../utils/validation-schemas/schema-listings";
 import ListingSaved from "../../database/models/listing_saved";
+import Offer from "../../database/models/offer";
+import PropertyTenant from "../../database/models/tenant_property";
+import PropertyDocument from "../../database/models/property_document";
+import Expense from "../../database/models/expense";
 
 const s3Bucket = new S3({
   s3ForcePathStyle: true,
@@ -207,7 +211,7 @@ export const getLandlordListings = async (req: Request, res: Response) => {
 
     const listings = await Listing.findAll({
       where: { landlordId: landord.id },
-      include: [{ model: PropertyForRent }, { model: ListingMedia }, { model: Address }]
+      include: [{ model: PropertyForRent }, { model: ListingMedia }, { model: Address }, { model: Offer }]
     });
 
     return res.status(200).json(listings);
@@ -410,18 +414,23 @@ export const getRentListingById = async (req: Request, res: Response) => {
 
 export const getExpandedRentListingById = async (req: Request, res: Response) => {
   const id = req.params.id;
-
+  const sessUsr = req.session.user;
   try {
     const listing = await Listing.findByPk(id, {
       include: [
         { model: Address },
-        { model: PropertyForRent },
+        { model: PropertyForRent, include: [PropertyTenant, PropertyDocument, Expense] },
         { model: ListingLandlord },
         { model: ListingMedia, order: [["id", "ASC"]] },
         { model: Admin, include: [User] },
-        { model: ListingQuestion }
+        { model: ListingQuestion },
+        { model: Offer, include: [User] }
       ]
     });
+
+    const allowedToView = sessUsr?.accountType === "admin" ? true : sessUsr?.id === listing?.ListingLandlord?.userId;
+
+    if (!allowedToView) return res.status(400).json({ message: "Unauthorized" });
 
     return res.status(200).json(listing);
   } catch (err) {

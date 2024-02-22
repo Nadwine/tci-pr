@@ -27,7 +27,8 @@ export const sendOffer = async (req: Request, res: Response) => {
       listingId: listingId,
       amount: amount,
       tenancyLengthDays: tenancyLengthDays,
-      preferredStartDate: preferredStartDate
+      preferredStartDate: preferredStartDate,
+      status: "pending"
     });
 
     return res.status(200).json({ message: "success", offer: offer });
