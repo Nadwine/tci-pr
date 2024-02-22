@@ -252,14 +252,14 @@ export const landLordSubmitRentListingRoute = async (req: Request, res: Response
   let createdMediaIds: number[] = [];
   try {
     await createListingSchema.validate(req.body); // need to sit inside catch block
-    const landlord = await ListingLandlord.findOne({ where: { userId: req.session.user?.id } });
+    const landlord = await ListingLandlord.findOrCreate({ where: { userId: req.session.user?.id }, defaults: { userId: req.session.user!.id } });
 
     if (landlord) {
       const newListing = await Listing.create({
         title: title,
         description: description,
         listingType: ListingTypeEnum.RENT,
-        landlordId: landlord.id,
+        landlordId: landlord[0].id,
         listingStatus: "awaiting approval",
         listingManager: listingManager,
         isApproved: false,
