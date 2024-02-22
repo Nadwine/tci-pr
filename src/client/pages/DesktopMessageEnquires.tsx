@@ -115,7 +115,7 @@ const MessageEnquiries = props => {
       </div>
       <div className="card col-md-7 col-lg-7 shadow-sm" style={{ height: "700px", borderTopRightRadius: "10px", borderBottomRightRadius: "10px" }}>
         {!activeConversation && (
-          <div style={{ marginTop: "250px", marginLeft: "320px" }}>
+          <div className="mx-auto" style={{ marginTop: "250px" }}>
             <img src="/static/message.png" style={{ height: "99px", width: "190px" }}></img>
           </div>
         )}

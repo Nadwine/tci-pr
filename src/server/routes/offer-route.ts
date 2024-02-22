@@ -17,7 +17,7 @@ export const sendOffer = async (req: Request, res: Response) => {
     }
 
     const profile = await Profile.findOne({ where: { userId: userId } });
-    if (!profile) return res.status(400).json({ message: "Profile Incomplete" });
+    if (!profile) return res.status(400).json({ message: "Profile Incomplete. Taking you to profile page..." });
 
     const foundOffer = await Offer.findOne({ where: { listingId: listingId, userId: userId } });
     if (foundOffer) return res.status(400).json({ message: "Offer has already been sent" });

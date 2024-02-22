@@ -10,6 +10,7 @@ import ListingQuestion from "../../database/models/listing_question";
 import PropertyForRent from "../../database/models/property_for_rent";
 import { Op } from "sequelize";
 import ListingLandlord from "../../database/models/listing_landlord";
+import Offer from "../../database/models/offer";
 
 export const createEnquiryRoute = async (req: Request, res: Response) => {
   const listingId = Number(req.params.listingId);
@@ -69,7 +70,8 @@ export const getLatestEnquiry = async (req: Request, res: Response) => {
             { model: PropertyForRent },
             { model: ListingMedia, order: [["id", "ASC"]] },
             { model: Admin, include: [User] },
-            { model: ListingQuestion }
+            { model: ListingQuestion },
+            { model: Offer }
           ]
         }
       ],
@@ -97,7 +99,8 @@ export const getLatestEnquiry = async (req: Request, res: Response) => {
             { model: PropertyForRent },
             { model: ListingMedia, order: [["id", "ASC"]] },
             { model: Admin, include: [User] },
-            { model: ListingQuestion }
+            { model: ListingQuestion },
+            { model: Offer }
           ]
         }
       ],

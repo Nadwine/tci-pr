@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { setActiveConversation } from "../redux/reducers/messagesReducer";
 import { useNavigate } from "react-router-dom";
+import { Button, Modal } from "react-bootstrap";
+import axios from "axios";
+import { toast } from "react-toastify";
 dayjs.extend(relativeTime);
 
 type Props = {
@@ -16,15 +19,19 @@ type Props = {
 export const Chat = (props: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [showMobileOptionsMenu, setShowMobileOptionsMenu] = useState(false);
-  const [showMobileOfferModal, setShowMobileOfferModal] = useState(false);
+  const [showDesktopOptionsMenu, setShowDesktopOptionsMenu] = useState(false);
+  const [showDesktopOfferModal, setShowDesktopOfferModal] = useState(false);
   const { textboxVal, onChangeTextboxVal, onSend } = props;
-  const loggedInUserId = useSelector((r: RootState) => r.auth.user?.id);
+  const logInUsr = useSelector((r: RootState) => r.auth.user);
+  const loggedInUserId = logInUsr?.id;
+  const formRef = useRef<HTMLFormElement>(null);
   const chats = useSelector((r: RootState) => r.message.activeConversation?.Messages) || [];
   const listing = useSelector((r: RootState) => r.message.activeConversation?.Listing);
   const activeConversation = useSelector((r: RootState) => r.message.activeConversation);
   const activeConvoTitle = useSelector((r: RootState) => r.message.activeConversation?.Listing.title);
   const introMessage = useSelector((r: RootState) => r.message.activeConversation?.intro_message);
+  const isTenant = logInUsr?.accountType === "tenant";
+  const alreadySentOffer = activeConversation?.Listing.Offers?.find(off => off.userId === logInUsr?.id);
 
   const mql = window.matchMedia("(max-width: 600px)");
 
@@ -37,6 +44,31 @@ export const Chat = (props: Props) => {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       textboxVal && onSend(textboxVal);
+    }
+  };
+
+  const submitOffer = async e => {
+    e.preventDefault();
+    if (alreadySentOffer) {
+      toast.error("Offer already sent. Please wait for a reply");
+      setShowDesktopOfferModal(false);
+      return;
+    }
+    const formData = new FormData(formRef.current || undefined);
+    const body: any = { listingId: activeConversation?.listingId };
+    for (var pair of formData.entries()) {
+      body[pair[0]] = pair[1];
+    }
+    const res = await axios.post("/api/offer/send", body);
+    if (res.status === 200) {
+      toast.success("Offer sent");
+      setShowDesktopOfferModal(false);
+    } else {
+      if (res.data.message === "Profile Incomplete. Taking you to profile page...") {
+        setTimeout(() => navigate("/user"), 4000);
+      }
+      toast.error(`Error sending offer - ${res.data.message}`);
+      return;
     }
   };
 
@@ -55,25 +87,27 @@ export const Chat = (props: Props) => {
             style={{ height: "40px", width: "40px", borderRadius: "5px", marginRight: "30px" }}
           />
           <strong>{activeConvoTitle}</strong>
-          {/* <button className="btn-close ms-auto" onClick={() => dispatch(setActiveConversation(null))}></button> */}
-          {activeConversation && (
+          {mobileView && <button className="btn-close ms-auto" onClick={() => dispatch(setActiveConversation(null))}></button>}
+          {activeConversation && !mobileView && (
             <div className="ms-auto pe-2 fs-5">
-              <i className="bi bi-three-dots point" onClick={() => setShowMobileOptionsMenu(!showMobileOptionsMenu)} />
-              {showMobileOptionsMenu && (
+              <i className="bi bi-three-dots point" onClick={() => setShowDesktopOptionsMenu(!showDesktopOptionsMenu)} />
+              {!mobileView && showDesktopOptionsMenu && (
                 <div
                   className="options-menu rounded"
                   style={{ backgroundColor: "#46778399", marginLeft: "-150px", width: "170px", position: "absolute", zIndex: +10 }}
                 >
-                  <ul className="list-group">
-                    <li
-                      onClick={() => {
-                        setShowMobileOfferModal(!showMobileOfferModal);
-                        setShowMobileOptionsMenu(false);
-                      }}
-                      className="list-group-item"
-                    >
-                      Make an offer
-                    </li>
+                  <ul className="list-group point">
+                    {isTenant && (
+                      <li
+                        onClick={() => {
+                          setShowDesktopOfferModal(!showDesktopOfferModal);
+                          setShowDesktopOptionsMenu(false);
+                        }}
+                        className="list-group-item"
+                      >
+                        Make an offer
+                      </li>
+                    )}
                     <li className="list-group-item" onClick={() => navigate(`/property/rent/${activeConversation.Listing.id}`)}>
                       View Property
                     </li>
@@ -137,6 +171,39 @@ export const Chat = (props: Props) => {
           </button>
         </div>
       </div>
+      {/* Mobile Offer Modal */}
+      <Modal show={showDesktopOfferModal} aria-labelledby="contained-modal-title-vcenter" centered>
+        <form ref={formRef} onSubmit={submitOffer}>
+          <Modal.Header>
+            <Modal.Title id="contained-modal-title-vcenter">Submit an Offer</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="mb-3">
+              <input name="amount" className="form-control" type="text" placeholder="Rent Price" required />
+            </div>
+            <div className="mb-3">
+              <input name="tenancyLengthDays" className="form-control" type="text" placeholder="Tenancy Length (Days)" required />
+            </div>
+            <div className="mb-3">
+              <label className="text-muted">Preferred Tenancy Start date</label>
+              <input
+                name="preferredStartDate"
+                min={dayjs().format("YYYY-MM-DD")}
+                type="date"
+                className="form-control"
+                placeholder="Preferred Start Date"
+                required
+              />
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button type="button" variant="secondary" onClick={() => setShowDesktopOfferModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit">Submit</Button>
+          </Modal.Footer>
+        </form>
+      </Modal>
     </div>
   );
 };

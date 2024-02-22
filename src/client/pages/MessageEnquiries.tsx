@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import EnquiryConversation from "../../database/models/enquiry_conversation";
 import { RootState } from "../redux/store";
@@ -11,17 +11,22 @@ import { cloneDeep } from "lodash";
 import dayjs from "dayjs";
 import DesktopMessageEnquires from "./DesktopMessageEnquires";
 import { Button, Modal, ModalProps } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const MessageEnquiries = props => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const enquiries = useSelector((root: RootState) => root.message.conversations);
   const activeConversation = useSelector((root: RootState) => root.message.activeConversation);
   const loginUsr = useSelector((r: RootState) => r.auth.user);
   const [chatTextbox, setChatTextbox] = useState("");
   const [showMobileOptionsMenu, setShowMobileOptionsMenu] = useState(false);
   const [showMobileOfferModal, setShowMobileOfferModal] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
   const userId = loginUsr!.id;
   const isAdmin = loginUsr?.accountType === "admin";
+  const isTenant = loginUsr?.accountType === "tenant";
+  const alreadySentOffer = activeConversation?.Listing.Offers?.find(off => off.userId === loginUsr?.id);
 
   const mql = window.matchMedia("(max-width: 600px)");
 
@@ -70,6 +75,31 @@ const MessageEnquiries = props => {
     }
   };
 
+  const submitOffer = async e => {
+    e.preventDefault();
+    if (alreadySentOffer) {
+      toast.error("Offer already sent. Please wait for a reply");
+      setShowMobileOfferModal(false);
+      return;
+    }
+    const formData = new FormData(formRef.current || undefined);
+    const body: any = { listingId: activeConversation?.listingId };
+    for (var pair of formData.entries()) {
+      body[pair[0]] = pair[1];
+    }
+    const res = await axios.post("/api/offer/send", body);
+    if (res.status === 200) {
+      toast.success("Offer sent");
+      setShowMobileOfferModal(false);
+    } else {
+      if (res.data.message === "Profile Incomplete. Taking you to profile page...") {
+        setTimeout(() => navigate("/user"), 4000);
+      }
+      toast.error(`Error sending offer - ${res.data.message}`);
+      return;
+    }
+  };
+
   const onClickCovo = (enq: EnquiryConversation) => {
     dispatch(setActiveConversation(enq));
     submitSeen(enq);
@@ -94,15 +124,17 @@ const MessageEnquiries = props => {
                     style={{ backgroundColor: "#46778399", marginLeft: "-150px", width: "170px", position: "absolute", zIndex: +10 }}
                   >
                     <ul className="list-group">
-                      <li
-                        onClick={() => {
-                          setShowMobileOfferModal(!showMobileOfferModal);
-                          setShowMobileOptionsMenu(false);
-                        }}
-                        className="list-group-item"
-                      >
-                        Make an offer
-                      </li>
+                      {isTenant && (
+                        <li
+                          onClick={() => {
+                            setShowMobileOfferModal(!showMobileOfferModal);
+                            setShowMobileOptionsMenu(false);
+                          }}
+                          className="list-group-item"
+                        >
+                          Make an offer
+                        </li>
+                      )}
                       <li className="list-group-item">View Property</li>
                       <li className="list-group-item">Add to Favorites</li>
                     </ul>
@@ -151,28 +183,38 @@ const MessageEnquiries = props => {
       )}
       {!mobileView && <DesktopMessageEnquires />}
 
-      {/* Offer Modal */}
+      {/* Mobile Offer Modal */}
       <Modal show={showMobileOfferModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-        <Modal.Header>
-          <Modal.Title id="contained-modal-title-vcenter">Submit an Offer</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="mb-3">
-            <input className="form-control" type="text" placeholder="Default input" />
-          </div>
-          <div className="mb-3">
-            <input className="form-control" type="text" placeholder="Default input" />
-          </div>
-          <div className="mb-3">
-            <input className="form-control" type="text" placeholder="Default input" />
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowMobileOfferModal(false)}>
-            Cancel
-          </Button>
-          <Button onClick={() => null}>Submit</Button>
-        </Modal.Footer>
+        <form ref={formRef} onSubmit={submitOffer}>
+          <Modal.Header>
+            <Modal.Title id="contained-modal-title-vcenter">Submit an Offer</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="mb-3">
+              <input name="amount" className="form-control" type="text" placeholder="Rent Price" required />
+            </div>
+            <div className="mb-3">
+              <input name="tenancyLengthDays" className="form-control" type="text" placeholder="Tenancy Length (Days)" required />
+            </div>
+            <div className="mb-3">
+              <label className="text-muted">Preferred Tenancy Start date</label>
+              <input
+                name="preferredStartDate"
+                min={dayjs().format("YYYY-MM-DD")}
+                type="date"
+                className="form-control"
+                placeholder="Preferred Start Date"
+                required
+              />
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button type="button" variant="secondary" onClick={() => setShowMobileOfferModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit">Submit</Button>
+          </Modal.Footer>
+        </form>
       </Modal>
     </div>
   ) : (

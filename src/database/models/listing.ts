@@ -10,6 +10,7 @@ import ListingMedia from "./listing_media";
 import ListingQuestion from "./listing_question";
 import ListingLandlord from "./listing_landlord";
 import { ListingStatusEnum } from "../../utils/listingStatusSequence";
+import Offer from "./offer";
 
 // for typeScript typing
 export default class Listing extends Model<InferAttributes<Listing>, InferCreationAttributes<Listing>> {
@@ -33,6 +34,7 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare ListingQuestions?: CreationOptional<ListingQuestion[]>;
   declare ListingMedia: CreationOptional<ListingMedia[]>;
   declare ListingLandlord?: CreationOptional<ListingLandlord>;
+  declare Offers?: CreationOptional<Offer[]>;
   declare Address: CreationOptional<Address>;
   declare createdAt: CreationOptional<string>;
   declare updatedAt: CreationOptional<string>;

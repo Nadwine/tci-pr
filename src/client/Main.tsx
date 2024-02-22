@@ -105,7 +105,7 @@ const Main = () => {
 
   useEffect(() => {
     const messageRefreshInterval = setInterval(async () => {
-      if (store.getState().auth.user?.id) {
+      if (store.getState().auth.user?.id && window.location.pathname === "/enquiries") {
         const res = await axios.get("/api/enquiry/latest");
         if (res.status === 200) {
           dispatcher(setConversations(res.data));
