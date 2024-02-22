@@ -73,7 +73,8 @@ export const adminCreateRentListingRoute = async (req: Request, res: Response) =
         listingManager: "admin",
         listingStatus: "approved",
         adminId: landlord!.id,
-        isApproved: true
+        isApproved: true,
+        category: "PropertyForRent"
       });
       createdListingId = newListing.id;
 
@@ -261,7 +262,8 @@ export const landLordSubmitRentListingRoute = async (req: Request, res: Response
         landlordId: landlord.id,
         listingStatus: "awaiting approval",
         listingManager: listingManager,
-        isApproved: false
+        isApproved: false,
+        category: "PropertyForRent"
       });
       createdListingId = newListing.id;
 

@@ -68,13 +68,15 @@ async function initialiseModels() {
 
 const getStyleSheets = async () => {
   const assetpath = resolve("dist/assets");
-  const files = await fs.readdir(assetpath);
-  const cssAssets = files.filter(l => l.endsWith(".css"));
+  const files = await fs.readdir(assetpath).catch(err => console.log("failed to load asset images. are you missing NPM RUN BUILD!!!!"));
+  const cssAssets = files?.filter(l => l.endsWith(".css"));
   const allContent = [];
-  for (const asset of cssAssets) {
-    const content = await fs.readFile(path.join(assetpath, asset), "utf-8");
-    // @ts-ignore
-    allContent.push(`<style type="text/css">${content}</style>`);
+  if (cssAssets) {
+    for (const asset of cssAssets) {
+      const content = await fs.readFile(path.join(assetpath, asset), "utf-8");
+      // @ts-ignore
+      allContent.push(`<style type="text/css">${content}</style>`);
+    }
   }
   return allContent.join("\n");
 };

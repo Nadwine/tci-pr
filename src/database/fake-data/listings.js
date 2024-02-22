@@ -8,6 +8,7 @@ module.exports = [
     isApproved: true,
     listingStatus: "approved",
     listingManager: "admin",
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -19,6 +20,7 @@ module.exports = [
     adminId: 1,
     listingStatus: "approved",
     listingManager: "admin",
+    category: "PropertyForRent",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -31,6 +33,7 @@ module.exports = [
     adminId: 1,
     listingStatus: "approved",
     listingManager: "admin",
+    category: "PropertyForRent",
     isApproved: true,
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
@@ -44,6 +47,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -56,6 +60,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -68,6 +73,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -80,6 +86,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -92,6 +99,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -104,6 +112,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -116,6 +125,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -128,6 +138,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -140,6 +151,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -152,6 +164,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -164,6 +177,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -176,6 +190,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -188,6 +203,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -200,6 +216,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -212,6 +229,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -224,6 +242,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -236,6 +255,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -248,6 +268,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -260,6 +281,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -272,6 +294,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -284,6 +307,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -296,6 +320,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -308,6 +333,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -320,6 +346,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -332,6 +359,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -344,6 +372,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   },
@@ -356,6 +385,7 @@ module.exports = [
     listingStatus: "approved",
     listingManager: "admin",
     isApproved: true,
+    category: "PropertyForRent",
     createdAt: "2021-05-28T15:36:56.200",
     updatedAt: "2021-08-28T13:40:02.200"
   }
