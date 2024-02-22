@@ -13,7 +13,7 @@ const RequireLogout: React.FC<ComponentProps> = ({ view }: { view: ReactElement<
   const user = useSelector((rootState: RootState) => rootState.auth.user);
 
   if (user) {
-    return <Navigate to="/my-profile" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return view;

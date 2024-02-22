@@ -22,9 +22,11 @@ const ViewRentProperty = props => {
   const [showEnquiryModal, setShowEnquiryModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
+  const [isEnqJustSent, setIsEnqJustSent] = useState(false);
   const enquiryRef = useRef<HTMLFormElement>(null);
   const user = useSelector((root: RootState) => root.auth.user);
   const isOwner = user?.id === listing?.Admin?.userId || user?.id === listing?.ListingLandlord?.userId;
+  const showEnqBtn = !user ? true : !isOwner;
   const navigate = useNavigate();
 
   const initialFetch = async () => {
@@ -40,11 +42,12 @@ const ViewRentProperty = props => {
 
   const submitEnquiry = async (body: object) => {
     if (!listing) return;
+    if (alreadySubmitted) return;
 
     const res = await axios.post(`/api/enquiry/${listing.id}`, body);
     if (res.status === 200) {
-      setShowEnquiryModal(false);
       toast.success("Enquiry Sent", { theme: "colored" });
+      setIsEnqJustSent(true);
     } else {
       toast.error("Failed to send enquiry. Try again", { theme: "colored" });
     }
@@ -53,7 +56,7 @@ const ViewRentProperty = props => {
   const handleRedirect = () => {
     const authState = store.getState().auth;
     if (!authState.user) {
-      navigate("/login");
+      navigate(`/login?returnUrl=${location.pathname}`);
     } else {
       setShowEnquiryModal(true);
       setInterval(() => {
@@ -88,7 +91,8 @@ const ViewRentProperty = props => {
           </Modal.Header>
           {!alreadySubmitted && (
             <Modal.Body className="d-flex flex-column justify-content-center">
-              {listing?.ListingQuestions &&
+              {!isEnqJustSent &&
+                listing?.ListingQuestions &&
                 listing.ListingQuestions.map((q, i) => (
                   <div key={i}>
                     <label>{q.text}</label>
@@ -102,6 +106,12 @@ const ViewRentProperty = props => {
           {alreadySubmitted && (
             <div className="p-5">
               You have already submitted an enquiry for this property. Click <a href="/enquiries">here</a> to see your enquiry
+              <br /> <br />
+              Or Select{" "}
+              <strong style={{ fontWeight: "bolder" }}>
+                {"'"} Enquiries {"'"}
+              </strong>{" "}
+              from the menu at the top on your profile circle
             </div>
           )}
           <Modal.Footer>
@@ -198,7 +208,7 @@ const ViewRentProperty = props => {
               {/* TODO grey out after 1 submission and search data to know if to disable on view 
                     or show a "view your submitted enquiry" button instead
               */}
-              {!isOwner && (
+              {showEnqBtn && (
                 <>
                   <hr />
                   <div className="text-secondary">

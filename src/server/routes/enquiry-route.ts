@@ -15,6 +15,9 @@ export const createEnquiryRoute = async (req: Request, res: Response) => {
   const listingId = Number(req.params.listingId);
 
   const listing = await Listing.findByPk(listingId, { include: [Admin] });
+  const found = await EnquiryConversation.findOne({ where: { userId: req.session.user!.id, listingId: listingId } });
+
+  if (found) return res.status(500).json({ message: "Failed to send enquiry. Already sent", err: "Already sent" });
 
   // Not allowed to submit enquiry on own listing
   if (!listing) {

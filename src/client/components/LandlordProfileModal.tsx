@@ -36,13 +36,13 @@ export const LandlordProfileModal = (props: Props) => {
         {!isPostByAdmin && listing.ListingLandlord && (
           <div>
             <h6 style={{ fontWeight: "700px" }}>Date Joined</h6>
-            <p>{dayjs(listing.ListingLandlord?.createdAt).fromNow()}</p>
+            <p className="text-secondary">{dayjs(listing.ListingLandlord?.createdAt).fromNow()}</p>
             <h6 style={{ fontWeight: "700px" }}>Home Island</h6>
-            <p>{listing.ListingLandlord?.homeIsland}</p>
+            <p className="text-secondary">{listing.ListingLandlord?.homeIsland}</p>
             <h6 style={{ fontWeight: "700px" }}>Contact</h6>
-            <p>{listing.ListingLandlord?.phoneNumber}</p>
+            <p className="text-secondary">{listing.ListingLandlord?.phoneNumber}</p>
             <h6 style={{ fontWeight: "700px" }}>Posted Properties</h6>
-            <p>{listing.ListingLandlord?.phoneNumber}</p>
+            <p className="text-secondary">{listing.ListingLandlord?.phoneNumber}</p>
           </div>
         )}
       </Modal.Body>
