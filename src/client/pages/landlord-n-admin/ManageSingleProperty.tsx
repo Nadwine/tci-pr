@@ -8,11 +8,15 @@ import PropertyDocument from "../../../database/models/property_document";
 import { RootState } from "../../redux/store";
 import Listing from "../../../database/models/listing";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import OfferList from "../../components/landlord-n-admin/OfferList";
 import DocumentList from "../../components/landlord-n-admin/DocumentList";
+import { setActiveConversation } from "../../redux/reducers/messagesReducer";
+import { useDispatch } from "react-redux";
 
 const ManageSingleProperty = props => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const params = useParams();
   const listingId = params.id;
   const [listing, setListing] = useState<Listing>();
@@ -33,6 +37,14 @@ const ManageSingleProperty = props => {
     setListing(res.data);
   };
 
+  const onClickViewEnquiry = (userId: number) => {
+    const foundEnquiry = listing?.EnquiryConversations?.find(enq => enq.userId === userId);
+    if (foundEnquiry) {
+      dispatch(setActiveConversation(foundEnquiry));
+      navigate("/enquiries");
+    }
+  };
+
   useEffect(() => {
     initialLoad();
   }, []);
@@ -43,7 +55,7 @@ const ManageSingleProperty = props => {
       <h4 className="pt-2 text-center">Manage Property</h4>
       <div className="pt-5 pb-5">
         <h5>Offers</h5>
-        <OfferList offers={offers} />
+        <OfferList offers={offers} onClickViewEnquiry={onClickViewEnquiry} />
       </div>
       <div className="pt-5 pb-5">
         <h5>Attached Documents</h5>

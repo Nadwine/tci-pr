@@ -13,9 +13,10 @@ dayjs.extend(duration);
 
 type Props = {
   offers?: Offer[];
+  onClickViewEnquiry: (number) => void;
 };
 const OfferList = (props: Props) => {
-  const { offers } = props;
+  const { offers, onClickViewEnquiry } = props;
   const noOffers = offers?.length === 0;
   return (
     <div className="offer-list">
@@ -46,7 +47,7 @@ const OfferList = (props: Props) => {
               <div className="pb-4">
                 <div className="full-name fw-bold d-flex">
                   {user.Profile?.firstName} {user.Profile?.lastName}
-                  <a className="link ms-auto" href="/enquiries">
+                  <a className="link point ms-auto" onClick={() => onClickViewEnquiry(user.id)}>
                     View Enquiry
                   </a>
                 </div>

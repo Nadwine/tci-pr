@@ -425,6 +425,7 @@ export const getExpandedRentListingById = async (req: Request, res: Response) =>
         { model: ListingMedia, order: [["id", "ASC"]] },
         { model: Admin, include: [User] },
         { model: ListingQuestion },
+        { model: EnquiryConversation, include: [{ model: Listing, include: [{ model: Offer }, { model: ListingMedia }] }] },
         { model: Offer, include: [{ model: User, include: [Profile] }] }
       ]
     });
