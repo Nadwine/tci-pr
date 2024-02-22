@@ -1,57 +1,34 @@
-// import { Request, Response, Express } from "express";
-// import AWS, { AWSError } from "aws-sdk";
-// import sharp from "sharp";
-// import S3 from "aws-sdk/clients/s3";
-// import Listing from "../../database/models/listing";
-// import Admin from "../../database/models/admin";
-// import PropertyForRent from "../../database/models/property_for_rent";
-// import Address from "../../database/models/address";
-// import { ListingTypeEnum } from "../../../types/enums";
-// import ListingMedia from "../../database/models/listing_media";
-// import { InferAttributes, Op, WhereOptions, where } from "sequelize";
-// import PropertyForSale from "../../database/models/property_for_sale";
-// import User from "../../database/models/user";
-// import ListingQuestion from "../../database/models/listing_question";
-// import EnquiryConversation from "../../database/models/enquiry_conversation";
-// import { current } from "@reduxjs/toolkit";
-// import ListingLandlord from "../../database/models/listing_landlord";
-// import { createListingRouteSchema, createListingSchema } from "../../utils/validation-schemas/schema-listings";
-// import ListingSaved from "../../database/models/listing_saved";
-// import { TenantAndProperty } from "../../client/pages/admin/AdminTenantAndProperty";
+import { Request, Response, Express } from "express";
+import PropertyTenant from "../../database/models/tenant_property";
+import PropertyForRent from "../../database/models/property_for_rent";
+import Listing from "../../database/models/listing";
 
-// export const createTenancyRoute = async (req: Request, res: Response) => {
-//   const {
-//    rentalAgreementDate,
-//    deposit,
-//    isDepositPaid,
-//   outstandingRent,
-//   isDepositReleased,
-//   tenancyStatus,
-//   } = req.body;
+export const createTenancyRoute = async (req: Request, res: Response) => {
+  const { rentalAgreementDate, deposit, isDepositPaid, outstandingRent, isDepositReleased, tenancyStatus, tenantUserId, propertyForRentId, isLeadTenant } =
+    req.body;
 
-//   if (req.session.user!.accountType !== "admin") return res.status(401).json({ message: "Unauthorized" });
+  const allowed = req.session.user!.accountType === "admin" || req.session.user!.accountType === "landlord";
 
-//   let userId: number | null = null;
-//   let propertyForRentId: number | null = null;
+  if (!allowed) return res.status(401).json({ message: "Unauthorized" });
 
-//   try {
-//     await TenantAndProperty.create({
-//         rentalAgreementDate: rentalAgreementDate,
-//         deposit: deposit,
-//         isDepositPaid: isDepositPaid,
-//        outstandingRent: outstandingRent,
-//        isDepositReleased: isDepositReleased,
-//        propertyForRentId: propertyForRentId,
-//        userId: userId,
-//        propertyForRentId: propertyForRentId,
-//        tenancyStatus: tenancyStatus,
-//     });
+  try {
+    const tenancy = await PropertyTenant.create({
+      rentalAgreementDate: rentalAgreementDate,
+      deposit: deposit,
+      isDepositPaid: isDepositPaid,
+      outstandingRent: outstandingRent,
+      isDepositReleased: isDepositReleased,
+      propertyForRentId: propertyForRentId,
+      userId: tenantUserId,
+      tenancyStatus: tenancyStatus,
+      isLeadTenant: isLeadTenant
+    });
 
-//     return res.status(200).json({ message: "Successful tenancy" });
-//   } catch (err) {
-//     return res.status(500).json({ message: "Internal Server error 711", err });
-//   }
-// };
+    return res.status(200).json(tenancy);
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error 711", err });
+  }
+};
 
 // export const updateTenById = async (req: Request, res: Response) => {
 //   const { id } = req.params;
@@ -104,11 +81,11 @@
 //   //   }
 // };
 
-// export const getAllUsers = async (req: Request, res: Response) => {
-//   try {
-//     const users = await User.findAll();
-//     return res.json(users);
-//   } catch (err) {
-//     res.status(500).json({ message: "Internal Server error 301", err });
-//   }
-// };
+export const adminGetAllTenants = async (req: Request, res: Response) => {
+  try {
+    const tenants = await PropertyTenant.findAll({ include: [{ model: PropertyForRent, include: [Listing] }] });
+    return res.json(tenants);
+  } catch (err) {
+    res.status(500).json({ message: "Internal Server error 301", err });
+  }
+};

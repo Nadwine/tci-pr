@@ -41,6 +41,7 @@ import { getAllLandlordsByUser, getSessionLandlordProfile } from "./routes/landl
 import { getProfileForLoggedInUser, updateSessionUrsProfile } from "./routes/profile";
 import { sendContactUsMail } from "./routes/mailing-route";
 import { sendOffer } from "./routes/offer-route";
+import { adminGetAllTenants, createTenancyRoute } from "./routes/tenant-route";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -124,8 +125,15 @@ router.put("/profile/my-profile/", ensureAuthentication, updateSessionUrsProfile
 
 // /api/mailing
 router.post("/mailing/contact-us", sendContactUsMail);
+router.post("/mailing/enquiry-creation", () => null);
+router.post("/mailing/offer-sent", () => null);
+router.post("/mailing/offer-accepted", () => null);
 
 // /api/offer
 router.post("/offer/send", ensureAuthentication, sendOffer);
+
+// /api/property-tenant
+router.get("/property-tenant/all", ensureAdmin, adminGetAllTenants);
+router.get("/property-tenant/create", ensureAuthentication, createTenancyRoute);
 
 export default router;
