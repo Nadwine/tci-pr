@@ -72,10 +72,10 @@ const Login = () => {
                 </div>
                 <div className="mb-5">
                   <div className="form-check">
-                    <input className="form-check-input" type="checkbox" name="check_example" id="check_example" />
+                    {/* <input className="form-check-input" type="checkbox" name="check_example" id="check_example" />
                     <label className="form-check-label" htmlFor="check_example">
                       Keep me logged in
-                    </label>
+                    </label> */}
                     <a className="float-end" href="/forget-password/null?status=pending">
                       Forgot Password?
                     </a>
@@ -88,7 +88,7 @@ const Login = () => {
                   </button>
                 </div>
               </form>
-              <div className="py-5 text-center">
+              <div className="py-4 text-center">
                 <span className="text-xs text-uppercase font-semibold">or</span>
               </div>
               <div className="GitHub & Google row visually-hidden">

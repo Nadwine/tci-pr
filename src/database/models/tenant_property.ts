@@ -21,6 +21,7 @@ export default class PropertyTenant extends Model<InferAttributes<PropertyTenant
   declare outstandingRent?: number;
   declare isDepositReleased?: bool;
   declare propertyForRentId: number;
+  declare tenancyStatus: "ongoing" | "ended";
   declare userId: number;
   declare User: CreationOptional<User>;
   declare PropertyForRent: CreationOptional<PropertyForRent>;
@@ -75,6 +76,10 @@ PropertyTenant.init(
       allowNull: true
     },
     addressString: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    tenancyStatus: {
       type: DataTypes.STRING,
       allowNull: true
     }
