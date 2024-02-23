@@ -36,6 +36,9 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
   const setMaxPrice = price => {
     let updatedSearchParams = new URLSearchParams(searchParams.toString());
     updatedSearchParams.set("page", `${0}`);
+    if (searchParams.get("minPrice") || "" > price) {
+      updatedSearchParams.set("minPrice", price);
+    }
     updatedSearchParams.set("maxPrice", `${price}`);
     setSearchParams(updatedSearchParams.toString());
   };
@@ -57,6 +60,9 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
   const setMaxBed = num => {
     let updatedSearchParams = new URLSearchParams(searchParams.toString());
     updatedSearchParams.set("page", `${0}`);
+    if (searchParams.get("minBed") || "" > num) {
+      updatedSearchParams.set("minBed", num);
+    }
     updatedSearchParams.set("maxBed", `${num}`);
     setSearchParams(updatedSearchParams.toString());
   };
@@ -71,6 +77,9 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
   const setMaxBath = num => {
     let updatedSearchParams = new URLSearchParams(searchParams.toString());
     updatedSearchParams.set("page", `${0}`);
+    if (searchParams.get("minBath") || "" > num) {
+      updatedSearchParams.set("minBath", num);
+    }
     updatedSearchParams.set("maxBath", `${num}`);
     setSearchParams(updatedSearchParams.toString());
   };
