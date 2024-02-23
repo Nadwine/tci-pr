@@ -33,6 +33,9 @@ const AdminSidebar = props => {
             <li className="list-group-item bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard/users")}>
               <i className="bi bi-people-fill"></i> View Users{" "}
             </li>
+            <li className="list-group-item bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard/tenancies")}>
+              <i className="bi bi-file-earmark-text-fill"></i> Tenancies
+            </li>
             <li className="list-group-item bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard")}>
               <i className="bi bi-graph-up text-light"></i> Dashboard
             </li>
@@ -53,6 +56,9 @@ const AdminSidebar = props => {
             </li>
             <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard/users")}>
               <i className="bi bi-people-fill text-light"></i>
+            </li>
+            <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard/tenancies")}>
+              <i className="bi bi-file-earmark-text-fill"></i>
             </li>
             <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard")}>
               <i className="bi bi-graph-up text-light"></i>

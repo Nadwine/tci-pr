@@ -39,6 +39,20 @@ export const createTenancyRoute = async (req: Request, res: Response) => {
   }
 };
 
+export const getTenantById = async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  try {
+    const tenancy = await PropertyTenant.findByPk(id, {
+      include: [{ model: User }]
+    });
+
+    return res.status(200).json(tenancy);
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
 // export const updateTenById = async (req: Request, res: Response) => {
 //   const { id } = req.params;
 //   const { firstName, lastName, email, phoneNumber } = req.body;
