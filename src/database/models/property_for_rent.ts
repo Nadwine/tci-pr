@@ -105,3 +105,4 @@ PropertyForRent.init(
 );
 
 Listing.hasOne(PropertyForRent, { foreignKey: "listingId", onDelete: "CASCADE" });
+PropertyForRent.belongsTo(Listing, { foreignKey: "listingId" });

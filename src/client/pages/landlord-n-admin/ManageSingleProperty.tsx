@@ -75,6 +75,9 @@ const ManageSingleProperty = props => {
         <h5>Attached Documents</h5>
         <DocumentList documents={[]} />
       </div>
+      <div>
+        <h5>Property Tenant</h5>
+      </div>
       <div className="d-flex">
         <div className="ms-auto btn">
           <i className="bi bi-pencil pe-1" />

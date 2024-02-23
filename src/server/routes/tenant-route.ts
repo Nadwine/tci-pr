@@ -2,6 +2,15 @@ import { Request, Response, Express } from "express";
 import PropertyTenant from "../../database/models/tenant_property";
 import PropertyForRent from "../../database/models/property_for_rent";
 import Listing from "../../database/models/listing";
+import Address from "../../database/models/address";
+import ListingLandlord from "../../database/models/listing_landlord";
+import Offer from "../../database/models/offer";
+import User from "../../database/models/user";
+import Profile from "../../database/models/profile";
+import ListingMedia from "../../database/models/listing_media";
+import Admin from "../../database/models/admin";
+import EnquiryConversation from "../../database/models/enquiry_conversation";
+import ListingQuestion from "../../database/models/listing_question";
 
 export const createTenancyRoute = async (req: Request, res: Response) => {
   const { rentalAgreementDate, deposit, isDepositPaid, outstandingRent, isDepositReleased, tenancyStatus, tenantUserId, propertyForRentId, isLeadTenant } =
@@ -83,7 +92,27 @@ export const createTenancyRoute = async (req: Request, res: Response) => {
 
 export const adminGetAllTenants = async (req: Request, res: Response) => {
   try {
-    const tenants = await PropertyTenant.findAll({ include: [{ model: PropertyForRent, include: [Listing] }] });
+    const tenants = await PropertyTenant.findAll({
+      include: [
+        {
+          model: PropertyForRent,
+          include: [
+            {
+              model: Listing,
+              include: [
+                { model: Address },
+                { model: ListingLandlord },
+                { model: ListingMedia, order: [["id", "ASC"]] },
+                { model: Admin, include: [User] },
+                { model: ListingQuestion },
+                // { model: EnquiryConversation, include: [{ model: Listing, include: [{ model: Offer }, { model: ListingMedia }] }] },
+                { model: Offer, include: [{ model: User, include: [Profile] }] }
+              ]
+            }
+          ]
+        }
+      ]
+    });
     return res.json(tenants);
   } catch (err) {
     res.status(500).json({ message: "Internal Server error 301", err });
