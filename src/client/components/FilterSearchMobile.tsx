@@ -30,12 +30,13 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
     setSearchText(e.target.value);
     setFieldActive(true);
   };
-
   const getMultiples = (f: number, limit: number) => [...Array(Math.floor(limit / f))].map((_, i) => f * (i + 1));
-
   const setMaxPrice = price => {
     let updatedSearchParams = new URLSearchParams(searchParams.toString());
     updatedSearchParams.set("page", `${0}`);
+    if (searchParams.get("minPrice") || "" > price) {
+      updatedSearchParams.set("minPrice", price);
+    }
     updatedSearchParams.set("maxPrice", `${price}`);
     setSearchParams(updatedSearchParams.toString());
   };
@@ -57,6 +58,9 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
   const setMaxBed = num => {
     let updatedSearchParams = new URLSearchParams(searchParams.toString());
     updatedSearchParams.set("page", `${0}`);
+    if (searchParams.get("minBed") || "" > num) {
+      updatedSearchParams.set("minBed", num);
+    }
     updatedSearchParams.set("maxBed", `${num}`);
     setSearchParams(updatedSearchParams.toString());
   };
@@ -71,6 +75,9 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
   const setMaxBath = num => {
     let updatedSearchParams = new URLSearchParams(searchParams.toString());
     updatedSearchParams.set("page", `${0}`);
+    if (searchParams.get("minBath") || "" > num) {
+      updatedSearchParams.set("minBath", num);
+    }
     updatedSearchParams.set("maxBath", `${num}`);
     setSearchParams(updatedSearchParams.toString());
   };

@@ -1,15 +1,16 @@
 import React from "react";
 
 const AboutUs = props => {
+  const mql = window.matchMedia("(max-width: 600px)");
+
+  let mobileView = mql.matches;
   return (
-    <div className="about-landlord" style={{ minHeight: "97vh", paddingLeft: "0px" }}>
+    <div className="about-landlord m-sm-0" style={{ minHeight: "97vh", paddingLeft: "0px" }}>
       <div
-        className="image-container"
+        className="image-container ml-sm-3"
         style={{
           position: "absolute",
-          padding: "0px",
-          maxHeight: "800px",
-          marginLeft: "0px",
+          maxHeight: mobileView ? "800px" : "auto",
           width: "100%",
           filter: "sepia(5%) saturate(160%) brightness(70%) hue-rotate(341deg)",
           overflow: "hidden"
@@ -17,11 +18,11 @@ const AboutUs = props => {
       >
         <img src="/static/about.jpg" style={{ marginTop: "-40px", width: 2000 }} className="home-photo.jpg"></img>
       </div>
-      <div className="d-flex col-12 w-100 flex-wrap justify-content-start" style={{ paddingTop: "10vh", alignItems: "center", borderRadius: "0px" }}>
-        <div className="card col-md-4 m-5" style={{ borderRadius: "0px" }}>
+      <div className="d-flex col-12 w-100 flex-wrap justify-content-start shadow-lg" style={{ paddingTop: "10vh", alignItems: "center", borderRadius: "0px" }}>
+        <div className="card col-md-4 m-md-5" style={{ borderRadius: "0px" }}>
           <img src="/static/example.jpeg" className="card-img-top" alt="..." />
         </div>
-        <div className="card col-md-6 p-5 ml-mb-5" style={{ borderRadius: "0px" }}>
+        <div className="card col-md-6 p-md-5 ml-mb-5 mt-sm-2 shadow-lg m-sm-1" style={{ borderRadius: "0px" }}>
           <div className="card-body">
             <p className="card-text">
               At TCI Homebase, we pride ourselves on being more than just a property management company, with a commitment to excellence and innovation at the
