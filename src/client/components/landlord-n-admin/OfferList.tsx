@@ -38,6 +38,24 @@ const OfferList = (props: Props) => {
         const remainingDays = tenancyLengthDays - monthLength * 30;
         const user = currOffer.User;
 
+        if (currOffer.status === "declined") {
+          return (
+            <Accordion key={currIndex} style={{ maxWidth: "500px" }}>
+              <AccordionSummary
+                style={{ textDecoration: "line-through" }}
+                key={currIndex}
+                expandIcon={<i className="bi bi-chevron-down" />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                <div>${amount}</div>
+                <div className="ms-auto px-2">Starting {dayjs(preferredStartDate).format("MMM, D, YYYY")}</div>
+              </AccordionSummary>
+              <AccordionDetails className="text-danger">Offer Declined</AccordionDetails>
+            </Accordion>
+          );
+        }
+
         return (
           <Accordion key={currIndex} style={{ maxWidth: "500px" }}>
             <AccordionSummary expandIcon={<i className="bi bi-chevron-down" />} aria-controls="panel1-content" id="panel1-header">

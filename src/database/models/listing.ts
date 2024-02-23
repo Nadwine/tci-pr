@@ -93,4 +93,5 @@ Listing.init(
   }
 );
 Listing.belongsTo(Admin, { foreignKey: "adminId", foreignKeyConstraint: true });
-Listing.belongsTo(ListingLandlord, { foreignKey: "landlordId", foreignKeyConstraint: true });
+Listing.belongsTo(ListingLandlord, { foreignKey: "landlordId" });
+ListingLandlord.hasMany(Listing, { foreignKey: "landlordId" });

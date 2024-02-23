@@ -1,6 +1,7 @@
 import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
 import User from "./user";
 import sequelize from "../sequelize-connection";
+import Listing from "./listing";
 
 // for typeScript typing
 export default class ListingLandlord extends Model<InferAttributes<ListingLandlord>, InferCreationAttributes<ListingLandlord>> {
@@ -15,6 +16,7 @@ export default class ListingLandlord extends Model<InferAttributes<ListingLandlo
   declare cardDetails?: any;
   declare stripeConnectId?: string;
   declare userId: number;
+  declare Listings: CreationOptional<Listing[]>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }

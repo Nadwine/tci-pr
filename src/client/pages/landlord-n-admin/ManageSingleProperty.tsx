@@ -40,7 +40,8 @@ const ManageSingleProperty = props => {
 
   //Accept or decline
   const onSubmitOffer = async (offerId, status) => {
-    const res = await axios.post("/api/offer/status", { offerId, status });
+    if (!listing) return;
+    const res = await axios.post("/api/offer/status", { offerId, status, listingId: listing.id });
     if (res.status === 200) {
       toast.info(`Offer has been ${status}`);
       initialLoad();

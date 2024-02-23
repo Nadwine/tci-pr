@@ -10,7 +10,7 @@ export default class Profile extends Model<InferAttributes<Profile>, InferCreati
   declare firstName?: string;
   declare lastName?: string;
   declare email?: string;
-  declare phoneNumber?: number;
+  declare phoneNumber?: string;
   declare addressLine1?: string;
   declare addressLine2?: string;
   declare city?: string;
