@@ -124,7 +124,7 @@ const UserProfile = props => {
             style={{ padding: "20px", borderRadius: "20px", paddingLeft: "10px" }}
           >
             <h3 style={{ marginLeft: "15px" }}>Personal Details</h3>
-            <div className="card" style={{ margin: "15px" }}>
+            <div className="card" style={{ margin: "15px", borderRadius: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Name</h5>
                 {!editingFields.firstName && nameDisplay}
@@ -162,7 +162,7 @@ const UserProfile = props => {
                 </button>
               </div>
             </div>
-            <div className="card" style={{ margin: "15px" }}>
+            <div className="card" style={{ margin: "15px", borderRadius: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Address</h5>
                 {!editingFields?.addressLine1 && addressDisplay}
@@ -216,7 +216,7 @@ const UserProfile = props => {
                 </button>
               </div>
             </div>
-            <div className="card" style={{ margin: "15px" }}>
+            <div className="card" style={{ margin: "15px", borderRadius: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Telephone</h5>
                 {(!editingFields.phoneNumber && profile?.phoneNumber) || "Incomplete"}
@@ -251,7 +251,7 @@ const UserProfile = props => {
                 </button>
               </div>
             </div>
-            <div className="card" style={{ margin: "15px" }}>
+            <div className="card" style={{ margin: "15px", borderRadius: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Email</h5>
                 {profile?.User?.email || loggedInUsr?.email}
@@ -266,7 +266,7 @@ const UserProfile = props => {
             style={{ padding: "20px", borderRadius: "20px", paddingLeft: "10px" }}
           >
             <h3 style={{ marginLeft: "15px" }}>Account Details</h3>
-            <div className="card" style={{ margin: "15px" }}>
+            <div className="card" style={{ margin: "15px", borderRadius: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Your Password</h5>
                 **************
@@ -275,7 +275,7 @@ const UserProfile = props => {
                 </button>
               </div>
             </div>
-            <div className="card" style={{ margin: "15px" }}>
+            <div className="card" style={{ margin: "15px", borderRadius: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title text-muted">Account Type</h5>
                 {getAcctTypeDescription(profile?.User.accountType || loggedInUsr?.accountType)}
@@ -288,7 +288,7 @@ const UserProfile = props => {
             className="col-12 col-md-9 col-lg-8 pl-2 ml-3 card ms-lg-3 ms-md-3 shadow-lg"
             style={{ padding: "20px", borderRadius: "20px", paddingLeft: "10px" }}
           >
-            <div className="card" style={{ margin: "15px" }}>
+            <div className="card" style={{ margin: "15px", borderRadius: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Link Your Bank Account</h5>
                 {!editingFields.payment && "details...."}
