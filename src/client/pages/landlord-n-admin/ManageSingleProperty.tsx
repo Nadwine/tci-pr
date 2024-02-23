@@ -38,8 +38,16 @@ const ManageSingleProperty = props => {
     setListing(res.data);
   };
 
-  const onSubmitOffer = (offerId, status) => {
-    toast.info("Test Dummy Submit");
+  //Accept or decline
+  const onSubmitOffer = async (offerId, status) => {
+    const res = await axios.post("/api/offer/status", { offerId, status });
+    if (res.status === 200) {
+      toast.info(`Offer has been ${status}`);
+      initialLoad();
+    } else {
+      toast.error("Opps something went wrong. Please try again");
+      initialLoad();
+    }
   };
 
   const onClickViewEnquiry = (userId: number) => {

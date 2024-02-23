@@ -131,6 +131,7 @@ router.post("/mailing/offer-accepted", () => null);
 
 // /api/offer
 router.post("/offer/send", ensureAuthentication, sendOffer);
+router.post("/offer/status", ensureAuthentication, (req, res) => res.json(["Hi"]));
 
 // /api/property-tenant
 router.get("/property-tenant/all", ensureAdmin, adminGetAllTenants);
