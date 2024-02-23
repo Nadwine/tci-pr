@@ -49,7 +49,7 @@ const Carousel = (props: Props) => {
   const currentImage = images[activeIndex];
 
   return (
-    <div id="carouselExample" className="carousel slide m-auto" style={{ minHeight: 200, maxWidth: 1000 }}>
+    <div id="carouselExample" className="carousel slide m-auto" style={{ minHeight: 200, maxWidth: 700 }}>
       <div className="carousel-inner">
         <div className="carousel-item active">
           {currentImage.mediaType === "image" && <img src={images[activeIndex].mediaUrl} className="d-block w-100" alt="..." />}
