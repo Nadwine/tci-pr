@@ -11,7 +11,7 @@ export default class Offer extends Model<InferAttributes<Offer>, InferCreationAt
   declare amount: number;
   declare tenancyLengthDays: number;
   declare preferredStartDate: string;
-  declare status: "pending" | "accepted" | "declined" | "counter-offer";
+  declare status: "pending" | "accepted" | "declined";
   declare listingId: CreationOptional<number>;
   declare userId: CreationOptional<number>;
   declare User: CreationOptional<User>;

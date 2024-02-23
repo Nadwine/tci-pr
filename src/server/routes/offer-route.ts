@@ -36,3 +36,15 @@ export const sendOffer = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "internal server error", err });
   }
 };
+
+export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
+  const sessUsr = req.session.user;
+  try {
+    if (sessUsr!.accountType !== "admin" && sessUsr!.accountType !== "landlord") {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    return res.json([""]);
+  } catch (err) {
+    return res.status(500).json({ message: "Internal server error", err });
+  }
+};

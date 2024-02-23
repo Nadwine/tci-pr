@@ -40,7 +40,7 @@ import { getAllUsers } from "./routes/user";
 import { getAllLandlordsByUser, getSessionLandlordProfile } from "./routes/landlord";
 import { getProfileForLoggedInUser, updateSessionUrsProfile } from "./routes/profile";
 import { sendContactUsMail } from "./routes/mailing-route";
-import { sendOffer } from "./routes/offer-route";
+import { acceptOrDeclineOffer, sendOffer } from "./routes/offer-route";
 import { adminGetAllTenants, createTenancyRoute } from "./routes/tenant-route";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
@@ -131,7 +131,7 @@ router.post("/mailing/offer-accepted", () => null);
 
 // /api/offer
 router.post("/offer/send", ensureAuthentication, sendOffer);
-router.post("/offer/status", ensureAuthentication, (req, res) => res.json(["Hi"]));
+router.post("/offer/status", ensureAuthentication, acceptOrDeclineOffer);
 
 // /api/property-tenant
 router.get("/property-tenant/all", ensureAdmin, adminGetAllTenants);
