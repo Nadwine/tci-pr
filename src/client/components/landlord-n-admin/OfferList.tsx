@@ -77,26 +77,28 @@ const OfferList = (props: Props) => {
                 </div>
               </div>
               <div className="pt-4 d-flex">
-                <div className="ms-auto">
-                  <button
-                    onClick={() => {
-                      setOfferAction({ offerId: currOffer.id, status: "declined" });
-                      setShowConfirmationModal(true);
-                    }}
-                    className="btn text-danger"
-                  >
-                    Decline
-                  </button>
-                  <button
-                    onClick={() => {
-                      setOfferAction({ offerId: currOffer.id, status: "accepted" });
-                      setShowConfirmationModal(true);
-                    }}
-                    className="btn text-success"
-                  >
-                    Accept
-                  </button>
-                </div>
+                {currOffer.status !== "accepted" && (
+                  <div className="ms-auto">
+                    <button
+                      onClick={() => {
+                        setOfferAction({ offerId: currOffer.id, status: "declined" });
+                        setShowConfirmationModal(true);
+                      }}
+                      className="btn text-danger"
+                    >
+                      Decline
+                    </button>
+                    <button
+                      onClick={() => {
+                        setOfferAction({ offerId: currOffer.id, status: "accepted" });
+                        setShowConfirmationModal(true);
+                      }}
+                      className="btn text-success"
+                    >
+                      Accept
+                    </button>
+                  </div>
+                )}
               </div>
             </AccordionDetails>
           </Accordion>
@@ -110,7 +112,9 @@ const OfferList = (props: Props) => {
           Are you sure you want to {offerAction.status === "accepted" ? "accept" : "decline"} this offer?
           <div className="pt-3">
             {offerAction.status === "accepted" &&
-              `Accepting this offer will begin initiating the tenancy for ${offers?.find(f => f.id === offerAction.offerId)?.User.Profile?.firstName}`}
+              `Accepting this offer will begin initiating the tenancy for ${
+                offers?.find(f => f.id === offerAction.offerId)?.User.Profile?.firstName
+              } and decline other offers`}
           </div>
         </Modal.Body>
         <Modal.Footer>
