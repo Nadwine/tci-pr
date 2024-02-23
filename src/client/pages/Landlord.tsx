@@ -2,7 +2,7 @@ import React from "react";
 
 const AboutUs = props => {
   return (
-    <div className="about" style={{ minHeight: "97vh" }}>
+    <div className="about-landlord" style={{ minHeight: "97vh", paddingLeft: "0px" }}>
       <div
         className="image-container"
         style={{

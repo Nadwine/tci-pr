@@ -1,9 +1,11 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const AboutUs = props => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const formRef = useRef<HTMLFormElement>(null);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -33,6 +35,13 @@ const AboutUs = props => {
       toast.error(res.data.message);
     }
   }
+
+  useEffect(() => {
+    const focus = searchParams.get("focus-contact");
+    if (focus) {
+      document.getElementById("contact-btn")?.focus();
+    }
+  }, []);
 
   return (
     <div className="about-us ps-3 w-sm-100">
@@ -100,7 +109,7 @@ const AboutUs = props => {
                   <textarea name="message" className="form-control" id="exampleFormControlTextarea1" required></textarea>
                 </div>
                 <div className="d-grid gap-2">
-                  <button className="btn btn text-light fw-bold" type="submit" style={{ backgroundColor: "#0aa2c0" }}>
+                  <button className="btn btn text-light fw-bold" id="contact-btn" type="submit" style={{ backgroundColor: "#0aa2c0" }}>
                     Contact Our Agents Now!
                   </button>
                 </div>

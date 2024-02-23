@@ -17,10 +17,10 @@ function Navbar() {
 
   const contactClick = () => {
     if (window.location.pathname === "/about") {
-      document.getElementById("contact-us-form")?.focus();
+      document.getElementById("contact-btn")?.focus();
       setIsCollapse(true);
     } else {
-      navigate("/about");
+      navigate("/about?focus-contact=true");
       setIsCollapse(true);
     }
   };
