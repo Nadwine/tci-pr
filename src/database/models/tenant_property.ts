@@ -21,7 +21,7 @@ export default class PropertyTenant extends Model<InferAttributes<PropertyTenant
   declare outstandingRent?: number;
   declare isDepositReleased?: bool;
   declare propertyForRentId: number;
-  declare tenancyStatus: "ongoing" | "ended";
+  declare tenancyStatus: "awaitng-signatures" | "ongoing" | "ended";
   declare isLeadTenant: boolean;
   declare userId: number;
   declare User: CreationOptional<User>;

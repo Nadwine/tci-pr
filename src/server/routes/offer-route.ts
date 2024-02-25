@@ -91,7 +91,7 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
         phoneNumber: userProfile?.phoneNumber,
         addressString: userProfile?.addressLine1 || "" + userProfile?.addressLine2 || "" + userProfile?.settlement || "" + userProfile?.city || "",
         propertyForRentId: offerPropertyForRent.id,
-        tenancyStatus: "ongoing",
+        tenancyStatus: "awaitng-signatures",
         isLeadTenant: true,
         userId: offerUser.id || 0
       });

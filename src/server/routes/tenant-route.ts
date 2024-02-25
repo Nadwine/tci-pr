@@ -1,7 +1,6 @@
 import { Request, Response, Express } from "express";
 import PropertyTenant from "../../database/models/tenant_property";
 import PropertyForRent from "../../database/models/property_for_rent";
-import Listing from "../../database/models/listing";
 import Address from "../../database/models/address";
 import ListingLandlord from "../../database/models/listing_landlord";
 import Offer from "../../database/models/offer";
@@ -11,6 +10,7 @@ import ListingMedia from "../../database/models/listing_media";
 import Admin from "../../database/models/admin";
 import EnquiryConversation from "../../database/models/enquiry_conversation";
 import ListingQuestion from "../../database/models/listing_question";
+import Listing from "../../database/models/listing";
 
 export const createTenancyRoute = async (req: Request, res: Response) => {
   const { rentalAgreementDate, deposit, isDepositPaid, outstandingRent, isDepositReleased, tenancyStatus, tenantUserId, propertyForRentId, isLeadTenant } =
