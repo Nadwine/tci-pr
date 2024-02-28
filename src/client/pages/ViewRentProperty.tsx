@@ -28,6 +28,9 @@ const ViewRentProperty = props => {
   const isOwner = user?.id === listing?.Admin?.userId || user?.id === listing?.ListingLandlord?.userId;
   const showEnqBtn = !user ? true : !isOwner;
   const navigate = useNavigate();
+  const mql = window.matchMedia("(max-width: 600px)");
+
+  let mobileView = mql.matches;
 
   const initialFetch = async () => {
     const res = await axios.get(`/api/listing/rent/${id}`);
@@ -134,7 +137,7 @@ const ViewRentProperty = props => {
     <div>
       <EnquiryModal />
       {listing && (
-        <div className="card mb-3 shadow-sm">
+        <div className="card mb-3 shadow-lg mx-md-5">
           <div className="card-body d-flex flex-wrap justify-content-center">
             <div className="image-container col-10 me-2 pb-3">
               <Carousel images={listing.ListingMedia} />
@@ -146,7 +149,7 @@ const ViewRentProperty = props => {
             <div className="info col-10">
               <div className="title fw-bolder col-12">
                 {listing.title}
-                <div className="availability col-3 float-end me-3" style={{ fontSize: "12px" }}>
+                <div className="availability col-6 col-md-3 float-end" style={{ fontSize: "12px" }}>
                   <span className="badge rounded-pill" style={{ backgroundColor: "#087990" }}>
                     Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}
                   </span>
@@ -155,7 +158,7 @@ const ViewRentProperty = props => {
               <div className="location">{listing.Address.settlement.charAt(0).toUpperCase() + listing.Address.settlement.slice(1)}</div>
 
               <div className="foot d-flex flex-row">
-                <div className="col-9">
+                <div className="col-7 col-md-9">
                   <div className="rooms pt-5">
                     <FontAwesomeIcon className="pe-1" icon={faBed} />
                     Rooms {listing.PropertyForRent.numOfRooms}
@@ -169,7 +172,7 @@ const ViewRentProperty = props => {
                     Tenants {listing.PropertyForRent.maxTenant}
                   </div>
                 </div>
-                <div style={{ fontSize: "13px" }} className="col-3 pt-5 mt-2 me-2 float-end">
+                <div style={{ fontSize: "15px" }} className="col-5 col-md-3 pt-5 mt-2 me-2 float-end">
                   <div className="fw-bold">Address</div>
                   <div>{listing.Address.addressLine1}</div>
                   <div>{listing.Address.addressLine2}</div>
@@ -177,11 +180,11 @@ const ViewRentProperty = props => {
                 </div>
               </div>
               <hr />
-              <h5 className="text-secondary fw-bolder">Description</h5>
+              <h5 className="fw-bolder">Description</h5>
               <div style={{ minHeight: "5rem" }} className="description card text-secondary p-2">
                 {listing.description}
               </div>
-              <div className="bills text-secondary pt-3">
+              <div className="bills pt-3">
                 <h5 className="fw-bolder">Inclusions</h5>
                 <div className="furnished">
                   <span className="pe-2">Furnished:</span>
@@ -211,12 +214,12 @@ const ViewRentProperty = props => {
               {showEnqBtn && (
                 <>
                   <hr />
-                  <div className="text-secondary">
-                    <h5>Contact</h5>
+                  <div className="text">
+                    <h5 className="fw-bolder">Contact</h5>
                     {/* <div>Email: {listing.Admin.User?.email}</div>
                   <div>Phone: {listing.Admin.phone || "N/A"}</div> */}
                   </div>
-                  <div className="mt-4 mb-4">
+                  <div className="mt-4 pb-5">
                     <button onClick={() => handleRedirect()} className="btn btn-success">
                       Submit online enquiry
                     </button>

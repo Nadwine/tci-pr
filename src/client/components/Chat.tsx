@@ -212,7 +212,9 @@ export const Chat = (props: Props) => {
             <Button type="button" variant="secondary" onClick={() => setShowDesktopOfferModal(false)}>
               Cancel
             </Button>
-            <Button type="submit">Submit</Button>
+            <Button style={{ backgroundColor: "#087990" }} type="submit">
+              Submit
+            </Button>
           </Modal.Footer>
         </form>
       </Modal>

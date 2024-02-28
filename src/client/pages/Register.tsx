@@ -124,13 +124,13 @@ const Register = () => {
               <form action="/api/auth/register" method="POST" onSubmit={handleFormSubmit}>
                 <div className="text-danger text-sm">{errors.registerReason && errors.registerReason}</div>
                 <div className="mb-4">
-                  <label className="pe-3">What are you looking for</label>
+                  <label className="pe-3 mb-1 fw-bolder">What are you looking for?</label>
                   <select
                     name="registerReason"
                     value={registerReason}
                     onChange={e => e.target.value !== "select" && setRegisterReason(e.target.value)}
                     onBlur={() => setElementAsTouched("registerReason")}
-                    style={{ height: "2em" }}
+                    style={{ height: "2em", borderColor: "#BEBEBE", padding: "3px", borderRadius: "2px" }}
                   >
                     <option value="select">Choose an option</option>
                     <option value="tenant">I am looking for a property</option>
@@ -207,9 +207,9 @@ const Register = () => {
                   </button>
                 </div>
               </form>
-              <div className="py-5 text-center">
+              {/* <div className="py-5 text-center">
                 <span className="text-xs text-uppercase font-semibold">or</span>
-              </div>
+              </div> */}
               <div className="GitHub & Google row visually-hidden">
                 <div className="col-sm-6">
                   <a href="#" className="btn btn-neutral w-full">
@@ -326,8 +326,8 @@ const Register = () => {
                   </a>
                 </div>
               </div>
-              <div className="my-6">
-                <small>Already have an account?</small>
+              <div className="my-6 mt-5">
+                <small>Already have an account? </small>
                 <a href="/login" className="text-primary text-sm font-semibold">
                   Login
                 </a>

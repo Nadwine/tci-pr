@@ -9,6 +9,8 @@ import Message from "../../database/models/message";
 import { toast } from "react-toastify";
 import { cloneDeep } from "lodash";
 import dayjs from "dayjs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComments } from "@fortawesome/free-solid-svg-icons";
 
 const MessageEnquiries = props => {
   const dispatch = useDispatch();
@@ -116,7 +118,7 @@ const MessageEnquiries = props => {
       <div className="card col-md-7 col-lg-7 shadow-sm" style={{ height: "700px", borderTopRightRadius: "10px", borderBottomRightRadius: "10px" }}>
         {!activeConversation && (
           <div className="mx-auto" style={{ marginTop: "250px" }}>
-            <img src="/static/message.png" style={{ height: "99px", width: "190px" }}></img>
+            <img src="/static/message.png" style={{ height: "169px", width: "190px" }}></img>
           </div>
         )}
         {activeConversation && (

@@ -57,7 +57,7 @@ const AboutUs = props => {
               padding: "0px",
               maxHeight: "215px",
               marginLeft: "0px",
-              width: "100%",
+              width: "98%",
               filter: "sepia(5%) saturate(160%) brightness(70%) hue-rotate(341deg)",
               overflow: "hidden"
             }}
@@ -65,7 +65,7 @@ const AboutUs = props => {
             <img src="/static/about.jpg" style={{ marginTop: "-530px", width: 2000 }} className="home-photo.jpg"></img>
           </div>
           <h1
-            className="position-absolute fw-bold w-100 mb-lg-3 mt-lg-2 mt-sm-5 mb-sm-2 ps-md-5 ps-2"
+            className="position-absolute fw-bold mb-lg-3 mt-lg-2 mt-sm-5 mb-sm-2 ps-md-5 ps-2"
             style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "left", color: "white" }}
           >
             About TCI Homebase <p className="text-break">Property Management</p>

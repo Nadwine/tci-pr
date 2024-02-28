@@ -73,7 +73,7 @@ export const Feedback = props => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                <label className="form-check-label">Very</label>
+                <label className="form-check-label">very</label>
                 <br />
                 <input
                   type="radio"
@@ -83,7 +83,7 @@ export const Feedback = props => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                <label className="form-check-label">Somewhat</label>
+                <label className="form-check-label">somewhat</label>
                 <br />
                 <input
                   type="radio"
@@ -93,7 +93,7 @@ export const Feedback = props => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                <label className="form-check-label">Unsatisfied</label>
+                <label className="form-check-label">unsatisfied</label>
                 <br />
               </div>
               {/* recommendation */}
@@ -105,7 +105,7 @@ export const Feedback = props => {
                   {errors.recommendation && touched.recommendation && errors.recommendation}
                 </div>
                 <input type="radio" className="form-check-input mx-2" name="recommendation" value="very likely" onChange={handleChange} onBlur={handleBlur} />
-                <label className="form-check-label">Very</label>
+                <label className="form-check-label">very</label>
                 <br />
                 <input
                   type="radio"
@@ -115,10 +115,10 @@ export const Feedback = props => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                <label className="form-check-label">Somewhat</label>
+                <label className="form-check-label">somewhat</label>
                 <br />
                 <input type="radio" className="form-check-input mx-2" name="recommendation" value="unlikely" onChange={handleChange} onBlur={handleBlur} />
-                <label className="form-check-label">Unlikely</label>
+                <label className="form-check-label">unlikely</label>
                 <br />
               </div>
               <div className="mb-3">

@@ -52,7 +52,7 @@ const Login = () => {
                 <span className="d-inline-block d-lg-block h1 mb-lg-6 me-3">
                   <i className="bi bi-person-circle" style={{ color: "#077990" }} />
                 </span>
-                <h1 className="ls-tight font-bolder h2">Login</h1>
+                <h1 className="ls-tight font-bolder mb-3 h2">Login</h1>
               </div>
               <div className="text-danger text-center w-100" style={{ minHeight: "1em", fontSize: "12px" }}>
                 {serverError}
@@ -88,9 +88,9 @@ const Login = () => {
                   </button>
                 </div>
               </form>
-              <div className="py-4 text-center">
+              {/* <div className="py-4 text-center">
                 <span className="text-xs text-uppercase font-semibold">or</span>
-              </div>
+              </div> */}
               <div className="GitHub & Google row visually-hidden">
                 <div className="col-sm-6">
                   <a href="#" className="btn btn-neutral w-full">
@@ -207,10 +207,10 @@ const Login = () => {
                   </a>
                 </div>
               </div>
-              <div className="my-6">
-                <small>{"Don't"} have an account?</small>
+              <div className="my-6 mt-5">
+                <small>{"Don't"} have an account? </small>
                 <a href="/register" className="text-primary text-sm font-semibold">
-                  {" "}
+                  {"  "}
                   Sign up
                 </a>
               </div>
