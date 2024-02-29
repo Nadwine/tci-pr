@@ -6,6 +6,10 @@ import { useParams } from "react-router-dom";
 import Listing from "../../database/models/listing";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { CardElement, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import StripeConfirmPayment from "../components/StripeConfirmPayment";
 
 const ListingPayment = props => {
   const params = useParams();
@@ -19,6 +23,30 @@ const ListingPayment = props => {
   const [listing, setListing] = useState<Listing>();
   const [loading, setLoading] = useState(true);
   const landlordFormRef = useRef<HTMLFormElement>(null);
+  const stripePromise = loadStripe("pk_test_51OYZbBIGvo7mWPbtUd3Dvc2lKOTPTdp2Ic8uD7uVcxbMbFERYYCu5ulgjJZ7EcPkQxSqp0rYi0AagRNAZ43sRJ7P00Zj8d0CEX")
+    .then(res => {
+      console.log("Stripe Success", res);
+      return res;
+    })
+    .catch(res => {
+      console.log("Stripe Error", res);
+      return res;
+    });
+  const [clientSecret, setClientSecret] = useState("seti_1OocFWIGvo7mWPbtrL2vDCOE_secret_Pdu3U7ixz5Een8Zxw2I3ZTfKwnqfRMC");
+  const [setupIntentId, setSetupIntentId] = useState("seti_1OocFWIGvo7mWPbtrL2vDCOE");
+
+  // Stripe
+  // .confirmCardSetup('{SETUP_INTENT_CLIENT_SECRET}', {
+  //   payment_method: {
+  //     card: cardElement,
+  //     billing_details: {
+  //       name: 'Jenny Rosen',
+  //     },
+  //   },
+  // })
+  // .then(function(result) {
+  //   // Handle result.error or result.setupIntent
+  // });
 
   const initialFetch = async () => {
     const res = await axios.get(`/api/listing/rent/expanded/${listingId}`);
@@ -62,7 +90,12 @@ const ListingPayment = props => {
     }
     body.listingId = listing?.id;
     const res = await axios.post("/api/payment/rent/attach-landlord", body);
-    toast.error(JSON.stringify(res.data.err));
+    if (res.status === 200) {
+      setClientSecret(res.data.clientSecret);
+      setSetupIntentId(res.data.intentId);
+    } else {
+      toast.error(res.data.message);
+    }
     console.log(res.data.err);
     // submitEnquiry(body);
   };

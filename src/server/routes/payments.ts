@@ -166,6 +166,8 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
     // first register my stripe account https://dashboard.stripe.com/account/applications/settings
     //You’ll provide this ID value to authenticate as the connected account by passing it into requests in the Stripe-Account header.
     const landlordStripeConnect = await stripeConnector.accounts.create({
+      // created accnt found here can manually setup a credit card here which will accept payouts
+      // https://dashboard.stripe.com/test/connect/accounts/overview
       type: "custom",
       country: "GB",
       email: landlordEmail,
@@ -182,9 +184,9 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
         }
       },
       capabilities: {
-        // card_payments: {
-        //   requested: true
-        // },
+        card_payments: {
+          requested: true
+        },
         transfers: {
           requested: true
         },
@@ -205,20 +207,63 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
     //   },
     // });
 
-    const landlordCardToken = await stripeConnector.tokens.create({
-      card: {
-        number: cardNumber,
-        exp_month: expMonth,
-        exp_year: expYear,
-        cvc: cvv
-      }
-    });
+    // const landlordCardToken = await stripeConnector.tokens.create({
+    //   card: {
+    //     number: cardNumber,
+    //     exp_month: expMonth,
+    //     exp_year: expYear,
+    //     cvc: cvv
+    //   }
+    // });
 
     // // attach bank or card to landlord
-    await stripeConnector.accounts.createExternalAccount(landlordStripeConnect.id, {
-      // @ts-ignore
-      external_account: landlordCardToken.id
+    // await stripeConnector.accounts.createExternalAccount(landlordStripeConnect.id, {
+    //   // @ts-ignore
+    //   external_account: landlordCardToken.id
+    // });
+
+    const card = landlord.cardDetails || {
+      number: cardNumber,
+      exp_month: expMonth,
+      exp_year: expYear,
+      cvc: cvv
+    };
+
+    // now create account link for onboarding to let landlord add his card
+    // const accountLink = await stripeConnector.accountLinks.create({
+    //   account: landlordStripeConnect.id,
+    //   refresh_url: "https://example.com/reauth",
+    //   return_url: `${process.env.BASE_URL}/return`,
+    //   type: "account_update"
+    // });
+
+    const customer = await stripeConnector.customers.create({
+      name: `${firstName} ${lastName}`,
+      email: landlordEmail
+      // address: {
+      //   city:
+      // }
     });
+
+    // const token = await stripeConnector.tokens.create({})
+
+    // const method = await stripeConnector.paymentMethods.create({type: "card", card : { token: token.id }});
+
+    const setupIntent = await stripeConnector.setupIntents.create({
+      payment_method_types: ["card"],
+      // payment_method: method.id,
+      customer: customer.id,
+      // description: "",
+      metadata: {
+        firstName: firstName,
+        lastName: lastName,
+        email: landlordEmail
+      }
+    });
+    // after confirming the intent on the front end attach it using this
+    // await stripeConnector.paymentMethods.attach(<string>setupIntent.payment_method, {
+    //   customer: customer.id
+    // });
 
     await landlord.update({
       firstName: firstName,
@@ -226,11 +271,12 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
       phoneNumber: phoneNumber,
       homeIsland: homeIsland,
       addressString: address,
-      cardDetails: { ...landlord.cardDetails, stripeCardToken: landlordCardToken.id },
-      stripeConnectId: landlordStripeConnect.id
+      cardDetails: card,
+      stripeConnectId: landlordStripeConnect.id,
+      stripeCustomerId: customer.id
     });
 
-    return res.status(200).json({ messages: "success" });
+    return res.json({ intentId: setupIntent.id, clientSecret: setupIntent.client_secret });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error", err });
   }

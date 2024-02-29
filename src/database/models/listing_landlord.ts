@@ -15,6 +15,7 @@ export default class ListingLandlord extends Model<InferAttributes<ListingLandlo
   declare addressString?: string;
   declare cardDetails?: any;
   declare stripeConnectId?: string;
+  declare stripeCustomerId?: string;
   declare userId: number;
   declare Listings: CreationOptional<Listing[]>;
   declare createdAt: CreationOptional<Date>;
@@ -56,6 +57,10 @@ ListingLandlord.init(
       allowNull: true
     },
     stripeConnectId: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    stripeCustomerId: {
       type: DataTypes.STRING,
       allowNull: true
     }
