@@ -85,6 +85,25 @@ export const Chat = (props: Props) => {
     };
   }, []);
 
+  const getConvoUser = () => {
+    const profile = activeConversation?.User.Profile;
+    const landlordProfile = activeConversation?.Listing.ListingLandlord;
+    if (isTenant) {
+      // tenant
+      if (landlordProfile?.firstName && landlordProfile?.lastName) {
+        return `${landlordProfile.firstName} ${landlordProfile?.lastName}`;
+      }
+      return `activeConversation?.Listing.ListingLandlord?.firstName`;
+    } else {
+      // landlord
+      if (profile?.firstName && profile.lastName) {
+        return `${profile.firstName} ${profile?.lastName}`;
+      } else {
+        return activeConversation?.User.email;
+      }
+    }
+  };
+
   return (
     <div className="enquiry-message-wrapper">
       <div className="d-flex w-100 flex-column align-items-center">
@@ -124,6 +143,9 @@ export const Chat = (props: Props) => {
               )}
             </div>
           )}
+        </div>
+        <div className="text-primary" style={{ fontSize: "15px" }}>
+          {getConvoUser()}
         </div>
         <div className="d-flex flex-column col-12 col-md-10 chat-area" style={{ paddingBottom: "60px", height: "60vh", overflow: "scroll" }}>
           <div className="intro-msg rounded-pill ms-5 mb-5 ps-3 text-muted">{introMessage}</div>

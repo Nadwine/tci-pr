@@ -100,6 +100,25 @@ const MessageEnquiries = props => {
     }
   };
 
+  const getConvoUser = (enq: EnquiryConversation) => {
+    const profile = enq?.User.Profile;
+    const landlordProfile = enq?.Listing.ListingLandlord;
+    if (isTenant) {
+      // tenant
+      if (landlordProfile?.firstName && landlordProfile?.lastName) {
+        return `${landlordProfile.firstName} ${landlordProfile?.lastName}`;
+      }
+      return `activeConversation?.Listing.ListingLandlord?.firstName`;
+    } else {
+      // landlord
+      if (profile?.firstName && profile.lastName) {
+        return `${profile.firstName} ${profile?.lastName}`;
+      } else {
+        return activeConversation?.User.email;
+      }
+    }
+  };
+
   const onClickCovo = (enq: EnquiryConversation) => {
     dispatch(setActiveConversation(enq));
     submitSeen(enq);
@@ -160,7 +179,7 @@ const MessageEnquiries = props => {
                       <img src={enq.Listing.ListingMedia[0]?.mediaUrl} style={{ height: "40px", width: "40px", borderRadius: "5px" }} />
                     </div>
                     <div style={{ marginLeft: "25px", width: "100%" }} className=" pe-1 pe-md-5 pe-lg-5">
-                      <span style={{ fontWeight: "bold" }}>{enq.Listing.title}</span>
+                      <span style={{ fontWeight: "bold" }}>{isTenant ? enq.Listing.title : getConvoUser(enq)}</span>
                       <p className="pe-sm-2 mb-0" style={{ float: "right", minWidth: "3rem" }}>
                         <small>{dayjs(enq.createdAt).format("MMM D")}</small>
                       </p>

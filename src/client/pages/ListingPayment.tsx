@@ -76,102 +76,88 @@ const ListingPayment = props => {
       <div className="d-flex flex-column justify-content-center mx-5">
         <h3 className="m-5">Listing Payment</h3>
         <Accordion>
-          <Card>
-            <Card.Header>
-              <Accordion.Toggle as={Button} variant="link" eventKey="0" style={{ width: "100%", display: "flex", color: "black" }}>
-                Tenant Payment Link
-                <i className="bi bi-chevron-down ms-auto" />
-              </Accordion.Toggle>
-            </Card.Header>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body>
-                <h6 className="pb-3">Reoccurring Payment</h6>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>Tenant Payment Link</Accordion.Header>
+            <Accordion.Body>
+              <h6 className="pb-3">Reoccurring Payment</h6>
+              <div>
                 <div>
-                  <div>
-                    Amount ${listing?.PropertyForRent.rentAmount}
-                    <br />
-                    Interval: Monthly
-                  </div>
+                  Amount ${listing?.PropertyForRent.rentAmount}
+                  <br />
+                  Interval: Monthly
                 </div>
-                {listing?.stripePaymentLink && (
-                  <div className="pt-5">
-                    Generated At: {dayjs(linkGeneratedAt).format("MMMM DD YYYY HH:MM:ss a")}
-                    <br />
-                    Link Status: {islinkExpired ? "Expired" : "Active"}
-                    <code className="card">
-                      <a href={listing.stripePaymentLink.url}>{listing.stripePaymentLink.url}</a>
-                    </code>
-                  </div>
-                )}
-                <div className="mt-5">{linkGeneratedAt && "Please send this link to the respected tenant"}</div>
-                <div className="mt-2">
-                  <button disabled={linkGeneratedAt ? !islinkExpired : false} onClick={() => submitPaymentLinkCreation()} className="btn btn-success">
-                    Generate New Link
-                  </button>
+              </div>
+              {listing?.stripePaymentLink && (
+                <div className="pt-5">
+                  Generated At: {dayjs(linkGeneratedAt).format("MMMM DD YYYY HH:MM:ss a")}
+                  <br />
+                  Link Status: {islinkExpired ? "Expired" : "Active"}
+                  <code className="card">
+                    <a href={listing.stripePaymentLink.url}>{listing.stripePaymentLink.url}</a>
+                  </code>
                 </div>
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-          <Card>
-            <Card.Header>
-              <Accordion.Toggle as={Button} variant="link" eventKey="1" style={{ width: "100%", display: "flex", color: "black" }}>
-                LandLord Details
-                <i className="bi bi-chevron-down ms-auto" />
-              </Accordion.Toggle>
-            </Card.Header>
-            <Accordion.Collapse eventKey="1">
-              <Card.Body>
-                <h4>Create Landlord to Pay</h4>
-                <form ref={landlordFormRef} onSubmit={submitNewLandLord}>
-                  <div className="mb-3 w-50">
-                    <label>First Name</label>
-                    <input name="firstName" className="form-control" defaultValue="Brutchsama" />
-                  </div>
-                  <div className="mb-3 w-50">
-                    <label>Last Name</label>
-                    <input name="lastName" className="form-control" defaultValue="Jean-Louis" />
-                  </div>
-                  <div className="mb-3 w-50">
-                    <label>Email</label>
-                    <input name="landlordEmail" className="form-control" defaultValue="brutchsama@mail.com" />
-                  </div>
-                  <div className="mb-3 w-50">
-                    <label>Phone</label>
-                    <input name="phoneNumber" className="form-control" defaultValue="+447535799721" />
-                  </div>
-                  <div className="mb-3 w-50">
-                    <label>Home Island</label>
-                    <input name="homeIsland" className="form-control" defaultValue="Providenciales" />
-                  </div>
-                  <div className="mb-3 w-50">
-                    <label>Address</label>
-                    <input name="address" className="form-control" defaultValue="Address, Test street, Five Cays" />
-                  </div>
-                  <div className="mb-3 w-50">
-                    <label>Card Number 4242424242424242</label>
-                    <input name="cardNumber" className="form-control" defaultValue="4242424242424242" />
-                  </div>
-                  <div className="mb-3 w-50">
-                    <label>Expiry Month</label>
-                    <input name="expMonth" className="form-control" defaultValue="12" />
-                  </div>
-                  <div className="mb-3 w-50">
-                    <label>Expiry Year</label>
-                    <input name="expYear" className="form-control" defaultValue="2027" />
-                  </div>
-                  <div className="mb-3 w-50">
-                    <label>Cvv</label>
-                    <input name="cvv" className="form-control" defaultValue="123" />
-                  </div>
-                  <div className="mb-3 w-50">
-                    <label>Name On Card</label>
-                    <input name="nameOnCard" className="form-control" defaultValue="Brutchsama" />
-                  </div>
-                  <button className="btn btn-primary">Submit</button>
-                </form>
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
+              )}
+              <div className="mt-5">{linkGeneratedAt && "Please send this link to the respected tenant"}</div>
+              <div className="mt-2">
+                <button disabled={linkGeneratedAt ? !islinkExpired : false} onClick={() => submitPaymentLinkCreation()} className="btn btn-success">
+                  Generate New Link
+                </button>
+              </div>
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="1">
+            <Accordion.Header>LandLord Details</Accordion.Header>
+            <Accordion.Body>
+              <h4>Create Landlord to Pay</h4>
+              <form ref={landlordFormRef} onSubmit={submitNewLandLord}>
+                <div className="mb-3 w-50">
+                  <label>First Name</label>
+                  <input name="firstName" className="form-control" defaultValue="Brutchsama" />
+                </div>
+                <div className="mb-3 w-50">
+                  <label>Last Name</label>
+                  <input name="lastName" className="form-control" defaultValue="Jean-Louis" />
+                </div>
+                <div className="mb-3 w-50">
+                  <label>Email</label>
+                  <input name="landlordEmail" className="form-control" defaultValue="brutchsama@mail.com" />
+                </div>
+                <div className="mb-3 w-50">
+                  <label>Phone</label>
+                  <input name="phoneNumber" className="form-control" defaultValue="+447535799721" />
+                </div>
+                <div className="mb-3 w-50">
+                  <label>Home Island</label>
+                  <input name="homeIsland" className="form-control" defaultValue="Providenciales" />
+                </div>
+                <div className="mb-3 w-50">
+                  <label>Address</label>
+                  <input name="address" className="form-control" defaultValue="Address, Test street, Five Cays" />
+                </div>
+                <div className="mb-3 w-50">
+                  <label>Card Number 4242424242424242</label>
+                  <input name="cardNumber" className="form-control" defaultValue="4242424242424242" />
+                </div>
+                <div className="mb-3 w-50">
+                  <label>Expiry Month</label>
+                  <input name="expMonth" className="form-control" defaultValue="12" />
+                </div>
+                <div className="mb-3 w-50">
+                  <label>Expiry Year</label>
+                  <input name="expYear" className="form-control" defaultValue="2027" />
+                </div>
+                <div className="mb-3 w-50">
+                  <label>Cvv</label>
+                  <input name="cvv" className="form-control" defaultValue="123" />
+                </div>
+                <div className="mb-3 w-50">
+                  <label>Name On Card</label>
+                  <input name="nameOnCard" className="form-control" defaultValue="Brutchsama" />
+                </div>
+                <button className="btn btn-primary">Submit</button>
+              </form>
+            </Accordion.Body>
+          </Accordion.Item>
         </Accordion>
       </div>
     </div>

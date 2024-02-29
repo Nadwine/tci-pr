@@ -163,13 +163,10 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
       </div>
       <div className="card">
         <Accordion>
-          <Card>
-            <Card.Header>
-              <Accordion.Toggle as={Button} variant="light" eventKey="0" style={{ width: "100%", display: "flex" }}>
-                <strong>Filter</strong>
-                <i className="bi bi-chevron-down ms-auto" />
-              </Accordion.Toggle>
-            </Card.Header>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>
+              <strong>Filter</strong>
+            </Accordion.Header>
             <Accordion.Collapse eventKey="0">
               <Card.Body>
                 <ul className="list-group">
@@ -295,7 +292,7 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
                 </ul>
               </Card.Body>
             </Accordion.Collapse>
-          </Card>
+          </Accordion.Item>
         </Accordion>
       </div>
     </div>

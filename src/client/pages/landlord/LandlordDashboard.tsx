@@ -32,14 +32,11 @@ export const LandlordDashboard = props => {
         <h3 className="fw-bold my-5 ms-5"> Dashboard</h3>
         {/**---------------------------------- Accordion ----------------------------------------------- */}
         <Accordion defaultActiveKey="0" className="px-md-5 mx-md-5">
-          <Card>
-            <Card.Header>
-              <Accordion.Toggle as={Button} variant="light" eventKey="0" style={{ width: "100%", display: "flex" }}>
-                <strong>Properties</strong>
-                <i className="bi bi-chevron-down ms-auto" />
-              </Accordion.Toggle>
-            </Card.Header>
-            <Accordion.Collapse eventKey="0">
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>
+              <strong>Properties</strong>
+            </Accordion.Header>
+            <Accordion.Body>
               <div className="p-3">
                 <h6 className="text-center fw-bolder">Your Listed Properties</h6>
                 {noListings ? <div>You have not yet posted any property listings</div> : <></>}
@@ -82,21 +79,18 @@ export const LandlordDashboard = props => {
                   })}
                 </div>
               </div>
-            </Accordion.Collapse>
-          </Card>
+            </Accordion.Body>
+          </Accordion.Item>
         </Accordion>
-        <Accordion defaultActiveKey="0" className=" px-md-5 mx-md-5">
-          <Card>
-            <Card.Header>
-              <Accordion.Toggle as={Button} variant="light" eventKey="0" style={{ width: "100%", display: "flex" }}>
-                <strong>Tenancies</strong>
-                <i className="bi bi-chevron-down ms-auto" />
-              </Accordion.Toggle>
-            </Card.Header>
+        <Accordion className=" px-md-5 mx-md-5">
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>
+              <strong>Tenancies</strong>
+            </Accordion.Header>
             <Accordion.Collapse eventKey="0">
               <p>You have no tenancies</p>
             </Accordion.Collapse>
-          </Card>
+          </Accordion.Item>
         </Accordion>
         <div className="m-5" style={{ height: "490px", width: "910px", justifyContent: "center" }}>
           <Bar

@@ -10,7 +10,7 @@ const AboutUs = props => {
         className="image-container ml-sm-3"
         style={{
           position: "absolute",
-          maxHeight: mobileView ? "800px" : "auto",
+          height: mobileView ? "800px" : "auto",
           width: "100%",
           filter: "sepia(5%) saturate(160%) brightness(70%) hue-rotate(341deg)",
           overflow: "hidden"
