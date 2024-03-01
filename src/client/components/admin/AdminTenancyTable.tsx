@@ -25,10 +25,12 @@ const columns = [
     footer: info => info.column.id
   }),
   columnHelper.accessor("isDepositPaid", {
+    cell: info => (info.getValue() ? "Yes" : "No"),
     header: "Deposit Paid?",
     footer: info => info.column.id
   }),
   columnHelper.accessor("isDepositReleased", {
+    cell: info => (info.getValue() ? "Yes" : "No"),
     header: "Deposit Released?",
     footer: info => info.column.id
   }),
@@ -40,7 +42,7 @@ const columns = [
     header: "Address Line1",
     footer: info => info.column.id
   }),
-  columnHelper.accessor("User.Admin.User.ListingLandlord.lastName", {
+  columnHelper.accessor("PropertyForRent.Listing.ListingLandlord.firstName", {
     header: "Landlord",
     footer: info => info.column.id
   }),
@@ -85,7 +87,7 @@ export const AdminTenancyTable = props => {
           </thead>
           <tbody>
             {table.getRowModel().rows.map(row => (
-              <tr key={row.id}>
+              <tr className="point" onClick={() => navigate(`/manage-property/rent/${row.original.PropertyForRent.Listing.id}`)} key={row.id}>
                 {row.getVisibleCells().map(cell => (
                   <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
                 ))}

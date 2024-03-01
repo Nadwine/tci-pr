@@ -14,6 +14,7 @@ import DocumentList from "../../components/landlord-n-admin/DocumentList";
 import { setActiveConversation } from "../../redux/reducers/messagesReducer";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { Accordion } from "react-bootstrap";
 
 const ManageSingleProperty = props => {
   const dispatch = useDispatch();
@@ -75,8 +76,34 @@ const ManageSingleProperty = props => {
         <h5>Attached Documents</h5>
         <DocumentList documents={[]} />
       </div>
+      <div className="pt-5 pb-5">
+        <h5>Tanancy</h5>
+        <Accordion style={{ maxWidth: "500px" }}>
+          <Accordion.Header>Tenancy Agreement</Accordion.Header>
+          <Accordion.Header>Status</Accordion.Header>
+        </Accordion>
+      </div>
+      <div className="pt-5 pb-5">
+        <h5>Tenants</h5>
+        <div>
+          {tenants?.map((curTenant, curIndex) => {
+            const tenantName = `${curTenant.firstName} ${curTenant.lastName}`;
+            return (
+              <div key={curIndex}>
+                <div>
+                  {tenantName}{" "}
+                  <a href={`/manage-tenancy/${curTenant.id}`} className="ms-5 btn btn-link">
+                    Manage Tenant
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
       <div>
-        <h5>Property Tenant</h5>
+        <h5>Payments</h5>
+        <a className="point btn-link">Manage/Setup Payments</a>
       </div>
       <div className="d-flex">
         <div className="ms-auto btn">

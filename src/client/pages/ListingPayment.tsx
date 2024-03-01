@@ -191,9 +191,11 @@ const ListingPayment = props => {
                 <button className="btn btn-primary">Submit</button>
               </form>
               {clientSecret}
-              <Elements stripe={stripePromise} options={{ clientSecret }}>
-                <StripeConfirmPayment />
-              </Elements>
+              {clientSecret && (
+                <Elements stripe={stripePromise} options={{ clientSecret }}>
+                  <StripeConfirmPayment />
+                </Elements>
+              )}
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>

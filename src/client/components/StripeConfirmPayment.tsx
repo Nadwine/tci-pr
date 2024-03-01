@@ -22,7 +22,7 @@ export const StripeConfirmPayment = (props: any) => {
       elements,
       confirmParams: {
         // success URL query come with status=success
-        return_url: "https://localhost:8080/order/123/complete"
+        return_url: window.location.href
       }
     });
 

@@ -186,6 +186,7 @@ const Main = () => {
             <Route path="my-tenancy" element={<MyTenancy />} />
             <Route path="about" element={<AboutUs />} />
             <Route path="manage-property/rent/:id" element={<RequirePermission view={<ManageSingleProperty />} roles={["landlord", "admin"]} />} />
+            <Route path="manage-tenancy/:property_tenant_id" element={<div></div>} />
             <Route path="admin/dashboard/listing-for-aproval" element={<RequirePermission view={<AdminApproveListingTable />} roles={["admin"]} />} />
             <Route path="admin/dashboard/tenancies" element={<RequirePermission view={<AdminTenancyTable />} roles={["admin"]} />} />
             <Route path="admin/dashboard/users" element={<RequirePermission view={<AdminUserTable />} roles={["admin"]} />} />
