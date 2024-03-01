@@ -76,10 +76,7 @@ const MessageEnquiries = props => {
   return enquiries.length > 0 ? (
     <div className="d-flex flex-wrap justify-content-center">
       <h3 className="w-100 my-4 ms-5 fw-bolder">Your Enquiries</h3>
-      <div
-        className="card p-0 col-md-4 col-lg-4 shadow-sm"
-        style={{ overflow: "scroll", height: "700px", borderTopLeftRadius: "10px", borderBottomLeftRadius: "10px" }}
-      >
+      <div className="card p-0 col-md-4 col-lg-4 shadow-sm" style={{ overflow: "scroll", height: "700px" }}>
         {/* Conversation List start */}
         {enquiries.map((enq, i) => {
           const hasMessages = enq?.Messages?.length > 0;
@@ -115,7 +112,7 @@ const MessageEnquiries = props => {
         })}
         {/* Conversation List end */}
       </div>
-      <div className="card col-md-7 col-lg-7 shadow-sm" style={{ height: "700px", borderTopRightRadius: "10px", borderBottomRightRadius: "10px" }}>
+      <div className="card col-md-7 col-lg-7 shadow-sm" style={{ height: "700px" }}>
         {!activeConversation && (
           <div className="mx-auto" style={{ marginTop: "250px" }}>
             <img src="/static/message.png" style={{ height: "169px", width: "190px" }}></img>

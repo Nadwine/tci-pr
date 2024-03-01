@@ -3,6 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { connect } from "react-redux";
 import Listing from "../../database/models/listing";
 import dayjs from "dayjs";
+import Offcanvas from "react-bootstrap/Offcanvas";
 
 type Props = {
   show: boolean;
@@ -18,36 +19,38 @@ export const LandlordProfileModal = (props: Props) => {
   const showHomeBase = isPostByAdmin || landlordPostButProfileIncomplete;
 
   return (
-    <Modal show={show}>
-      <Modal.Header>
-        <Modal.Title>
-          {listing.ListingLandlord?.firstName} {listing.ListingLandlord?.lastName}
-        </Modal.Title>
-        <Button variant="secondary" onClick={() => setShow(false)}>
-          Close
-        </Button>
-      </Modal.Header>
-      <Modal.Body className="d-flex flex-column justify-content-center">
-        {showHomeBase && (
-          <h6>
-            Posted by <span className="fw-bold">TCI HOMEBASE PROPERTY MANAGEMENT</span>
-          </h6>
-        )}
-        {!isPostByAdmin && listing.ListingLandlord && (
-          <div>
-            <h6 style={{ fontWeight: "700px" }}>Date Joined</h6>
-            <p className="text-secondary">{dayjs(listing.ListingLandlord?.createdAt).fromNow()}</p>
-            <h6 style={{ fontWeight: "700px" }}>Home Island</h6>
-            <p className="text-secondary">{listing.ListingLandlord?.homeIsland}</p>
-            <h6 style={{ fontWeight: "700px" }}>Contact</h6>
-            <p className="text-secondary">{listing.ListingLandlord?.phoneNumber}</p>
-            <h6 style={{ fontWeight: "700px" }}>Posted Properties</h6>
-            <p className="text-secondary">{listing.ListingLandlord?.phoneNumber}</p>
-          </div>
-        )}
-      </Modal.Body>
-      <Modal.Footer></Modal.Footer>
-    </Modal>
+    <>
+      {" "}
+      <Offcanvas show={show} onHide={() => setShow(false)}>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Owner Details</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          {showHomeBase && (
+            <div>
+              <h6>
+                Posted by <span className="fw-bold">TCI HOMEBASE PROPERTY MANAGEMENT</span>
+              </h6>
+              <p className="pt-3">Find out more about TCI Homebase on here-make link</p>
+            </div>
+          )}
+          {!isPostByAdmin && listing.ListingLandlord && (
+            <div>
+              <h5 className="mb-3" style={{ fontWeight: "700px" }}>
+                {listing.ListingLandlord?.firstName} {listing.ListingLandlord.lastName}
+              </h5>
+              <hr />
+              <h6 style={{ fontWeight: "700px" }}>Date Joined</h6>
+              <p className="text-secondary">{dayjs(listing.ListingLandlord?.createdAt).fromNow()}</p>
+              <h6 style={{ fontWeight: "700px" }}>Home Island</h6>
+              <p className="text-secondary">{listing.ListingLandlord?.homeIsland}</p>
+              <h6 style={{ fontWeight: "700px" }}>Contact</h6>
+              <p className="text-secondary">{listing.ListingLandlord?.phoneNumber}</p>
+            </div>
+          )}
+        </Offcanvas.Body>
+      </Offcanvas>
+    </>
   );
 };
 

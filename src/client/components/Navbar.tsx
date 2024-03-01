@@ -40,7 +40,9 @@ function Navbar() {
         {/* <!-- Logo --> */}
         <a className="navbar-brand d-flex flex-row" href="/">
           <img src="/static/web-logo-cyan.png" style={{ width: "40px" }} className="h-8" alt="..." />
-          <span className="d-flex align-items-center fw-bolder caption-bold fs-6 ps-2">TCI Homebase</span>
+          <span className="d-flex align-items-center fw-bolder caption-bold fs-6 ps-2" style={{ WebkitTextStrokeWidth: "0.2px" }}>
+            TCI Homebase
+          </span>
         </a>
         {/* <!-- Navbar toggle --> */}
         <button

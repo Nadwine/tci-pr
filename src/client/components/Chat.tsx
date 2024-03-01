@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { setActiveConversation } from "../redux/reducers/messagesReducer";
 import { useNavigate } from "react-router-dom";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Offcanvas } from "react-bootstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { LoadingSpinnerComponent } from "./LoadingSpinners";
@@ -93,7 +93,7 @@ export const Chat = (props: Props) => {
       if (landlordProfile?.firstName && landlordProfile?.lastName) {
         return `${landlordProfile.firstName} ${landlordProfile?.lastName}`;
       }
-      return `activeConversation?.Listing.ListingLandlord?.firstName`;
+      return `${activeConversation?.Listing.ListingLandlord?.firstName}`;
     } else {
       // landlord
       if (profile?.firstName && profile.lastName) {
@@ -107,13 +107,12 @@ export const Chat = (props: Props) => {
   return (
     <div className="enquiry-message-wrapper">
       <div className="d-flex w-100 flex-column align-items-center">
-        <div className="d-flex chat-header py-3 px-md-5 px-lg-5 w-100" style={{ borderBottom: "1px solid #eaecef", marginBottom: "10px" }}>
+        <div className="d-flex chat-header py-3 px-md-5 px-lg-5 w-100" style={{ borderBottom: "2px solid #eaecef", marginBottom: "10px" }}>
           <img
             src={listing?.ListingMedia.find(m => m.label === "1")?.mediaUrl}
             style={{ height: "40px", width: "40px", borderRadius: "5px", marginRight: "30px" }}
           />
           <strong>{activeConvoTitle}</strong>
-          {mobileView && <button className="btn-close ms-auto" onClick={() => dispatch(setActiveConversation(null))}></button>}
           {activeConversation && !mobileView && (
             <div className="ms-auto pe-2 fs-5">
               <i className="bi bi-three-dots point" onClick={() => setShowDesktopOptionsMenu(!showDesktopOptionsMenu)} />
@@ -206,7 +205,7 @@ export const Chat = (props: Props) => {
         </div>
       </div>
       {/* Mobile Offer Modal */}
-      <Modal show={showDesktopOfferModal} aria-labelledby="contained-modal-title-vcenter" centered>
+      {/* <Modal show={showDesktopOfferModal} aria-labelledby="contained-modal-title-vcenter" centered>
         <form ref={formRef} onSubmit={submitOffer}>
           <Modal.Header>
             <Modal.Title id="contained-modal-title-vcenter">Submit an Offer</Modal.Title>
@@ -239,7 +238,36 @@ export const Chat = (props: Props) => {
             </Button>
           </Modal.Footer>
         </form>
-      </Modal>
+      </Modal> */}
+      <Offcanvas show={showDesktopOfferModal} onHide={() => setShowDesktopOfferModal(false)}>
+        <form ref={formRef} onSubmit={submitOffer}>
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Submit an Offer</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <div className="mb-3">
+              <input name="amount" className="form-control" type="text" placeholder="Rent Price" required />
+            </div>
+            <div className="mb-3">
+              <input name="tenancyLengthDays" className="form-control" type="text" placeholder="Tenancy Length (Days)" required />
+            </div>
+            <div className="mb-3">
+              <label className="text-muted">Preferred Tenancy Start date</label>
+              <input
+                name="preferredStartDate"
+                min={dayjs().format("YYYY-MM-DD")}
+                type="date"
+                className="form-control"
+                placeholder="Preferred Start Date"
+                required
+              />
+              <button className="btn btn mt-4 text-light" style={{ backgroundColor: "#087990" }} type="submit">
+                Submit
+              </button>
+            </div>
+          </Offcanvas.Body>
+        </form>
+      </Offcanvas>
     </div>
   );
 };

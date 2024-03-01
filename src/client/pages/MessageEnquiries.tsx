@@ -10,8 +10,9 @@ import { toast } from "react-toastify";
 import { cloneDeep } from "lodash";
 import dayjs from "dayjs";
 import DesktopMessageEnquires from "./DesktopMessageEnquires";
-import { Button, Modal, ModalProps } from "react-bootstrap";
+import { Button, Modal, ModalProps, Offcanvas } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import listing from "../../database/models/listing";
 
 const MessageEnquiries = props => {
   const dispatch = useDispatch();
@@ -108,7 +109,7 @@ const MessageEnquiries = props => {
       if (landlordProfile?.firstName && landlordProfile?.lastName) {
         return `${landlordProfile.firstName} ${landlordProfile?.lastName}`;
       }
-      return `activeConversation?.Listing.ListingLandlord?.firstName`;
+      return `${activeConversation?.Listing.ListingLandlord?.firstName}`;
     } else {
       // landlord
       if (profile?.firstName && profile.lastName) {
@@ -133,10 +134,13 @@ const MessageEnquiries = props => {
       {mobileView && (
         <div className="message-view-wrapper d-md-none d-lg-none d-xl-none">
           <div className="d-flex align-items-center">
-            <h3 className="px-4 mt-4 ps-1 fw-bolder">Your Enquiries</h3>
+            {!activeConversation && mobileView && <h3 className="px-4 mt-4 ps-1 fw-bolder">Your Enquiries</h3>}
             {activeConversation && (
-              <div className="ms-auto pe-2 fs-5">
-                <i className="bi bi-three-dots point" onClick={() => setShowMobileOptionsMenu(!showMobileOptionsMenu)} />
+              <div className="w-100 pe-2 fs-5">
+                <button className="btn float-start" style={{ height: "3px" }} onClick={() => dispatch(setActiveConversation(null))}>
+                  <i className="bi bi-chevron-left float-left" style={{ WebkitTextStrokeWidth: "3px" }}></i>
+                </button>
+                <i className="bi bi-three-dots float-end point" onClick={() => setShowMobileOptionsMenu(!showMobileOptionsMenu)} />
                 {showMobileOptionsMenu && (
                   <div
                     className="options-menu rounded"
@@ -162,7 +166,7 @@ const MessageEnquiries = props => {
               </div>
             )}
           </div>
-          <hr className="text-secondary"></hr>
+          {!activeConversation && <hr className="text-secondary w-100"></hr>}
           {/* Conversation List start */}
           {!activeConversation &&
             enquiries.map((enq, i) => {
@@ -203,7 +207,7 @@ const MessageEnquiries = props => {
       {!mobileView && <DesktopMessageEnquires />}
 
       {/* Mobile Offer Modal */}
-      <Modal show={showMobileOfferModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+      {/* <Modal show={showMobileOfferModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
         <form ref={formRef} onSubmit={submitOffer}>
           <Modal.Header>
             <Modal.Title id="contained-modal-title-vcenter">Submit an Offer</Modal.Title>
@@ -234,7 +238,36 @@ const MessageEnquiries = props => {
             <Button type="submit">Submit</Button>
           </Modal.Footer>
         </form>
-      </Modal>
+      </Modal> */}
+      <Offcanvas show={showMobileOfferModal} onHide={() => setShowMobileOfferModal(false)}>
+        <form ref={formRef} onSubmit={submitOffer}>
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Submit an Offer</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <div className="mb-3">
+              <input name="amount" className="form-control" type="text" placeholder="Rent Price" required />
+            </div>
+            <div className="mb-3">
+              <input name="tenancyLengthDays" className="form-control" type="text" placeholder="Tenancy Length (Days)" required />
+            </div>
+            <div className="mb-3">
+              <label className="text-muted">Preferred Tenancy Start date</label>
+              <input
+                name="preferredStartDate"
+                min={dayjs().format("YYYY-MM-DD")}
+                type="date"
+                className="form-control"
+                placeholder="Preferred Start Date"
+                required
+              />
+              <button className="btn btn mt-4 text-light" style={{ backgroundColor: "#087990" }} type="submit">
+                Submit
+              </button>
+            </div>
+          </Offcanvas.Body>
+        </form>
+      </Offcanvas>
     </div>
   ) : (
     <div className="my-3 text-center" style={{ justifyItems: "center" }}>
