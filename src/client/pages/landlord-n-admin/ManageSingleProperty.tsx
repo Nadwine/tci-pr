@@ -77,7 +77,7 @@ const ManageSingleProperty = props => {
         <DocumentList documents={[]} />
       </div>
       <div className="pt-5 pb-5">
-        <h5>Tanancy</h5>
+        <h5>Tenancy</h5>
         <Accordion style={{ maxWidth: "500px" }}>
           <Accordion.Header>Tenancy Agreement</Accordion.Header>
           <Accordion.Header>Status</Accordion.Header>
