@@ -32,8 +32,8 @@ const ListingPayment = props => {
       console.log("Stripe Error", res);
       return res;
     });
-  const [clientSecret, setClientSecret] = useState("seti_1OocFWIGvo7mWPbtrL2vDCOE_secret_Pdu3U7ixz5Een8Zxw2I3ZTfKwnqfRMC");
-  const [setupIntentId, setSetupIntentId] = useState("seti_1OocFWIGvo7mWPbtrL2vDCOE");
+  const [clientSecret, setClientSecret] = useState("");
+  const [setupIntentId, setSetupIntentId] = useState("");
 
   // Stripe
   // .confirmCardSetup('{SETUP_INTENT_CLIENT_SECRET}', {
@@ -89,6 +89,7 @@ const ListingPayment = props => {
       body[pair[0]] = pair[1];
     }
     body.listingId = listing?.id;
+    body.browserPath = window.location.pathname;
     const res = await axios.post("/api/payment/rent/attach-landlord", body);
     if (res.status === 200) {
       setClientSecret(res.data.clientSecret);
@@ -189,6 +190,10 @@ const ListingPayment = props => {
                 </div>
                 <button className="btn btn-primary">Submit</button>
               </form>
+              {clientSecret}
+              <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <StripeConfirmPayment />
+              </Elements>
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>

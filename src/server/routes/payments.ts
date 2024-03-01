@@ -251,7 +251,6 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
 
     const setupIntent = await stripeConnector.setupIntents.create({
       payment_method_types: ["card"],
-      // payment_method: method.id,
       customer: customer.id,
       // description: "",
       metadata: {
@@ -260,6 +259,9 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
         email: landlordEmail
       }
     });
+
+    // currently the customer is created but the payment method is not linked to his connected account
+    // we may not need to do the below
     // after confirming the intent on the front end attach it using this
     // await stripeConnector.paymentMethods.attach(<string>setupIntent.payment_method, {
     //   customer: customer.id
@@ -291,6 +293,10 @@ export const stripeWebhook = async (req: Request, res: Response) => {
     case "payment_intent.succeeded":
       // const paymentIntentSucceeded = req.body.data.object;
       // Then define and call a function to handle the event payment_intent.succeeded
+      break;
+    case "setup_intent.succeeded":
+      // We will pull in the setup intent and update the landlord connect account with the payment method
+      console.log();
       break;
     // ... handle other event types
     default:

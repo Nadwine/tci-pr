@@ -33,6 +33,10 @@ export const StripeConfirmPayment = (props: any) => {
       // Your customer will be redirected to your `return_url`. For some payment
       // methods like iDEAL, your customer will be redirected to an intermediate
       // site first to authorize the payment, then redirected to the `return_url`.
+      // with the Succeeded Query params below
+      // setup_intent= the setup intent id
+      // setup_intent_client_secret=the secret
+      // redirect_status=succeeded
     }
   }
 
