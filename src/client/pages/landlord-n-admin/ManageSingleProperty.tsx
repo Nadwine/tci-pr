@@ -103,7 +103,9 @@ const ManageSingleProperty = props => {
       </div>
       <div>
         <h5>Payments</h5>
-        <a className="point btn-link">Manage/Setup Payments</a>
+        <a href={`/property/rent/${listing && listing?.id}/payments`} className="point btn-link">
+          Manage/Setup Payments
+        </a>
       </div>
       <div className="d-flex">
         <div className="ms-auto btn">
