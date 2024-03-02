@@ -7,8 +7,10 @@ import axios from "axios";
 import Profile from "../../database/models/profile";
 import { cloneDeep } from "lodash";
 import { AccountTypeEnum } from "../../../types/enums";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = props => {
+  const navigate = useNavigate();
   const [currentView, setCurrentView] = useState("PersonalDetails");
   const [profile, setProfile] = useState<Profile>();
   const loggedInUsr = useSelector((r: RootState) => r.auth.user);
@@ -271,7 +273,10 @@ const UserProfile = props => {
                 <h5 className="card-title">Your Password</h5>
                 **************
                 <button className="btn btn-white" style={{ float: "right", color: "#055160" }}>
-                  edit <i className="bi bi-pencil-square" />
+                  <p onClick={() => navigate("/forget-password/null?status=pending")}>
+                    {" "}
+                    edit <i className="bi bi-pencil-square" />{" "}
+                  </p>
                 </button>
               </div>
             </div>
