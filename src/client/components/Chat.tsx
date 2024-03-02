@@ -86,7 +86,7 @@ export const Chat = (props: Props) => {
   }, []);
 
   const getConvoUser = () => {
-    const profile = activeConversation?.User.Profile;
+    const profile = activeConversation?.User?.Profile;
     const landlordProfile = activeConversation?.Listing.ListingLandlord;
     if (isTenant) {
       // tenant
@@ -99,7 +99,7 @@ export const Chat = (props: Props) => {
       if (profile?.firstName && profile.lastName) {
         return `${profile.firstName} ${profile?.lastName}`;
       } else {
-        return activeConversation?.User.email;
+        return activeConversation?.User?.email;
       }
     }
   };
