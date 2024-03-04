@@ -13,40 +13,12 @@ import ListingQuestion from "../../database/models/listing_question";
 import Listing from "../../database/models/listing";
 import Tenancy from "../../database/models/tenancy";
 
-export const createTenancyRoute = async (req: Request, res: Response) => {
-  const { rentalAgreementDate, deposit, isDepositPaid, outstandingRent, isDepositReleased, tenancyStatus, tenantUserId, propertyForRentId, isPaymentTogether } =
-    req.body;
-
-  const allowed = req.session.user!.accountType === "admin" || req.session.user!.accountType === "landlord";
-
-  if (!allowed) return res.status(401).json({ message: "Unauthorized" });
-
-  try {
-    const tenancy = await Tenancy.create({
-      rentalAgreementDate: rentalAgreementDate,
-      deposit: deposit,
-      isDepositPaid: isDepositPaid,
-      outstandingRent: outstandingRent,
-      isDepositReleased: isDepositReleased,
-      propertyForRentId: propertyForRentId,
-      userId: tenantUserId,
-      tenancyStatus: tenancyStatus,
-      leadTenantid: 0,
-      isPaymentTogether: isPaymentTogether
-    });
-
-    return res.status(200).json(tenancy);
-  } catch (err) {
-    return res.status(500).json({ message: "Internal Server error 711", err });
-  }
-};
-
 export const getTenantById = async (req: Request, res: Response) => {
-  const id = req.params.id;
+  const tenantId = req.params.id;
 
   try {
-    const tenancy = await Tenant.findByPk(id, {
-      include: [{ model: User }]
+    const tenancy = await Tenant.findByPk(tenantId, {
+      include: [{ model: User }, { model: Tenancy }]
     });
 
     return res.status(200).json(tenancy);
@@ -110,6 +82,7 @@ export const adminGetAllTenants = async (req: Request, res: Response) => {
   try {
     const tenants = await Tenant.findAll({
       include: [
+        { model: User },
         {
           model: Tenancy,
           include: [

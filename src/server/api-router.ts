@@ -41,7 +41,8 @@ import { getAllLandlordsByUser, getLanlordUserById, getSessionLandlordProfile } 
 import { getProfileForLoggedInUser, updateSessionUrsProfile } from "./routes/profile";
 import { sendContactUsMail } from "./routes/mailing-route";
 import { acceptOrDeclineOffer, sendOffer } from "./routes/offer-route";
-import { adminGetAllTenants, createTenancyRoute } from "./routes/tenant-route";
+import { adminGetAllTenants, getTenantById } from "./routes/tenant-route";
+import { createTenancyRoute, getAllTenancies, getLandlordTenancies, getSessionUserTenancies, getTenancyById } from "./routes/tenancy-route";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -135,8 +136,14 @@ router.post("/mailing/offer-accepted", () => null);
 router.post("/offer/send", ensureAuthentication, sendOffer);
 router.post("/offer/status", ensureAuthentication, acceptOrDeclineOffer);
 
-// /api/property-tenant
-router.get("/property-tenant/all", ensureAdmin, adminGetAllTenants);
-router.get("/property-tenant/create", ensureAuthentication, createTenancyRoute);
+// /api/tenant
+router.get("/tenant/all", ensureAdmin, adminGetAllTenants);
+router.get("/tenant/:id", ensureAdmin, getTenantById);
 
+// /api/tenancy
+router.get("/tenancy/all", ensureAdmin, getAllTenancies);
+router.get("/tenancy/user", ensureAuthentication, getSessionUserTenancies);
+router.get("/tenancy/landlord", ensureAuthentication, getLandlordTenancies);
+router.get("/tenancy/:id", ensureAuthentication, getTenancyById);
+router.get("/tenancy/create", ensureAuthentication, createTenancyRoute);
 export default router;

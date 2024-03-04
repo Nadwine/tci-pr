@@ -58,9 +58,9 @@ export const AdminTenancyTable = props => {
   const navigate = useNavigate();
 
   const loadData = async () => {
-    const res = await axios.get("/api/property-tenant/all");
+    const res = await axios.get("/api/tenant/all");
     if (res.status !== 200) {
-      toast.error("error fetching /api/property-tenant/all");
+      toast.error("error fetching /api/tenant/all");
       return;
     }
     setData(res.data);
