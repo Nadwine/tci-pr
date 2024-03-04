@@ -316,9 +316,9 @@ export const landLordSubmitRentListingRoute = async (req: Request, res: Response
         const currentFile: Express.Multer.File = files[i];
         const filename = `${new Date().getTime()}_${currentFile.originalname}`;
         const s3Key = `${req.session.user!.id}/${newListing.id}/${filename}`;
-
+        const isimage = currentFile.mimetype.includes("image");
         // transform to small thumbnail and fix aspect ratio
-        const imageBuffer = await sharp(currentFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer();
+        const imageBuffer = isimage ? await sharp(currentFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer() : currentFile.buffer;
 
         await s3Bucket
           .upload(
@@ -416,6 +416,11 @@ export const getRentListingById = async (req: Request, res: Response) => {
 export const getExpandedRentListingById = async (req: Request, res: Response) => {
   const id = req.params.id;
   const sessUsr = req.session.user;
+
+  if (sessUsr?.accountType !== "admin" && sessUsr?.accountType !== "landlord") {
+    return res.status(401).json({ message: "unauthorized" });
+  }
+  const isLandlord = req.session.user?.accountType === "landlord";
   try {
     const listing = await Listing.findByPk(id, {
       include: [

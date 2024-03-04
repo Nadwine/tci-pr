@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { Accordion, Button, Card } from "react-bootstrap";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Listing from "../../database/models/listing";
 import { toast } from "react-toastify";
@@ -10,6 +10,9 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { CardElement, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import StripeConfirmPayment from "../components/StripeConfirmPayment";
+import { RootState } from "../redux/store";
+import ListingLandlord from "../../database/models/listing_landlord";
+import User from "../../database/models/user";
 
 const ListingPayment = props => {
   const params = useParams();
@@ -21,7 +24,11 @@ const ListingPayment = props => {
   const [expiration, setExpiration] = useState("");
   const [cvv, setCvv] = useState("");
   const [listing, setListing] = useState<Listing>();
+  const [landlordUser, setLandlordUser] = useState<User>();
+  const [clientSecret, setClientSecret] = useState("");
+  const [setupIntentId, setSetupIntentId] = useState("");
   const [loading, setLoading] = useState(true);
+  const loginUsr = useSelector((r: RootState) => r.auth.user);
   const landlordFormRef = useRef<HTMLFormElement>(null);
   const stripePromise = loadStripe("pk_test_51OYZbBIGvo7mWPbtUd3Dvc2lKOTPTdp2Ic8uD7uVcxbMbFERYYCu5ulgjJZ7EcPkQxSqp0rYi0AagRNAZ43sRJ7P00Zj8d0CEX")
     .then(res => {
@@ -32,30 +39,21 @@ const ListingPayment = props => {
       console.log("Stripe Error", res);
       return res;
     });
-  const [clientSecret, setClientSecret] = useState("");
-  const [setupIntentId, setSetupIntentId] = useState("");
 
-  // Stripe
-  // .confirmCardSetup('{SETUP_INTENT_CLIENT_SECRET}', {
-  //   payment_method: {
-  //     card: cardElement,
-  //     billing_details: {
-  //       name: 'Jenny Rosen',
-  //     },
-  //   },
-  // })
-  // .then(function(result) {
-  //   // Handle result.error or result.setupIntent
-  // });
+  const isLanlord = loginUsr?.accountType === "landlord";
+  const landlordId = isLanlord ? loginUsr.id : listing?.ListingLandlord?.userId;
 
   const initialFetch = async () => {
-    const res = await axios.get(`/api/listing/rent/expanded/${listingId}`);
-    if (res.status === 200) {
-      console.log("/api/listing/rent/expanded", res.data);
-      setListing(res.data);
+    const listingRes = await axios.get(`/api/listing/rent/expanded/${listingId}`);
+    const landlordRes = await axios.get(`/api/landlord/${landlordId}`);
+    if (landlordRes?.status === 200) setLandlordUser(landlordRes.data);
+    console.log("landlord", landlordRes.data);
+    if (listingRes.status === 200) {
+      console.log("/api/listing/rent/expanded", listingRes.data);
+      setListing(listingRes.data);
       setLoading(false);
     } else {
-      console.log(`/api/listing/rent/${listingId}`, res);
+      console.log(`/api/listing/rent/${listingId}`, listingRes);
     }
   };
 
@@ -69,13 +67,24 @@ const ListingPayment = props => {
     try {
       const res = await axios.post("/api/payment/rent/create/monthly-payment-link", {
         amountUSD: listing?.PropertyForRent.rentAmount,
-        listingId: listing?.id
+        listingId: listing?.id,
+        landlordUserId: landlordId
       });
       if (res.status === 200) toast.success("Payment link successfully generated");
     } catch {
       toast.error("Error while generating this link");
     }
     initialFetch();
+  };
+
+  const payoutlandlord = async () => {
+    // /api/payment/pay-out-landlord
+    // const propertyForRentId = req.body.propertyForRentId;
+    // const landlordId = req.body.landlordId;
+    const reqBody = { propertyForRentId: listing?.PropertyForRent.id, landlordId: listing?.ListingLandlord!.id };
+    const res = await axios.post("/api/payment/pay-out-landlord", reqBody);
+    if (res.status === 200) toast.success("Payment Sent");
+    if (res.status !== 200) toast.error("Error ocured while sending payment. No fund were transfered");
   };
 
   const submitNewLandLord = async e => {
@@ -104,6 +113,8 @@ const ListingPayment = props => {
   const now = dayjs();
   const linkGeneratedAt = listing?.stripePaymentLink?.generatedAt;
   const islinkExpired = dayjs(linkGeneratedAt).add(23, "hours").isBefore(now);
+
+  const disableForm = loginUsr?.accountType === "landlord";
 
   return (
     <div className="listing-payment">
@@ -142,60 +153,46 @@ const ListingPayment = props => {
           <Accordion.Item eventKey="1">
             <Accordion.Header>LandLord Details</Accordion.Header>
             <Accordion.Body>
-              <h4>Create Landlord to Pay</h4>
+              <h4>Landlord to Pay</h4>
               <form ref={landlordFormRef} onSubmit={submitNewLandLord}>
                 <div className="mb-3 w-50">
                   <label>First Name</label>
-                  <input name="firstName" className="form-control" defaultValue="Brutchsama" />
+                  <input name="firstName" className="form-control" defaultValue={landlordUser?.ListingLandlord?.firstName} required />
                 </div>
                 <div className="mb-3 w-50">
                   <label>Last Name</label>
-                  <input name="lastName" className="form-control" defaultValue="Jean-Louis" />
+                  <input name="lastName" className="form-control" defaultValue={landlordUser?.ListingLandlord?.lastName} required />
                 </div>
                 <div className="mb-3 w-50">
                   <label>Email</label>
-                  <input name="landlordEmail" className="form-control" defaultValue="brutchsama@mail.com" />
+                  <input name="landlordEmail" className="form-control" defaultValue={landlordUser?.email} required />
                 </div>
                 <div className="mb-3 w-50">
                   <label>Phone</label>
-                  <input name="phoneNumber" className="form-control" defaultValue="+447535799721" />
+                  <input name="phoneNumber" className="form-control" defaultValue={landlordUser?.ListingLandlord?.phoneNumber} required />
                 </div>
                 <div className="mb-3 w-50">
                   <label>Home Island</label>
-                  <input name="homeIsland" className="form-control" defaultValue="Providenciales" />
+                  <input name="homeIsland" className="form-control" defaultValue={landlordUser?.ListingLandlord?.homeIsland} required />
                 </div>
                 <div className="mb-3 w-50">
                   <label>Address</label>
-                  <input name="address" className="form-control" defaultValue="Address, Test street, Five Cays" />
+                  <input name="address" className="form-control" defaultValue={landlordUser?.ListingLandlord?.addressString} required />
                 </div>
-                <div className="mb-3 w-50">
-                  <label>Card Number 4242424242424242</label>
-                  <input name="cardNumber" className="form-control" defaultValue="4242424242424242" />
-                </div>
-                <div className="mb-3 w-50">
-                  <label>Expiry Month</label>
-                  <input name="expMonth" className="form-control" defaultValue="12" />
-                </div>
-                <div className="mb-3 w-50">
-                  <label>Expiry Year</label>
-                  <input name="expYear" className="form-control" defaultValue="2027" />
-                </div>
-                <div className="mb-3 w-50">
-                  <label>Cvv</label>
-                  <input name="cvv" className="form-control" defaultValue="123" />
-                </div>
-                <div className="mb-3 w-50">
-                  <label>Name On Card</label>
-                  <input name="nameOnCard" className="form-control" defaultValue="Brutchsama" />
-                </div>
-                <button className="btn btn-primary">Submit</button>
+                <button className="btn btn-primary">Add Credit Card</button>
               </form>
-              {clientSecret}
+              TODO Show card alrady linked and make remove card button
               {clientSecret && (
                 <Elements stripe={stripePromise} options={{ clientSecret }}>
                   <StripeConfirmPayment />
                 </Elements>
               )}
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="2">
+            <Accordion.Header>Pay Landlord</Accordion.Header>
+            <Accordion.Body>
+              <button onClick={() => payoutlandlord()}>Pay</button>
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>

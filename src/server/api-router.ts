@@ -34,10 +34,10 @@ import {
 } from "./routes/listing-route";
 import { createEnquiryRoute, getLatestEnquiry } from "./routes/enquiry-route";
 import { getMessagesByEnquiryConversationId, sendMessageToConversation, setMessageAsSeen } from "./routes/message-chat-route";
-import { adminCreateLandLordForListing, createNewRentMonthly, stripeWebhook } from "./routes/payments";
+import { adminCreateLandLordForListing, createNewRentMonthly, payLandlordForProperty, stripeWebhook } from "./routes/payments";
 import { submitFeedback } from "./routes/feedback";
 import { getAllUsers } from "./routes/user";
-import { getAllLandlordsByUser, getSessionLandlordProfile } from "./routes/landlord";
+import { getAllLandlordsByUser, getLanlordUserById, getSessionLandlordProfile } from "./routes/landlord";
 import { getProfileForLoggedInUser, updateSessionUrsProfile } from "./routes/profile";
 import { sendContactUsMail } from "./routes/mailing-route";
 import { acceptOrDeclineOffer, sendOffer } from "./routes/offer-route";
@@ -106,7 +106,8 @@ router.post("/message/enquiry", ensureAuthentication, sendMessageToConversation)
 
 // /api/payments  routes
 router.post("/payment/rent/create/monthly-payment-link", ensureAdmin, createNewRentMonthly);
-router.post("/payment/rent/attach-landlord", ensureAdmin, adminCreateLandLordForListing);
+router.post("/payment/rent/attach-landlord", ensureAuthentication, adminCreateLandLordForListing);
+router.post("/payment/pay-out-landlord", ensureAuthentication, payLandlordForProperty);
 router.post("/payment/webhook", express.raw({ type: "application/json" }), stripeWebhook);
 
 // /api/feedback
@@ -118,6 +119,7 @@ router.get("/users", ensureAdmin, getAllUsers);
 // /api/landlord
 router.get("/landlords", ensureAdmin, getAllLandlordsByUser);
 router.get("/landlord/profile", ensureAuthentication, getSessionLandlordProfile);
+router.get("/landlord/:id", ensureAuthentication, getLanlordUserById);
 
 // /api/profile
 router.get("/profile/my-profile/", ensureAuthentication, getProfileForLoggedInUser);

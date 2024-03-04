@@ -7,6 +7,11 @@ import Listing from "../../database/models/listing";
 import dayjs from "dayjs";
 import User from "../../database/models/user";
 import messages from "../../database/fake-data/messages";
+import PropertyForRent from "../../database/models/property_for_rent";
+
+const dollarsToCent = (amountUSD: number) => {
+  return parseFloat(`${amountUSD}`) * 100;
+};
 
 export const createNewRentMonthly = async (req: Request, res: Response) => {
   if (req.session.user?.accountType !== "admin") return res.status(401).json({ message: "Unauthorized " });
@@ -72,6 +77,10 @@ export const createNewRentMonthly = async (req: Request, res: Response) => {
 };
 
 export const adminCreateLandLordForListing = async (req: Request, res: Response) => {
+  const sessUsr = req.session.user;
+  if (sessUsr?.accountType !== "landlord" && sessUsr?.accountType !== "admin") {
+    return res.status(401).json({ message: "unauthorized" });
+  }
   // use stripe connect
   // we will link landlord to listing in DB and create a connected account for him
   // this stripe connected account will hold his card and we will store is connected Id in out DB
@@ -165,36 +174,45 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
 
     // first register my stripe account https://dashboard.stripe.com/account/applications/settings
     //You’ll provide this ID value to authenticate as the connected account by passing it into requests in the Stripe-Account header.
-    const landlordStripeConnect = await stripeConnector.accounts.create({
-      // created accnt found here can manually setup a credit card here which will accept payouts
-      // https://dashboard.stripe.com/test/connect/accounts/overview
-      type: "custom",
-      country: "GB",
-      email: landlordEmail,
-      default_currency: "usd",
-      metadata: {
-        firstName: firstName,
-        lastName: lastName
-      },
-      settings: {
-        payouts: {
-          schedule: {
-            interval: "manual"
+    let landlordStripeConnect: Stripe.Account;
+    let customer: Stripe.Customer | Stripe.DeletedCustomer;
+
+    if (!landlord?.stripeConnectId) {
+      landlordStripeConnect = await stripeConnector.accounts.create({
+        // created accnt found here can manually setup a credit card here which will accept payouts
+        // https://dashboard.stripe.com/test/connect/accounts/overview
+        type: "custom",
+        country: "GB",
+        email: landlordEmail,
+        default_currency: "usd",
+        metadata: {
+          landlordId: landlord.id,
+          firstName: firstName,
+          lastName: lastName
+        },
+        settings: {
+          payouts: {
+            schedule: {
+              interval: "manual"
+            }
+          }
+        },
+        capabilities: {
+          card_payments: {
+            requested: true
+          },
+          transfers: {
+            requested: true
+          },
+          bank_transfer_payments: {
+            requested: true
           }
         }
-      },
-      capabilities: {
-        card_payments: {
-          requested: true
-        },
-        transfers: {
-          requested: true
-        },
-        bank_transfer_payments: {
-          requested: true
-        }
-      }
-    });
+      });
+    }
+    if (landlord.stripeConnectId) {
+      landlordStripeConnect = await stripeConnector.accounts.retrieve(landlord.stripeConnectId);
+    }
 
     // const landlorBankToken = await stripeConnector.tokens.create({
     //   bank_account: {
@@ -237,13 +255,24 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
     //   type: "account_update"
     // });
 
-    const customer = await stripeConnector.customers.create({
-      name: `${firstName} ${lastName}`,
-      email: landlordEmail
-      // address: {
-      //   city:
-      // }
-    });
+    if (!landlord.stripeCustomerId) {
+      customer = await stripeConnector.customers.create({
+        name: `${firstName} ${lastName}`,
+        email: landlordEmail,
+        metadata: {
+          landlordId: landlord.id,
+          connectId: landlordStripeConnect!.id,
+          firstName: firstName,
+          lastName: lastName
+        }
+        // address: {
+        //   city:
+        // }
+      });
+    }
+    if (landlord.stripeCustomerId) {
+      customer = await stripeConnector.customers.retrieve(landlord.stripeCustomerId);
+    }
 
     // const token = await stripeConnector.tokens.create({})
 
@@ -251,9 +280,11 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
 
     const setupIntent = await stripeConnector.setupIntents.create({
       payment_method_types: ["card"],
-      customer: customer.id,
+      customer: customer!.id,
       // description: "",
       metadata: {
+        landlordId: landlord.id,
+        connectId: landlordStripeConnect!.id,
         firstName: firstName,
         lastName: lastName,
         email: landlordEmail
@@ -274,11 +305,60 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
       homeIsland: homeIsland,
       addressString: address,
       cardDetails: card,
-      stripeConnectId: landlordStripeConnect.id,
-      stripeCustomerId: customer.id
+      stripeConnectId: landlordStripeConnect!.id,
+      stripeCustomerId: customer!.id
     });
 
-    return res.json({ intentId: setupIntent.id, clientSecret: setupIntent.client_secret });
+    return res.json({ intentId: setupIntent.id, clientSecret: setupIntent.client_secret, landlord: landlord });
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
+export const payLandlordForProperty = async (req: Request, res: Response) => {
+  const stripeConnector = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2023-10-16" });
+
+  const propertyForRentId = req.body.propertyForRentId;
+  const landlordId = req.body.landlordId;
+
+  try {
+    const landlord = await ListingLandlord.findByPk(landlordId);
+    const property = await PropertyForRent.findByPk(propertyForRentId);
+
+    if (!landlord?.stripeConnectId || !landlord.stripeCustomerId) {
+      return res.status(400).json({ message: "Landlord stripe details incomplete" });
+    }
+
+    const paymentMethods = await stripeConnector.customers.listPaymentMethods(landlord?.stripeCustomerId, {
+      limit: 3
+    });
+
+    // await stripeConnector.accounts.update("", {
+    //   settings: {
+    //     payouts: {
+    //       schedule
+    //     }
+    //   }
+    // })
+
+    const intent = await stripeConnector.paymentIntents.create({
+      currency: "usd",
+      amount: dollarsToCent(0.5),
+      customer: landlord?.stripeCustomerId,
+      confirm: true,
+      payment_method: paymentMethods.data[0].id,
+      automatic_payment_methods: {
+        enabled: true,
+        allow_redirects: "never"
+      }
+    });
+
+    const charge = await stripeConnector.refunds.create({
+      payment_intent: intent.id,
+      amount: dollarsToCent(property?.rentAmount || 0)
+    });
+
+    return res.json({ message: "success", charge });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error", err });
   }
