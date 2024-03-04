@@ -4,9 +4,10 @@ import User from "./user";
 import sequelize from "../sequelize-connection";
 import { bool } from "aws-sdk/clients/signer";
 import PropertyForRent from "./property_for_rent";
+import Tenancy from "./tenancy";
 
 // for typeScript typing
-export default class PropertyTenant extends Model<InferAttributes<PropertyTenant>, InferCreationAttributes<PropertyTenant>> {
+export default class Tenant extends Model<InferAttributes<Tenant>, InferCreationAttributes<Tenant>> {
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
@@ -21,9 +22,11 @@ export default class PropertyTenant extends Model<InferAttributes<PropertyTenant
   declare outstandingRent?: number;
   declare isDepositReleased?: bool;
   declare propertyForRentId: number;
-  declare tenancyStatus: "awaitng-signatures" | "ongoing" | "ended";
+  declare tenancyStatus: "awaiting-signatures" | "ongoing" | "ended";
+  declare tenancyId: CreationOptional<number>;
   declare isLeadTenant: boolean;
   declare userId: number;
+  declare Tenancy: CreationOptional<Tenancy>;
   declare User: CreationOptional<User>;
   declare PropertyForRent: CreationOptional<PropertyForRent>;
   declare createdAt: CreationOptional<Date>;
@@ -31,7 +34,7 @@ export default class PropertyTenant extends Model<InferAttributes<PropertyTenant
 }
 
 // allowNull defaults to true if not set
-PropertyTenant.init(
+Tenant.init(
   // @ts-ignore
   {
     // Model attributes are defined here
@@ -92,14 +95,14 @@ PropertyTenant.init(
   {
     // Other model options
     sequelize,
-    tableName: "property_tenants",
+    tableName: "tenants",
     timestamps: true,
-    modelName: "PropertyTenant"
+    modelName: "Tenant"
   }
 );
 
-PropertyForRent.hasMany(PropertyTenant, { foreignKey: "propertyForRentId" });
-PropertyTenant.belongsTo(PropertyForRent, { foreignKey: "propertyForRentId" });
+Tenant.belongsTo(User, { foreignKey: { name: "userId" } });
+User.hasOne(Tenant, { foreignKey: "userId" });
 
-PropertyTenant.belongsTo(User, { foreignKey: { name: "userId", allowNull: false } });
-User.hasOne(PropertyTenant, { foreignKey: "userId" });
+Tenant.belongsTo(Tenancy, { foreignKey: { name: "tenancyId" } });
+Tenancy.hasMany(Tenant, { foreignKey: "tenancyId" });

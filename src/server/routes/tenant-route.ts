@@ -1,5 +1,5 @@
 import { Request, Response, Express } from "express";
-import PropertyTenant from "../../database/models/tenant_property";
+import Tenant from "../../database/models/tenant";
 import PropertyForRent from "../../database/models/property_for_rent";
 import Address from "../../database/models/address";
 import ListingLandlord from "../../database/models/listing_landlord";
@@ -11,9 +11,10 @@ import Admin from "../../database/models/admin";
 import EnquiryConversation from "../../database/models/enquiry_conversation";
 import ListingQuestion from "../../database/models/listing_question";
 import Listing from "../../database/models/listing";
+import Tenancy from "../../database/models/tenancy";
 
 export const createTenancyRoute = async (req: Request, res: Response) => {
-  const { rentalAgreementDate, deposit, isDepositPaid, outstandingRent, isDepositReleased, tenancyStatus, tenantUserId, propertyForRentId, isLeadTenant } =
+  const { rentalAgreementDate, deposit, isDepositPaid, outstandingRent, isDepositReleased, tenancyStatus, tenantUserId, propertyForRentId, isPaymentTogether } =
     req.body;
 
   const allowed = req.session.user!.accountType === "admin" || req.session.user!.accountType === "landlord";
@@ -21,7 +22,7 @@ export const createTenancyRoute = async (req: Request, res: Response) => {
   if (!allowed) return res.status(401).json({ message: "Unauthorized" });
 
   try {
-    const tenancy = await PropertyTenant.create({
+    const tenancy = await Tenancy.create({
       rentalAgreementDate: rentalAgreementDate,
       deposit: deposit,
       isDepositPaid: isDepositPaid,
@@ -30,7 +31,8 @@ export const createTenancyRoute = async (req: Request, res: Response) => {
       propertyForRentId: propertyForRentId,
       userId: tenantUserId,
       tenancyStatus: tenancyStatus,
-      isLeadTenant: isLeadTenant
+      leadTenantid: 0,
+      isPaymentTogether: isPaymentTogether
     });
 
     return res.status(200).json(tenancy);
@@ -43,7 +45,7 @@ export const getTenantById = async (req: Request, res: Response) => {
   const id = req.params.id;
 
   try {
-    const tenancy = await PropertyTenant.findByPk(id, {
+    const tenancy = await Tenant.findByPk(id, {
       include: [{ model: User }]
     });
 
@@ -106,21 +108,26 @@ export const getTenantById = async (req: Request, res: Response) => {
 
 export const adminGetAllTenants = async (req: Request, res: Response) => {
   try {
-    const tenants = await PropertyTenant.findAll({
+    const tenants = await Tenant.findAll({
       include: [
         {
-          model: PropertyForRent,
+          model: Tenancy,
           include: [
             {
-              model: Listing,
+              model: PropertyForRent,
               include: [
-                { model: Address },
-                { model: ListingLandlord },
-                { model: ListingMedia, order: [["id", "ASC"]] },
-                { model: Admin, include: [User] },
-                { model: ListingQuestion },
-                // { model: EnquiryConversation, include: [{ model: Listing, include: [{ model: Offer }, { model: ListingMedia }] }] },
-                { model: Offer, include: [{ model: User, include: [Profile] }] }
+                {
+                  model: Listing,
+                  include: [
+                    { model: Address },
+                    { model: ListingLandlord },
+                    { model: ListingMedia, order: [["id", "ASC"]] },
+                    { model: Admin, include: [User] },
+                    { model: ListingQuestion },
+                    // { model: EnquiryConversation, include: [{ model: Listing, include: [{ model: Offer }, { model: ListingMedia }] }] },
+                    { model: Offer, include: [{ model: User, include: [Profile] }] }
+                  ]
+                }
               ]
             }
           ]

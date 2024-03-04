@@ -8,9 +8,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Listing from "../../../database/models/listing";
 import { useNavigate } from "react-router-dom";
-import PropertyTenant from "../../../database/models/tenant_property";
+import Tenant from "../../../database/models/tenant";
 
-const columnHelper = createColumnHelper<PropertyTenant>();
+const columnHelper = createColumnHelper<Tenant>();
 const columns = [
   columnHelper.accessor("id", {
     cell: info => info.getValue(),
@@ -54,7 +54,7 @@ const columns = [
 ];
 
 export const AdminTenancyTable = props => {
-  const [data, setData] = useState<PropertyTenant[]>([]);
+  const [data, setData] = useState<Tenant[]>([]);
   const navigate = useNavigate();
 
   const loadData = async () => {

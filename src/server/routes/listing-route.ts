@@ -18,10 +18,11 @@ import ListingLandlord from "../../database/models/listing_landlord";
 import { createListingRouteSchema, createListingSchema } from "../../utils/validation-schemas/schema-listings";
 import ListingSaved from "../../database/models/listing_saved";
 import Offer from "../../database/models/offer";
-import PropertyTenant from "../../database/models/tenant_property";
+import Tenant from "../../database/models/tenant";
 import PropertyDocument from "../../database/models/property_document";
 import Expense from "../../database/models/expense";
 import Profile from "../../database/models/profile";
+import Tenancy from "../../database/models/tenancy";
 
 const s3Bucket = new S3({
   s3ForcePathStyle: true,
@@ -425,7 +426,7 @@ export const getExpandedRentListingById = async (req: Request, res: Response) =>
     const listing = await Listing.findByPk(id, {
       include: [
         { model: Address },
-        { model: PropertyForRent, include: [PropertyTenant, PropertyDocument, Expense] },
+        { model: PropertyForRent, include: [Tenancy, PropertyDocument, Expense] },
         { model: ListingLandlord },
         { model: ListingMedia, order: [["id", "ASC"]] },
         { model: Admin, include: [User] },

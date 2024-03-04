@@ -3,7 +3,7 @@ import User from "../../database/models/user";
 import Profile from "../../database/models/profile";
 import ListingLandlord from "../../database/models/listing_landlord";
 import { where } from "sequelize";
-import PropertyTenant from "../../database/models/tenant_property";
+import Tenant from "../../database/models/tenant";
 
 export const getProfileForLoggedInUser = async (req: Request, res: Response) => {
   const sessionUsr = req.session.user;
@@ -28,7 +28,7 @@ export const updateSessionUrsProfile = async (req: Request, res: Response) => {
   const country = "Turks and Caicos Islands";
 
   try {
-    const found = await Profile.findOne({ where: { userId: sessionUsr!.id }, include: [{ model: User, include: [ListingLandlord, PropertyTenant] }] });
+    const found = await Profile.findOne({ where: { userId: sessionUsr!.id }, include: [{ model: User, include: [ListingLandlord, Tenant] }] });
     const newRec =
       found == null
         ? await Profile.create({

@@ -37,7 +37,8 @@ async function initialiseModels() {
       "enquiry_conversation.ts",
       "message.ts",
       "feedback.ts",
-      "tenant_property.ts",
+      "tenancy.ts",
+      "tenant.ts",
       "expense.ts",
       "offer.ts",
       "property_document.ts"

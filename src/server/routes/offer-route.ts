@@ -3,9 +3,10 @@ import Offer from "../../database/models/offer";
 import Profile from "../../database/models/profile";
 import ListingLandlord from "../../database/models/listing_landlord";
 import Listing from "../../database/models/listing";
-import PropertyTenant from "../../database/models/tenant_property";
+import Tenant from "../../database/models/tenant";
 import User from "../../database/models/user";
 import PropertyForRent from "../../database/models/property_for_rent";
+import Tenancy from "../../database/models/tenancy";
 
 export const sendOffer = async (req: Request, res: Response) => {
   const sessionUsr = req.session.user;
@@ -84,17 +85,32 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
       offerToAccept?.update({ status: "accepted" });
 
       // Intiate Tenancy
-      await PropertyTenant.create({
+      const tenant = await Tenant.create({
         firstName: userProfile?.firstName,
         lastName: userProfile?.lastName,
         email: offerUser?.email,
         phoneNumber: userProfile?.phoneNumber,
         addressString: userProfile?.addressLine1 || "" + userProfile?.addressLine2 || "" + userProfile?.settlement || "" + userProfile?.city || "",
         propertyForRentId: offerPropertyForRent.id,
-        tenancyStatus: "awaitng-signatures",
+        tenancyStatus: "awaiting-signatures",
         isLeadTenant: true,
         userId: offerUser.id || 0
       });
+
+      const tenancy = await Tenancy.create({
+        firstName: userProfile?.firstName,
+        lastName: userProfile?.lastName,
+        mainContactEmail: offerUser?.email,
+        mainContactNumber: userProfile?.phoneNumber,
+        addressString: userProfile?.addressLine1 || "" + userProfile?.addressLine2 || "" + userProfile?.settlement || "" + userProfile?.city || "",
+        propertyForRentId: offerPropertyForRent.id,
+        tenancyStatus: "awaiting-signatures",
+        leadTenantid: tenant.id,
+        isPaymentTogether: false,
+        userId: offerUser.id || 0
+      });
+
+      await tenant.update({ tenancyId: tenancy.id });
     }
 
     if (status === "declined") {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import ViewRentProperty from "../ViewRentProperty";
-import PropertyTenant from "../../../database/models/tenant_property";
+import Tenant from "../../../database/models/tenant";
 import Offer from "../../../database/models/offer";
 import Expense from "../../../database/models/expense";
 import PropertyDocument from "../../../database/models/property_document";
@@ -23,7 +23,7 @@ const ManageSingleProperty = props => {
   const listingId = params.id;
   const [listing, setListing] = useState<Listing>();
   const property = listing?.PropertyForRent;
-  const tenants = property?.PropertyTenants;
+  const tenancies = property?.Tenancies;
   const expenses = property?.Expenses;
   const documents = property?.PropertyDocuments;
   const offers = listing?.Offers;
@@ -86,7 +86,7 @@ const ManageSingleProperty = props => {
       <div className="pt-5 pb-5">
         <h5>Tenants</h5>
         <div>
-          {tenants?.map((curTenant, curIndex) => {
+          {tenancies?.map((curTenant, curIndex) => {
             const tenantName = `${curTenant.firstName} ${curTenant.lastName}`;
             return (
               <div key={curIndex}>
