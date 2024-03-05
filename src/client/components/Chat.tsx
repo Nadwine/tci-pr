@@ -261,6 +261,12 @@ export const Chat = (props: Props) => {
                 placeholder="Preferred Start Date"
                 required
               />
+              <div className="card my-4 border-info">
+                <div className="card-body">
+                  {" "}
+                  <i className="bi bi-info-circle-fill"></i> We recommend viewing the property before making an offer
+                </div>
+              </div>
               <button className="btn btn mt-4 text-light" style={{ backgroundColor: "#087990" }} type="submit">
                 Submit
               </button>
