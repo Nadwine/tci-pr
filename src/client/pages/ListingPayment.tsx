@@ -25,20 +25,13 @@ const ListingPayment = props => {
   const [cvv, setCvv] = useState("");
   const [listing, setListing] = useState<Listing>();
   const [landlordUser, setLandlordUser] = useState<User>();
+  const [listingLandLord, setListingLandlord] = useState<ListingLandlord>();
   const [clientSecret, setClientSecret] = useState("");
   const [setupIntentId, setSetupIntentId] = useState("");
   const [loading, setLoading] = useState(true);
   const loginUsr = useSelector((r: RootState) => r.auth.user);
   const landlordFormRef = useRef<HTMLFormElement>(null);
-  const stripePromise = loadStripe("pk_test_51OYZbBIGvo7mWPbtUd3Dvc2lKOTPTdp2Ic8uD7uVcxbMbFERYYCu5ulgjJZ7EcPkQxSqp0rYi0AagRNAZ43sRJ7P00Zj8d0CEX")
-    .then(res => {
-      console.log("Stripe Success", res);
-      return res;
-    })
-    .catch(res => {
-      console.log("Stripe Error", res);
-      return res;
-    });
+  const stripePromise = loadStripe("pk_test_51OYZbBIGvo7mWPbtUd3Dvc2lKOTPTdp2Ic8uD7uVcxbMbFERYYCu5ulgjJZ7EcPkQxSqp0rYi0AagRNAZ43sRJ7P00Zj8d0CEX");
 
   const isLanlord = loginUsr?.accountType === "landlord";
   const landlordId = isLanlord ? loginUsr.id : listing?.ListingLandlord?.userId;
@@ -103,6 +96,7 @@ const ListingPayment = props => {
     if (res.status === 200) {
       setClientSecret(res.data.clientSecret);
       setSetupIntentId(res.data.intentId);
+      setListingLandlord(res.data.landlord);
     } else {
       toast.error(res.data.message);
     }
@@ -179,12 +173,12 @@ const ListingPayment = props => {
                   <label>Address</label>
                   <input name="address" className="form-control" defaultValue={landlordUser?.ListingLandlord?.addressString} required />
                 </div>
-                <button className="btn btn-primary">Add Credit Card</button>
+                <button className="btn btn-primary">+ Add Credit Card</button>
               </form>
-              TODO Show card alrady linked and make remove card button
+              <div className="text-danger pt-3">TODO Show card alrady linked and make remove card button</div>
               {clientSecret && (
                 <Elements stripe={stripePromise} options={{ clientSecret }}>
-                  <StripeConfirmPayment />
+                  <StripeConfirmPayment clientSecret={clientSecret} landlord={listingLandLord} />
                 </Elements>
               )}
             </Accordion.Body>

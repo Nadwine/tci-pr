@@ -184,7 +184,7 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
         type: "custom",
         country: "GB",
         email: landlordEmail,
-        default_currency: "usd",
+        default_currency: "gbp",
         metadata: {
           landlordId: landlord.id,
           firstName: firstName,
@@ -193,7 +193,7 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
         settings: {
           payouts: {
             schedule: {
-              interval: "manual"
+              interval: "daily"
             }
           }
         },
@@ -206,6 +206,9 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
           },
           bank_transfer_payments: {
             requested: true
+          },
+          us_bank_account_ach_payments: {
+            requested: true
           }
         }
       });
@@ -213,32 +216,6 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
     if (landlord.stripeConnectId) {
       landlordStripeConnect = await stripeConnector.accounts.retrieve(landlord.stripeConnectId);
     }
-
-    // const landlorBankToken = await stripeConnector.tokens.create({
-    //   bank_account: {
-    //     country: "Turks and Caicos Islands",
-    //     currency: 'usd',
-    //     account_holder_name: account_holder_name,
-    //     account_holder_type: account_holder_type || 'individual',
-    //     routing_number: routing_number,
-    //     account_number: account_number,
-    //   },
-    // });
-
-    // const landlordCardToken = await stripeConnector.tokens.create({
-    //   card: {
-    //     number: cardNumber,
-    //     exp_month: expMonth,
-    //     exp_year: expYear,
-    //     cvc: cvv
-    //   }
-    // });
-
-    // // attach bank or card to landlord
-    // await stripeConnector.accounts.createExternalAccount(landlordStripeConnect.id, {
-    //   // @ts-ignore
-    //   external_account: landlordCardToken.id
-    // });
 
     const card = landlord.cardDetails || {
       number: cardNumber,
@@ -279,7 +256,7 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
     // const method = await stripeConnector.paymentMethods.create({type: "card", card : { token: token.id }});
 
     const setupIntent = await stripeConnector.setupIntents.create({
-      payment_method_types: ["card"],
+      payment_method_types: ["customer_balance"],
       customer: customer!.id,
       // description: "",
       metadata: {
@@ -341,6 +318,7 @@ export const payLandlordForProperty = async (req: Request, res: Response) => {
     //   }
     // })
 
+    // NOT WORKING
     const intent = await stripeConnector.paymentIntents.create({
       currency: "usd",
       amount: dollarsToCent(0.5),
@@ -359,6 +337,34 @@ export const payLandlordForProperty = async (req: Request, res: Response) => {
     });
 
     return res.json({ message: "success", charge });
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
+export const attachCardToLandlord = async (req: Request, res: Response) => {
+  const stripeConnector = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2023-10-16" });
+
+  const landlordId = req.body.landlordId;
+  const tokenId = req.body.tokenId;
+
+  try {
+    const landlord = await ListingLandlord.findByPk(landlordId);
+    // const property = await PropertyForRent.findByPk(propertyForRentId);
+
+    if (!landlord?.stripeConnectId || !landlord.stripeCustomerId) {
+      return res.status(400).json({ message: "Landlord stripe details incomplete" });
+    }
+
+    const paymentMethods = await stripeConnector.customers.listPaymentMethods(landlord?.stripeCustomerId, {
+      limit: 3
+    });
+
+    await stripeConnector.accounts.createExternalAccount(landlord.stripeConnectId, {
+      external_account: tokenId
+    });
+
+    return res.json({ message: "success" });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error", err });
   }
