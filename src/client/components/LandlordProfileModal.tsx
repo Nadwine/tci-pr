@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { connect } from "react-redux";
 import Listing from "../../database/models/listing";
 import dayjs from "dayjs";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import axios from "axios";
 
 type Props = {
   show: boolean;
@@ -13,10 +14,20 @@ type Props = {
 
 export const LandlordProfileModal = (props: Props) => {
   const { show, listing, setShow } = props;
+  const [landlordProperties, setLandlordProperties] = useState<Listing[]>([]);
 
   const isPostByAdmin = listing.adminId != null;
   const landlordPostButProfileIncomplete = listing.adminId == null && listing.ListingLandlord == null;
   const showHomeBase = isPostByAdmin || landlordPostButProfileIncomplete;
+
+  const getProperties = async () => {
+    const res = await axios.get(`/api/listing/landlord/profile-properties/${listing.ListingLandlord?.userId}`);
+    setLandlordProperties(res.data);
+  };
+
+  useEffect(() => {
+    getProperties();
+  }, []);
 
   return (
     <>
@@ -46,6 +57,13 @@ export const LandlordProfileModal = (props: Props) => {
               <p className="text-secondary">{listing.ListingLandlord?.homeIsland}</p>
               <h6 style={{ fontWeight: "700px" }}>Contact</h6>
               <p className="text-secondary">{listing.ListingLandlord?.phoneNumber}</p>
+
+              <h6 style={{ fontWeight: "700px" }}>Properties</h6>
+              {landlordProperties.map((l, i) => (
+                <div key={i}>
+                  {l.title}, {l.Address.settlement}
+                </div>
+              ))}
             </div>
           )}
         </Offcanvas.Body>

@@ -204,6 +204,24 @@ export const adminCreateRentListingRoute = async (req: Request, res: Response) =
   }
 };
 
+export const getPublicListingsByUserId = async (req: Request, res: Response) => {
+  const userId = req.params.id;
+
+  try {
+    const landord = await ListingLandlord.findOne({ where: { userId: userId } });
+    if (!landord) return res.status(200).json([]);
+
+    const listings = await Listing.findAll({
+      where: { landlordId: landord.id },
+      include: [{ model: PropertyForRent }, { model: ListingMedia }, { model: Address }, { model: Offer }]
+    });
+
+    return res.status(200).json(listings);
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
 export const getLandlordListings = async (req: Request, res: Response) => {
   const sessionUsr = req.session!.user;
 
