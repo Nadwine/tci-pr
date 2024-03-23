@@ -10,7 +10,12 @@ export const getSessionUserTenancies = async (req: Request, res: Response) => {
     const tenant = await Tenant.findOne({ where: { userId: req.session.user?.id } });
     if (!tenant) return res.json(null);
 
-    const tenancies = await Tenancy.findAll({ include: [{ model: Tenant, where: { id: tenant.id } }, { model: PropertyForRent }] });
+    const tenancies = await Tenancy.findAll({
+      include: [
+        { model: Tenant, where: { id: tenant.id } },
+        { model: PropertyForRent, include: [{ model: Listing, include: [{ model: ListingLandlord }] }] }
+      ]
+    });
     return res.json(tenancies);
   } catch (err) {
     return res.status(500).json({ message: "Internal server error", err });

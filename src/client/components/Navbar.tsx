@@ -104,11 +104,6 @@ function Navbar() {
                   <a href="/user" className="dropdown-item">
                     Profile & Settings
                   </a>
-                  {user.accountType !== "admin" && (
-                  <a href="/user" className="dropdown-item">
-                      Tenancies
-                  </a>
-                  )}
                   {user.accountType === "landlord" && (
                     <a href="/landlord/create-listing" className="dropdown-item">
                       Create a Listing
@@ -119,7 +114,7 @@ function Navbar() {
                   </a>
                   {user.accountType === "tenant" && (
                     <a href="/my-tenancy" className="dropdown-item">
-                      My Tenancies
+                      My Tenancy
                     </a>
                   )}
                   {user.accountType === "landlord" && (
