@@ -117,6 +117,11 @@ function Navbar() {
                   <a href="/enquiries" className="dropdown-item">
                     Enquiries
                   </a>
+                  {user.accountType === "tenant" && (
+                    <a href="/my-tenancy" className="dropdown-item">
+                      My Tenancies
+                    </a>
+                  )}
                   {user.accountType === "landlord" && (
                     <a href="/landlord/dashboard" className="dropdown-item">
                       Dashboard
