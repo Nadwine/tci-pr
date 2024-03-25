@@ -18,7 +18,7 @@ export const MyTenancy = props => {
   }, []);
 
   return (
-    <div className="mx-5">
+    <div className="px-md-5">
       <h4 className="py-4">My Tenancies</h4>
       <div>
         {tenancies?.map((currTenancy, i) => {

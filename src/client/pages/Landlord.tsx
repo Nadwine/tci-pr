@@ -5,7 +5,7 @@ const AboutUs = props => {
 
   let mobileView = mql.matches;
   return (
-    <div className="about-landlord m-sm-0" style={{ minHeight: "97vh", paddingLeft: "0px" }}>
+    <div className="about-landlord m-sm-0" style={{ minHeight: "97vh", paddingLeft: "0px", paddingRight: "0px" }}>
       <div
         className="image-container ml-sm-3"
         style={{
