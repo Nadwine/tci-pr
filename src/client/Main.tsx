@@ -59,6 +59,9 @@ import MyTenancy from "./pages/MyTenancy";
 import ManageSingleProperty from "./pages/landlord-n-admin/ManageSingleProperty";
 import AdminTenancyTable from "./components/admin/AdminTenancyTable";
 import AboutUsMobile from "./pages/AboutUsMobile";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import CookieTerms from "./pages/CookieTerms";
+import PrivacyTerms from "./pages/PrivacyTerms";
 const tenMinute = 600000;
 
 function initTranslations() {
@@ -171,6 +174,9 @@ const Main = () => {
             <Route path={ReactRoutesEnum.REGISTERCONFIRM} element={<RegisterConfirm />} />
             <Route path={ReactRoutesEnum.REGISTER} element={<RequireLogout view={<Register />} />} />
             <Route path={ReactRoutesEnum.LOGIN} element={<RequireLogout view={<Login />} />} />
+            <Route path="condition-terms" element={<TermsAndConditions />} />
+            <Route path="cookie-terms" element={<CookieTerms />} />
+            <Route path="privacy-terms" element={<PrivacyTerms />} />
             <Route path="create-listing" element={<RequirePermission view={<CreateListing />} roles={["admin"]} />} />
             <Route path="edit-listing/rent/:id" element={<RequirePermission view={<EditRentListing />} roles={["landlord", "admin"]} />} />
             <Route path="search/rent" element={<SearchRentResults />} />
@@ -178,7 +184,7 @@ const Main = () => {
             <Route path="products" element={<Products />} />
             <Route path="feedback" element={<Feedback />} />
             <Route path="temp" element={<TempHome />} />
-            <Route path="/about/us/landlord" element={<Landlord />} />
+            <Route path="about/us/landlord" element={<Landlord />} />
             <Route path="/test-mobile" element={<AboutUsMobile />} />
             <Route path="user" element={<RequireLogin view={<UserProfile />} />} />
             <Route path="listing-success" element={<SubmitListingRedirect />} />
