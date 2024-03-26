@@ -1,63 +1,129 @@
 /* eslint-disable react/react-in-jsx-scope */
 
+import { faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Accordion, Card, useAccordionButton } from "react-bootstrap";
+
 const Products = props => {
+  function CustomButton({ children, eventKey }: any) {
+    const decoratedOnClick = useAccordionButton(eventKey, () => console.log("totally custom!"));
+
+    return (
+      <button className="btn btn-link ms-auto" type="button" onClick={decoratedOnClick} style={{ textDecoration: "none" }}>
+        {children}
+      </button>
+    );
+  }
   return (
     <div>
       <h3 className="m-5">Products & Services</h3>
+      <div className="text-center py-5 px-md-5 fs-5">
+        TCI Homebase offers a range of services. From finding & screening for potential tenants to fully managed service model, We{"'"}ve got you covered.
+      </div>
       <div className="col-12 d-flex justify-content-center">
-        <div
-          className="card text-center shadow-sm mb-3"
-          style={{ width: "18rem", height: "20rem", marginRight: "20px", padding: "30px", backgroundColor: "white" }}
-        >
-          <div className="card-body p-0">
-            <h5 className="card-title">Property Listing</h5>
-            <p className="card-text" style={{ fontSize: "12px" }}>
-              We assess your properties and list them on our portal.
-            </p>
-            <i className="bi bi-house-check" style={{ fontSize: "50px", color: "#055160" }}></i>
-          </div>
-        </div>
-
-        <div
-          className="card text-center mb-3 shadow-sm"
-          style={{ width: "18rem", height: "20rem", marginRight: "20px", padding: "30px", backgroundColor: "white" }}
-        >
-          <div className="card-body p-0">
-            <h5 className="card-title">Tenant Screen & Referencing</h5>
-            <p className="card-text" style={{ fontSize: "12px" }}>
-              We will shortlist your applicants and ensure the applicant is the right fit for you. We will assess their financial status, complete the relevant
-              background checks and employment references.{" "}
-            </p>
-            <i className="bi bi-person-check" style={{ fontSize: "50px", color: "#055160" }}></i>
-          </div>
-        </div>
-
-        <div
-          className="card text-center mb-3 shadow-sm"
-          style={{ width: "18rem", height: "20rem", marginRight: "20px", padding: "30px", backgroundColor: "white" }}
-        >
-          <div className="card-body p-0">
-            <h5 className="card-title">Rent Collection</h5>
-            <p className="card-text" style={{ fontSize: "12px" }}>
-              We handle all rent and deposit payments and ensure our landlords and tenants money is always protected.We prioritize ensuring rent arrives on time
-              and keep an accurate record of all transactions.
-            </p>
-            <i className="bi bi-cash-coin" style={{ fontSize: "50px", color: "#055160" }}></i>
-          </div>
-        </div>
-
-        <div
-          className="card text-center mb-3 shadow-sm"
-          style={{ width: "18rem", height: "20rem", marginRight: "20px", padding: "30px", backgroundColor: "white" }}
-        >
-          <div className="card-body p-0">
-            <h5 className="card-title">Full Property Management Services</h5>
-            <p className="card-text" style={{ fontSize: "12px" }}>
-              We offer you a hassle free experience where we manage your property and inventory from the start to the end of your tenancy agreement. We also
-              provide additional services including cleaning and maintenance services.
-            </p>
-            <i className="bi bi-house-lock-fill" style={{ fontSize: "50px", color: "#055160" }}></i>
-          </div>
+        <div className="col-12">
+          <Accordion>
+            <Card>
+              <Card.Header style={{ height: "100px" }}>
+                <div className="d-flex h-100 align-items-center px-md-5">
+                  <i className="theme-text bi bi-postcard fs-1 pe-3" />
+                  <span className="fs-5">Property Listing</span>
+                  <CustomButton eventKey="0">More Info +</CustomButton>
+                </div>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body className="px-md-5">We assess your properties and list them on our portal. </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
+          <Accordion>
+            <Card>
+              <Card.Header style={{ height: "100px" }}>
+                <div className="d-flex h-100 align-items-center px-md-5">
+                  <i className="theme-text bi bi-person-check fs-1 pe-3" />
+                  <span className="fs-5">Tenant Screening & Referencing Agent</span>
+                  <CustomButton eventKey="0">More Info +</CustomButton>
+                </div>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body className="px-md-5">
+                  We will shortlist your applicants and ensure the applicant is the right fit for you. We will assess their financial status, complete the
+                  relevant background checks and employment references.
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
+          <Accordion>
+            <Card>
+              <Card.Header style={{ height: "100px" }}>
+                <div className="d-flex h-100 align-items-center px-md-5">
+                  <i className="theme-text bi bi-eye fs-1 pe-3" />
+                  <span className="fs-5">Accompanied Viewing Service</span>
+                  <CustomButton eventKey="0">More Info +</CustomButton>
+                </div>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body className="px-md-5">We will arrange and manage all viewings for your property.</Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
+          <Accordion>
+            <Card>
+              <Card.Header style={{ height: "100px" }}>
+                <div className="d-flex h-100 align-items-center px-md-5">
+                  {/* <i className="theme-text bi bi-eye fs-1 pe-3" />
+                   */}
+                  <FontAwesomeIcon icon={faHandHoldingDollar} className="theme-text fs-2 pe-3" />
+                  <span className="fs-5">Rent Collection</span>
+                  <CustomButton eventKey="0">More Info +</CustomButton>
+                </div>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body className="px-md-5">
+                  We handle all rent and deposit payments and ensure our landlords and tenants money is always protected.We prioritize ensuring rent arrives on
+                  time and keep an accurate record of all transactions
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
+          <Accordion>
+            <Card>
+              <Card.Header style={{ height: "100px" }}>
+                <div className="d-flex h-100 align-items-center px-md-5">
+                  {/* <i className="theme-text bi bi-eye fs-1 pe-3" />
+                   */}
+                  <i className="theme-text bi bi-house-add fs-1 pe-3" />
+                  <span className="fs-5">Full Property Management Services</span>
+                  <CustomButton eventKey="0">More Info +</CustomButton>
+                </div>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body className="px-md-5">
+                  We offer you a hassle free experience where we manage your property and inventory from the start to the end of your tenancy agreement. We also
+                  provide additional services including cleaning and maintenance services.
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
+          <Accordion>
+            <Card>
+              <Card.Header style={{ height: "100px" }}>
+                <div className="d-flex h-100 align-items-center px-md-5">
+                  {/* <i className="theme-text bi bi-eye fs-1 pe-3" />
+                   */}
+                  <i className="theme-text bi bi-door-open fs-1 pe-3" />
+                  <span className="fs-5">Tenant Check In and Check Out</span>
+                  <CustomButton eventKey="0">More Info +</CustomButton>
+                </div>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body className="px-md-5">
+                  Not only will we onboard your tenants, we will ensure that the property is returned in the best conditions, complete a full inventory check,
+                  manage deposits and handle all the nifty details at the end of the tenancy agreement.
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
         </div>
       </div>
     </div>

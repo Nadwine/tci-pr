@@ -16,6 +16,14 @@
   -webkit-text-stroke: 0.8px;
 }
 
+.theme-text {
+  color: #087990;
+}
+
+.theme-background {
+  background-color: #087990;
+}
+
 .pt-sans caption-regular {
   font-family: "PT Sans Caption", sans-serif;
   font-weight: 400;
