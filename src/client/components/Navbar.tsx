@@ -84,6 +84,9 @@ function Navbar() {
             <a className="nav-item nav-link fw-bold text-dark point" onClick={() => contactClick()} style={{ color: "#032830" }}>
               Contact
             </a>
+            <a className="nav-item nav-link fw-bold text-dark point" href="/team" style={{ color: "#032830" }}>
+              The Team
+            </a>
           </div>
           {/* <!-- Right navigation --> */}
           {user && (
