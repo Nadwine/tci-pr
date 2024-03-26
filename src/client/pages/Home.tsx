@@ -235,7 +235,7 @@ const Home = props => {
                 <img src="/static/home4.jpg" className="card-img-top" alt="..."></img>
                 <div className="card-body shadow-lg">
                   <h6 className="card-title fw-bold" style={{ color: "#087990" }}>
-                    Long & short term rentals
+                    Long & short term Leases
                   </h6>
                   <p>
                     <a className="link-dark link-underline-light" href=""></a>

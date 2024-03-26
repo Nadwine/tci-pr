@@ -67,7 +67,7 @@ const ManageSingleProperty = props => {
   if (!allowedToView && listing) return <h3>You do not have permission to view this page</h3>;
   return (
     <div className="p-md-5">
-      <h4 className="pt-2 text-center">Manage Property</h4>
+      <h3 className="pt-2">Manage Property</h3>
       <div className="pt-5 pb-5">
         <h5>Offers</h5>
         <OfferList offers={offers} onSubmitOffer={onSubmitOffer} onClickViewEnquiry={onClickViewEnquiry} />

@@ -124,12 +124,12 @@ const TempHome = props => {
           <div className="suggestions text-center text-dark" style={{ zIndex: +1, position: "relative", marginTop: "130px" }}>
             <div className="card shadow-sm" style={{ marginBottom: "10px" }}>
               <div className="card-body">
-                <i className="bi bi-house-fill"></i> Long Term Rentals {"(dummy)"}
+                <i className="bi bi-house-fill"></i> Long Term Leases {"(dummy)"}
               </div>
             </div>
             <div className="card shadow-sm">
               <div className="card-body">
-                <i className="bi bi-coin"></i> Short Term Rentals {"(dummy)"}
+                <i className="bi bi-coin"></i> Short Term Leases {"(dummy)"}
               </div>
             </div>
           </div>

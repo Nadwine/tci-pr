@@ -264,7 +264,7 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
                     </div>
                   </li>
                   <li className="price-filter list-group-item d-flex flex-row justify-content-between">
-                    Bills Included:
+                    Utilities Included:
                     <Dropdown className="px-lg-5" onSelect={(val: any) => setBillsIncluded(val)}>
                       <Dropdown.Toggle variant="light" id="dropdown-basic">
                         {formatBoolValueToYesNo(searchParams.get("bills"))}

@@ -27,9 +27,11 @@ export const LandlordDashboard = props => {
 
   const noListings = listings.length === 0;
   return (
-    <div className="d-flex row ps-dm-5" style={{ backgroundColor: "white" }}>
+    <div className="d-flex row ps-dm-5">
       <div>
-        <h3 className="fw-bold my-5 ms-5"> Dashboard</h3>
+        <div className="ms-5">
+          <h3 className="fw-bold my-5 ms-5"> Dashboard</h3>
+        </div>
         {/**---------------------------------- Accordion ----------------------------------------------- */}
         <Accordion className="px-md-5 mx-md-5">
           <Accordion.Item eventKey="0">
@@ -88,11 +90,11 @@ export const LandlordDashboard = props => {
               <strong>Tenancies</strong>
             </Accordion.Header>
             <Accordion.Collapse eventKey="0">
-              <p>You have no tenancies</p>
+              <p>You have no active tenancies</p>
             </Accordion.Collapse>
           </Accordion.Item>
         </Accordion>
-        <div className="m-5" style={{ height: "490px", width: "910px", justifyContent: "center" }}>
+        {/* <div className="m-5" style={{ height: "490px", width: "910px", justifyContent: "center" }}>
           <Bar
             data={{
               labels: ["Mar", "Apr", "May", "Jun", "Jul", "Aug"],
@@ -104,7 +106,7 @@ export const LandlordDashboard = props => {
               ]
             }}
           ></Bar>
-        </div>
+        </div> */}
 
         {/* <div className="col-12 d-flex justify-content-center" style={{ marginTop: "150px" }}>
             <div className="card" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>

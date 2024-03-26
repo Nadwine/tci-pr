@@ -261,7 +261,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
           <li className="price-filter list-group-item d-flex flex-row justify-content-between">
             <div className="d-flex flex-row justify-content-between fw-bold">
               <p className="fw-bold" style={{ marginRight: "5px" }}>
-                Bills Included:
+                Utilities Included:
               </p>
               <Dropdown className="px-lg-5" onSelect={(val: any) => setBillsIncluded(val)}>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
