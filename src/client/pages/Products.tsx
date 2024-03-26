@@ -15,18 +15,25 @@ const Products = props => {
     );
   }
   return (
-    <div>
+    <div className="px-md-5">
       <div className="ms-md-5">
         <h3 className="mt-5">Products & Services</h3>
-        <div className="py-4 pb-5 fs-5">
-          TCI Homebase offers a range of services. From finding suitible tenants for your property to a fully managed service model, we{"'"}ve got you covered.
+        <div className="pb-5 fs-5 mx-auto d-flex flex-wrap" style={{ paddingTop: "70px", maxWidth: "1000px" }}>
+          <div className="col-12 col-md-9 d-flex align-items-center">
+            TCI Homebase offers a range of services. From finding suitible tenants for your property to a fully managed service model, we{"'"}ve got you
+            covered.
+          </div>
+          <div className="d-none d-md-flex">
+            <img width="250" height="150" src="/static/products-package.png" />
+          </div>
         </div>
       </div>
-      <div className="col-12 d-flex justify-content-center">
-        <div className="col-12">
+      <hr />
+      <div className="col-12 d-flex justify-content-center px-md-5">
+        <div className="col-12" style={{ maxWidth: "750px", paddingTop: "30px" }}>
           <Accordion>
             <Card>
-              <Card.Header style={{ height: "100px" }}>
+              <Card.Header style={{ height: "100px", backgroundColor: "white" }}>
                 <div className="d-flex h-100 align-items-center px-md-5">
                   <i className="theme-text bi bi-postcard fs-1 pe-3" />
                   <span className="fs-5">Property Listing</span>
@@ -40,10 +47,10 @@ const Products = props => {
           </Accordion>
           <Accordion>
             <Card>
-              <Card.Header style={{ height: "100px" }}>
+              <Card.Header style={{ height: "100px", backgroundColor: "white" }}>
                 <div className="d-flex h-100 align-items-center px-md-5">
                   <i className="theme-text bi bi-person-check fs-1 pe-3" />
-                  <span className="fs-5">Tenant Screening & Referencing Agent</span>
+                  <span className="fs-5">Tenant Screening & Referencing</span>
                   <CustomButton eventKey="0">More Info +</CustomButton>
                 </div>
               </Card.Header>
@@ -57,7 +64,7 @@ const Products = props => {
           </Accordion>
           <Accordion>
             <Card>
-              <Card.Header style={{ height: "100px" }}>
+              <Card.Header style={{ height: "100px", backgroundColor: "white" }}>
                 <div className="d-flex h-100 align-items-center px-md-5">
                   <i className="theme-text bi bi-eye fs-1 pe-3" />
                   <span className="fs-5">Accompanied Viewing Service</span>
@@ -71,7 +78,7 @@ const Products = props => {
           </Accordion>
           <Accordion>
             <Card>
-              <Card.Header style={{ height: "100px" }}>
+              <Card.Header style={{ height: "100px", backgroundColor: "white" }}>
                 <div className="d-flex h-100 align-items-center px-md-5">
                   {/* <i className="theme-text bi bi-eye fs-1 pe-3" />
                    */}
@@ -90,7 +97,7 @@ const Products = props => {
           </Accordion>
           <Accordion>
             <Card>
-              <Card.Header style={{ height: "100px" }}>
+              <Card.Header style={{ height: "100px", backgroundColor: "white" }}>
                 <div className="d-flex h-100 align-items-center px-md-5">
                   {/* <i className="theme-text bi bi-eye fs-1 pe-3" />
                    */}
@@ -109,7 +116,7 @@ const Products = props => {
           </Accordion>
           <Accordion>
             <Card>
-              <Card.Header style={{ height: "100px" }}>
+              <Card.Header style={{ height: "100px", backgroundColor: "white" }}>
                 <div className="d-flex h-100 align-items-center px-md-5">
                   {/* <i className="theme-text bi bi-eye fs-1 pe-3" />
                    */}

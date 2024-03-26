@@ -35,12 +35,24 @@ const Login = () => {
         >
           {/* <!-- Logo --> */}
           <a className="d-block" href="#">
-            <img src="/static/web-logo-white.png" className="h-10" alt="..." style={{ width: "70px" }} />
+            <img src="/static/web-logo-white.png" className="h-10 pt-3" alt="..." style={{ width: "70px" }} />
           </a>
           {/* <!-- Title --> */}
           <div className="mt-32 mb-20">
-            <h1 className="ls-tight font-bolder display-6 text-white mb-5">Let’s showcase something amazing today.</h1>
-            <p className="text-white text-opacity-75">Maybe some text here will help me see it better. Oh God. Oke, let’s do it then.</p>
+            <h1 className="ls-tight font-bolder fs-2 pt-5 text-white mb-5">Login to start your journey in finding or renting a property.</h1>
+            <div style={{ paddingTop: "30px" }}>
+              <a href="/help" className="text-white text-opacity-75 text-decoration-none">
+                Need any help?
+              </a>
+              <br />
+              <a href="/feedback" className="text-white text-opacity-75 text-decoration-none">
+                Send us you feedback
+              </a>{" "}
+              <br />
+              <a href="#" className="text-white text-opacity-75 text-decoration-none">
+                Follow us on instagram
+              </a>
+            </div>
           </div>
           {/* <!-- Circle --> */}
           <div className="w-56 h-56 bg-orange-500 rounded-circle position-absolute bottom-0 end-20 transform translate-y-1/3"></div>

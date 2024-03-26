@@ -17,6 +17,7 @@ export default class User extends Model<InferAttributes<User>, InferCreationAttr
   declare password: string;
   declare verified: boolean;
   declare accountType?: AccountTypeEnum; // landlord, admin, tenant/user
+  declare termsAccepted: boolean;
   declare Admin?: CreationOptional<Admin>;
   declare ListingLandlord?: CreationOptional<ListingLandlord>;
   declare Profile?: CreationOptional<Profile>;
@@ -59,6 +60,10 @@ User.init(
     accountType: {
       type: DataTypes.STRING,
       defaultValue: false
+    },
+    termsAccepted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
     }
   },
   {
