@@ -16,8 +16,11 @@ const Products = props => {
   }
   return (
     <div>
-      <div className="ms-5">
-        <h3 className="m-5">Products & Services</h3>
+      <div className="ms-md-5">
+        <h3 className="mt-5">Products & Services</h3>
+        <div className="py-4 pb-5 fs-5">
+          TCI Homebase offers a range of services. From finding suitible tenants for your property to a fully managed service model, we{"'"}ve got you covered.
+        </div>
       </div>
       <div className="col-12 d-flex justify-content-center">
         <div className="col-12">
