@@ -85,7 +85,7 @@ function Navbar() {
               Contact
             </a>
             <a className="nav-item nav-link fw-bold text-dark point" href="/team" style={{ color: "#032830" }}>
-              The Team
+              Our Team
             </a>
           </div>
           {/* <!-- Right navigation --> */}
