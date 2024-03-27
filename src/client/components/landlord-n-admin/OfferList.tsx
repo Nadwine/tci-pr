@@ -19,6 +19,8 @@ const OfferList = (props: Props) => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [offerAction, setOfferAction] = useState({ offerId: 0, status: "" });
   const noOffers = offers?.length === 0;
+
+  const showOfferActionButtons = offers?.filter(o => o.status === "accepted").length === 0;
   return (
     <div className="offer-list">
       {noOffers && (
@@ -77,7 +79,7 @@ const OfferList = (props: Props) => {
                 </div>
               </div>
               <div className="pt-4 d-flex">
-                {currOffer.status !== "accepted" && (
+                {showOfferActionButtons && currOffer.status !== "accepted" && (
                   <div className="ms-auto">
                     <button
                       onClick={() => {
