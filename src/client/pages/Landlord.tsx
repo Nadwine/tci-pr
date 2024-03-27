@@ -20,7 +20,10 @@ const AboutUs = props => {
         <img src="/static/about.jpg" style={{ marginTop: "-40px", width: 2000 }} className="home-photo.jpg"></img>
       </div>
       <div className="d-flex col-12 w-100 flex-wrap justify-content-start shadow-lg" style={{ paddingTop: "10vh", alignItems: "center", borderRadius: "0px" }}>
-        <div className="card col-md-4 m-md-5 mb-5" style={{ borderRadius: "0px" }}>
+        <div className="card col-md-4 m-md-5 mb-5" style={{ borderRadius: "0px", backgroundColor: "#ffffff00", border: "none" }}>
+          <h4 className="strong-text fst-italic text-center text-white" style={{ backgroundColor: "#ffffff00" }}>
+            Why Choose Us?
+          </h4>
           <img src="/static/example.jpeg" className="card-img-top" alt="..." />
         </div>
         <div className="card col-md-6 p-md-5 ml-mb-5 mt-sm-2 shadow-lg m-sm-1" style={{ borderRadius: "0px" }}>

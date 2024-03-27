@@ -6,7 +6,7 @@ const Footer = () => {
   const footerClassName = `bg-dark text-white mt-4 ${enquiryPath ? "d-none" : ""}`;
   return (
     <footer className={footerClassName} style={{ zIndex: 100 }}>
-      <div className="container-fluid py-3">
+      <div className="container-fluid py-3 px-md-5">
         <div className="row">
           <div className="col-md-3">
             <a className="text-white text-decoration-none" href="/about">
