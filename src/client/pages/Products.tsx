@@ -18,7 +18,8 @@ const Products = props => {
     <div className="px-md-5">
       <div className="ms-md-5">
         <h3 className="mt-5">Products & Services</h3>
-        <div className="pb-5 fs-5 mx-auto d-flex flex-wrap" style={{ paddingTop: "70px", maxWidth: "1000px" }}>
+        {/* Desktop Title */}
+        <div className="pb-5 fs-5 mx-auto d-none d-md-flex flex-wrap" style={{ paddingTop: "70px", maxWidth: "1000px" }}>
           <div className="col-12 col-md-9 d-flex align-items-center">
             TCI Homebase offers a range of services. From finding suitible tenants for your property to a fully managed service model, we{"'"}ve got you
             covered.
@@ -27,10 +28,20 @@ const Products = props => {
             <img width="250" height="150" src="/static/products-package.png" />
           </div>
         </div>
+        {/* Mobile Title */}
+        <div
+          className="pb-5 fs-5 mx-auto mt-4 d-flex d-md-none d-lg-none flex-wrap text-center"
+          style={{ padding: "25px", maxWidth: "1000px", backgroundColor: "#7591ee", color: "white", borderTopRightRadius: "30px", borderTopLeftRadius: "30px" }}
+        >
+          <div className="col-12 col-md-9 d-flex align-items-center">
+            TCI Homebase offers a range of services. From finding suitible tenants for your property to a fully managed service model, we{"'"}ve got you
+            covered.
+          </div>
+        </div>
       </div>
       <hr />
       <div className="col-12 d-flex justify-content-center px-md-5">
-        <div className="col-12" style={{ maxWidth: "750px", paddingTop: "30px" }}>
+        <div className="col-12 pt-md-4" style={{ maxWidth: "750px" }}>
           <Accordion>
             <Card>
               <Card.Header style={{ height: "100px", backgroundColor: "white" }}>
