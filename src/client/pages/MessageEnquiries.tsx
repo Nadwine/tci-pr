@@ -136,7 +136,7 @@ const MessageEnquiries = props => {
           <div className="d-flex align-items-center">
             {!activeConversation && mobileView && <h3 className="px-4 mt-4 ps-1 fw-bolder">Your Enquiries</h3>}
             {activeConversation && (
-              <div className="w-100 pe-2 fs-5">
+              <div className="w-100 pe-2 fs-5 pt-2">
                 <button className="btn float-start" style={{ height: "3px" }} onClick={() => dispatch(setActiveConversation(null))}>
                   <i className="bi bi-chevron-left float-left" style={{ WebkitTextStrokeWidth: "3px" }}></i>
                 </button>
@@ -144,7 +144,7 @@ const MessageEnquiries = props => {
                 {showMobileOptionsMenu && (
                   <div
                     className="options-menu rounded"
-                    style={{ backgroundColor: "#46778399", marginLeft: "-150px", width: "170px", position: "absolute", zIndex: +10 }}
+                    style={{ backgroundColor: "#46778399", marginLeft: "150px", marginTop: "2em", width: "170px", position: "absolute", zIndex: +10 }}
                   >
                     <ul className="list-group">
                       {isTenant && (
