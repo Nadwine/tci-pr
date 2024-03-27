@@ -340,3 +340,11 @@ body {
   width: 100%;
 }
 /*________________ ViewProject (End)_____________________*/
+
+/* Produts & Services */
+
+.products-accordions-text {
+
+    /* smartphones, iPhone, portrait 480x320 phones */
+    font-size: 15px !important;
+}

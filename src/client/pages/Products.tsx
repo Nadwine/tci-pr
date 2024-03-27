@@ -9,7 +9,7 @@ const Products = props => {
     const decoratedOnClick = useAccordionButton(eventKey, () => console.log("totally custom!"));
 
     return (
-      <button className="btn btn-link ms-auto" type="button" onClick={decoratedOnClick} style={{ textDecoration: "none" }}>
+      <button className="btn btn-link ms-auto" type="button" onClick={decoratedOnClick} style={{ textDecoration: "none", width: "11em" }}>
         {children}
       </button>
     );
@@ -17,14 +17,18 @@ const Products = props => {
   return (
     <div className="px-md-5">
       <div className="ms-md-5">
-        <h3 className="mt-5">Products & Services</h3>
+        {/* Desktop Page Header */}
+        {/* <h3 className="mt-5 d-none d-md-flex">Products & Services</h3> */}
+        {/* Mobile Page Header */}
+        <h3 className="mt-5 text-center d-md-none d-lg-none">Products & Services</h3>
         {/* Desktop Title */}
         <div className="pb-5 fs-5 mx-auto d-none d-md-flex flex-wrap" style={{ paddingTop: "70px", maxWidth: "1000px" }}>
-          <div className="col-12 col-md-9 d-flex align-items-center">
+          <h3 className="d-none d-md-flex pb-5">Products & Services</h3>
+          <div className="col-12d-flex align-items-center">
             TCI Homebase offers a range of services. From finding suitible tenants for your property to a fully managed service model, we{"'"}ve got you
             covered.
           </div>
-          <div className="d-none d-md-flex">
+          <div className="d-none d-md-flex pt-3">
             <img width="250" height="150" src="/static/products-package.png" />
           </div>
         </div>
@@ -41,13 +45,13 @@ const Products = props => {
       </div>
       <hr />
       <div className="col-12 d-flex justify-content-center px-md-5">
-        <div className="col-12 pt-md-4" style={{ maxWidth: "750px" }}>
+        <div className="col-12 pt-md-4 products-accordions" style={{ maxWidth: "750px" }}>
           <Accordion>
             <Card>
               <Card.Header style={{ height: "100px", backgroundColor: "white" }}>
                 <div className="d-flex h-100 align-items-center px-md-5">
                   <i className="theme-text bi bi-postcard fs-1 pe-3" />
-                  <span className="fs-5">Property Listing</span>
+                  <span className="fs-5 col-5 products-accordions-text">Property Listing</span>
                   <CustomButton eventKey="0">More Info +</CustomButton>
                 </div>
               </Card.Header>
@@ -61,7 +65,7 @@ const Products = props => {
               <Card.Header style={{ height: "100px", backgroundColor: "white" }}>
                 <div className="d-flex h-100 align-items-center px-md-5">
                   <i className="theme-text bi bi-person-check fs-1 pe-3" />
-                  <span className="fs-5">Tenant Screening & Referencing</span>
+                  <span className="fs-5 col-5 products-accordions-text">Tenant Screening & Referencing</span>
                   <CustomButton eventKey="0">More Info +</CustomButton>
                 </div>
               </Card.Header>
@@ -78,7 +82,7 @@ const Products = props => {
               <Card.Header style={{ height: "100px", backgroundColor: "white" }}>
                 <div className="d-flex h-100 align-items-center px-md-5">
                   <i className="theme-text bi bi-eye fs-1 pe-3" />
-                  <span className="fs-5">Accompanied Viewing Service</span>
+                  <span className="fs-5 col-5 products-accordions-text">Accompanied Viewing Service</span>
                   <CustomButton eventKey="0">More Info +</CustomButton>
                 </div>
               </Card.Header>
@@ -94,7 +98,7 @@ const Products = props => {
                   {/* <i className="theme-text bi bi-eye fs-1 pe-3" />
                    */}
                   <FontAwesomeIcon icon={faHandHoldingDollar} className="theme-text fs-2 pe-3" />
-                  <span className="fs-5">Rent Collection</span>
+                  <span className="fs-5 col-5 products-accordions-text">Rent Collection</span>
                   <CustomButton eventKey="0">More Info +</CustomButton>
                 </div>
               </Card.Header>
@@ -113,7 +117,7 @@ const Products = props => {
                   {/* <i className="theme-text bi bi-eye fs-1 pe-3" />
                    */}
                   <i className="theme-text bi bi-house-add fs-1 pe-3" />
-                  <span className="fs-5">Full Property Management Services</span>
+                  <span className="fs-5 col-5 products-accordions-text">Full Property Management Services</span>
                   <CustomButton eventKey="0">More Info +</CustomButton>
                 </div>
               </Card.Header>
@@ -132,7 +136,7 @@ const Products = props => {
                   {/* <i className="theme-text bi bi-eye fs-1 pe-3" />
                    */}
                   <i className="theme-text bi bi-door-open fs-1 pe-3" />
-                  <span className="fs-5">Tenant Check In and Check Out</span>
+                  <span className="fs-5 products-accordions-text">Tenant Check In and Check Out</span>
                   <CustomButton eventKey="0">More Info +</CustomButton>
                 </div>
               </Card.Header>

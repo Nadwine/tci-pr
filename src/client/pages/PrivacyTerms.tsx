@@ -87,10 +87,86 @@ const PrivacyTerms = props => {
             <li>Enables you to contact us and receive relevant property alerts and marketing emails.</li>
             <li>Facilitates direct communication with our agents and landlords.</li>
             <li>Allows for personalized services tailored to your needs.</li>
-            <li> Ensures relevant information and adverts. .</li>
+            <li>Ensures relevant information and adverts.</li>
           </ul>
         </div>
       </div>
+      <div className="py-3">
+        <span className="strong-text">Marketing Data and Preferences</span>
+        <div>
+          <ul>
+            <li>To personalize online experiences and improve advertising relevance.</li>
+            <li>To remind you of available services and potentially increase engagement with TCI Homebase.</li>
+            <li>To send marketing emails on behalf of trusted businesses and maintain user privacy.</li>
+            <li>To enable targeted advertising and measure effectiveness.</li>
+          </ul>
+        </div>
+      </div>
+      <div className="py-3">
+        <span className="strong-text">How does it benefit you?</span>
+        <div>
+          <ul>
+            <li>Provides information on relevant properties and services.</li>
+            <li>Provides a more personalized online experience.</li>
+            <li>Ensures communication about products and services that match your interests.</li>
+            <li>Provides relevant content and targeted advertising.</li>
+          </ul>
+        </div>
+      </div>
+      <div className="py-3">
+        <h6 className="strong-text pb-3">My TCI Homebase account information</h6>
+        <div>
+          <ul>
+            <li>To maintain your account and personalize your experience.</li>
+            <li>To create audience segments for tailored content and ads.</li>
+          </ul>
+        </div>
+      </div>
+      <div className="py-3">
+        <span className="strong-text">How does it benefit you?</span>
+        <div>
+          <ul>
+            <li>Provides a personalized experience with property alerts and recommendations.</li>
+          </ul>
+        </div>
+      </div>
+      <div className="py-3">
+        <span className="strong-text">Search Information</span>
+        <div>
+          <ul>
+            <li>To understand user preferences and provide relevant suggestions.</li>
+          </ul>
+        </div>
+      </div>
+      <div className="py-3">
+        <span className="strong-text">How does it benefit you?</span>
+        <div>
+          <ul>
+            <li>Ensures more relevant property search results.</li>
+          </ul>
+        </div>
+      </div>
+      <div className="py-3">
+        <h6 className="strong-text pb-3">Your communications and feedback</h6>
+        <div>
+          <ul>
+            <li>To facilitate and monitor communication on the platform and improve functionalities.</li>
+            <li>To improve service quality and resolve complaints.</li>
+            <li>To measure service effectiveness and make improvements.</li>
+          </ul>
+        </div>
+      </div>
+      <div className="py-3">
+        <span className="strong-text">How does it benefit you?</span>
+        <div>
+          <ul>
+            <li>Facilitates quick connection with agents and landlords.</li>
+            <li>Allows direct influence on website and app improvements.</li>
+            <li>Ensures continuous improvement in service quality.</li>
+          </ul>
+        </div>
+      </div>
+      <h4>Sharing Informations</h4>
     </div>
   );
 };
