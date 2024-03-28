@@ -149,7 +149,7 @@ const Home = props => {
           </div>
         </div>
         <div className="text-center fs-6" style={{ marginTop: "130px" }}>
-          <h3 className="fw-bolder" style={{ color: "#055160" }}>
+          <h3 className="fw-bolder px-3" style={{ color: "#055160" }}>
             Search Properties for Rent in the Turks and Caicos Islands
           </h3>
         </div>
@@ -321,7 +321,7 @@ const Home = props => {
             </div>
           </div>
         )}
-        <div className="text-center text-light mt-5" style={{ backgroundColor: "#055160", height: "3rem" }}>
+        <div className="text-center text-light mt-5" style={{ backgroundColor: "#055160", minHeight: "3.5rem" }}>
           <p className="py-2">Interested in promoting your business on our website? Contact us on tci.homebase.tc@gmail.com or at +1(649) 348-4021</p>
         </div>
       </div>

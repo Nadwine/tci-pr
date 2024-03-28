@@ -15,7 +15,7 @@ Before joining the TCI Homebase team, Herby was the Administrative Coordinator/A
 const samaFullText = `As Chief Technology Officer, Sama will oversee all aspects of data management and information technology within TCI Homebase Property Management. Leveraging his extensive industry knowledge and technological expertise, he determines the best security, communications, software and hardware protocols for the company, ensuring each element of IT functions safely and allows for the effective attainment of the organization mandates.
 Sama’s journey in the corporate landscape unfolded with a tenure at Bet365, a global giant in the online betting industry. At Bet365, Sama immersed himself in the fast-paced and competitive environment, leveraging his expertise to contribute to the success of one of the world's largest online betting companies. Prior to his role at Bet365, Sama embarked on a multifaceted professional journey at Near-Life, an innovative E-Learning company. This period overlapped with his dedicated pursuit of a Bachelor's degree in Software Engineering at the esteemed University of Bolton in the United Kingdom. Sama's commitment to professional growth and academic excellence showcased his ability to balance the demands of the tech industry and his educational endeavors seamlessly.`;
 
-const naeFullText = `Nadwine is an accomplished Software Engineer with expertise in full-stack development, demonstrating a strong proficiency in her field. In her current capacity, she serves as a pivotal member of our team, overseeing the design and development of the TCI Homebase Property Management website. In this role, she meticulously crafts and refines the website to ensure both its functionality and user experience align seamlessly with our organisational objectives. Nadwine is also responsible for the ongoing maintenance and optimisation of the site, ensuring it remains intuitive.
+const naeFullText = `Nadwine is a Software Engineer with expertise in full-stack development, demonstrating a strong proficiency in her field. In her current capacity, she serves as a pivotal member of our team, overseeing the design and development of the TCI Homebase Property Management website. In this role, she meticulously crafts and refines the website to ensure both its functionality and user experience align seamlessly with our organisational objectives. Nadwine is also responsible for the ongoing maintenance and optimisation of the site, ensuring it remains intuitive.
 Possessing a distinguished academic background, Nadwine holds a Bachelor of Engineering degree in Software Engineering from the esteemed University of Bolton. This foundational education equips her with a comprehensive understanding of software engineering principles and best practices, which she consistently applies to her work.
 Nadwine's professional journey includes valuable experience as a Software Engineer at Naimuri, UK. During her tenure there, she honed her skills in developing innovative solutions and contributing to the success of various projects. Her tenure at Naimuri underscores her commitment to excellence and her ability to thrive in dynamic and collaborative work environments.
 With a passion for staying abreast of emerging technologies and industry trends, Nadwine remains dedicated to continuous learning and professional development. Her combination of academic and practical experience positions her as a valuable asset to the company.`;
@@ -37,7 +37,7 @@ const MeetTheTeam = props => {
         style={{ height: "180px", backgroundColor: "#68bece", borderBottomRightRadius: "120px", width: "80%" }}
       >
         <div className="ps-2 ps-md-5 strong-text">
-          <div className="col-9">The Organization</div>
+          <div className="col-9">The Organisation</div>
           <div className="sub-title" style={{ fontSize: "15px" }}>
             Meet the Team and Founders
           </div>
@@ -82,7 +82,7 @@ const MeetTheTeam = props => {
           <div className="text-decoration-underline">Chief Technology Officer</div>
           {!samaOpen && (
             <div className="px-md-5 text-center" style={{ height: "70px", overflow: "hidden" }}>
-              As Chief Technology Officer, Sama will oversee all aspects of data management and information technology within..
+              As Chief Technology Officer, Sama oversees all aspects of data management and information technology within..
             </div>
           )}
           <Collapse in={samaOpen}>
@@ -95,10 +95,10 @@ const MeetTheTeam = props => {
         <div className="col-12 col-md-6 d-flex align-items-center flex-column">
           <div className="img-container rounded" style={imgContainerStyle}></div>
           <div className="fs-5 pt-3">Nadwine Louis</div>
-          <div className="text-decoration-underline">Software Engineer</div>
+          <div className="text-decoration-underline">Lead Software Engineer</div>
           {!naeOpen && (
             <div className="px-md-5 text-center" style={{ height: "70px", overflow: "hidden" }}>
-              Nadwine is an accomplished Software Engineer with expertise in full-stack Development..
+              Nadwine is a Software Engineer with expertise in full-stack development, demonstrating a strong proficiency in her..
             </div>
           )}
           <Collapse in={naeOpen}>
