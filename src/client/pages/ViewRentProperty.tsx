@@ -211,7 +211,7 @@ const ViewRentProperty = props => {
               {/* TODO grey out after 1 submission and search data to know if to disable on view 
                     or show a "view your submitted enquiry" button instead
               */}
-              {showEnqBtn && (
+              {showEnqBtn && listing.listingStatus !== "gone" && (
                 <>
                   <hr />
                   <div className="text">
@@ -225,6 +225,12 @@ const ViewRentProperty = props => {
                     </button>
                   </div>
                 </>
+              )}
+              {listing.listingStatus === "gone" && (
+                <h6 className="text-danger py-3 text-center">
+                  Sorry Enquiries are no longer being accepted. <br />
+                  This Property already been secured.
+                </h6>
               )}
             </div>
           </div>

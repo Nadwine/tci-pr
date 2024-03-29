@@ -4,7 +4,7 @@ module.exports = [
     addressLine1: "45 Rodinson Rd",
     addressLine2: "Dock Yard",
     city: "Providenciales",
-    settlement: "Kewtown",
+    settlement: "Kew Town",
     postcode: "TKCA 1ZZ",
     country: "Turks & Caicos Islands",
     listingId: 1,

@@ -37,6 +37,8 @@ export const sendOffer = async (req: Request, res: Response) => {
       status: "pending"
     });
 
+    await Listing.update({ listingStatus: "in offer" }, { where: { id: listingId } });
+
     return res.status(200).json({ message: "success", offer: offer });
   } catch (err) {
     return res.status(500).json({ message: "internal server error", err });
@@ -83,6 +85,7 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
       const offerPropertyForRent = offerListing?.PropertyForRent;
       if (!offerUser || !offerToAccept || !offerListing || !offerPropertyForRent) return res.status(500);
       offerToAccept?.update({ status: "accepted" });
+      offerToAccept.Listing.update({ listingStatus: "gone" });
 
       // Intiate Tenancy
       const tenant = await Tenant.create({
