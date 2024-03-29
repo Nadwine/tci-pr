@@ -18,7 +18,7 @@ const AboutUs = props => {
     const coolDownPassed = dayjs(timeAdded).isBefore(now);
 
     if (coolDownPassed === false && lastSuccessfulSent != null) {
-      toast.error("Please wait to send another form");
+      toast.error("Please wait for 12 hours to send another form");
       formRef.current?.reset();
       return;
     }

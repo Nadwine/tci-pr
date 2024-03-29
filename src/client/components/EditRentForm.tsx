@@ -134,7 +134,7 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
     <div className="create-rent-form d-flex justify-content-center row">
       <div className="col-md-6 col-sm-10 col-lg-5">
         <h4 className="text-center pb-4 mt-5">
-          Edit property <i className="bi bi-pencil-fill text-info px-1" style={{ fontSize: "20px" }}></i>
+          Edit Property Listing<i className="bi bi-pencil-fill text-info ps-4" style={{ fontSize: "20px" }}></i>
           <button id="edit-rent-btn" onClick={() => setIsDisabled(!isDisabled)} className={`edit float-end btn btn-${isDisabled ? "primary" : "secondary"}`}>
             {isDisabled ? "Edit" : "Cancel"}
           </button>
@@ -143,6 +143,9 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
           <button onClick={() => flipApprovalVal()} className={`btn btn-lg btn-${!listing.isApproved ? "success" : "danger"}`}>
             {!listing.isApproved ? "Approve" : "Revoke Approval"}
           </button>
+        </div>
+        <div className="pb-5">
+          <a href={`/manage-property/rent/${listing.id}`}>Property Management</a>
         </div>
         <form onSubmit={handleSubmit} onKeyPress={e => e.key === "Enter" && e.preventDefault()} onKeyUp={e => e.key === "Enter" && e.preventDefault()}>
           <div className={`${isDisabled && "disabled-section"}`} style={disableStyle}>
