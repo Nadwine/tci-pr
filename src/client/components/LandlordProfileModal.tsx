@@ -23,7 +23,7 @@ export const LandlordProfileModal = (props: Props) => {
   const showHomeBase = isPostByAdmin || landlordPostButProfileIncomplete;
 
   const getProperties = async () => {
-    const res = await axios.get(`/api/listing/landlord/profile-properties/${listing.ListingLandlord?.userId}`);
+    const res = await axios.get(`/api/listing/landlord/profile-properties/${listing.ListingLandlord?.userId || listing.Admin?.userId}`);
     setLandlordProperties(res.data);
   };
 

@@ -1,6 +1,7 @@
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from "sequelize";
 import sequelize from "../sequelize-connection";
 import User from "./user";
+import ProfileMedia from "./profile_media";
 
 // for typeScript typing
 export default class Profile extends Model<InferAttributes<Profile>, InferCreationAttributes<Profile>> {
@@ -19,6 +20,7 @@ export default class Profile extends Model<InferAttributes<Profile>, InferCreati
   declare country?: string;
   declare userId: number;
   declare User: CreationOptional<User>;
+  declare ProfileMedia: CreationOptional<ProfileMedia[]>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }

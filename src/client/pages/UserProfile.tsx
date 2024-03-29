@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import LandlordProposalButton from "../components/landlord/LandlordProposalButton";
 import { RootState } from "../redux/store";
@@ -8,6 +8,7 @@ import Profile from "../../database/models/profile";
 import { cloneDeep } from "lodash";
 import { AccountTypeEnum } from "../../../types/enums";
 import { useNavigate } from "react-router-dom";
+import { Avatar } from "@mui/material";
 
 const UserProfile = props => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const UserProfile = props => {
   const [profile, setProfile] = useState<Profile>();
   const loggedInUsr = useSelector((r: RootState) => r.auth.user);
   const [editingFields, setEditingFields] = useState<any>({});
+  const uploadFormRef = useRef<any>();
 
   const setFieldEditStatus = (field: string, status: boolean) => {
     const stateClone = cloneDeep(editingFields);
@@ -49,6 +51,26 @@ const UserProfile = props => {
     console.log(res.data);
   };
 
+  const uploadProfilePicture = async (e: any) => {
+    e.preventDefault();
+    const formData = new FormData(uploadFormRef.current || undefined);
+    const body: any = {};
+    for (var pair of formData.entries()) {
+      body[pair[0]] = pair[1];
+    }
+    if (!body.file) {
+      toast.error("please select a file to upload");
+      return;
+    }
+
+    const res = await axios.post("/api/profile/upload-picture", body, { headers: { "Content-Type": "multipart/form-data" } });
+    if (res.status === 200) {
+      toast.success("Upload Success");
+      fetchProfile();
+    }
+    if (res.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
+  };
+
   const getAcctTypeDescription = (accountType: AccountTypeEnum | undefined) => {
     if (accountType === "tenant") return "Looking for a property";
     return accountType;
@@ -65,7 +87,7 @@ const UserProfile = props => {
   return (
     <div className="container px-lg-5 px-md-5 pt-5">
       <div>
-        <h3 className="pb-3 fw-bolder" style={{ color: "#032830" }}>
+        <h3 className="pb-3 fw-bolder d-flex flex-row" style={{ color: "#032830" }}>
           User Profile
         </h3>
       </div>
@@ -126,6 +148,25 @@ const UserProfile = props => {
             style={{ padding: "20px", borderRadius: "20px", paddingLeft: "10px" }}
           >
             <h3 style={{ marginLeft: "15px" }}>Personal Details</h3>
+            <div className="d-flex py-2 align-items-center">
+              <div className="px-3">
+                <Avatar style={{ border: "solid 2px black", width: "70px", height: "70px" }} src={profile?.ProfileMedia[0]?.mediaUrl} />
+              </div>
+              <form ref={uploadFormRef} onSubmit={uploadProfilePicture}>
+                <div className="d-flex flex-row align-items-center">
+                  <input
+                    name="file"
+                    className="form-control form-control-sm"
+                    style={{ width: "220px", height: "2em" }}
+                    type="file"
+                    accept="image/png, image/jpeg, image/jpg"
+                  />
+                  <button className="btn btn-link" type="submit">
+                    Upload
+                  </button>
+                </div>
+              </form>
+            </div>
             <div className="card" style={{ margin: "15px", borderRadius: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Name</h5>

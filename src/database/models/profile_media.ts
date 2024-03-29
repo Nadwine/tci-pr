@@ -7,11 +7,12 @@ export default class ProfileMedia extends Model<InferAttributes<ProfileMedia>, I
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
   declare mediaType: string;
-  declare mediaFormat: string;
+  declare fileFormat: string;
   declare s3BucketKey: string;
   declare mediaUrl: string;
   declare label: string;
   declare profileId: number;
+  declare Profile: CreationOptional<Profile>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -30,7 +31,7 @@ ProfileMedia.init(
       type: DataTypes.STRING,
       allowNull: false
     },
-    mediaFormat: {
+    fileFormat: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -57,3 +58,4 @@ ProfileMedia.init(
 );
 
 Profile.hasMany(ProfileMedia, { foreignKey: "profileId" });
+ProfileMedia.belongsTo(Profile, { foreignKey: "profileId" });

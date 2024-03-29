@@ -39,7 +39,7 @@ import { adminCreateLandLordForListing, attachCardToLandlord, createNewRentMonth
 import { submitFeedback } from "./routes/feedback";
 import { getAllUsers } from "./routes/user";
 import { getAllLandlordsByUser, getLanlordUserById, getSessionLandlordProfile } from "./routes/landlord";
-import { getProfileForLoggedInUser, updateSessionUrsProfile } from "./routes/profile";
+import { getProfileForLoggedInUser, updateSessionUrsProfile, uploadSessionUserProfilePicture } from "./routes/profile";
 import { sendContactUsMail } from "./routes/mailing-route";
 import { acceptOrDeclineOffer, sendOffer } from "./routes/offer-route";
 import { adminGetAllTenants, getTenantById } from "./routes/tenant-route";
@@ -128,6 +128,7 @@ router.get("/landlord/:id", ensureAuthentication, getLanlordUserById);
 // /api/profile
 router.get("/profile/my-profile/", ensureAuthentication, getProfileForLoggedInUser);
 router.put("/profile/my-profile/", ensureAuthentication, updateSessionUrsProfile);
+router.post("/profile/upload-picture", ensureAuthentication, uploadMemory.any(), uploadSessionUserProfilePicture);
 
 // /api/mailing
 router.post("/mailing/contact-us", sendContactUsMail);

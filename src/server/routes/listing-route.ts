@@ -23,6 +23,7 @@ import PropertyDocument from "../../database/models/property_document";
 import Expense from "../../database/models/expense";
 import Profile from "../../database/models/profile";
 import Tenancy from "../../database/models/tenancy";
+import ProfileMedia from "../../database/models/profile_media";
 
 const s3Bucket = new S3({
   s3ForcePathStyle: true,
@@ -450,7 +451,7 @@ export const getExpandedRentListingById = async (req: Request, res: Response) =>
         { model: Admin, include: [User] },
         { model: ListingQuestion },
         { model: EnquiryConversation, include: [{ model: Listing, include: [{ model: Offer }, { model: ListingMedia }] }] },
-        { model: Offer, include: [{ model: User, include: [Profile] }] }
+        { model: Offer, include: [{ model: User, include: [{ model: Profile, include: [ProfileMedia] }] }] }
       ]
     });
 
