@@ -2,6 +2,7 @@
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import sequelize from "../sequelize-connection";
 import PropertyForRent from "./property_for_rent";
+import PropertyDocument from "./property_document";
 
 export default class Expense extends Model<InferAttributes<Expense>, InferCreationAttributes<Expense>> {
   declare id: CreationOptional<number>;
@@ -9,6 +10,7 @@ export default class Expense extends Model<InferAttributes<Expense>, InferCreati
   declare description: string;
   declare amount: number;
   declare stripePaymentInfo: any;
+  declare operation: "add" | "minus";
 }
 
 Expense.init(
@@ -32,6 +34,10 @@ Expense.init(
       type: DataTypes.DECIMAL(20, 2),
       allowNull: false
     },
+    operation: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     stripePaymentInfo: {
       type: DataTypes.JSON,
       allowNull: true
@@ -48,3 +54,6 @@ Expense.init(
 
 PropertyForRent.hasMany(Expense, { foreignKey: "propertyForRentId" });
 Expense.belongsTo(PropertyForRent, { foreignKey: "propertyForRentId" });
+
+PropertyDocument.hasOne(Expense, { foreignKey: "propertyDocumentId" });
+Expense.belongsTo(PropertyDocument, { foreignKey: "propertyDocumentId" });

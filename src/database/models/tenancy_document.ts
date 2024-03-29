@@ -1,8 +1,8 @@
 import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
 import sequelize from "../sequelize-connection";
-import PropertyForRent from "./property_for_rent";
+import Tenancy from "./tenancy";
 
-export default class PropertyDocument extends Model<InferAttributes<PropertyDocument>, InferCreationAttributes<PropertyDocument>> {
+export default class TenancyDocument extends Model<InferAttributes<TenancyDocument>, InferCreationAttributes<TenancyDocument>> {
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
@@ -11,15 +11,22 @@ export default class PropertyDocument extends Model<InferAttributes<PropertyDocu
   declare s3BucketKey: string;
   declare mediaUrl: string;
   declare label: string;
-  declare documentType: "receipt" | "inspection";
-  declare expenseId?: number;
+  declare documentType:
+    | "tenancy-agreement"
+    | "passport"
+    | "national-insurance"
+    | "drivers-license"
+    | "job-contract"
+    | "payslip"
+    | "bank-statement"
+    | "previous-tenancy-agreement";
   declare propertyForRentId: number;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
 
 // allowNull defaults to true if not set
-PropertyDocument.init(
+TenancyDocument.init(
   // @ts-ignore
   {
     // Model attributes are defined here
@@ -56,10 +63,11 @@ PropertyDocument.init(
   {
     // Other model options
     sequelize,
-    tableName: "property_documents",
+    tableName: "tenancy_documents",
     timestamps: true,
-    modelName: "PropertyDocument"
+    modelName: "TenancyDocument"
   }
 );
 
-PropertyForRent.hasMany(PropertyDocument, { foreignKey: "propertyForRentId" });
+Tenancy.hasMany(TenancyDocument, { foreignKey: "tenancyId" });
+TenancyDocument.belongsTo(Tenancy, { foreignKey: "tenancyId" });

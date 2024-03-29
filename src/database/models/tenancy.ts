@@ -1,8 +1,5 @@
 import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
-import Listing from "./listing";
-import User from "./user";
 import sequelize from "../sequelize-connection";
-import { bool } from "aws-sdk/clients/signer";
 import PropertyForRent from "./property_for_rent";
 import Tenant from "./tenant";
 

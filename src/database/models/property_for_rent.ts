@@ -1,7 +1,6 @@
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, CreationAttributes } from "sequelize";
 import sequelize from "../sequelize-connection";
 import Listing from "./listing";
-import Tenant from "./tenant";
 import Expense from "./expense";
 import PropertyDocument from "./property_document";
 import Tenancy from "./tenancy";
