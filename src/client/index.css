@@ -212,6 +212,9 @@ body {
   padding-left: 7px;
 }
 
+.smaller-text {
+  font-size: 15px;
+}
 /*  */
 
 /*________________ Global Styles (End)________________*/

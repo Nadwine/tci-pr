@@ -39,7 +39,7 @@ const MeetTheTeam = props => {
         <div className="ps-2 ps-md-5 strong-text">
           <div className="col-9">The Organisation</div>
           <div className="sub-title" style={{ fontSize: "15px" }}>
-            Meet the Team and Founders
+            Meet Our Founders
           </div>
         </div>
       </div>
@@ -47,9 +47,11 @@ const MeetTheTeam = props => {
         <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5">
           <div className="img-container rounded" style={imgContainerStyle}></div>
           <div className="fs-5 pt-3">Christma Jean-Louis</div>
-          <div className="text-decoration-underline">Chief Executive Officer</div>
+          <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
+            Chief Executive Officer
+          </div>
           {!chrisOpen && (
-            <div className="px-md-5 text-center" style={{ height: "70px", overflow: "hidden" }}>
+            <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden" }}>
               Christma has managed a number of teams and brings a wealth of experience in operation management, business..
             </div>
           )}
@@ -63,9 +65,11 @@ const MeetTheTeam = props => {
         <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5">
           <div className="img-container rounded" style={imgContainerStyle}></div>
           <div className="fs-5 pt-3">Herby Magny</div>
-          <div className="text-decoration-underline">Chief Financial Officer</div>
+          <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
+            Chief Financial Officer
+          </div>
           {!herbyOpen && (
-            <div className="px-md-5 text-center" style={{ height: "70px", overflow: "hidden" }}>
+            <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden" }}>
               Herby has built a reputation for transforming entrepreneurial organizations into sustainable growth enterprises..
             </div>
           )}
@@ -79,9 +83,11 @@ const MeetTheTeam = props => {
         <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5">
           <div className="img-container rounded" style={imgContainerStyle}></div>
           <div className="fs-5 pt-3">Brutchsama Jean-Louis</div>
-          <div className="text-decoration-underline">Chief Technology Officer</div>
+          <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
+            Chief Technology Officer
+          </div>
           {!samaOpen && (
-            <div className="px-md-5 text-center" style={{ height: "70px", overflow: "hidden" }}>
+            <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden" }}>
               As Chief Technology Officer, Sama oversees all aspects of data management and information technology within..
             </div>
           )}
@@ -95,9 +101,11 @@ const MeetTheTeam = props => {
         <div className="col-12 col-md-6 d-flex align-items-center flex-column">
           <div className="img-container rounded" style={imgContainerStyle}></div>
           <div className="fs-5 pt-3">Nadwine Louis</div>
-          <div className="text-decoration-underline">Lead Software Engineer</div>
+          <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
+            Lead Software Engineer
+          </div>
           {!naeOpen && (
-            <div className="px-md-5 text-center" style={{ height: "70px", overflow: "hidden" }}>
+            <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden" }}>
               Nadwine is a Software Engineer with expertise in full-stack development, demonstrating a strong proficiency in her..
             </div>
           )}

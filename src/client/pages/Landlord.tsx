@@ -24,7 +24,7 @@ const AboutUs = props => {
         style={{ paddingTop: "5vh", alignItems: "center", borderRadius: "0px" }}
       >
         <div className="card col-md-4 m-md-5 mb-5" style={{ borderRadius: "0px", backgroundColor: "#ffffff00", border: "none" }}>
-          <h5 className="strong-text fst-italic text-center text-white pb-3" style={{ backgroundColor: "#ffffff00" }}>
+          <h5 className="strong-text fst-italic text-center text-white pb-3  text-decoration-underline" style={{ backgroundColor: "#ffffff00" }}>
             Why Choose Us?
           </h5>
           <img src="/static/example.jpeg" className="card-img-top" alt="..." />
