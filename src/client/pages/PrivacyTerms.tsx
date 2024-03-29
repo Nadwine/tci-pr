@@ -167,6 +167,92 @@ const PrivacyTerms = props => {
         </div>
       </div>
       <h4>Sharing Informations</h4>
+      <div className="py-3">
+        Like many technology businesses, we use trusted suppliers to host our services (including our websites and apps) and power our business systems. We only
+        choose partners who have appropriate security measures in place to keep your data safe. We may share information with third parties so that they can
+        assist us in providing our services; selected third parties could include:
+      </div>
+      <div className="py-3">
+        <div>
+          <ul>
+            <li>Other TCI Homebase Users, for instance supplying your details to a User advertising a property if you request to view that property.</li>
+            <li>
+              Suppliers and sub-contractors for the performance of a contract, or (by way of example) supplying your details to a gas engineer to allow them to
+              contact you and arrange a date and time to visit the property at which the service has been ordered.
+            </li>
+            <li>Analytics and search engine providers that assist us in the improvement and optimization of our website.</li>
+          </ul>
+        </div>
+      </div>
+      <div className="py-3">
+        <h6 className="pb-3">We may also disclose your personal information to third parties:</h6>
+        <div>
+          <ul>
+            <li>
+              If TCI Homebase or substantially all of its assets are acquired by a third party, in which case personal data held by TCI Homebase (in part or in
+              whole) may be one of the transferred assets.
+            </li>
+            <li>
+              If We are under a duty to disclose or share personal data to comply with any legal obligation, or in order to enforce or apply our terms and other
+              agreements; or to protect the rights, property, or safety of TCI Homebase or others. This includes exchanging information with other companies and
+              organisations for the purposes of fraud protection and credit risk reduction.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <h4>Your Data Choices</h4>
+      <ol>
+        <li className="py-2">
+          <div>
+            Opting not to provide us with your data remains an option.
+            <div className="pt-3">
+              {"> "}Should you choose this path, you can still freely navigate our websites and utilize our apps. However, you will forfeit the ability to
+              submit inquiries, subscribe to our emails, or register with us.
+            </div>
+          </div>
+        </li>
+        <li className="py-2">
+          <div>
+            Adjusting cookie settings is within your control.
+            <div className="pt-3">
+              {"> "}If you have previously consented to advertising and personalization cookies, you have the capability to modify these preferences through our
+              cookie policy. Additionally, you can block all cookies by adjusting your browser settings or accessing our websites in {"'"}incognito{"'"} or{" "}
+              {"'"}private{"'"}
+              mode. Should you choose to delete cookies from your browser settings, please note that it may limit your access to certain services. Further
+              details on cookies can be found on our website.
+            </div>
+          </div>
+        </li>
+        <li className="py-2">
+          <div>
+            You have the authority to request that we refrain from utilizing your data for marketing purposes.
+            <div className="pt-3">
+              {"> "}At any given time, you have the option to decline the use of your data for direct marketing or to withdraw your consent. This can be
+              accomplished by adjusting your marketing preferences within your account settings, selecting {"'"}Unsubscribe{"'"} in any email correspondence, or
+              reaching out to us through our helpline.
+            </div>
+          </div>
+        </li>
+      </ol>
+      <h4>How we store your data</h4>
+      <div className="py-3">
+        <span className="strong-text py-2">Where do we store your data?</span>
+        <br />
+        The personal data we collect is processed and stored in our Providenciales office and in our third party data processing facilities. As such we will
+        ensure we have appropriate safeguards and security measures in place to protect your data. Please contact us for more information about our data
+        transfer safeguards.
+      </div>
+      <div className="py-3">
+        <span className="strong-text py-2">How long do we store your data?</span>
+        <br />
+        We store data for as long as necessary to fulfill the purposes we collected it for, including for any legal, accounting, or reporting requirements. To
+        determine the appropriate retention period for personal information, we consider the amount, nature, and sensitivity of the personal information. In
+        some circumstances we may anonymise your personal information so that it can no longer be associated with you.. It is then archived or deleted pursuant
+        to our data retention framework.
+      </div>
+      <div className="py-3">
+        See <a href="/cookie-terms">Cookie Policy</a> for more info about your data storage.
+      </div>
     </div>
   );
 };

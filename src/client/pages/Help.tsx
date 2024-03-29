@@ -33,7 +33,7 @@ const Help = props => {
           </div>
         </div>
       </div>
-      <div className="help-content pt-5">
+      <div className="help-content pt-5 px-md-5">
         <h3>Topics</h3>
         <div className="help-article pt-5" style={{ maxWidth: "600px" }}>
           <div className="title strong-text" style={{ height: "3em" }}>

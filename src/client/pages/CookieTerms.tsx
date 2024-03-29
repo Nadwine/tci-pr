@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 const CookieTerms = props => {
   return (
     <div className="px-md-5">
-      <h5 className="pb-5 strong-text">Cookie Policy</h5>
+      <h5 className="py-5 strong-text">Cookie Policy</h5>
       <div className="py-2">
         A cookie, a small text file stored on your device, is employed on our website to distinguish you from other users and provide insights into how the
         website is used. This information helps us maintain the website{"'"}s relevance, accuracy, and error-free functionality. The types of cookies used on
@@ -40,6 +40,9 @@ const CookieTerms = props => {
         is collected. These cookies aid in analyzing web page usage and enhancing our website to better suit the needs of our audience. They typically store
         data regarding your webpage visits, duration of stay, referral sources, and interactions, serving as a tool for recognizing your device when you visit
         other websites.
+      </div>
+      <div className="py-3">
+        See <a href="/privacy-terms">Privacy Policy</a> for more about your privacy.
       </div>
     </div>
   );
