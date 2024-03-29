@@ -153,11 +153,11 @@ const UserProfile = props => {
                 <Avatar style={{ border: "solid 2px black", width: "70px", height: "70px" }} src={profile?.ProfileMedia[0]?.mediaUrl} />
               </div>
               <form ref={uploadFormRef} onSubmit={uploadProfilePicture}>
-                <div className="d-flex flex-row align-items-center">
+                <div className="d-flex flex-row flex-wrap align-items-center">
                   <input
                     name="file"
-                    className="form-control form-control-sm"
-                    style={{ width: "220px", height: "2em" }}
+                    className="form-control form-control-sm "
+                    style={{ width: "180px", height: "2em", fontSize: "11px" }}
                     type="file"
                     accept="image/png, image/jpeg, image/jpg"
                   />
