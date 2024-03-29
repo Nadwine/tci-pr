@@ -58,7 +58,7 @@ const UserProfile = props => {
     for (var pair of formData.entries()) {
       body[pair[0]] = pair[1];
     }
-    if (!body.file) {
+    if (!body.file.name) {
       toast.error("please select a file to upload");
       return;
     }
@@ -148,24 +148,29 @@ const UserProfile = props => {
             style={{ padding: "20px", borderRadius: "20px", paddingLeft: "10px" }}
           >
             <h3 style={{ marginLeft: "15px" }}>Personal Details</h3>
-            <div className="d-flex py-2 align-items-center">
-              <div className="px-3">
-                <Avatar style={{ border: "solid 2px black", width: "70px", height: "70px" }} src={profile?.ProfileMedia[0]?.mediaUrl} />
-              </div>
-              <form ref={uploadFormRef} onSubmit={uploadProfilePicture}>
-                <div className="d-flex flex-row flex-wrap align-items-center">
-                  <input
-                    name="file"
-                    className="form-control form-control-sm "
-                    style={{ width: "180px", height: "2em", fontSize: "11px" }}
-                    type="file"
-                    accept="image/png, image/jpeg, image/jpg"
-                  />
-                  <button className="btn btn-link" type="submit">
-                    Upload
-                  </button>
+            <div className="card" style={{ margin: "15px", borderRadius: "15px" }}>
+              <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
+                <h5 className="card-title">Profile Picture</h5>
+                <div className="d-flex py-2 align-items-center">
+                  <div className="px-3">
+                    <Avatar style={{ border: "solid 2px black", width: "70px", height: "70px" }} src={profile?.ProfileMedia[0]?.mediaUrl} />
+                  </div>
+                  <form ref={uploadFormRef} onSubmit={uploadProfilePicture}>
+                    <div className="d-flex flex-row flex-wrap align-items-center">
+                      <input
+                        name="file"
+                        className="form-control form-control-sm "
+                        style={{ width: "180px", height: "2em", fontSize: "11px" }}
+                        type="file"
+                        accept="image/png, image/jpeg, image/jpg"
+                      />
+                      <button className="btn btn-link" type="submit">
+                        Upload
+                      </button>
+                    </div>
+                  </form>
                 </div>
-              </form>
+              </div>
             </div>
             <div className="card" style={{ margin: "15px", borderRadius: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>

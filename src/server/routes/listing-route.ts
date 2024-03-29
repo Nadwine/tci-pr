@@ -24,6 +24,7 @@ import Expense from "../../database/models/expense";
 import Profile from "../../database/models/profile";
 import Tenancy from "../../database/models/tenancy";
 import ProfileMedia from "../../database/models/profile_media";
+import TenancyDocument from "../../database/models/tenancy_document";
 
 const s3Bucket = new S3({
   s3ForcePathStyle: true,
@@ -128,7 +129,7 @@ export const adminCreateRentListingRoute = async (req: Request, res: Response) =
       for (let i = 0; i < Number(files.length); i++) {
         const currentFile: Express.Multer.File = files[i];
         const filename = `${new Date().getTime()}_${currentFile.originalname}`;
-        const s3Key = `${req.session.user!.id}/${newListing.id}/${filename}`;
+        const s3Key = `listings/${req.session.user!.id}/${newListing.id}/${filename}`;
 
         // transform to small thumbnail and fix aspect ratio
         const imageBuffer = await sharp(currentFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer();
@@ -335,7 +336,7 @@ export const landLordSubmitRentListingRoute = async (req: Request, res: Response
       for (let i = 0; i < Number(files.length); i++) {
         const currentFile: Express.Multer.File = files[i];
         const filename = `${new Date().getTime()}_${currentFile.originalname}`;
-        const s3Key = `${req.session.user!.id}/${newListing.id}/${filename}`;
+        const s3Key = `listings/${req.session.user!.id}/${newListing.id}/${filename}`;
         const isimage = currentFile.mimetype.includes("image");
         // transform to small thumbnail and fix aspect ratio
         const imageBuffer = isimage ? await sharp(currentFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer() : currentFile.buffer;
@@ -445,7 +446,7 @@ export const getExpandedRentListingById = async (req: Request, res: Response) =>
     const listing = await Listing.findByPk(id, {
       include: [
         { model: Address },
-        { model: PropertyForRent, include: [Tenancy, PropertyDocument, Expense] },
+        { model: PropertyForRent, include: [{ model: Tenancy, include: [Tenant, TenancyDocument] }, PropertyDocument, Expense] },
         { model: ListingLandlord },
         { model: ListingMedia, order: [["id", "ASC"]] },
         { model: Admin, include: [User] },
@@ -738,7 +739,7 @@ export const adminUpdateRentListingById = async (req: Request, res: Response) =>
         const matchedFile = files.find(f => f.size === currentFullFile.size && f.originalname === currentFullFile.name);
 
         const filename = `${new Date().getTime()}_${matchedFile.originalname}`;
-        const s3Key = `${req.session.user!.id}/${relatedListing.id}/${filename}`;
+        const s3Key = `listings/${req.session.user!.id}/${relatedListing.id}/${filename}`;
 
         // transform to small thumbnail and fix aspect ratio
         const imageBuffer = await sharp(matchedFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer();

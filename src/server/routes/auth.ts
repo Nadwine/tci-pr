@@ -73,6 +73,7 @@ export const registerUser = async (req: Request, res: Response) => {
     password: hashedPassword,
     company: "",
     verified: false,
+    termsAccepted: true,
     accountType: registerReason === "landlord" ? "landlord" : "tenant"
   });
 
