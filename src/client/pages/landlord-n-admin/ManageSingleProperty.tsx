@@ -1,10 +1,6 @@
-import React, { FormEvent, useEffect, useRef, useState } from "react";
+import React, { FormEvent, LegacyRef, MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import ViewRentProperty from "../ViewRentProperty";
-import Tenant from "../../../database/models/tenant";
-import Offer from "../../../database/models/offer";
-import Expense from "../../../database/models/expense";
-import PropertyDocument from "../../../database/models/property_document";
 import { RootState } from "../../redux/store";
 import Listing from "../../../database/models/listing";
 import axios from "axios";
@@ -15,6 +11,8 @@ import { setActiveConversation } from "../../redux/reducers/messagesReducer";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { Accordion } from "react-bootstrap";
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import SignaturePad from "signature_pad";
 
 const ManageSingleProperty = props => {
   const dispatch = useDispatch();
@@ -25,12 +23,32 @@ const ManageSingleProperty = props => {
   const property = listing?.PropertyForRent;
   const tenancies = property?.Tenancies;
   const onGoingTenancies = tenancies?.filter(t => t.tenancyStatus !== "ended");
+  const tenancyAgreement = onGoingTenancies && onGoingTenancies[0].TenancyDocuments.find(d => d.documentType === "tenancy-agreement");
   const expenses = property?.Expenses;
   const documents = property?.PropertyDocuments;
   const offers = listing?.Offers;
   const loginUsr = useSelector((r: RootState) => r.auth.user);
   const [allowedToView, setAllowedToView] = useState(true);
   const uploadTAgreemFormRef = useRef<any>();
+  const PDFIframe = useRef<any>();
+  const signatureCanvas = useRef<any>();
+  const pad = useRef<any>();
+  const pdf = useRef<any>();
+  const [fetchedPDF, setFetchedPDF] = useState<any>();
+
+  const loadPDF = async onGoingTenancies => {
+    if (!onGoingTenancies || onGoingTenancies?.length === 0) return;
+    const existingPdfBytes = await fetch(`/api/tenancy-document/${onGoingTenancies[0].id}`).then(res => res.arrayBuffer());
+    setFetchedPDF(existingPdfBytes);
+    pdf.current = await PDFDocument.load(existingPdfBytes);
+    const pdfDataUri = await pdf.current.saveAsBase64({ dataUri: true });
+    PDFIframe.current.src = pdfDataUri;
+  };
+
+  const loadSignaturePad = async onGoingTenancies => {
+    if (!onGoingTenancies || onGoingTenancies?.length === 0) return;
+    pad.current = new SignaturePad(signatureCanvas.current);
+  };
 
   const initialLoad = async () => {
     const res = await axios.get(`/api/listing/rent/expanded/${listingId}`);
@@ -39,6 +57,59 @@ const ManageSingleProperty = props => {
       return;
     }
     setListing(res.data);
+    const activeTenancies = res.data?.PropertyForRent?.Tenancies?.filter(t => t.tenancyStatus !== "ended");
+    loadPDF(activeTenancies);
+    loadSignaturePad(activeTenancies);
+    console.log(res.data);
+  };
+
+  const signPDF = async () => {
+    const hasTenantSigned = tenancyAgreement?.metadata?.tenantsSignData.filter(d => d.date);
+    const newPDF = await PDFDocument.load(fetchedPDF);
+    const dataURL = pad.current.toDataURL();
+
+    const pngImage = await newPDF.embedPng(dataURL);
+    const pngDims = pngImage.scale(0.5);
+
+    // Add a blank page to the document if none was added yet
+    const page = hasTenantSigned ? newPDF.getPage(newPDF.getPageCount() - 1) : newPDF.addPage();
+
+    const text = `Property manager's signature`;
+
+    // Goes from bottom to top
+    // Draw the JPG image in the center of the page
+    page.drawImage(pngImage, {
+      x: page.getWidth() / 2 - pngDims.width / 2,
+      y: page.getHeight() - 130,
+      width: pngDims.width,
+      height: pngDims.height
+    });
+
+    // Draw the string of text on the page
+    page.drawText(text, {
+      x: page.getWidth() / 2 - 100,
+      y: page.getHeight() - 40,
+      size: 15,
+      color: rgb(0, 0.53, 0.71)
+    });
+
+    const pdfDataUri = await newPDF.saveAsBase64({ dataUri: true });
+    PDFIframe.current.src = pdfDataUri;
+    const bytes = await newPDF.save();
+    if (!onGoingTenancies) return;
+    // const pdfBytes = await pdf.current.save();
+    const body: any = { tenancyId: onGoingTenancies[0].id, file: bytes.buffer, signer: "property_manager" };
+    if (!body.file) {
+      toast.error("please select a file to upload");
+      return;
+    }
+
+    const uploaRes = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
+    if (uploaRes.status === 200) {
+      toast.success("Upload Success");
+      initialLoad();
+    }
+    if (uploaRes.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
   };
 
   //Accept or decline
@@ -64,8 +135,14 @@ const ManageSingleProperty = props => {
 
   const uploadTenancyAgrem = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (onGoingTenancies?.length === 0) {
+      toast.error("Find a tenant before uploading documents for this tenancy period");
+      return;
+    }
+    if (!onGoingTenancies) return;
+
     const formData = new FormData(uploadTAgreemFormRef.current || undefined);
-    const body: any = {};
+    const body: any = { tenancyId: onGoingTenancies[0].id };
     for (var pair of formData.entries()) {
       body[pair[0]] = pair[1];
     }
@@ -102,11 +179,26 @@ const ManageSingleProperty = props => {
       <div className="pt-5 pb-5">
         <h5>Tenancy Agreement</h5>
         <Accordion style={{ maxWidth: "500px" }}>
-          <Accordion.Header>View Download</Accordion.Header>
+          <Accordion.Header>View</Accordion.Header>
           <Accordion.Body>
             <div className="pb-4">
               Tenancy Agreement <i className="bi bi-download ps-2" />
             </div>
+            {tenancyAgreement && <iframe ref={PDFIframe} id="pdf" style={{ width: "350px", height: "500px" }} />}
+            {!tenancyAgreement?.metadata?.landlordSignData && (
+              <div>
+                <div>Signature</div>
+                <div className="w-100">
+                  <canvas style={{ border: "1px solid black", width: "100%", height: "100%" }} ref={signatureCanvas} id="signature" />
+                  <button className="btn btn-secondary mb-5 me-3" onClick={() => pad.current.clear()}>
+                    Clear
+                  </button>
+                  <button className="btn btn-secondary mb-5" onClick={() => signPDF()}>
+                    Sign
+                  </button>
+                </div>
+              </div>
+            )}
             <form ref={uploadTAgreemFormRef} onSubmit={uploadTenancyAgrem}>
               <div className="d-flex flex-row flex-wrap align-items-center">
                 <input

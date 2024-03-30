@@ -31,18 +31,17 @@ export const attachMediaToProject = async (req: Request, res: Response) => {
  |
  *===================================================================*/
 
-// export const getMediaFromS3Bucket = async (req: Request, res: Response) => {
+// export const getTenancyAgreementFromS3Bucket = async (req: Request, res: Response) => {
 //   // TODO ensure user can view the image before sending
-//   const { visibility, filename } = req.params;
-//   const userId = Number(req.params.userId);
-//   const projectId = Number(req.params.projectId);
-//   const canView = canUserViewMedia(visibility, projectId, userId, req.session);
+//   const { s3Key } = req.body;
+//   // const userId = Number(req.params.userId);
+//   // const projectId = Number(req.params.projectId);
+//   // const canView = canUserViewMedia(visibility, projectId, userId, req.session);
 
-//   if (!canView) {
-//     return res.status(401).json({ message: "unauthorized" });
-//   }
-
-//   const s3Key = `${visibility}/${userId}/${projectId}/${filename}`;
+//   // TODO Visibility
+//   // if (!canView) {
+//   //   return res.status(401).json({ message: "unauthorized" });
+//   // }
 //   try {
 //     const awsReqParams = { Bucket: String(process.env.AWS_S3_BUCKET_NAME), Key: s3Key };
 //     const fileStream = s3Bucket.getObject(awsReqParams).createReadStream();

@@ -2,6 +2,7 @@ import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttri
 import sequelize from "../sequelize-connection";
 import PropertyForRent from "./property_for_rent";
 import Tenant from "./tenant";
+import TenancyDocument from "./tenancy_document";
 
 // for typeScript typing
 export default class Tenancy extends Model<InferAttributes<Tenancy>, InferCreationAttributes<Tenancy>> {
@@ -24,6 +25,7 @@ export default class Tenancy extends Model<InferAttributes<Tenancy>, InferCreati
   declare leadTenantid: number;
   declare userId: number;
   declare Tenants: CreationOptional<Tenant[]>;
+  declare TenancyDocuments: CreationOptional<TenancyDocument[]>;
   declare PropertyForRent: CreationOptional<PropertyForRent>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;

@@ -2,12 +2,14 @@ import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttri
 import sequelize from "../sequelize-connection";
 import Tenancy from "./tenancy";
 
+type SignData = { date: string; name: string };
+
 export default class TenancyDocument extends Model<InferAttributes<TenancyDocument>, InferCreationAttributes<TenancyDocument>> {
   // Only Used for typescript to pick up intellisense and types
   // The Init function below are the actual DB columns
   declare id: CreationOptional<number>;
   declare mediaType: string;
-  declare mediaFormat: string;
+  declare fileFormat: string;
   declare s3BucketKey: string;
   declare mediaUrl: string;
   declare label: string;
@@ -20,7 +22,8 @@ export default class TenancyDocument extends Model<InferAttributes<TenancyDocume
     | "payslip"
     | "bank-statement"
     | "previous-tenancy-agreement";
-  declare propertyForRentId: number;
+  declare metadata?: { landlordSignData: SignData; [key: string]: any; tenantsSignData: SignData[] };
+  declare tenancyId: number;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -39,7 +42,7 @@ TenancyDocument.init(
       type: DataTypes.STRING,
       allowNull: false
     },
-    mediaFormat: {
+    fileFormat: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -58,6 +61,10 @@ TenancyDocument.init(
     documentType: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    metadata: {
+      type: DataTypes.JSON,
+      allowNull: true
     }
   },
   {

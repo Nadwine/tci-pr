@@ -130,6 +130,13 @@ export const uploadSessionUserProfilePicture = async (req: Request, res: Respons
     // transform to small thumbnail and fix aspect ratio
     const imageBuffer = await sharp(currentFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer();
 
+    const existing = await ProfileMedia.findOne({ where: { profileId: profile[0].id } });
+
+    if (existing) {
+      await s3Bucket.deleteObject({ Bucket: process.env.AWS_S3_BUCKET_NAME, Key: existing?.s3BucketKey }, (err, data) => {});
+      await existing.destroy();
+    }
+
     await s3Bucket
       .upload(
         {
@@ -155,13 +162,6 @@ export const uploadSessionUserProfilePicture = async (req: Request, res: Respons
         const format = currentFile.mimetype.split("/")[1];
         const mediaURl = val.Location;
 
-        // deleteOld Pic
-        const existing = await ProfileMedia.findOne({ where: { profileId: profile[0].id } }); //destroy({ where: { profileId: profile[0].id } });
-
-        if (existing) {
-          await s3Bucket.deleteObject({ Bucket: process.env.AWS_S3_BUCKET_NAME, Key: existing?.s3BucketKey }, (err, data) => {});
-          await existing.destroy();
-        }
         //create new pic
         await ProfileMedia.create({
           mediaType: mediaType,

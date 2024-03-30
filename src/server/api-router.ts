@@ -44,6 +44,7 @@ import { sendContactUsMail } from "./routes/mailing-route";
 import { acceptOrDeclineOffer, sendOffer } from "./routes/offer-route";
 import { adminGetAllTenants, getTenantById } from "./routes/tenant-route";
 import { createTenancyRoute, getAllTenancies, getLandlordTenancies, getSessionUserTenancies, getTenancyById } from "./routes/tenancy-route";
+import { getTenancyAgreementFromS3Bucket, uploadTenancyAgreement } from "./routes/tenancy-document-route";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -150,4 +151,8 @@ router.get("/tenancy/user", ensureAuthentication, getSessionUserTenancies);
 router.get("/tenancy/landlord", ensureAuthentication, getLandlordTenancies);
 router.get("/tenancy/:id", ensureAuthentication, getTenancyById);
 router.get("/tenancy/create", ensureAuthentication, createTenancyRoute);
+
+// /api/tenancy-document
+router.post("/tenancy-document/upload-agreement", ensureAuthentication, uploadMemory.any(), uploadTenancyAgreement);
+router.get("/tenancy-document/:tenancyId", ensureAuthentication, getTenancyAgreementFromS3Bucket);
 export default router;
