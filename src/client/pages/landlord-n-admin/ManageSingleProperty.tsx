@@ -185,7 +185,7 @@ const ManageSingleProperty = props => {
             <div className="pb-4">
               Tenancy Agreement <i className="bi bi-download ps-2" />
             </div>
-            {tenancyAgreement && <iframe ref={PDFIframe} id="pdf" style={{ width: "350px", height: "500px" }} />}
+            {tenancyAgreement && <iframe ref={PDFIframe} id="pdf" style={{ width: "100%", height: "500px" }} />}
             {showSignature && (
               <div>
                 <div>Signature</div>
