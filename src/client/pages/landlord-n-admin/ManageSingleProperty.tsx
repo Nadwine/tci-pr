@@ -39,7 +39,9 @@ const ManageSingleProperty = props => {
   const [showSignaturePad, setshowSignaturePad] = useState(false);
   const allowNewSignature = tenancyAgreement && !tenancyAgreement.metadata?.landlordSignData;
   const landlordSigned = tenancyAgreement && tenancyAgreement.metadata?.landlordSignData.dateTime;
-  const allowPDFDownload = tenancyAgreement && (tenancyAgreement.metadata?.landlordSignData || tenancyAgreement.metadata?.tenantsSignData);
+  const tenantSigned = tenancyAgreement && tenancyAgreement?.metadata?.tenantsSignData?.length && tenancyAgreement?.metadata?.tenantsSignData?.length > 0;
+  const allowPDFDownload = tenancyAgreement; // && (tenancyAgreement.metadata?.landlordSignData || tenancyAgreement.metadata?.tenantsSignData);
+  const downloadText = tenantSigned || landlordSigned ? "Download Signed PDF" : "Download Unsigned PDF";
 
   const loadPDF = async onGoingTenancies => {
     if (!onGoingTenancies || onGoingTenancies?.length === 0) return;
@@ -47,6 +49,9 @@ const ManageSingleProperty = props => {
     setFetchedPDF(existingPdfBytes);
     pdf.current = await PDFDocument.load(existingPdfBytes, { ignoreEncryption: true });
     const pdfDataUri = await pdf.current.saveAsBase64({ dataUri: true });
+
+    // viewing pdf on browser not avalible in mobile. Need to download
+    // can also set the source direct `/api/tenancy-document/${onGoingTenancies[0].id}`;
     PDFIframe.current.src = pdfDataUri;
   };
 
@@ -197,11 +202,14 @@ const ManageSingleProperty = props => {
           <Accordion.Header>View & Sign</Accordion.Header>
           <Accordion.Body>
             {allowPDFDownload && (
-              <div className="pb-4 point" onClick={() => downloadPDF()}>
-                Download <i className="bi bi-download ps-2" />
+              <div className="pb-4">
+                {tenancyAgreement && <div className="d-md-none text-center text-danger pb-3">Web-view not avalible on mobile. download to view</div>}
+                <div className="point" onClick={() => downloadPDF()} style={{ width: "fit-content" }}>
+                  {downloadText} <i className="bi bi-download ps-2" />
+                </div>
               </div>
             )}
-            {tenancyAgreement && <iframe ref={PDFIframe} id="pdf" width={300} height={800} />}
+            {tenancyAgreement && <iframe className="d-none d-md-block" ref={PDFIframe} id="pdf" width="100%" height={650} />}
             {allowNewSignature && (
               <div>
                 <div className="btn btn-link" onClick={() => setshowSignaturePad(true)}>
@@ -226,7 +234,8 @@ const ManageSingleProperty = props => {
                 )}
               </div>
             )}
-            {landlordSigned && <div>Signed: {tenancyAgreement.metadata?.landlordSignData.dateTime}</div>}
+            {landlordSigned && <div style={{ fontSize: "13px" }}>Agent Signed: {tenancyAgreement.metadata?.landlordSignData.dateTime}</div>}
+            {tenantSigned && <div style={{ fontSize: "13px" }}>Tenant Signed: {tenancyAgreement.metadata?.tenantsSignData[0].dateTime}</div>}
             <form ref={uploadTAgreemFormRef} onSubmit={uploadTenancyAgrem}>
               <hr />
               <div className="d-flex pt-3 flex-row align-items-center">

@@ -2,7 +2,7 @@ import { Express, Response, Request } from "express";
 import AWS, { AWSError } from "aws-sdk";
 import S3 from "aws-sdk/clients/s3";
 import TenancyDocument from "../../database/models/tenancy_document";
-import dayjs from "dayjs";
+import fs from "fs";
 
 export const uploadTenancyAgreement = async (req: Request, res: Response) => {
   const files = req.files ?? [];
@@ -120,6 +120,7 @@ export const getTenancyAgreementFromS3Bucket = async (req: Request, res: Respons
       return res.status(404).json({ message: "file not found", error: err });
     });
 
+    res.setHeader("Content-Type", "application/pdf");
     await fileStream.pipe(res);
   } catch (err) {
     return res.status(500).send();
