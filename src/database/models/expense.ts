@@ -9,6 +9,7 @@ export default class Expense extends Model<InferAttributes<Expense>, InferCreati
   declare date: string;
   declare description: string;
   declare amount: number;
+  declare category: "rent_payment" | "purchase";
   declare stripePaymentInfo: any;
   declare operation: "add" | "minus";
 }
@@ -32,6 +33,10 @@ Expense.init(
     },
     amount: {
       type: DataTypes.DECIMAL(20, 2),
+      allowNull: false
+    },
+    category: {
+      type: DataTypes.STRING,
       allowNull: false
     },
     operation: {

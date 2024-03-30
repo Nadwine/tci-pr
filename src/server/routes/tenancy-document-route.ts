@@ -62,7 +62,7 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
 
         const meta = { ...existingAgreement?.metadata };
         if (signer === "tenant") {
-          meta.tenantsSignData?.push({ name: name, dateTime: dateTime });
+          meta.tenantsSignData ? meta.tenantsSignData?.push({ name: name, dateTime: dateTime }) : (meta.tenantsSignData = [{ name: name, dateTime: dateTime }]);
         } else {
           // Property Manager is signing
           meta.landlordSignData = { name: name, dateTime: dateTime };

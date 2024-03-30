@@ -7,6 +7,7 @@ import Tenant from "../../database/models/tenant";
 import User from "../../database/models/user";
 import PropertyForRent from "../../database/models/property_for_rent";
 import Tenancy from "../../database/models/tenancy";
+import Address from "../../database/models/address";
 
 export const sendOffer = async (req: Request, res: Response) => {
   const sessionUsr = req.session.user;
@@ -76,13 +77,14 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
       const offerToAccept = await Offer.findByPk(offerId, {
         include: [
           { model: User, include: [Profile] },
-          { model: Listing, include: [PropertyForRent] }
+          { model: Listing, include: [PropertyForRent, Address] }
         ]
       });
       const offerUser = offerToAccept?.User;
       const userProfile = offerUser?.Profile;
       const offerListing = offerToAccept?.Listing;
       const offerPropertyForRent = offerListing?.PropertyForRent;
+      const offerAddress = offerListing?.Address;
       if (!offerUser || !offerToAccept || !offerListing || !offerPropertyForRent) return res.status(500);
       offerToAccept?.update({ status: "accepted" });
       offerToAccept.Listing.update({ listingStatus: "gone" });
@@ -105,7 +107,7 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
         lastName: userProfile?.lastName,
         mainContactEmail: offerUser?.email,
         mainContactNumber: userProfile?.phoneNumber,
-        addressString: userProfile?.addressLine1 || "" + userProfile?.addressLine2 || "" + userProfile?.settlement || "" + userProfile?.city || "",
+        addressString: offerAddress?.addressLine1 || "" + offerAddress?.addressLine2 || "" + offerAddress?.settlement || "" + offerAddress?.city || "",
         propertyForRentId: offerPropertyForRent.id,
         tenancyStatus: "awaiting-signatures",
         leadTenantid: tenant.id,

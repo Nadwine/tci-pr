@@ -4,6 +4,7 @@ import PropertyForRent from "../../database/models/property_for_rent";
 import ListingLandlord from "../../database/models/listing_landlord";
 import Listing from "../../database/models/listing";
 import Tenant from "../../database/models/tenant";
+import TenancyDocument from "../../database/models/tenancy_document";
 
 export const getSessionUserTenancies = async (req: Request, res: Response) => {
   try {
@@ -13,7 +14,8 @@ export const getSessionUserTenancies = async (req: Request, res: Response) => {
     const tenancies = await Tenancy.findAll({
       include: [
         { model: Tenant, where: { id: tenant.id } },
-        { model: PropertyForRent, include: [{ model: Listing, include: [{ model: ListingLandlord }] }] }
+        { model: PropertyForRent, include: [{ model: Listing, include: [{ model: ListingLandlord }] }] },
+        { model: TenancyDocument }
       ]
     });
     return res.json(tenancies);

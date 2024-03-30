@@ -1,20 +1,122 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import Tenancy from "../../database/models/tenancy";
 import dayjs from "dayjs";
 import axios from "axios";
+import { CloseButton, Modal } from "react-bootstrap";
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import SignaturePad from "signature_pad";
+import { toast } from "react-toastify";
 
 export const MyTenancy = props => {
   const [tenancies, setTenancies] = useState<Tenancy[]>();
+  const [showSignModal, setShowSignModal] = useState(false);
+  const [currentTenancySignId, setCurrentTenancySignId] = useState(0);
+  const currentTenancySign = tenancies?.find(t => t.id === currentTenancySignId);
+  const currentAgreement = currentTenancySign?.TenancyDocuments.find(doc => doc.documentType === "tenancy-agreement");
+  const PDFIframe = useRef<any>();
+  const signatureCanvas = useRef<any>();
+  const pad = useRef<any>();
+  const pdf = useRef<any>();
+  const [fetchedPDF, setFetchedPDF] = useState<any>();
+  const [showSignaturePad, setshowSignaturePad] = useState(false);
+  const allowNewSignature = currentAgreement && !currentAgreement.metadata?.tenantsSignData;
+  const landlordSigned = currentAgreement && currentAgreement.metadata?.landlordSignData.dateTime;
+  const tenantSigned = currentAgreement && currentAgreement?.metadata?.tenantsSignData?.length && currentAgreement?.metadata?.tenantsSignData?.length > 0;
+  const allowPDFDownload = currentAgreement; // && (tenancyAgreement.metadata?.landlordSignData || tenancyAgreement.metadata?.tenantsSignData);
+  const downloadText = tenantSigned || landlordSigned ? "Download Signed PDF" : "Download Unsigned PDF";
+
+  const downloadPDF = async () => {
+    const bytes = await pdf.current.save();
+    var blob = new Blob([bytes], { type: "application/pdf" }); // change resultByte to bytes
+
+    var link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = `homebase_agreement_${currentAgreement?.tenancyId}.pdf`;
+    link.click();
+  };
+
+  const loadPDF = async onGoingTenancies => {
+    if (!onGoingTenancies || onGoingTenancies?.length === 0) return;
+    const existingPdfBytes = await fetch(`/api/tenancy-document/${onGoingTenancies[0].id}`).then(res => res.arrayBuffer());
+    setFetchedPDF(existingPdfBytes);
+    pdf.current = await PDFDocument.load(existingPdfBytes, { ignoreEncryption: true });
+    const pdfDataUri = await pdf.current.saveAsBase64({ dataUri: true });
+
+    // viewing pdf on browser not avalible in mobile. Need to download
+    // can also set the source direct `/api/tenancy-document/${onGoingTenancies[0].id}`;
+    PDFIframe.current.src = pdfDataUri;
+  };
+
+  const loadSignaturePad = async onGoingTenancies => {
+    if (!onGoingTenancies || onGoingTenancies?.length === 0) return;
+    pad.current = new SignaturePad(signatureCanvas.current);
+  };
 
   const fetchTenancy = async () => {
     const res = await axios.get("/api/tenancy/user");
-    if (res.status === 200) setTenancies(res.data);
+    if (res.status === 200) {
+      setTenancies(res.data);
+      const ongoingTenancies = res.data.filter((t: Tenancy) => t.tenancyStatus !== "ended");
+      loadPDF(ongoingTenancies);
+      loadSignaturePad(ongoingTenancies);
+    }
   };
+
+  const signPDF = async () => {
+    const hasLandlordSigned = currentAgreement?.metadata?.landlordSignData?.dateTime;
+    const newPDF = await PDFDocument.load(fetchedPDF, { ignoreEncryption: true });
+    const dataURL = pad.current.toDataURL();
+
+    const pngImage = await newPDF.embedPng(dataURL);
+    const pngDims = pngImage.scale(0.5);
+
+    // Add a blank page to the document if none was added yet
+    const page = hasLandlordSigned ? newPDF.getPage(newPDF.getPageCount() - 1) : newPDF.addPage();
+    const dateTime = dayjs().format("DD MMM, YYYY h:mm A");
+    const text = `Tenant's signature - ${dateTime}`;
+
+    // ------- CHECK POINT
+    // Goes from bottom to top
+    // Draw the JPG image in the center of the page
+    page.drawImage(pngImage, {
+      x: page.getWidth() / 2 - pngDims.width / 2,
+      y: page.getHeight() - 330,
+      width: pngDims.width,
+      height: pngDims.height
+    });
+
+    // Draw the string of text on the page
+    page.drawText(text, {
+      x: page.getWidth() / 2 - 200,
+      y: page.getHeight() - 240,
+      size: 15,
+      color: rgb(0, 0.53, 0.71)
+    });
+    const onGoingTenancies = tenancies?.filter(t => t.tenancyStatus !== "ended");
+    const pdfDataUri = await newPDF.saveAsBase64({ dataUri: true });
+    PDFIframe.current.src = pdfDataUri;
+    const bytes = await newPDF.save();
+    if (!onGoingTenancies) return;
+
+    const body: any = { tenancyId: onGoingTenancies[0].id, file: bytes.buffer, signer: "tenant", dateTime: dateTime };
+    if (!body.file) {
+      toast.error("please select a file to upload");
+      return;
+    }
+
+    const uploaRes = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
+    if (uploaRes.status === 200) {
+      toast.success("Upload Success");
+      fetchTenancy();
+    }
+    if (uploaRes.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
+  };
+
   useEffect(() => {
     fetchTenancy();
-  }, []);
+  }, [showSignaturePad, showSignModal]);
 
   return (
     <div className="px-md-5">
@@ -33,6 +135,8 @@ export const MyTenancy = props => {
       <div>
         {tenancies?.map((currTenancy, i) => {
           const leadTenant = currTenancy?.Tenants?.find(t => t.id === currTenancy.leadTenantid);
+          const tenancyAgreement = currTenancy.TenancyDocuments.find(doc => doc.documentType === "tenancy-agreement");
+
           return (
             <div key={i}>
               <div className="pb-5">
@@ -52,7 +156,21 @@ export const MyTenancy = props => {
                         <td>
                           {currTenant.firstName} {currTenant.lastName}
                         </td>
-                        <td>Signature: {currTenant.rentalAgreementDate ? currTenancy.rentalAgreementDate : "pending"}</td>
+                        <td>
+                          Signature: {currTenant.rentalAgreementDate ? currTenancy.rentalAgreementDate : "pending"}{" "}
+                          {tenancyAgreement && (
+                            <button
+                              onClick={() => {
+                                setShowSignModal(true);
+                                setCurrentTenancySignId(currTenancy.id);
+                              }}
+                              className="btn-sm btn-success ms-3"
+                            >
+                              {" "}
+                              View & Sign
+                            </button>
+                          )}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -117,6 +235,55 @@ export const MyTenancy = props => {
           );
         })}
       </div>
+      <Modal show={showSignModal} onHide={() => null} backdrop="static" keyboard={false}>
+        <Modal.Header>
+          <Modal.Title style={{ width: "100%" }}>
+            <div className="d-flex">
+              <div>View & Sign</div>
+              <div className="ms-auto">
+                <CloseButton onClick={() => setShowSignModal(false)} />
+              </div>
+            </div>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {allowPDFDownload && (
+            <div className="pb-4">
+              {currentAgreement && <div className="d-md-none text-center text-danger pb-3">Web-view not avalible on mobile. download to view</div>}
+              <div className="point" onClick={() => downloadPDF()} style={{ width: "fit-content" }}>
+                {downloadText} <i className="bi bi-download ps-2" />
+              </div>
+            </div>
+          )}
+          {currentAgreement && <iframe className="d-none d-md-block" ref={PDFIframe} id="pdf" width="100%" height={650} />}
+          {allowNewSignature && (
+            <div>
+              <div className="btn btn-link" onClick={() => setshowSignaturePad(true)}>
+                + Add Signature
+              </div>
+              {showSignaturePad && (
+                <div className="w-100">
+                  <canvas
+                    // onTouchStart={() => {setForceRefresh(Math.random())}}
+                    // onTouchStartCapture={() => {setForceRefresh(Math.random())}}
+                    style={{ zIndex: +20, border: "1px solid black", width: "100%", height: "100%" }}
+                    ref={signatureCanvas}
+                    id="signature"
+                  />
+                  <button className="btn btn-secondary mb-5 me-3" onClick={() => pad.current.clear()}>
+                    Clear
+                  </button>
+                  <button className="btn btn-secondary mb-5" onClick={() => signPDF()}>
+                    Sign
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+          {landlordSigned && <div style={{ fontSize: "13px" }}>Agent Signed: {currentAgreement.metadata?.landlordSignData.dateTime}</div>}
+          {tenantSigned && <div style={{ fontSize: "13px" }}>Tenant Signed: {currentAgreement.metadata?.tenantsSignData[0].dateTime}</div>}
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
