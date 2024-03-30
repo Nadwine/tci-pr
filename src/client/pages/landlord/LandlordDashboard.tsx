@@ -33,7 +33,7 @@ export const LandlordDashboard = props => {
           <h3 className="fw-bold my-5 ms-5"> Dashboard</h3>
         </div>
         {/**---------------------------------- Accordion ----------------------------------------------- */}
-        <Accordion className="px-md-5 mx-md-5">
+        <Accordion defaultActiveKey="0" className="px-md-5 mx-md-5">
           <Accordion.Item eventKey="0">
             <Accordion.Header>
               <strong>Properties</strong>

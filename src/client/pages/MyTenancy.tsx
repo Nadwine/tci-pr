@@ -11,7 +11,6 @@ export const MyTenancy = props => {
   const fetchTenancy = async () => {
     const res = await axios.get("/api/tenancy/user");
     if (res.status === 200) setTenancies(res.data);
-    console.log(res);
   };
   useEffect(() => {
     fetchTenancy();
@@ -20,6 +19,17 @@ export const MyTenancy = props => {
   return (
     <div className="px-md-5">
       <h4 className="py-4">My Tenancies</h4>
+      {!tenancies && (
+        <div className="my-3 text-center" style={{ justifyItems: "center" }}>
+          {" "}
+          <div>
+            <h4 className="fw-bolder">You have no active tenancies</h4>
+          </div>
+          <div>
+            <img src="/static/no-message.png"></img>
+          </div>{" "}
+        </div>
+      )}
       <div>
         {tenancies?.map((currTenancy, i) => {
           const leadTenant = currTenancy?.Tenants?.find(t => t.id === currTenancy.leadTenantid);
