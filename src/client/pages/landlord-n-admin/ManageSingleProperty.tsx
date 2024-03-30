@@ -79,7 +79,7 @@ const ManageSingleProperty = props => {
 
   const signPDF = async () => {
     const hasTenantSigned = tenancyAgreement?.metadata?.tenantsSignData.filter(d => d?.dateTime);
-    const newPDF = await PDFDocument.load(fetchedPDF);
+    const newPDF = await PDFDocument.load(fetchedPDF, { ignoreEncryption: true });
     const dataURL = pad.current.toDataURL();
 
     const pngImage = await newPDF.embedPng(dataURL);
