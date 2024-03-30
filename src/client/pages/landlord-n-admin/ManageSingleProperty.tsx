@@ -23,7 +23,7 @@ const ManageSingleProperty = props => {
   const property = listing?.PropertyForRent;
   const tenancies = property?.Tenancies;
   const onGoingTenancies = tenancies?.filter(t => t.tenancyStatus !== "ended");
-  const tenancyAgreement = onGoingTenancies && onGoingTenancies[0].TenancyDocuments.find(d => d.documentType === "tenancy-agreement");
+  const tenancyAgreement = onGoingTenancies && onGoingTenancies[0]?.TenancyDocuments?.find(d => d.documentType === "tenancy-agreement");
   const expenses = property?.Expenses;
   const documents = property?.PropertyDocuments;
   const offers = listing?.Offers;
@@ -35,6 +35,7 @@ const ManageSingleProperty = props => {
   const pad = useRef<any>();
   const pdf = useRef<any>();
   const [fetchedPDF, setFetchedPDF] = useState<any>();
+  const showSignature = tenancyAgreement && !tenancyAgreement.metadata?.landlordSignData;
 
   const loadPDF = async onGoingTenancies => {
     if (!onGoingTenancies || onGoingTenancies?.length === 0) return;
@@ -185,7 +186,7 @@ const ManageSingleProperty = props => {
               Tenancy Agreement <i className="bi bi-download ps-2" />
             </div>
             {tenancyAgreement && <iframe ref={PDFIframe} id="pdf" style={{ width: "350px", height: "500px" }} />}
-            {!tenancyAgreement?.metadata?.landlordSignData && (
+            {showSignature && (
               <div>
                 <div>Signature</div>
                 <div className="w-100">
