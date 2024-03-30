@@ -5,7 +5,6 @@ import Admin from "./admin";
 import { ListingTypeEnum } from "../../../types/enums";
 import Address from "./address";
 import PropertyForRent from "./property_for_rent";
-import PropertyForSale from "./property_for_sale";
 import ListingMedia from "./listing_media";
 import ListingQuestion from "./listing_question";
 import ListingLandlord from "./listing_landlord";
@@ -29,7 +28,6 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare listingManager: "landlord" | "admin";
   declare listingStatus: ListingStatusEnum;
   declare PropertyForRent: CreationOptional<PropertyForRent>;
-  declare PropertyForSale: CreationOptional<PropertyForSale>;
   declare EnquiryConversations?: CreationOptional<EnquiryConversation[]>;
   declare ListingQuestions?: CreationOptional<ListingQuestion[]>;
   declare ListingMedia: CreationOptional<ListingMedia[]>;

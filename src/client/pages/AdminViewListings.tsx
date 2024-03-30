@@ -83,7 +83,6 @@ const AdminViewListings = props => {
                 </a>
               </div>
               {l.PropertyForRent && <div>Rent: ${l.PropertyForRent?.rentAmount}</div>}
-              {l.PropertyForSale && <div>Sale: ${l.PropertyForSale?.saleAmount}</div>}
               <div>Location: {l.Address.settlement}</div>
               <div>Enquiries: {l.EnquiryConversations?.length}</div>
             </div>

@@ -4,7 +4,7 @@ const usersArray = require("../fake-data/users");
 const listingsArray = require("../fake-data/listings");
 const addressesArray = require("../fake-data/addresses");
 const propertyForRentArray = require("../fake-data/property_for_rent");
-const propertyForSaleArray = require("../fake-data/property_for_sale");
+// const propertyForSaleArray = require("../fake-data/property_for_sale");
 const listingMediaArray = require("../fake-data/listing_media");
 const enqConvoArray = require("../fake-data/enquiry_conversation");
 const messagesArray = require("../fake-data/messages");
@@ -61,8 +61,8 @@ module.exports = {
       await queryInterface.bulkInsert("property_for_rent", propertyForRentArray, {});
       await queryInterface.sequelize.query(`ALTER SEQUENCE property_for_rent_id_seq RESTART WITH ${propertyForRentArray.length + 1}`);
 
-      await queryInterface.bulkInsert("property_for_sale", propertyForSaleArray, {});
-      await queryInterface.sequelize.query(`ALTER SEQUENCE property_for_sale_id_seq RESTART WITH ${propertyForSaleArray.length + 1}`);
+      // await queryInterface.bulkInsert("property_for_sale", propertyForSaleArray, {});
+      // await queryInterface.sequelize.query(`ALTER SEQUENCE property_for_sale_id_seq RESTART WITH ${propertyForSaleArray.length + 1}`);
     } catch (err) {
       // @ts-ignore
       console.log("Error occured while bulk insert PropertyForRent", err?.original?.message);

@@ -9,7 +9,6 @@ import Address from "../../database/models/address";
 import { ListingTypeEnum } from "../../../types/enums";
 import ListingMedia from "../../database/models/listing_media";
 import { InferAttributes, Op, WhereOptions, where } from "sequelize";
-import PropertyForSale from "../../database/models/property_for_sale";
 import User from "../../database/models/user";
 import ListingQuestion from "../../database/models/listing_question";
 import EnquiryConversation from "../../database/models/enquiry_conversation";
@@ -622,7 +621,6 @@ export const landlordViewMyListings = async (req: Request, res: Response) => {
       include: [
         { model: Address },
         { model: PropertyForRent },
-        { model: PropertyForSale },
         { model: ListingMedia, order: [["id", "ASC"]] },
         { model: Admin, include: [User] },
         { model: EnquiryConversation }
@@ -829,13 +827,7 @@ export const getRandomListings = async (req: Request, res: Response) => {
   try {
     const listings = await Listing.findAll({
       limit: 5000,
-      include: [
-        { model: Address },
-        { model: PropertyForRent },
-        { model: PropertyForSale },
-        { model: ListingMedia, order: [["id", "ASC"]] },
-        { model: Admin, include: [User] }
-      ]
+      include: [{ model: Address }, { model: PropertyForRent }, { model: ListingMedia, order: [["id", "ASC"]] }, { model: Admin, include: [User] }]
     });
 
     const shuffled = listings
@@ -865,13 +857,7 @@ export const getApproveFromListings = async (req: Request, res: Response) => {
       where: {
         isApproved: false
       },
-      include: [
-        { model: Address },
-        { model: PropertyForRent },
-        { model: PropertyForSale },
-        { model: ListingMedia, order: [["id", "ASC"]] },
-        { model: ListingLandlord }
-      ]
+      include: [{ model: Address }, { model: PropertyForRent }, { model: ListingMedia, order: [["id", "ASC"]] }, { model: ListingLandlord }]
     });
     return res.json(listings);
   } catch (err) {
