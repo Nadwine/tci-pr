@@ -20,6 +20,7 @@ const MessageEnquiries = props => {
   const [chatTextbox, setChatTextbox] = useState("");
   const userId = loginUsr!.id;
   const isAdmin = loginUsr?.accountType === "admin";
+  const isTenant = loginUsr?.accountType === "tenant";
 
   const loadData = async () => {
     const res = await axios.get("/api/enquiry/latest");
@@ -102,7 +103,8 @@ const MessageEnquiries = props => {
                   </div>
                   {/**todo: fix elipsis on bigger screen */}
                   <p className="card-text" style={{ width: "400px", overflow: "scroll", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
-                    {lastMessage && lastMessage?.messageText}
+                    {/** TODO ADD USERNAME OR EMAIL OF MESSAGE SENDER HERE */}
+                    <span className="strong-text">{enq.User.Profile?.email}:</span> {lastMessage && lastMessage?.messageText}
                   </p>
                   {isAdmin && landlordManaged && <span className="text-danger">Managed by Landlord</span>}
                 </div>
