@@ -9,6 +9,7 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
   const sessionUsr = req.session.user;
   const tenancyId = req.body.tenancyId;
   const signer = req.body.signer;
+  const dateTime = req.body.dateTime;
   const name = req.session.user!.email;
 
   if (files.length === 0) return res.status(400).json({ message: "Bad request, No Files to upload" });
@@ -61,10 +62,10 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
 
         const meta = { ...existingAgreement?.metadata };
         if (signer === "tenant") {
-          meta.tenantsSignData?.push({ name: name, date: dayjs().toISOString() });
+          meta.tenantsSignData?.push({ name: name, dateTime: dateTime });
         } else {
           // Property Manager is signing
-          meta.landlordSignData = { name: name, date: dayjs().toISOString() };
+          meta.landlordSignData = { name: name, dateTime: dateTime };
         }
         //create new pic
         !signer &&

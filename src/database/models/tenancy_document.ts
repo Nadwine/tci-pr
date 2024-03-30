@@ -2,7 +2,7 @@ import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttri
 import sequelize from "../sequelize-connection";
 import Tenancy from "./tenancy";
 
-type SignData = { date: string; name: string };
+type SignData = { dateTime: string; name: string };
 
 export default class TenancyDocument extends Model<InferAttributes<TenancyDocument>, InferCreationAttributes<TenancyDocument>> {
   // Only Used for typescript to pick up intellisense and types

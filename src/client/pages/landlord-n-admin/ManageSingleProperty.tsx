@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { Accordion, Offcanvas } from "react-bootstrap";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import SignaturePad from "signature_pad";
+import dayjs from "dayjs";
 
 const ManageSingleProperty = props => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const ManageSingleProperty = props => {
     if (!onGoingTenancies || onGoingTenancies?.length === 0) return;
     const existingPdfBytes = await fetch(`/api/tenancy-document/${onGoingTenancies[0].id}`).then(res => res.arrayBuffer());
     setFetchedPDF(existingPdfBytes);
-    pdf.current = await PDFDocument.load(existingPdfBytes);
+    pdf.current = await PDFDocument.load(existingPdfBytes, { ignoreEncryption: true });
     const pdfDataUri = await pdf.current.saveAsBase64({ dataUri: true });
     PDFIframe.current.src = pdfDataUri;
   };
@@ -77,7 +78,7 @@ const ManageSingleProperty = props => {
   };
 
   const signPDF = async () => {
-    const hasTenantSigned = tenancyAgreement?.metadata?.tenantsSignData.filter(d => d.date);
+    const hasTenantSigned = tenancyAgreement?.metadata?.tenantsSignData.filter(d => d?.dateTime);
     const newPDF = await PDFDocument.load(fetchedPDF);
     const dataURL = pad.current.toDataURL();
 
@@ -86,8 +87,8 @@ const ManageSingleProperty = props => {
 
     // Add a blank page to the document if none was added yet
     const page = hasTenantSigned ? newPDF.getPage(newPDF.getPageCount() - 1) : newPDF.addPage();
-
-    const text = `Property manager's signature`;
+    const dateTime = dayjs().format("DD MMM, YYYY h:m A");
+    const text = `Property manager's signature - ${dateTime}`;
 
     // Goes from bottom to top
     // Draw the JPG image in the center of the page
@@ -100,7 +101,7 @@ const ManageSingleProperty = props => {
 
     // Draw the string of text on the page
     page.drawText(text, {
-      x: page.getWidth() / 2 - 100,
+      x: page.getWidth() / 2 - 200,
       y: page.getHeight() - 40,
       size: 15,
       color: rgb(0, 0.53, 0.71)
@@ -110,8 +111,8 @@ const ManageSingleProperty = props => {
     PDFIframe.current.src = pdfDataUri;
     const bytes = await newPDF.save();
     if (!onGoingTenancies) return;
-    // const pdfBytes = await pdf.current.save();
-    const body: any = { tenancyId: onGoingTenancies[0].id, file: bytes.buffer, signer: "property_manager" };
+
+    const body: any = { tenancyId: onGoingTenancies[0].id, file: bytes.buffer, signer: "property_manager", dateTime: dateTime };
     if (!body.file) {
       toast.error("please select a file to upload");
       return;
@@ -199,7 +200,7 @@ const ManageSingleProperty = props => {
                 Download <i className="bi bi-download ps-2" />
               </div>
             )}
-            {tenancyAgreement && <iframe ref={PDFIframe} id="pdf" style={{ width: "100%", height: "500px" }} />}
+            {tenancyAgreement && <iframe ref={PDFIframe} id="pdf" width={300} height={800} />}
             {allowNewSignature && (
               <div>
                 <div className="btn btn-link" onClick={() => setshowSignaturePad(true)}>
