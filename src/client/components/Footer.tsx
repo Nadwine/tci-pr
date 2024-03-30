@@ -10,12 +10,12 @@ const Footer = () => {
         <div className="row">
           <div className="col-md-3">
             <a className="text-white text-decoration-none" href="/about">
-              About Us
+              About TCI Homebase
             </a>
           </div>
           <div className="col-md-3">
             <a className="text-white text-decoration-none" href="#">
-              Stay Conected, Follow us on instagram
+              Follow us on instagram <i className="bi bi-instagram"></i>
             </a>
           </div>
           <div className="col-md-3">
@@ -23,13 +23,10 @@ const Footer = () => {
               Terms & Conditions
             </a>
           </div>
-          <div className="col-md-3"></div>
-          <div className="col-md-3"></div>
-          <div className="col-md-3"></div>
-        </div>
-        <div className="row pt-4">
-          {/* <div className="col-md-3"></div> */}
-          <div className="col-md-3 text-right small align-self-end">©2024 TCI Homebase.</div>
+          <div className="col-md-3">
+            {/* <div className="col-md-3"></div> */}
+            <div className="">©2024 TCI Homebase.</div>
+          </div>
         </div>
       </div>
     </footer>

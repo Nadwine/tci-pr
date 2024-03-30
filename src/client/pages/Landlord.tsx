@@ -31,7 +31,7 @@ const AboutUs = props => {
         </div>
         <div className="card col-md-6 p-md-5 ml-mb-5 mt-sm-2 shadow-lg m-sm-1" style={{ borderRadius: "0px" }}>
           <div className="card-body">
-            <p className="card-text">
+            <p className="card-text text-muted">
               At TCI Homebase, we pride ourselves on being more than just a property management company, with a commitment to excellence and innovation at the
               forefront of everything we do, we go above and beyond to ensure your peace of mind and the utmost satisfaction.
               <p className="mt-3">
