@@ -90,6 +90,7 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
       offerToAccept.Listing.update({ listingStatus: "in offer" });
 
       // Intiate Tenancy
+      offerPropertyForRent.update({ numOfTenants: offerPropertyForRent.numOfTenants + 1 });
       const tenant = await Tenant.create({
         firstName: userProfile?.firstName,
         lastName: userProfile?.lastName,

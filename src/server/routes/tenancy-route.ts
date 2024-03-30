@@ -69,20 +69,20 @@ export const createTenancyRoute = async (req: Request, res: Response) => {
   if (!allowed) return res.status(401).json({ message: "Unauthorized" });
 
   try {
-    const tenancy = await Tenancy.create({
-      rentalAgreementDate: rentalAgreementDate,
-      deposit: deposit,
-      isDepositPaid: isDepositPaid,
-      outstandingRent: outstandingRent,
-      isDepositReleased: isDepositReleased,
-      propertyForRentId: propertyForRentId,
-      userId: tenantUserId,
-      tenancyStatus: tenancyStatus,
-      leadTenantid: 0,
-      isPaymentTogether: isPaymentTogether
-    });
+    // const tenancy = await Tenancy.create({
+    //   rentalAgreementDate: rentalAgreementDate,
+    //   deposit: deposit,
+    //   isDepositPaid: isDepositPaid,
+    //   outstandingRent: outstandingRent,
+    //   isDepositReleased: isDepositReleased,
+    //   propertyForRentId: propertyForRentId,
+    //   userId: tenantUserId,
+    //   tenancyStatus: tenancyStatus,
+    //   leadTenantid: 0,
+    //   isPaymentTogether: isPaymentTogether
+    // });
 
-    return res.status(200).json(tenancy);
+    return res.status(200).json();
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error 711", err });
   }

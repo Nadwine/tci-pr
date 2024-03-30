@@ -26,6 +26,7 @@ export default class PropertyForRent extends Model<InferAttributes<PropertyForRe
    * Tenancy Length in Days
    */
   declare tenancyLength: number;
+  declare numOfTenants: CreationOptional<number>;
   declare Listing: CreationOptional<Listing>;
   declare Tenancies: CreationOptional<Tenancy[]>;
   declare Expenses: CreationOptional<Expense[]>;
@@ -93,6 +94,11 @@ PropertyForRent.init(
     tenancyLength: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    numOfTenants: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
     }
   },
   {
