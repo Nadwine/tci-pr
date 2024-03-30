@@ -44,14 +44,14 @@ const MeetTheTeam = props => {
         </div>
       </div>
       <div className="d-flex flex-wrap pt-5">
-        <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5">
+        <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5 px-1">
           <div className="img-container rounded" style={imgContainerStyle}></div>
           <div className="fs-5 pt-3">Christma Jean-Louis</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
             Chief Executive Officer
           </div>
           {!chrisOpen && (
-            <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden" }}>
+            <div className="px-md-5 text-center" style={{ height: "70px", overflow: "hidden" }}>
               Christma has managed a number of teams and brings a wealth of experience in operation management, business..
             </div>
           )}
@@ -62,7 +62,7 @@ const MeetTheTeam = props => {
             {chrisOpen ? "Close" : "Read More"}
           </Button>
         </div>
-        <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5">
+        <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5 px-1">
           <div className="img-container rounded" style={imgContainerStyle}></div>
           <div className="fs-5 pt-3">Herby Magny</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
@@ -80,7 +80,7 @@ const MeetTheTeam = props => {
             {herbyOpen ? "Close" : "Read More"}
           </Button>
         </div>
-        <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5">
+        <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5 px-1">
           <div className="img-container rounded" style={imgContainerStyle}></div>
           <div className="fs-5 pt-3">Brutchsama Jean-Louis</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
@@ -98,7 +98,7 @@ const MeetTheTeam = props => {
             {samaOpen ? "Close" : "Read More"}
           </Button>
         </div>
-        <div className="col-12 col-md-6 d-flex align-items-center flex-column">
+        <div className="col-12 col-md-6 d-flex align-items-center flex-column px-1">
           <div className="img-container rounded" style={imgContainerStyle}></div>
           <div className="fs-5 pt-3">Nadwine Louis</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>

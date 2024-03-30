@@ -24,7 +24,7 @@ const Products = props => {
         {/* Desktop Title */}
         <div className="pb-5 fs-5 mx-auto d-none d-md-flex flex-wrap" style={{ paddingTop: "70px", maxWidth: "1000px" }}>
           <h3 className="d-none d-md-flex pb-4">Products & Services</h3>
-          <div className="col-12 d-flex align-items-center text-muted pb-3">
+          <div className="col-12 d-flex align-items-center text-muted pb-3" style={{ fontSize: "16px" }}>
             TCI Homebase offers a range of services. From finding suitible tenants for your property to a fully managed service model, we{"'"}ve got you
             covered.
           </div>

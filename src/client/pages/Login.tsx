@@ -50,7 +50,7 @@ const Login = () => {
               </a>{" "}
               <br />
               <a href="#" className="text-white text-opacity-75 text-decoration-none">
-                Follow us on instagram
+                Follow us on instagram <i className="bi bi-instagram"></i>
               </a>
             </div>
           </div>
