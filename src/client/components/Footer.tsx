@@ -25,7 +25,7 @@ const Footer = () => {
           </div>
           <div className="col-md-3">
             {/* <div className="col-md-3"></div> */}
-            <div className="">©2024 TCI Homebase.</div>
+            <div className="small">©2024 TCI Homebase.</div>
           </div>
         </div>
       </div>
