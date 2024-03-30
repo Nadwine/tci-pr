@@ -38,6 +38,7 @@ const ManageSingleProperty = props => {
   const [fetchedPDF, setFetchedPDF] = useState<any>();
   const [showSignaturePad, setshowSignaturePad] = useState(false);
   const allowNewSignature = tenancyAgreement && !tenancyAgreement.metadata?.landlordSignData;
+  const landlordSigned = tenancyAgreement && tenancyAgreement.metadata?.landlordSignData.dateTime;
   const allowPDFDownload = tenancyAgreement && (tenancyAgreement.metadata?.landlordSignData || tenancyAgreement.metadata?.tenantsSignData);
 
   const loadPDF = async onGoingTenancies => {
@@ -87,7 +88,7 @@ const ManageSingleProperty = props => {
 
     // Add a blank page to the document if none was added yet
     const page = hasTenantSigned ? newPDF.getPage(newPDF.getPageCount() - 1) : newPDF.addPage();
-    const dateTime = dayjs().format("DD MMM, YYYY h:m A");
+    const dateTime = dayjs().format("DD MMM, YYYY h:mm A");
     const text = `Property manager's signature - ${dateTime}`;
 
     // Goes from bottom to top
@@ -225,6 +226,7 @@ const ManageSingleProperty = props => {
                 )}
               </div>
             )}
+            {landlordSigned && <div>Signed: {tenancyAgreement.metadata?.landlordSignData.dateTime}</div>}
             <form ref={uploadTAgreemFormRef} onSubmit={uploadTenancyAgrem}>
               <hr />
               <div className="d-flex pt-3 flex-row align-items-center">
