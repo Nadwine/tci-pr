@@ -370,7 +370,7 @@ const LandLordCreateListing = props => {
           </div>
           <div>
             <input
-              style={{ width: "6.8em" }}
+              style={{ width: "7.3em" }}
               className="form-control mb-5 ms-auto mt-2"
               type="file"
               id="formFileMultiple"

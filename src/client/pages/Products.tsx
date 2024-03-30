@@ -20,11 +20,11 @@ const Products = props => {
         {/* Desktop Page Header */}
         {/* <h3 className="mt-5 d-none d-md-flex">Products & Services</h3> */}
         {/* Mobile Page Header */}
-        <h3 className="mt-5 text-center d-md-none d-lg-none">Products & Services</h3>
+        <h3 className="mt-5 text-center d-md-none d-lg-none strong-text">Products & Services</h3>
         {/* Desktop Title */}
         <div className="pb-5 fs-5 mx-auto d-none d-md-flex flex-wrap" style={{ paddingTop: "70px", maxWidth: "1000px" }}>
-          <h3 className="d-none d-md-flex pb-5">Products & Services</h3>
-          <div className="col-12d-flex align-items-center">
+          <h3 className="d-none d-md-flex pb-4">Products & Services</h3>
+          <div className="col-12 d-flex align-items-center text-muted pb-3">
             TCI Homebase offers a range of services. From finding suitible tenants for your property to a fully managed service model, we{"'"}ve got you
             covered.
           </div>
@@ -45,7 +45,7 @@ const Products = props => {
       </div>
       <hr />
       <div className="col-12 d-flex justify-content-center px-md-5">
-        <div className="col-12 pt-md-4 products-accordions" style={{ maxWidth: "750px" }}>
+        <div className="col-12 pt-md-4 products-accordions pb-5" style={{ maxWidth: "750px" }}>
           <Accordion>
             <Card>
               <Card.Header style={{ height: "100px", backgroundColor: "white" }}>

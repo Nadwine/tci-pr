@@ -46,7 +46,7 @@ const Login = () => {
               </a>
               <br />
               <a href="/feedback" className="text-white text-opacity-75 text-decoration-none">
-                Send us you feedback
+                Send us your feedback
               </a>{" "}
               <br />
               <a href="#" className="text-white text-opacity-75 text-decoration-none">

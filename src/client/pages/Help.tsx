@@ -34,8 +34,9 @@ const Help = props => {
         </div>
       </div>
       <div className="help-content pt-5 px-md-5">
-        <h3>Topics</h3>
-        <div className="help-article pt-5" style={{ maxWidth: "600px" }}>
+        <h3 className="strong-text px-3">Topics</h3>
+        <hr className="mb-4 m-3" style={{ width: "40px", color: "#087990", height: "6px" }} />
+        <div className="help-article pt-3 p-3">
           <div className="title strong-text" style={{ height: "3em" }}>
             <i className="bi bi-dot" /> How to search
           </div>
@@ -46,7 +47,7 @@ const Help = props => {
             Each property posted will be linked with a specifc settlement and island to make your search more convenient.
           </div>
         </div>
-        <div className="help-article pt-5" style={{ maxWidth: "600px" }}>
+        <div className="help-article pt-5 p-3">
           <div className="title strong-text" style={{ height: "3em" }}>
             <i className="bi bi-dot" />
             Submitting a property listing
@@ -59,7 +60,7 @@ const Help = props => {
             <span className="px-1 fst-italic strong-text">Create a listing</span>. Fill out this form with the required information hit the submit button.
           </div>
         </div>
-        <div className="help-article pt-5" style={{ maxWidth: "600px" }}>
+        <div className="help-article pt-5 p-3">
           <div className="title strong-text" style={{ height: "3em" }}>
             <i className="bi bi-dot" />
             Sending an offer for a property
@@ -73,7 +74,7 @@ const Help = props => {
             symbol. Then select Make an offer. Fill in the required information and hit send.
           </div>
         </div>
-        <div className="help-article pt-5" style={{ maxWidth: "600px" }}>
+        <div className="help-article pt-5 pb-5 p-3">
           <div className="title strong-text" style={{ height: "3em" }}>
             <i className="bi bi-dot" />
             Managing your posted properties

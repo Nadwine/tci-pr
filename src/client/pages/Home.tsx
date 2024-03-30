@@ -197,7 +197,7 @@ const Home = props => {
                     <p>Guided one-on-one onboarding for landlords</p>
                   </div>
                 </div>
-                <div className="card align-items-center border-0 justify-content-center" style={{ width: "100%", padding: "30px", backgroundColor: "#f8f9fa" }}>
+                <div className="card align-items-center border-0 justify-content-center" style={{ width: "100%", padding: "30px", backgroundColor: "white" }}>
                   <div
                     className="d-flex align-items-center justify-content-center"
                     style={{ borderRadius: "100px", border: "9px solid #01acac", height: "8rem", width: "8rem", backgroundColor: "#01acac" }}
@@ -210,7 +210,7 @@ const Home = props => {
                     <p>No fake adverts</p>
                   </div>
                 </div>
-                <div className="card align-items-center border-0 justify-content-center" style={{ width: "100%", padding: "30px", backgroundColor: "#f8f9fa" }}>
+                <div className="card align-items-center border-0 justify-content-center" style={{ width: "100%", padding: "30px", backgroundColor: "white" }}>
                   <div
                     className="d-flex align-items-center justify-content-center"
                     style={{ borderRadius: "100px", border: "9px solid #01acac", height: "8rem", width: "8rem", backgroundColor: "#01acac" }}

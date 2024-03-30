@@ -149,7 +149,7 @@ const ViewRentProperty = props => {
             <div className="info col-10">
               <div className="title fw-bolder col-12">
                 {listing.title}
-                <div className="availability col-6 col-md-3 float-end" style={{ fontSize: "12px" }}>
+                <div className="availability col-6 col-md-3 float-end" style={{ fontSize: "15px" }}>
                   <span className="badge rounded-pill" style={{ backgroundColor: "#087990" }}>
                     Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}
                   </span>
