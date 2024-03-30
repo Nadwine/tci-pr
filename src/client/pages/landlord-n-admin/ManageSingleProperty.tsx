@@ -37,6 +37,7 @@ const ManageSingleProperty = props => {
   const [fetchedPDF, setFetchedPDF] = useState<any>();
   const [showSignaturePad, setshowSignaturePad] = useState(false);
   const allowNewSignature = tenancyAgreement && !tenancyAgreement.metadata?.landlordSignData;
+  const allowPDFDownload = tenancyAgreement && (tenancyAgreement.metadata?.landlordSignData || tenancyAgreement.metadata?.tenantsSignData);
 
   const loadPDF = async onGoingTenancies => {
     if (!onGoingTenancies || onGoingTenancies?.length === 0) return;
@@ -45,6 +46,16 @@ const ManageSingleProperty = props => {
     pdf.current = await PDFDocument.load(existingPdfBytes);
     const pdfDataUri = await pdf.current.saveAsBase64({ dataUri: true });
     PDFIframe.current.src = pdfDataUri;
+  };
+
+  const downloadPDF = async () => {
+    const bytes = await pdf.current.save();
+    var blob = new Blob([bytes], { type: "application/pdf" }); // change resultByte to bytes
+
+    var link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = `homebase_agreement_${tenancyAgreement?.tenancyId}.pdf`;
+    link.click();
   };
 
   const loadSignaturePad = async onGoingTenancies => {
@@ -183,9 +194,11 @@ const ManageSingleProperty = props => {
         <Accordion style={{ maxWidth: "500px" }}>
           <Accordion.Header>View & Sign</Accordion.Header>
           <Accordion.Body>
-            <div className="pb-4">
-              Tenancy Agreement <i className="bi bi-download ps-2" />
-            </div>
+            {allowPDFDownload && (
+              <div className="pb-4 point" onClick={() => downloadPDF()}>
+                Download <i className="bi bi-download ps-2" />
+              </div>
+            )}
             {tenancyAgreement && <iframe ref={PDFIframe} id="pdf" style={{ width: "100%", height: "500px" }} />}
             {allowNewSignature && (
               <div>
