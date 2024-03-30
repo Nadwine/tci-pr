@@ -87,7 +87,7 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
       const offerAddress = offerListing?.Address;
       if (!offerUser || !offerToAccept || !offerListing || !offerPropertyForRent) return res.status(500);
       offerToAccept?.update({ status: "accepted" });
-      offerToAccept.Listing.update({ listingStatus: "gone" });
+      offerToAccept.Listing.update({ listingStatus: "in offer" });
 
       // Intiate Tenancy
       const tenant = await Tenant.create({
