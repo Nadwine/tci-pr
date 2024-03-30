@@ -10,7 +10,7 @@ import DocumentList from "../../components/landlord-n-admin/DocumentList";
 import { setActiveConversation } from "../../redux/reducers/messagesReducer";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { Accordion } from "react-bootstrap";
+import { Accordion, Offcanvas } from "react-bootstrap";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import SignaturePad from "signature_pad";
 
@@ -35,7 +35,8 @@ const ManageSingleProperty = props => {
   const pad = useRef<any>();
   const pdf = useRef<any>();
   const [fetchedPDF, setFetchedPDF] = useState<any>();
-  const showSignature = tenancyAgreement && !tenancyAgreement.metadata?.landlordSignData;
+  const [showSignaturePad, setshowSignaturePad] = useState(false);
+  const allowNewSignature = tenancyAgreement && !tenancyAgreement.metadata?.landlordSignData;
 
   const loadPDF = async onGoingTenancies => {
     if (!onGoingTenancies || onGoingTenancies?.length === 0) return;
@@ -59,8 +60,8 @@ const ManageSingleProperty = props => {
     }
     setListing(res.data);
     const activeTenancies = res.data?.PropertyForRent?.Tenancies?.filter(t => t.tenancyStatus !== "ended");
-    loadPDF(activeTenancies);
-    loadSignaturePad(activeTenancies);
+    await loadPDF(activeTenancies);
+    await loadSignaturePad(activeTenancies);
     console.log(res.data);
   };
 
@@ -162,7 +163,7 @@ const ManageSingleProperty = props => {
 
   useEffect(() => {
     initialLoad();
-  }, []);
+  }, [showSignaturePad]);
 
   if (!allowedToView && listing) return <h3>You do not have permission to view this page</h3>;
 
@@ -186,22 +187,33 @@ const ManageSingleProperty = props => {
               Tenancy Agreement <i className="bi bi-download ps-2" />
             </div>
             {tenancyAgreement && <iframe ref={PDFIframe} id="pdf" style={{ width: "100%", height: "500px" }} />}
-            {showSignature && (
+            {allowNewSignature && (
               <div>
-                <div>Signature</div>
-                <div className="w-100">
-                  <canvas style={{ border: "1px solid black", width: "100%", height: "100%" }} ref={signatureCanvas} id="signature" />
-                  <button className="btn btn-secondary mb-5 me-3" onClick={() => pad.current.clear()}>
-                    Clear
-                  </button>
-                  <button className="btn btn-secondary mb-5" onClick={() => signPDF()}>
-                    Sign
-                  </button>
+                <div className="btn btn-link" onClick={() => setshowSignaturePad(true)}>
+                  + Add Signature
                 </div>
+                {showSignaturePad && (
+                  <div className="w-100">
+                    <canvas
+                      // onTouchStart={() => {setForceRefresh(Math.random())}}
+                      // onTouchStartCapture={() => {setForceRefresh(Math.random())}}
+                      style={{ zIndex: +20, border: "1px solid black", width: "100%", height: "100%" }}
+                      ref={signatureCanvas}
+                      id="signature"
+                    />
+                    <button className="btn btn-secondary mb-5 me-3" onClick={() => pad.current.clear()}>
+                      Clear
+                    </button>
+                    <button className="btn btn-secondary mb-5" onClick={() => signPDF()}>
+                      Sign
+                    </button>
+                  </div>
+                )}
               </div>
             )}
             <form ref={uploadTAgreemFormRef} onSubmit={uploadTenancyAgrem}>
-              <div className="d-flex flex-row flex-wrap align-items-center">
+              <hr />
+              <div className="d-flex pt-3 flex-row align-items-center">
                 <input
                   name="file"
                   className="form-control form-control-sm "
@@ -209,8 +221,8 @@ const ManageSingleProperty = props => {
                   type="file"
                   accept="application/pdf"
                 />
-                <button className="btn btn-link" type="submit">
-                  Upload new pdf
+                <button style={{ fontSize: "11px" }} className="btn btn-link" type="submit">
+                  Upload New pdf
                 </button>
               </div>
             </form>
