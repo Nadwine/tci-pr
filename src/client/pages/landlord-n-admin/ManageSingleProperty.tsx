@@ -181,7 +181,7 @@ const ManageSingleProperty = props => {
       <div className="pt-5 pb-5">
         <h5>Tenancy Agreement</h5>
         <Accordion style={{ maxWidth: "500px" }}>
-          <Accordion.Header>View</Accordion.Header>
+          <Accordion.Header>View & Sign</Accordion.Header>
           <Accordion.Body>
             <div className="pb-4">
               Tenancy Agreement <i className="bi bi-download ps-2" />
