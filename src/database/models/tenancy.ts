@@ -15,6 +15,7 @@ export default class Tenancy extends Model<InferAttributes<Tenancy>, InferCreati
   declare mainContactNumber?: string;
   declare addressString?: string;
   declare rentalAgreementDate?: string;
+  declare lenghtInDays: number;
   declare isPaymentTogether: boolean;
   declare deposit?: number;
   declare isDepositPaid?: boolean;
@@ -59,6 +60,10 @@ Tenancy.init(
     },
     rentalAgreementDate: {
       type: DataTypes.DATE,
+      allowNull: true
+    },
+    lenghtInDays: {
+      type: DataTypes.INTEGER,
       allowNull: true
     },
     isPaymentTogether: {

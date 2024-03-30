@@ -254,7 +254,20 @@ const ManageSingleProperty = props => {
           </Accordion.Body>
         </Accordion>
         <Accordion style={{ maxWidth: "500px" }}>
-          <Accordion.Header>Status</Accordion.Header>
+          <Accordion.Header>Tenancy Details</Accordion.Header>
+          {onGoingTenancies?.length && (
+            <Accordion.Body>
+              <div>Length: {onGoingTenancies[0]?.lenghtInDays} days</div>
+              <div>Start Date: {onGoingTenancies[0]?.rentalAgreementDate}</div>
+              <div>Main Contact Email: {onGoingTenancies[0]?.mainContactEmail}</div>
+              <div>Main Contact Number: {onGoingTenancies[0]?.mainContactNumber}</div>
+              <div className="pt-4">
+                Status: <br /> {!tenantSigned && "Tenant"} <br />
+                {!landlordSigned && "Property Manager"}
+                <br /> {onGoingTenancies[0]?.tenancyStatus}
+              </div>
+            </Accordion.Body>
+          )}
         </Accordion>
       </div>
       <div className="pt-5 pb-5">

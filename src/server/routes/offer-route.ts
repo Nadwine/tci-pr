@@ -110,7 +110,9 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
         tenancyStatus: "awaiting-signatures",
         leadTenantid: tenant.id,
         isPaymentTogether: false,
-        userId: offerUser.id || 0
+        userId: offerUser.id || 0,
+        rentalAgreementDate: offerToAccept.preferredStartDate,
+        lenghtInDays: offerToAccept.tenancyLengthDays
       });
 
       await tenant.update({ tenancyId: tenancy.id });
