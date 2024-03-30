@@ -22,7 +22,7 @@ export const MyTenancy = props => {
   const [fetchedPDF, setFetchedPDF] = useState<any>();
   const [showSignaturePad, setshowSignaturePad] = useState(false);
   const allowNewSignature = currentAgreement && !currentAgreement.metadata?.tenantsSignData;
-  const landlordSigned = currentAgreement && currentAgreement.metadata?.landlordSignData.dateTime;
+  const landlordSigned = currentAgreement && currentAgreement.metadata?.landlordSignData?.dateTime;
   const tenantSigned = currentAgreement && currentAgreement?.metadata?.tenantsSignData?.length && currentAgreement?.metadata?.tenantsSignData?.length > 0;
   const allowPDFDownload = currentAgreement; // && (tenancyAgreement.metadata?.landlordSignData || tenancyAgreement.metadata?.tenantsSignData);
   const downloadText = tenantSigned || landlordSigned ? "Download Signed PDF" : "Download Unsigned PDF";
@@ -89,7 +89,7 @@ export const MyTenancy = props => {
 
     // Draw the string of text on the page
     page.drawText(text, {
-      x: page.getWidth() / 2 - 200,
+      x: page.getWidth() / 2 - 150,
       y: page.getHeight() - 240,
       size: 15,
       color: rgb(0, 0.53, 0.71)

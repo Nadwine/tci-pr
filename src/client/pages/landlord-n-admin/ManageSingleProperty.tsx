@@ -38,7 +38,7 @@ const ManageSingleProperty = props => {
   const [fetchedPDF, setFetchedPDF] = useState<any>();
   const [showSignaturePad, setshowSignaturePad] = useState(false);
   const allowNewSignature = tenancyAgreement && !tenancyAgreement.metadata?.landlordSignData;
-  const landlordSigned = tenancyAgreement && tenancyAgreement.metadata?.landlordSignData.dateTime;
+  const landlordSigned = tenancyAgreement && tenancyAgreement.metadata?.landlordSignData?.dateTime;
   const tenantSigned = tenancyAgreement && tenancyAgreement?.metadata?.tenantsSignData?.length && tenancyAgreement?.metadata?.tenantsSignData?.length > 0;
   const allowPDFDownload = tenancyAgreement; // && (tenancyAgreement.metadata?.landlordSignData || tenancyAgreement.metadata?.tenantsSignData);
   const downloadText = tenantSigned || landlordSigned ? "Download Signed PDF" : "Download Unsigned PDF";
