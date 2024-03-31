@@ -26,7 +26,7 @@ const steps = [
   {
     label: "Complete your profile",
     description: (
-      <div>
+      <div className="pe-5">
         Now that your account has been created, next is to fill out your details on your profile,{" "}
         <a href="/user" className="link-underline-light">
           Click here
@@ -37,7 +37,7 @@ const steps = [
   {
     label: "List your property",
     description: (
-      <div>
+      <div className="pe-5">
         If you have a property and would like to list it on our site, you will need to go here and{" "}
         <a href="/landlord/create-listing" className="link-underline-light">
           fill this form
@@ -48,7 +48,7 @@ const steps = [
   {
     label: "Wait for approval",
     description: (
-      <div>
+      <div className="pe-5">
         After submitting your form, the next step is to wait for approval. During this stage, a colleague will be reviewing your post, and if it meets the
         standards and rules, we will approve it and add the property to our site for you. Please keep track of the status of your listing by going on your
         dashboard.{" "}
