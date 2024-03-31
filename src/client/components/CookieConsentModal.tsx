@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Offcanvas } from "react-bootstrap";
 import { connect } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 
 // TODO customize cookie category https://codepen.io/iubenda/pen/zYYJwYr?editors=1000
 const CookieConsentModal = props => {
+  const navigate = useNavigate();
   const [show, setShow] = useState(true);
   const [isCustomizing, setIsCustomizing] = useState(false);
 
@@ -16,18 +18,27 @@ const CookieConsentModal = props => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
-      <Modal.Header>
-        <Modal.Title>Cookie consent</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>By using this website you agree to the processing of cookie to enable the basic functions of the site.</Modal.Body>
-      <Modal.Footer>
-        <Button variant="white">Customize</Button>
-        <Button onClick={handleAcceptAll} variant="primary">
-          Accept all
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    <div className="px-md-5">
+      <Offcanvas show={show} scroll onHide={handleClose} placement="bottom" {...props}>
+        <Offcanvas.Header style={{ height: "1em", padding: "20px 0px 0px 20px" }}>
+          <Offcanvas.Title>Cookie consent</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body style={{ fontSize: "13px" }}>
+          <div className="py-md-3">
+            By using this website you agree to the processing of{" "}
+            <button onClick={() => navigate("/cookie-terms")} style={{ fontSize: "13px" }} className="btn btn-link m-0 p-0">
+              cookies
+            </button>{" "}
+            to enable the basic functions of the site.
+          </div>
+          <div className="w-100">
+            <button className="float-end btn btn-sm btn-primary" onClick={handleAcceptAll}>
+              Accept All
+            </button>
+          </div>
+        </Offcanvas.Body>
+      </Offcanvas>
+    </div>
   );
 };
 
