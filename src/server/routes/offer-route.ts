@@ -81,15 +81,6 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
     });
 
     if (status === "accepted") {
-      // now lets auto decline all other offers for that particular listing
-      // no longer do this since we can support multi tenants
-      // await Offer.update(
-      //   {
-      //     status: "declined"
-      //   },
-      //   { where: { listingId: listingId } }
-      // );
-      // accept the one he/she selected
       const offerUser = offerToAccept?.User;
       const userProfile = offerUser?.Profile;
       const offerListing = offerToAccept?.Listing;
@@ -115,6 +106,7 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
       });
 
       const tenancy = await Tenancy.create({
+        isHistory: false,
         firstName: userProfile?.firstName,
         lastName: userProfile?.lastName,
         mainContactEmail: offerUser?.email,

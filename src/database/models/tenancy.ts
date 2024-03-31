@@ -23,6 +23,7 @@ export default class Tenancy extends Model<InferAttributes<Tenancy>, InferCreati
   declare isDepositReleased?: boolean;
   declare propertyForRentId: number;
   declare tenancyStatus: "awaiting-signatures" | "ongoing" | "ended";
+  declare isHistory: boolean;
   declare leadTenantid: number;
   declare userId: number;
   declare Tenants: CreationOptional<Tenant[]>;
@@ -97,6 +98,11 @@ Tenancy.init(
     tenancyStatus: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    isHistory: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   },
   {

@@ -20,7 +20,7 @@ const OfferList = (props: Props) => {
   const [offerAction, setOfferAction] = useState({ offerId: 0, status: "" });
   const noOffers = offers?.length === 0;
 
-  const showOfferActionButtons = offers?.filter(o => o.status === "accepted").length === 0;
+  const showOfferActionButtons = true; //offers?.filter(o => o.status === "accepted").length === 0;
   return (
     <div className="offer-list">
       {noOffers && (

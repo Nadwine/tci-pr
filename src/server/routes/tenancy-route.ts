@@ -12,6 +12,7 @@ export const getSessionUserTenancies = async (req: Request, res: Response) => {
     if (!tenant) return res.json(null);
 
     const tenancies = await Tenancy.findAll({
+      where: { isHistory: false },
       include: [
         { model: Tenant, where: { id: tenant.id } },
         { model: PropertyForRent, include: [{ model: Listing, include: [{ model: ListingLandlord }] }] },
@@ -31,7 +32,7 @@ export const getLandlordTenancies = async (req: Request, res: Response) => {
     const listings = await Listing.findAll({ where: { landlordId: landlord.id }, include: [PropertyForRent] });
     const landLordProperyIds = listings.map(l => l.PropertyForRent.id);
 
-    const tenancies = await Tenancy.findAll({ where: { propertyForRentId: landLordProperyIds }, include: [Tenant] });
+    const tenancies = await Tenancy.findAll({ where: { propertyForRentId: landLordProperyIds, isHistory: false }, include: [Tenant] });
     return res.json(tenancies);
   } catch (err) {
     return res.status(500).json({ message: "Internal server error", err });

@@ -3,12 +3,14 @@ import AWS, { AWSError } from "aws-sdk";
 import S3 from "aws-sdk/clients/s3";
 import TenancyDocument from "../../database/models/tenancy_document";
 import fs from "fs";
+import Tenancy from "../../database/models/tenancy";
 
 export const uploadTenancyAgreement = async (req: Request, res: Response) => {
   const files = req.files ?? [];
   const sessionUsr = req.session.user;
   const tenancyId = req.body.tenancyId;
   const signer = req.body.signer;
+  const signing = Boolean(signer);
   const dateTime = req.body.dateTime;
   const name = req.session.user!.email;
 
@@ -25,8 +27,10 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
     const isProd = process.env.NODE_ENV === "production";
 
     const existingAgreement = await TenancyDocument.findOne({ where: { documentType: "tenancy-agreement", tenancyId: tenancyId } });
+    await s3Bucket.deleteObject({ Bucket: process.env.AWS_S3_BUCKET_NAME, Key: existingAgreement?.s3BucketKey || "" }, (err, data) => {});
+
+    // If enter here means we are trying to upload a fresh copy.
     if (existingAgreement) {
-      await s3Bucket.deleteObject({ Bucket: process.env.AWS_S3_BUCKET_NAME, Key: existingAgreement?.s3BucketKey }, (err, data) => {});
       !signer && (await existingAgreement.destroy());
     }
 
@@ -60,16 +64,25 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
         const format = currentFile.mimetype.split("/")[1];
         const mediaURl = val.Location;
 
-        const meta = { ...existingAgreement?.metadata };
-        if (signer === "tenant") {
-          meta.tenantsSignData ? meta.tenantsSignData?.push({ name: name, dateTime: dateTime }) : (meta.tenantsSignData = [{ name: name, dateTime: dateTime }]);
-        } else {
-          // Property Manager is signing
-          meta.landlordSignData = { name: name, dateTime: dateTime };
+        if (signing) {
+          const meta = { ...existingAgreement?.metadata };
+          if (signer === "tenant") {
+            meta.tenantsSignData
+              ? meta.tenantsSignData?.push({ name: name, dateTime: dateTime })
+              : (meta.tenantsSignData = [{ name: name, dateTime: dateTime }]);
+          } else {
+            // Property Manager is signing
+            meta.landlordSignData = { name: name, dateTime: dateTime };
+          }
+
+          await existingAgreement?.update({
+            //@ts-ignore
+            metadata: meta
+          });
         }
-        //create new pic
-        !signer &&
-          (await TenancyDocument.create({
+
+        if (!signing) {
+          await TenancyDocument.create({
             mediaType: mediaType,
             fileFormat: format,
             s3BucketKey: val.Key,
@@ -77,13 +90,8 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
             tenancyId: tenancyId,
             label: `${filename}`,
             documentType: "tenancy-agreement"
-          }));
-
-        signer &&
-          (await existingAgreement?.update({
-            //@ts-ignore
-            metadata: meta
-          }));
+          });
+        }
       });
 
     return res.json({ message: "success" });
