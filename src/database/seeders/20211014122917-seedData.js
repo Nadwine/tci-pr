@@ -94,6 +94,7 @@ module.exports = {
       // @ts-ignore
       console.log("Error occured while bulk insert Message", err?.original?.message);
     }
+    process.exit();
   },
 
   down: async (queryInterface, Sequelize) => {

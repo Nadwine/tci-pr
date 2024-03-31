@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -16,6 +16,7 @@ module.exports = {
     } catch (err) {
       console.log("error occurred while trying to drop tables:", err);
     }
+    process.exit();
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -26,4 +27,4 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
   }
-}
+};
