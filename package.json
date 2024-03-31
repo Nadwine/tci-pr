@@ -33,6 +33,7 @@
     "copy-files": "copyfiles static/* dist/assets && copyfiles index.html dist && copyfiles -f dist/client/assets/* dist/assets",
     "format": "prettier --write .",
     "migrate": "cd ./src/database && NODE_ENV=development npx sequelize-cli db:migrate",
+    "undo-migrate": "cd ./src/database && NODE_ENV=development npx sequelize-cli db:migrate:undo",
     "migrate:prod": "cd ./src/database && npx sequelize-cli db:migrate",
     "generate-first-migration": "NODE_ENV=development GENERATE_MIG=true npx ts-node ./src/database/generate-migrations.ts",
     "copy-db": "cd ./src/database && NODE_ENV=development npx sequelize-cli migration:generate --name init_db",
