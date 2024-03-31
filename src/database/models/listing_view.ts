@@ -21,9 +21,8 @@ ListingView.init(
   {
     // Model attributes are defined here
     id: {
-      type: DataTypes.UUID,
-      // autoIncrement: true, // does not work with UUID
-      defaultValue: DataTypes.UUID,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true
     },
     ipAddress: {
@@ -31,7 +30,7 @@ ListingView.init(
       allowNull: false
     },
     visitorId: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING,
       allowNull: false
     }
   },

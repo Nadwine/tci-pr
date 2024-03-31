@@ -881,11 +881,8 @@ export const toggleASaveListing = async (req: Request, res: Response) => {
       });
     }
 
-    const savedListings = await ListingSaved.findAll({
-      where: { userId: sessionUsrId },
-      include: { model: Listing, include: [PropertyForRent, ListingMedia, Address] }
-    });
-    return res.status(200).json(savedListings);
+    const message = found ? "Removed" : "Saved";
+    return res.status(200).json({ message: message });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error", err });
   }
@@ -893,11 +890,14 @@ export const toggleASaveListing = async (req: Request, res: Response) => {
 
 export const getMySavedListings = async (req: Request, res: Response) => {
   try {
-    const savedListings = await ListingSaved.findAll({
-      where: { userId: req.session.user!.id },
-      include: { model: Listing, include: [PropertyForRent, ListingMedia, Address] }
+    const saves = await ListingSaved.findAll({
+      where: { userId: req.session.user?.id }
     });
-    return res.status(200).json(savedListings);
+
+    const saveIds = saves.map(s => s.listingId);
+
+    const listingSaves = await Listing.findAll({ where: { id: saveIds }, include: [PropertyForRent, ListingMedia, Address] });
+    return res.status(200).json(listingSaves);
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error", err });
   }

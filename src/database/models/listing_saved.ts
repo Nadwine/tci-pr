@@ -20,9 +20,8 @@ ListingSaved.init(
   {
     // Model attributes are defined here
     id: {
-      type: DataTypes.UUID,
-      // autoIncrement: true, // does not work with UUID
-      defaultValue: DataTypes.UUID,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true
     }
   },

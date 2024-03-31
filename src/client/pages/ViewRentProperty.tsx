@@ -19,6 +19,7 @@ const ViewRentProperty = props => {
   const params = useParams();
   const { id } = params;
   const [listing, setListing] = useState<Listing>();
+  const [savedListings, setSavedListings] = useState<Listing[]>();
   const [showEnquiryModal, setShowEnquiryModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
@@ -26,6 +27,7 @@ const ViewRentProperty = props => {
   const enquiryRef = useRef<HTMLFormElement>(null);
   const user = useSelector((root: RootState) => root.auth.user);
   const isOwner = user?.id === listing?.Admin?.userId || user?.id === listing?.ListingLandlord?.userId;
+  const isListingSaved = savedListings?.find(l => l.id === listing?.id);
   const showEnqBtn = !user ? true : !isOwner;
   const navigate = useNavigate();
   const mql = window.matchMedia("(max-width: 600px)");
@@ -40,6 +42,12 @@ const ViewRentProperty = props => {
     } else {
       setLoading(false);
       console.log(`/api/listing/rent/${id}`, res);
+    }
+
+    if (user) {
+      const savedListResponse = await axios.get("/api/listing/my-saved");
+      if (res.status === 200) setSavedListings(savedListResponse.data);
+      if (res.status !== 200) toast.error("Unable to detect if this listing was saved");
     }
   };
 
@@ -68,6 +76,12 @@ const ViewRentProperty = props => {
         setAlreadySubmitted(alreadySubmitted);
       }, 300);
     }
+  };
+
+  const saveListing = async () => {
+    const res = await axios.post(`/api/listing/${listing?.id}/save-unsave`);
+    if (res.status !== 200) toast.error("Something went wrong saving this listing");
+    initialFetch();
   };
 
   useEffect(() => {
@@ -138,6 +152,9 @@ const ViewRentProperty = props => {
       <EnquiryModal />
       {listing && (
         <div className="card mb-3 shadow-lg mx-md-5">
+          <div className="d-flex w-100 px-5 pt-2">
+            <i onClick={() => saveListing()} style={{ color: "#ff617d" }} className={`ms-auto fs-3 bi bi-heart${isListingSaved ? "-fill" : ""} point`} />
+          </div>
           <div className="card-body d-flex flex-wrap justify-content-center">
             <div className="image-container col-10 me-2 pb-3">
               <Carousel images={listing.ListingMedia} />
