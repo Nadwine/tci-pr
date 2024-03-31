@@ -11,11 +11,17 @@ import PropertyForRent from "../../database/models/property_for_rent";
 import { Op } from "sequelize";
 import ListingLandlord from "../../database/models/listing_landlord";
 import Offer from "../../database/models/offer";
+import { emailLandlord_on_EnquiryReceived } from "../services/notification-service";
 
 export const createEnquiryRoute = async (req: Request, res: Response) => {
   const listingId = Number(req.params.listingId);
 
-  const listing = await Listing.findByPk(listingId, { include: [Admin] });
+  const listing = await Listing.findByPk(listingId, {
+    include: [
+      { model: Admin, include: [User] },
+      { model: ListingLandlord, include: [User] }
+    ]
+  });
   const found = await EnquiryConversation.findOne({ where: { userId: req.session.user!.id, listingId: listingId } });
 
   if (found) return res.status(500).json({ message: "Failed to send enquiry. Already sent", err: "Already sent" });
@@ -38,7 +44,9 @@ export const createEnquiryRoute = async (req: Request, res: Response) => {
     userId: req.session.user!.id,
     intro_message: msg
   })
-    .then(() => {
+    .then(async () => {
+      const email = listing.listingManager === "landlord" ? listing?.ListingLandlord?.User.email : listing?.Admin?.User?.email;
+      await emailLandlord_on_EnquiryReceived(email || "");
       return res.status(200).json({ message: "Enquiry Sent" });
     })
     .catch(err => {

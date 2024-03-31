@@ -8,6 +8,8 @@ import User from "../../database/models/user";
 import PropertyForRent from "../../database/models/property_for_rent";
 import Tenancy from "../../database/models/tenancy";
 import Address from "../../database/models/address";
+import { emailLandlord_on_OfferReceived, emailTenant_on_OfferAccepted, emailTenant_on_OfferDeclined } from "../services/notification-service";
+import Admin from "../../database/models/admin";
 
 export const sendOffer = async (req: Request, res: Response) => {
   const sessionUsr = req.session.user;
@@ -28,7 +30,12 @@ export const sendOffer = async (req: Request, res: Response) => {
 
     const foundOffer = await Offer.findOne({ where: { listingId: listingId, userId: userId } });
     if (foundOffer) return res.status(400).json({ message: "Offer has already been sent" });
-
+    const offerListing = await Listing.findByPk(listingId, {
+      include: [
+        { model: Admin, include: [User] },
+        { model: ListingLandlord, include: [User] }
+      ]
+    });
     const offer = await Offer.create({
       userId: userId,
       listingId: listingId,
@@ -38,7 +45,8 @@ export const sendOffer = async (req: Request, res: Response) => {
       status: "pending"
     });
 
-    await Listing.update({ listingStatus: "in offer" }, { where: { id: listingId } });
+    const email = offerListing!.listingManager === "landlord" ? offerListing?.ListingLandlord?.User.email : offerListing?.Admin?.User?.email;
+    await emailLandlord_on_OfferReceived(email || "");
 
     return res.status(200).json({ message: "success", offer: offer });
   } catch (err) {
@@ -63,23 +71,25 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
       if (!landlord || relatedListing?.landlordId !== landlord.id) return res.status(401).json({ message: "Unauthorized" });
     }
 
-    // now all above autorizations checks passed
+    // now that all above autorizations checks has passed
+
+    const offerToAccept = await Offer.findByPk(offerId, {
+      include: [
+        { model: User, include: [Profile] },
+        { model: Listing, include: [PropertyForRent, Address] }
+      ]
+    });
 
     if (status === "accepted") {
       // now lets auto decline all other offers for that particular listing
-      await Offer.update(
-        {
-          status: "declined"
-        },
-        { where: { listingId: listingId } }
-      );
+      // no longer do this since we can support multi tenants
+      // await Offer.update(
+      //   {
+      //     status: "declined"
+      //   },
+      //   { where: { listingId: listingId } }
+      // );
       // accept the one he/she selected
-      const offerToAccept = await Offer.findByPk(offerId, {
-        include: [
-          { model: User, include: [Profile] },
-          { model: Listing, include: [PropertyForRent, Address] }
-        ]
-      });
       const offerUser = offerToAccept?.User;
       const userProfile = offerUser?.Profile;
       const offerListing = offerToAccept?.Listing;
@@ -88,6 +98,7 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
       if (!offerUser || !offerToAccept || !offerListing || !offerPropertyForRent) return res.status(500);
       offerToAccept?.update({ status: "accepted" });
       offerToAccept.Listing.update({ listingStatus: "in offer" });
+      await emailTenant_on_OfferAccepted(offerUser.email);
 
       // Intiate Tenancy
       offerPropertyForRent.update({ numOfTenants: offerPropertyForRent.numOfTenants + 1 });
@@ -128,6 +139,7 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
         },
         { where: { id: offerId } }
       );
+      await emailTenant_on_OfferDeclined(offerToAccept?.User.email || "");
     }
 
     return res.json({ message: "Success" });

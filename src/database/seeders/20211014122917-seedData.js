@@ -36,7 +36,33 @@ module.exports = {
 
     try {
       // Listing
-      await queryInterface.bulkInsert("listings", listingsArray, {});
+      const productPackage = `{
+        "name": "premium",
+        "paymentType": "percentage",
+        "capabilities": [
+          "ads",
+          "enquiries",
+          "referencing",
+          "shortlisting-applicants",
+          "viewings",
+          "rent-collection",
+          "deposit-handling",
+          "reports",
+          "tenancy-renewals",
+          "leasing-documents",
+          "property-maintenance",
+          "tenant-communication",
+          "routine-checks",
+          "expense-tracking",
+          "inventory-builder",
+          "certificate-reminder",
+          "compliance-checklist"
+        ],
+        "extras": [],
+        "active": false
+      }`;
+      const listingsWithProducts = listingsArray.map(l => ({ ...l, productPackage }));
+      await queryInterface.bulkInsert("listings", listingsWithProducts, {});
       await queryInterface.sequelize.query(`ALTER SEQUENCE listings_id_seq RESTART WITH ${listingsArray.length + 1}`);
       //Address
       // PropertyForRent

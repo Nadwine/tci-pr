@@ -45,6 +45,7 @@ export const MyTenancy = props => {
     const pdfDataUri = await pdf.current.saveAsBase64({ dataUri: true });
 
     // viewing pdf on browser not avalible in mobile. Need to download
+    // error - no enabled plugin supports this mime type pdf mobile
     // can also set the source direct `/api/tenancy-document/${onGoingTenancies[0].id}`;
     PDFIframe.current.src = pdfDataUri;
   };

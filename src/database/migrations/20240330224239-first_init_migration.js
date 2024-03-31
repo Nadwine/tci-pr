@@ -321,6 +321,10 @@ const migrationCommands = [
           allowNull: false,
           type: Sequelize.STRING
         },
+        productPackage: {
+          type: Sequelize.JSON,
+          allowNull: false
+        },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE

@@ -153,7 +153,10 @@ const UserProfile = props => {
                 <h5 className="card-title">Profile Picture</h5>
                 <div className="d-flex py-2 align-items-center">
                   <div className="px-3">
-                    <Avatar style={{ border: "solid 2px black", width: "70px", height: "70px" }} src={profile?.ProfileMedia[0]?.mediaUrl} />
+                    <Avatar
+                      style={{ border: "solid 2px black", width: "70px", height: "70px" }}
+                      src={profile && profile.ProfileMedia?.length > 0 ? profile?.ProfileMedia[0]?.mediaUrl : ""}
+                    />
                   </div>
                   <form ref={uploadFormRef} onSubmit={uploadProfilePicture}>
                     <div className="d-flex flex-row flex-wrap align-items-center">

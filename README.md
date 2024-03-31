@@ -53,3 +53,4 @@ Password:  P!z3winnerz
 - Select All Files in root and wrap in zip (excluding node_modules, stripe, ngrok, local ses and s3 folders)
 - Run necessary Migrations using sequelize cli (IMPORTANT)
 - Go To Elastic Beanstalk on aws. Click upload and deploy and deploy > select zip file.
+- Platform updated Mondays 5am UTC

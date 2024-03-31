@@ -52,7 +52,8 @@ const LandLordCreateListing = props => {
       tenancyLength: "",
       listingManager: "",
       files: [] as File[],
-      questions: [] as string[]
+      questions: [] as string[],
+      productPackage: ""
     },
     async onSubmit(formValues, formikHelpers) {
       const billsIncluded = formValues.electricityIncluded || formValues.internetIncluded || formValues.waterIncluded;
@@ -83,7 +84,8 @@ const LandLordCreateListing = props => {
         listingManager: formValues.listingManager,
         postcode: "TKCA 1ZZ",
         country: "Turks and Caicos Islands",
-        questions: JSON.stringify(formValues.questions)
+        questions: JSON.stringify(formValues.questions),
+        productPackage: formValues.productPackage
       };
       const res = await axios.post("/api/listing/rent/landlord/create", body, axiosConfig);
       if (res.status === 200) navigate("/listing-success");
@@ -143,6 +145,19 @@ const LandLordCreateListing = props => {
               </div>
             </div>
           )}
+          <div className="py-5">
+            <label>
+              Select your desired <a href="/products">package</a>
+            </label>
+            <select name="productPackage" onChange={handleChange} value={values.productPackage} className="form-select">
+              <option selected value="">
+                Select an option
+              </option>
+              <option value="basic">Basic</option>
+              <option value="standard">Standard</option>
+              <option value="premium">Premium</option>
+            </select>
+          </div>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
               Island

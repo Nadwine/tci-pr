@@ -114,9 +114,7 @@ const OfferList = (props: Props) => {
           Are you sure you want to {offerAction.status === "accepted" ? "accept" : "decline"} this offer?
           <div className="pt-3">
             {offerAction.status === "accepted" &&
-              `Accepting this offer will begin initiating the tenancy for ${
-                offers?.find(f => f.id === offerAction.offerId)?.User.Profile?.firstName
-              } and decline other offers`}
+              `Accepting this offer will begin initiating the tenancy for ${offers?.find(f => f.id === offerAction.offerId)?.User.Profile?.firstName}`}
           </div>
         </Modal.Body>
         <Modal.Footer>

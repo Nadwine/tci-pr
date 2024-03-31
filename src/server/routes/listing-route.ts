@@ -24,6 +24,7 @@ import Profile from "../../database/models/profile";
 import Tenancy from "../../database/models/tenancy";
 import ProfileMedia from "../../database/models/profile_media";
 import TenancyDocument from "../../database/models/tenancy_document";
+import packageDefaultValues from "../../utils/packageDefaultValues";
 
 const s3Bucket = new S3({
   s3ForcePathStyle: true,
@@ -55,7 +56,8 @@ export const adminCreateRentListingRoute = async (req: Request, res: Response) =
     postcode,
     country,
     rentAmount,
-    tenancyLength
+    tenancyLength,
+    productPackage
   } = req.body;
   const files = req.files ?? [];
   const questions: string[] = JSON.parse(req.body.questions);
@@ -81,7 +83,8 @@ export const adminCreateRentListingRoute = async (req: Request, res: Response) =
         listingStatus: "approved",
         adminId: landlord!.id,
         isApproved: true,
-        category: "PropertyForRent"
+        category: "PropertyForRent",
+        productPackage: packageDefaultValues.find(p => p.name === productPackage)
       });
       createdListingId = newListing.id;
 
@@ -263,7 +266,8 @@ export const landLordSubmitRentListingRoute = async (req: Request, res: Response
     country,
     rentAmount,
     listingManager,
-    tenancyLength
+    tenancyLength,
+    productPackage
   } = req.body;
   const files = req.files ?? [];
   const questions: string[] = JSON.parse(req.body.questions);
@@ -288,7 +292,8 @@ export const landLordSubmitRentListingRoute = async (req: Request, res: Response
         listingStatus: "awaiting approval",
         listingManager: listingManager,
         isApproved: false,
-        category: "PropertyForRent"
+        category: "PropertyForRent",
+        productPackage: packageDefaultValues.find(p => p.name === productPackage)
       });
       createdListingId = newListing.id;
 

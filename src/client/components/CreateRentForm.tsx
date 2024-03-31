@@ -37,7 +37,8 @@ const CreateRentForm = props => {
       tenancyLength: "",
       listingManager: "admin",
       files: [] as File[],
-      questions: [] as string[]
+      questions: [] as string[],
+      productPackage: ""
     },
     async onSubmit(formValues, formikHelpers) {
       const billsIncluded = formValues.electricityIncluded || formValues.internetIncluded || formValues.waterIncluded;
@@ -64,7 +65,8 @@ const CreateRentForm = props => {
         listingManager: formValues.listingManager,
         postcode: "TKCA 1ZZ",
         country: "Turks and Caicos Islands",
-        questions: JSON.stringify(formValues.questions)
+        questions: JSON.stringify(formValues.questions),
+        productPackage: formValues.productPackage
       };
       const res = await axios.post("/api/listing/rent/create", body, axiosConfig);
       if (res.status === 200) navigate("/admin/dashboard/listings");
@@ -104,6 +106,19 @@ const CreateRentForm = props => {
       <div className="col-md-6 col-sm-10 col-lg-5">
         <form onSubmit={handleSubmit} onKeyPress={e => e.key === "Enter" && e.preventDefault()} onKeyUp={e => e.key === "Enter" && e.preventDefault()}>
           <h4 className="text-center pb-4 mt-5">Add property for rent</h4>
+          <div className="py-5">
+            <label>
+              Select your desired <a href="/products">package</a>
+            </label>
+            <select name="productPackage" onChange={handleChange} value={values.productPackage} className="form-select">
+              <option selected value="">
+                Select an option
+              </option>
+              <option value="basic">Basic</option>
+              <option value="standard">Standard</option>
+              <option value="premium">Premium</option>
+            </select>
+          </div>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
               Island

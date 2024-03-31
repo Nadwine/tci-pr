@@ -11,6 +11,34 @@ import ListingLandlord from "./listing_landlord";
 import { ListingStatusEnum } from "../../utils/listingStatusSequence";
 import Offer from "./offer";
 
+type Capabilities =
+  | "ads"
+  | "enquiries"
+  | "referencing"
+  | "shortlisting-applicants"
+  | "viewings"
+  | "rent-collection"
+  | "deposit-handling"
+  | "reports"
+  | "tenancy-renewals"
+  | "leasing-documents"
+  | "property-maintenance"
+  | "tenant-communication"
+  | "routine-checks"
+  | "expense-tracking"
+  | "inventory-builder"
+  | "certificate-reminder"
+  | "compliance-checklist";
+
+type Extras = "video-listing";
+export type ProductPackage = {
+  name: string;
+  paymentType: "per-listing" | "per-term" | "percentage";
+  capabilities: Capabilities[];
+  extras: Extras[];
+  active: boolean;
+};
+
 // for typeScript typing
 export default class Listing extends Model<InferAttributes<Listing>, InferCreationAttributes<Listing>> {
   // Only Used for typescript to pick up intellisense and types
@@ -23,6 +51,7 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare isApproved: boolean;
   declare stripePaymentLink?: { url: string; expiresAtUnixSeconds: number; generatedAt: string };
   declare category: "PropertyForRent";
+  declare productPackage: any;
   declare landlordId?: number;
   declare Admin?: CreationOptional<Admin>;
   declare listingManager: "landlord" | "admin";
@@ -79,6 +108,10 @@ Listing.init(
     },
     category: {
       type: DataTypes.STRING,
+      allowNull: false
+    },
+    productPackage: {
+      type: DataTypes.JSON,
       allowNull: false
     }
   },
