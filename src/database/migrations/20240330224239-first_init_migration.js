@@ -149,13 +149,15 @@ const migrationCommands = [
           type: Sequelize.STRING
         },
         verified: {
-          type: Sequelize.BOOLEAN
+          type: Sequelize.BOOLEAN,
+          defaultValue: false
         },
         accountType: {
           type: Sequelize.STRING
         },
         termsAccepted: {
-          type: Sequelize.BOOLEAN
+          type: Sequelize.BOOLEAN,
+          defaultValue: true
         },
         createdAt: {
           allowNull: false,
@@ -246,7 +248,8 @@ const migrationCommands = [
           type: Sequelize.INTEGER
         },
         verified: {
-          type: Sequelize.BOOLEAN
+          type: Sequelize.BOOLEAN,
+          defaultValue: false
         },
         phone: {
           allowNull: true,
@@ -467,7 +470,8 @@ const migrationCommands = [
         },
         numOfTenants: {
           allowNull: true,
-          type: Sequelize.INTEGER
+          type: Sequelize.INTEGER,
+          defaultValue: 0
         },
         createdAt: {
           allowNull: false,
@@ -478,7 +482,7 @@ const migrationCommands = [
           type: Sequelize.DATE
         },
         listingId: {
-          onDelete: "CASCADE",
+          onDelete: "SET NULL",
           onUpdate: "CASCADE",
           references: {
             model: "listings",
@@ -636,7 +640,8 @@ const migrationCommands = [
       {
         id: {
           primaryKey: true,
-          type: Sequelize.UUID
+          type: Sequelize.UUID,
+          defaultValue: Sequelize.UUID
         },
         createdAt: {
           allowNull: false,
@@ -678,7 +683,8 @@ const migrationCommands = [
       {
         id: {
           primaryKey: true,
-          type: Sequelize.UUID
+          type: Sequelize.UUID,
+          defaultValue: Sequelize.UUID
         },
         ipAddress: {
           allowNull: false,

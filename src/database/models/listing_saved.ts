@@ -22,7 +22,7 @@ ListingSaved.init(
     id: {
       type: DataTypes.UUID,
       // autoIncrement: true, // does not work with UUID
-      defaultValue: DataTypes.UUIDV4,
+      defaultValue: DataTypes.UUID,
       primaryKey: true
     }
   },

@@ -58,8 +58,7 @@ User.init(
       defaultValue: false
     },
     accountType: {
-      type: DataTypes.STRING,
-      defaultValue: false
+      type: DataTypes.STRING
     },
     termsAccepted: {
       type: DataTypes.BOOLEAN,
