@@ -4,6 +4,7 @@ import S3 from "aws-sdk/clients/s3";
 import TenancyDocument from "../../database/models/tenancy_document";
 import fs from "fs";
 import Tenancy from "../../database/models/tenancy";
+import Profile from "../../database/models/profile";
 
 export const uploadTenancyAgreement = async (req: Request, res: Response) => {
   const files = req.files ?? [];
@@ -12,11 +13,13 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
   const signer = req.body.signer;
   const signing = Boolean(signer);
   const dateTime = req.body.dateTime;
-  const name = req.session.user!.email;
+  const email = req.session.user!.email;
 
   if (files.length === 0) return res.status(400).json({ message: "Bad request, No Files to upload" });
 
   try {
+    const profile = await Profile.findOne({ where: { userId: req.session.user?.id } });
+    const name = `${profile?.firstName} ${profile?.lastName}`;
     const s3Bucket = new S3({
       s3ForcePathStyle: true,
       region: process.env.AWS_S3_REGION,
@@ -68,11 +71,11 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
           const meta = { ...existingAgreement?.metadata };
           if (signer === "tenant") {
             meta.tenantsSignData
-              ? meta.tenantsSignData?.push({ name: name, dateTime: dateTime })
-              : (meta.tenantsSignData = [{ name: name, dateTime: dateTime }]);
+              ? meta.tenantsSignData?.push({ name: name, email: email, dateTime: dateTime })
+              : (meta.tenantsSignData = [{ name: name, email: email, dateTime: dateTime }]);
           } else {
             // Property Manager is signing
-            meta.landlordSignData = { name: name, dateTime: dateTime };
+            meta.landlordSignData = { name: name, email: email, dateTime: dateTime };
           }
 
           await existingAgreement?.update({

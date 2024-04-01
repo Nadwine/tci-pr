@@ -8,20 +8,25 @@ import { CloseButton, Modal } from "react-bootstrap";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import SignaturePad from "signature_pad";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 export const MyTenancy = props => {
+  const loginUsr = useSelector((r: RootState) => r.auth.user);
   const [tenancies, setTenancies] = useState<Tenancy[]>();
   const [showSignModal, setShowSignModal] = useState(false);
-  const [currentTenancySignId, setCurrentTenancySignId] = useState(0);
-  const currentTenancySign = tenancies?.find(t => t.id === currentTenancySignId);
-  const currentAgreement = currentTenancySign?.TenancyDocuments.find(doc => doc.documentType === "tenancy-agreement");
+  const [currViewSignId, setCurrentTenancySignId] = useState(0);
+  const myTenancy = tenancies?.find(ten => ten.Tenants.find(t => t.userId === loginUsr?.id));
+  const myTenant = myTenancy?.Tenants.find(t => t.userId === loginUsr?.id);
+  const currentTenancySigning = tenancies?.find(t => t.id === currViewSignId);
+  const currentAgreement = currentTenancySigning?.TenancyDocuments.find(doc => doc.documentType === "tenancy-agreement");
   const PDFIframe = useRef<any>();
   const signatureCanvas = useRef<any>();
   const pad = useRef<any>();
   const pdf = useRef<any>();
   const [fetchedPDF, setFetchedPDF] = useState<any>();
   const [showSignaturePad, setshowSignaturePad] = useState(false);
-  const allowNewSignature = currentAgreement && !currentAgreement.metadata?.tenantsSignData;
+  const allowNewSignature = currentAgreement && !currentAgreement.metadata?.tenantsSignData.find(sd => sd.email === loginUsr?.email);
   const landlordSigned = currentAgreement && currentAgreement.metadata?.landlordSignData?.dateTime;
   const tenantSigned = currentAgreement && currentAgreement?.metadata?.tenantsSignData?.length && currentAgreement?.metadata?.tenantsSignData?.length > 0;
   const allowPDFDownload = currentAgreement; // && (tenancyAgreement.metadata?.landlordSignData || tenancyAgreement.metadata?.tenantsSignData);
@@ -74,16 +79,24 @@ export const MyTenancy = props => {
     const pngDims = pngImage.scale(0.5);
 
     // Add a blank page to the document if none was added yet
-    const page = hasLandlordSigned ? newPDF.getPage(newPDF.getPageCount() - 1) : newPDF.addPage();
+    const willAddPage = hasLandlordSigned || tenantSigned;
+    const page = willAddPage ? newPDF.getPage(newPDF.getPageCount() - 1) : newPDF.addPage();
     const dateTime = dayjs().format("DD MMM, YYYY h:mm A");
     const text = `Tenant's signature - ${dateTime}`;
 
     // ------- CHECK POINT
     // Goes from bottom to top
     // Draw the JPG image in the center of the page
+    const onGoingTenancies = tenancies?.filter(t => t.tenancyStatus !== "ended" && !t.isHistory);
+
+    // defaults to 200 multiply by * the amount of tenants already signed
+    const verticalOffset =
+      currentAgreement?.metadata?.tenantsSignData.length && currentAgreement?.metadata?.tenantsSignData.length > 0
+        ? currentAgreement?.metadata?.tenantsSignData.length + 1 * 200
+        : 200;
     page.drawImage(pngImage, {
       x: page.getWidth() / 2 - pngDims.width / 2,
-      y: page.getHeight() - 330,
+      y: page.getHeight() - (verticalOffset + 30),
       width: pngDims.width,
       height: pngDims.height
     });
@@ -91,28 +104,30 @@ export const MyTenancy = props => {
     // Draw the string of text on the page
     page.drawText(text, {
       x: page.getWidth() / 2 - 150,
-      y: page.getHeight() - 240,
+      y: page.getHeight() - (verticalOffset + 40),
       size: 15,
       color: rgb(0, 0.53, 0.71)
     });
-    const onGoingTenancies = tenancies?.filter(t => t.tenancyStatus !== "ended");
     const pdfDataUri = await newPDF.saveAsBase64({ dataUri: true });
     PDFIframe.current.src = pdfDataUri;
     const bytes = await newPDF.save();
     if (!onGoingTenancies) return;
 
-    const body: any = { tenancyId: onGoingTenancies[0].id, file: bytes.buffer, signer: "tenant", dateTime: dateTime };
-    if (!body.file) {
-      toast.error("please select a file to upload");
-      return;
+    // upload doc for all tenancies on that 1 property
+    for (let i = 0; i < onGoingTenancies.length; i++) {
+      const curTenancy = onGoingTenancies[i];
+      const body: any = { tenancyId: curTenancy.id, file: bytes.buffer, signer: "tenant", dateTime: dateTime };
+      if (!body.file) {
+        toast.error("please select a file to upload");
+        return;
+      }
+      const uploaRes = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
+      if (uploaRes.status === 200) {
+        toast.success("Upload Success");
+        fetchTenancy();
+      }
+      if (uploaRes.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
     }
-
-    const uploaRes = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
-    if (uploaRes.status === 200) {
-      toast.success("Upload Success");
-      fetchTenancy();
-    }
-    if (uploaRes.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
   };
 
   useEffect(() => {
@@ -137,7 +152,10 @@ export const MyTenancy = props => {
         {tenancies?.map((currTenancy, i) => {
           const leadTenant = currTenancy?.Tenants?.find(t => t.id === currTenancy.leadTenantid);
           const tenancyAgreement = currTenancy.TenancyDocuments.find(doc => doc.documentType === "tenancy-agreement");
-
+          const showViewAndSignButton =
+            tenancyAgreement &&
+            !tenancyAgreement.metadata?.tenantsSignData.find(sd => sd.email === loginUsr?.email) &&
+            tenancyAgreement.tenancyId === myTenancy?.id;
           return (
             <div key={i}>
               <div className="pb-5">
@@ -159,7 +177,7 @@ export const MyTenancy = props => {
                         </td>
                         <td>
                           Signature: {currTenant.rentalAgreementDate ? currTenancy.rentalAgreementDate : "pending"}{" "}
-                          {tenancyAgreement && (
+                          {showViewAndSignButton && (
                             <button
                               onClick={() => {
                                 setShowSignModal(true);

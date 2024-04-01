@@ -5,13 +5,14 @@ import ListingLandlord from "../../database/models/listing_landlord";
 import Listing from "../../database/models/listing";
 import Tenant from "../../database/models/tenant";
 import TenancyDocument from "../../database/models/tenancy_document";
+import _ from "lodash";
 
 export const getSessionUserTenancies = async (req: Request, res: Response) => {
   try {
     const tenant = await Tenant.findOne({ where: { userId: req.session.user?.id } });
     if (!tenant) return res.json(null);
 
-    const tenancies = await Tenancy.findAll({
+    const myOngoingTenancies = await Tenancy.findAll({
       where: { isHistory: false },
       include: [
         { model: Tenant, where: { id: tenant.id } },
@@ -19,7 +20,13 @@ export const getSessionUserTenancies = async (req: Request, res: Response) => {
         { model: TenancyDocument }
       ]
     });
-    return res.json(tenancies);
+    const otherJointTenancies = await Tenancy.findAll({
+      where: { propertyForRentId: myOngoingTenancies[0].PropertyForRent.id, isHistory: false },
+      include: [{ model: Tenant }, { model: PropertyForRent, include: [{ model: Listing, include: [{ model: ListingLandlord }] }] }, { model: TenancyDocument }]
+    });
+
+    const combined = myOngoingTenancies.concat(otherJointTenancies.filter(other => !myOngoingTenancies.find(my => my.id === other.id)));
+    return res.json(combined);
   } catch (err) {
     return res.status(500).json({ message: "Internal server error", err });
   }

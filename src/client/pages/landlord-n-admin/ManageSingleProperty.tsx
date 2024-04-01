@@ -119,18 +119,22 @@ const ManageSingleProperty = props => {
     const bytes = await newPDF.save();
     if (!onGoingTenancies) return;
 
-    const body: any = { tenancyId: onGoingTenancies[0].id, file: bytes.buffer, signer: "property_manager", dateTime: dateTime };
-    if (!body.file) {
-      toast.error("please select a file to upload");
-      return;
-    }
+    // upload doc for all tenancies on that 1 property
+    for (let i = 0; i < onGoingTenancies.length; i++) {
+      const curTenancy = onGoingTenancies[i];
+      const body: any = { tenancyId: curTenancy.id, file: bytes.buffer, signer: "property_manager", dateTime: dateTime };
+      if (!body.file) {
+        toast.error("please select a file to upload");
+        return;
+      }
 
-    const uploaRes = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
-    if (uploaRes.status === 200) {
-      toast.success("Upload Success");
-      initialLoad();
+      const uploaRes = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
+      if (uploaRes.status === 200) {
+        toast.success("Upload Success");
+        initialLoad();
+      }
+      if (uploaRes.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
     }
-    if (uploaRes.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
   };
 
   //Accept or decline
@@ -162,22 +166,26 @@ const ManageSingleProperty = props => {
     }
     if (!onGoingTenancies) return;
 
-    const formData = new FormData(uploadTAgreemFormRef.current || undefined);
-    const body: any = { tenancyId: onGoingTenancies[0].id };
-    for (var pair of formData.entries()) {
-      body[pair[0]] = pair[1];
-    }
-    if (!body.file.name) {
-      toast.error("please select a file to upload");
-      return;
-    }
+    for (let i = 0; i < onGoingTenancies.length; i++) {
+      const curTenancy = onGoingTenancies[i];
 
-    const res = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
-    if (res.status === 200) {
-      toast.success("Upload Success");
-      initialLoad();
+      const formData = new FormData(uploadTAgreemFormRef.current || undefined);
+      const body: any = { tenancyId: curTenancy.id };
+      for (var pair of formData.entries()) {
+        body[pair[0]] = pair[1];
+      }
+      if (!body.file.name) {
+        toast.error("please select a file to upload");
+        return;
+      }
+
+      const res = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
+      if (res.status === 200) {
+        toast.success("Upload Success");
+        initialLoad();
+      }
+      if (res.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
     }
-    if (res.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
   };
 
   useEffect(() => {
