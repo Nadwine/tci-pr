@@ -44,7 +44,7 @@ const Help = props => {
             Searching TCI Homebase for your next property is very simple. You can Find the Search Functionality on our homepage found <a href="/">here.</a>
             <br />
             Searching for properties on the website does not require creating an account. Simply type in your desired settlement or island in the search box.
-            Each property posted will be linked with a specifc settlement and island to make your search more convenient.
+            Each property posted will be linked with a specific settlement and island to make your search more convenient.
           </div>
         </div>
         <div className="help-article pt-5 p-3">
@@ -69,7 +69,7 @@ const Help = props => {
             Whiles viewing a property. You will have to first submit an enquiry to the property manager by clicking the{" "}
             <span className="px-1 fst-italic strong-text">Submit an enquiry</span> button at the bottom of the page. After Submitting an enquiry. You can find
             all your enquiries by clicking the icon at the top right of the screen. Then click the <span className="fst-italic strong-text">Enquiries</span>{" "}
-            button. We recomend to enchange a few messages with the property manager before sending an offer to increase the chances of your offer being
+            button. We recommend to exchange a few messages with the property manager before sending an offer to increase the chances of your offer being
             accepted. On the message screen select the enquiry you want. Then select the <span style={{ fontSize: "50px", lineHeight: "1rem" }}>...</span>{" "}
             symbol. Then select Make an offer. Fill in the required information and hit send.
           </div>
