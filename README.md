@@ -46,6 +46,9 @@ Company TCI Homebase Property Management
 
 # Gmail
 tci.homebase.tc@gmail.com
+tci.landlordtest1@gmail.com
+tci.xuser@gmail.com
+tci.yuser@gmail.com
 Password:  P!z3winnerz
 
 # Deployment steps

@@ -1,9 +1,9 @@
 module.exports = [
   {
     id: 1,
-    username: "admin1",
+    username: "tcihomebase",
     password: "$2b$10$tvc8WYw278jhiSaKQOHVj.dU2cZvSGbY.WVlGuZcLinZls2GLfawO",
-    email: "admin@mail.com",
+    email: "tci.homebase.tc@gmail.com",
     verified: true,
     accountType: "admin",
     createdAt: "2021-05-28T15:36:56.200",
@@ -11,9 +11,9 @@ module.exports = [
   },
   {
     id: 2,
-    username: "user1",
+    username: "xuser",
     password: "$2b$10$tvc8WYw278jhiSaKQOHVj.dU2cZvSGbY.WVlGuZcLinZls2GLfawO",
-    email: "user@mail.com",
+    email: "tci.xuser@gmail.com",
     verified: true,
     accountType: "tenant",
     createdAt: "2021-05-28T15:36:56.200",
@@ -21,9 +21,9 @@ module.exports = [
   },
   {
     id: 3,
-    username: "user2",
+    username: "yuser",
     password: "$2b$10$tvc8WYw278jhiSaKQOHVj.dU2cZvSGbY.WVlGuZcLinZls2GLfawO",
-    email: "user2@mail.com",
+    email: "tci.yuser@gmail.com",
     verified: true,
     accountType: "tenant",
     createdAt: "2021-05-28T15:36:56.200",
@@ -41,9 +41,9 @@ module.exports = [
   },
   {
     id: 5,
-    username: "landlord5",
+    username: "landlord",
     password: "$2b$10$tvc8WYw278jhiSaKQOHVj.dU2cZvSGbY.WVlGuZcLinZls2GLfawO",
-    email: "landlord2@mail.com",
+    email: "tci.landlordtest1@gmail.com",
     verified: true,
     accountType: "landlord",
     createdAt: "2021-05-28T15:36:56.200",

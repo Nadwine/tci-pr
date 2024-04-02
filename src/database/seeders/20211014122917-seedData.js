@@ -8,6 +8,9 @@ const propertyForRentArray = require("../fake-data/property_for_rent");
 const listingMediaArray = require("../fake-data/listing_media");
 const enqConvoArray = require("../fake-data/enquiry_conversation");
 const messagesArray = require("../fake-data/messages");
+const adminArray = require("../fake-data/admin");
+const listingLandlordArray = require("../fake-data/listing_landlord");
+const profileArray = require("../fake-data/profile");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -21,17 +24,39 @@ module.exports = {
      * }], {});
      */
     try {
+      // Users
       await queryInterface.bulkInsert("users", usersArray, {});
       await queryInterface.sequelize.query(`ALTER SEQUENCE users_id_seq RESTART WITH ${usersArray.length + 1}`);
-
-      await queryInterface.bulkInsert("admin", [
-        { id: 1, verified: true, phone: "123456", userId: 1, createdAt: "2021-05-28T15:36:56.200", updatedAt: "2021-08-28T13:40:02.200" },
-        { id: 2, verified: true, phone: "123456", userId: 5, createdAt: "2021-05-28T15:36:56.200", updatedAt: "2021-08-28T13:40:02.200" }
-      ]);
-      await queryInterface.sequelize.query("ALTER SEQUENCE admin_id_seq RESTART WITH 3;");
     } catch (err) {
       // @ts-ignore
       console.log("Error occured while bulk insert Users", err?.original?.message);
+    }
+
+    try {
+      //Admin
+      await queryInterface.bulkInsert("admin", adminArray, {});
+      await queryInterface.sequelize.query(`ALTER SEQUENCE admin_id_seq RESTART WITH ${adminArray.length + 1}`);
+    } catch (err) {
+      // @ts-ignore
+      console.log("Error occured while bulk insert Admin", err?.original?.message);
+    }
+
+    try {
+      //Listing_Landlord
+      await queryInterface.bulkInsert("listing_landlords", listingLandlordArray, {});
+      await queryInterface.sequelize.query(`ALTER SEQUENCE listing_landlords_id_seq RESTART WITH ${listingLandlordArray.length + 1}`);
+    } catch (err) {
+      // @ts-ignore
+      console.log("Error occured while bulk insert Listing_Landlord", err?.original?.message);
+    }
+
+    try {
+      // Profiles
+      await queryInterface.bulkInsert("profiles", profileArray, {});
+      await queryInterface.sequelize.query(`ALTER SEQUENCE profiles_id_seq RESTART WITH ${profileArray.length + 1}`);
+    } catch (err) {
+      // @ts-ignore
+      console.log("Error occured while bulk insert Profiles", err?.original?.message);
     }
 
     try {
