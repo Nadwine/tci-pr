@@ -8,6 +8,7 @@ import compression from "compression";
 import serveStatic from "serve-static";
 import { createServer as createViteServer } from "vite";
 import { ModelDefined } from "sequelize";
+import { getS3MediaForTestEnvironment } from "./src/server/routes/media";
 
 const isTest = process.env.NODE_ENV === "test" || !!process.env.VITE_TEST_BUILD;
 
@@ -149,6 +150,8 @@ async function createServer(isProd = process.env.NODE_ENV === "production") {
       })
     );
   }
+
+  app.get("/tcipr/*", getS3MediaForTestEnvironment);
   const stylesheets = getStyleSheets();
 
   app.get("/logout", (req: Request, res: Response) => {
