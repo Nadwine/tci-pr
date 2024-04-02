@@ -33,7 +33,7 @@ const s3Bucket = new S3({
   secretAccessKey: process.env.AWS_S3_SECRET,
   endpoint: new AWS.Endpoint(process.env.AWS_S3_ENDPOINT ?? "")
 });
-const isProd = process.env.NODE_ENV === "production";
+const isProd = process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test";
 
 export const adminCreateRentListingRoute = async (req: Request, res: Response) => {
   const {

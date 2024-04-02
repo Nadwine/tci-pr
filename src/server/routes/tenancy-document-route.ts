@@ -27,7 +27,7 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
       secretAccessKey: process.env.AWS_S3_SECRET,
       endpoint: new AWS.Endpoint(process.env.AWS_S3_ENDPOINT ?? "")
     });
-    const isProd = process.env.NODE_ENV === "production";
+    const isProd = process.env.NODE_ENV === "production" || "test";
 
     const existingAgreement = await TenancyDocument.findOne({ where: { documentType: "tenancy-agreement", tenancyId: tenancyId } });
     await s3Bucket.deleteObject({ Bucket: process.env.AWS_S3_BUCKET_NAME, Key: existingAgreement?.s3BucketKey || "" }, (err, data) => {});

@@ -117,7 +117,7 @@ export const uploadSessionUserProfilePicture = async (req: Request, res: Respons
       secretAccessKey: process.env.AWS_S3_SECRET,
       endpoint: new AWS.Endpoint(process.env.AWS_S3_ENDPOINT ?? "")
     });
-    const isProd = process.env.NODE_ENV === "production";
+    const isProd = process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test";
 
     const profile = await Profile.findOrCreate({ where: { userId: sessionUsr!.id }, defaults: { userId: sessionUsr!.id } });
     if (!profile) return res.status(404).json("Profile not Found");
