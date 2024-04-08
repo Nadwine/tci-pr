@@ -12,6 +12,7 @@ import { Op } from "sequelize";
 import ListingLandlord from "../../database/models/listing_landlord";
 import Offer from "../../database/models/offer";
 import { emailLandlord_on_EnquiryReceived } from "../services/notification-service";
+import Profile from "../../database/models/profile";
 
 export const createEnquiryRoute = async (req: Request, res: Response) => {
   const listingId = Number(req.params.listingId);
@@ -68,16 +69,23 @@ export const getLatestEnquiry = async (req: Request, res: Response) => {
       include: [
         {
           model: Message,
-          include: [{ model: EnquiryConversation, include: [{ model: Listing, include: [{ model: Admin }] }] }, { model: User }]
+          include: [
+            {
+              model: EnquiryConversation,
+              include: [{ model: Listing, include: [{ model: Admin, include: [{ model: User, include: [Profile] }] }, { model: ListingLandlord }] }]
+            },
+            { model: User, include: [Profile] }
+          ]
         },
-        { model: User },
+        { model: User, include: [Profile] },
         {
           model: Listing,
           include: [
             { model: Address },
             { model: PropertyForRent },
             { model: ListingMedia, order: [["id", "ASC"]] },
-            { model: Admin, include: [User] },
+            { model: Admin, include: [{ model: User, include: [Profile] }] },
+            { model: ListingLandlord, include: [User] },
             { model: ListingQuestion },
             { model: Offer }
           ]

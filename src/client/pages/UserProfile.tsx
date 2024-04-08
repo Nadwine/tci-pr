@@ -30,8 +30,14 @@ const UserProfile = props => {
     setProfile(stateClone);
   };
 
-  const submitUpdate = async () => {
+  const submitUpdate = async (section: string) => {
     const profileObj = cloneDeep(profile);
+
+    if (!profile?.firstName || !profile?.lastName) {
+      toast.error("Please complete names section");
+      return;
+    }
+
     const res = await axios.put("/api/profile/my-profile", profileObj);
     if (res.status === 200) toast.success("Success");
     if (res.status !== 200) toast.error("Error updating");
@@ -197,7 +203,7 @@ const UserProfile = props => {
                   {editingFields.firstName ? (
                     <p
                       onClick={() => {
-                        submitUpdate();
+                        submitUpdate("names");
                         setFieldEditStatus("firstName", false);
                       }}
                     >
@@ -251,7 +257,7 @@ const UserProfile = props => {
                   {editingFields.addressLine1 ? (
                     <p
                       onClick={() => {
-                        submitUpdate();
+                        submitUpdate("address");
                         setFieldEditStatus("addressLine1", false);
                       }}
                     >
@@ -286,7 +292,7 @@ const UserProfile = props => {
                   {editingFields.phoneNumber ? (
                     <p
                       onClick={() => {
-                        submitUpdate();
+                        submitUpdate("phone");
                         setFieldEditStatus("phoneNumber", false);
                       }}
                     >
