@@ -121,7 +121,7 @@ const MessageEnquiries = props => {
                     </p>
                   </div>
                   {/**todo: fix elipsis on bigger screen */}
-                  <p className="card-text" style={{ width: "400px", overflow: "scroll", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+                  <p className="card-text" style={{ width: "300px", overflow: "scroll", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
                     {/** TODO ADD USERNAME OR EMAIL OF MESSAGE SENDER HERE */}
                     <span className="strong-text">{getConvoUser(enq)}:</span> {lastMessage && lastMessage?.messageText}
                   </p>
