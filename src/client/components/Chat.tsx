@@ -9,6 +9,7 @@ import { Button, Modal, Offcanvas } from "react-bootstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { LoadingSpinnerComponent } from "./LoadingSpinners";
+import EnquiryConversation from "../../database/models/enquiry_conversation";
 dayjs.extend(relativeTime);
 
 type Props = {
@@ -85,13 +86,13 @@ export const Chat = (props: Props) => {
     };
   }, []);
 
-  const getConvoUser = () => {
-    const profile = activeConversation?.User?.Profile;
-    const landlordProfile = activeConversation?.Listing.ListingLandlord;
+  const getConvoUser = (enq: EnquiryConversation) => {
+    const profile = enq?.User.Profile;
+    const landlordOrAdminProfile = enq?.Listing.ListingLandlord || enq.Listing.Admin?.User?.Profile;
     if (isTenant) {
       // tenant
-      if (landlordProfile?.firstName && landlordProfile?.lastName) {
-        return `${landlordProfile.firstName} ${landlordProfile?.lastName}`;
+      if (landlordOrAdminProfile?.firstName && landlordOrAdminProfile?.lastName) {
+        return `${landlordOrAdminProfile.firstName} ${landlordOrAdminProfile?.lastName}`;
       }
       return `${activeConversation?.Listing.ListingLandlord?.firstName}`;
     } else {
@@ -99,7 +100,7 @@ export const Chat = (props: Props) => {
       if (profile?.firstName && profile.lastName) {
         return `${profile.firstName} ${profile?.lastName}`;
       } else {
-        return activeConversation?.User?.email;
+        return activeConversation?.User.email;
       }
     }
   };
@@ -144,7 +145,7 @@ export const Chat = (props: Props) => {
           )}
         </div>
         <div className="text-primary" style={{ fontSize: "15px" }}>
-          {getConvoUser()}
+          {activeConversation && getConvoUser(activeConversation)}
         </div>
         <div className="d-flex flex-column col-12 col-md-10 chat-area" style={{ paddingBottom: "60px", height: "60vh", overflow: "scroll" }}>
           <div className="intro-msg rounded-pill ms-5 mb-5 ps-3 text-muted">{introMessage}</div>
@@ -249,7 +250,17 @@ export const Chat = (props: Props) => {
               <input name="amount" className="form-control" type="text" placeholder="Rent Price" required />
             </div>
             <div className="mb-3">
-              <input name="tenancyLengthDays" className="form-control" type="text" placeholder="Tenancy Length (Days)" required />
+              <label className="text-muted">
+                Tenancy Lenght {"("}Days{")"}
+              </label>
+              <input
+                readOnly
+                name="tenancyLengthDays"
+                defaultValue={activeConversation?.Listing.PropertyForRent.tenancyLength}
+                className="form-control"
+                type="text"
+                placeholder="Tenancy Length (Days)"
+              />
             </div>
             <div className="mb-3">
               <label className="text-muted">Preferred Tenancy Start date</label>

@@ -70,6 +70,25 @@ const MessageEnquiries = props => {
     submitSeen(enq);
   };
 
+  const getConvoUser = (enq: EnquiryConversation) => {
+    const profile = enq?.User.Profile;
+    const landlordOrAdminProfile = enq?.Listing.ListingLandlord || enq.Listing.Admin?.User?.Profile;
+    if (isTenant) {
+      // tenant
+      if (landlordOrAdminProfile?.firstName && landlordOrAdminProfile?.lastName) {
+        return `${landlordOrAdminProfile.firstName} ${landlordOrAdminProfile?.lastName}`;
+      }
+      return `${activeConversation?.Listing.ListingLandlord?.firstName}`;
+    } else {
+      // landlord
+      if (profile?.firstName && profile.lastName) {
+        return `${profile.firstName} ${profile?.lastName}`;
+      } else {
+        return activeConversation?.User.email;
+      }
+    }
+  };
+
   useEffect(() => {
     loadData();
   }, []);
@@ -102,9 +121,9 @@ const MessageEnquiries = props => {
                     </p>
                   </div>
                   {/**todo: fix elipsis on bigger screen */}
-                  <p className="card-text" style={{ width: "400px", overflow: "scroll", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+                  <p className="card-text" style={{ width: "300px", overflow: "scroll", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
                     {/** TODO ADD USERNAME OR EMAIL OF MESSAGE SENDER HERE */}
-                    <span className="strong-text">{enq.User.Profile?.email}:</span> {lastMessage && lastMessage?.messageText}
+                    <span className="strong-text">{getConvoUser(enq)}:</span> {lastMessage && lastMessage?.messageText}
                   </p>
                   {isAdmin && landlordManaged && <span className="text-danger">Managed by Landlord</span>}
                 </div>

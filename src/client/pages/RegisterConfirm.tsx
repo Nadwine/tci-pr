@@ -33,13 +33,15 @@ const RegisterConfirm = () => {
   // TODO: check first if email exist then rate limit the re-send endpoint to avoid spam email
   return (
     <div>
-      <h2>Almost there!</h2>
+      <h4 className="ms-2 ms-md-5 mt-5 text-success">
+        <i className="bi bi-stars"></i>Almost there!
+      </h4>
       <br />
-      <h2>{"Let's"} confirm your email address.</h2>
+      <h4 className="ms-md-5 ms-2">{"Let's"} confirm your email address</h4>
       <br />
-      {renderSentMessage && `A link has been sent to your inbox please verify your account ${""}`}
+      <div className="ms-2 ms-md-5">{renderSentMessage && `A link has been sent to your inbox, please verify your account ${""}`}</div>
 
-      <div className="pt-5 mt-4">
+      <div className="pt-2 mt-4 ms-md-5 ms-2">
         <br />
         Token not working? Enter email to resend
         <br />
@@ -48,10 +50,10 @@ const RegisterConfirm = () => {
             type="text"
             className=" form-control"
             style={{ width: "20em", height: "3em" }}
-            placeholder="email"
+            placeholder="example@mail.com"
             onChange={e => setEmailResender(e.target.value)}
           />
-          <button onClick={() => requestNewVerifyLink()} className="btn btn-primary ms-3">
+          <button onClick={() => requestNewVerifyLink()} className="btn btn-dark ms-3">
             Resend
           </button>
         </div>

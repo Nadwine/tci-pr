@@ -91,7 +91,7 @@ const AboutLandlord = props => {
     <div>
       <h2 className="fw-bolder mt-5 mx-5 my-5">How-to Guide</h2>
       <div className="mt-2 my-5 mx-5">
-        <p className="me-5 fs-6" style={{ color: "#032830" }}>
+        <p className="me-5 fs-6 py-3" style={{ color: "#032830" }}>
           We find you reliable tenants and ensure your proprietary stays in good condition. At TCI Homebase, we offer more than simply listing your properties.
           Browse our list of services available{" "}
           <a href="/products" className="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
