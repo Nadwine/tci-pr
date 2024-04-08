@@ -215,6 +215,18 @@ body {
 .smaller-text {
   font-size: 15px;
 }
+
+.primary-text {
+color: #077990;
+}
+
+.blue-text{
+color: #075ad3;
+}
+
+.greyed-text{
+  color: #4d6384;
+}
 /*  */
 
 /*________________ Global Styles (End)________________*/
