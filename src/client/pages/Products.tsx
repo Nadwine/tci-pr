@@ -123,7 +123,7 @@ const Products = props => {
       <div className="w-100 text-center">
         <h4 className="m-5 bolder-text text-muted">Additional Services</h4>
       </div>
-      <div className="col-12 pt-md-4 products-accordions pb-5 w-100" style={{ maxWidth: "750px" }}>
+      <div className="col-12 mx-auto pt-md-4 products-accordions pb-5 w-100" style={{ maxWidth: "750px" }}>
         <Accordion>
           <Card>
             <Card.Header style={{ height: "100px", backgroundColor: "white" }}>
