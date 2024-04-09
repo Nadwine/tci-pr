@@ -4,24 +4,63 @@ import { connect } from "react-redux";
 const TenantDashboard = props => {
   return (
     <div>
-      <div className="m-5"> Dashboard</div>
-      <div>
-        Welcome to your management dashboard.
-        <span>
-          As you use our services your dashboard will serve relevant content here. You can also use the links on the left to navigate more areas of the site.
-        </span>
+      <div className="ms-md-5">
+        <h3 className="ms-md-5 mt-md-5 fw-bolder w-100 ms-2 mt-3 mb-3">Dashboard</h3>
+        <p className="text-muted ms-md-5 mb-3 mb-md-5 text-break ms-2">
+          Welcome to your dashboard! Everything you need to manage your move, all in one place. As you use our services{" "}
+          <span className="text-break">your dashboard will serve relevant content here.</span>
+        </p>
       </div>
-      <div>
-        <div className="card">
-          <div className="card-body">
-            <h5 className="card-title">My Tenancies</h5>
-            This is some text within a card body.
+      <div className="col-12 d-flex flex-row justify-content-center flex-wrap px-md-5">
+        <div
+          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-3"
+          style={{ padding: "30px", backgroundColor: "white", borderRadius: "15px" }}
+        >
+          <div className="card-body" style={{ backgroundColor: "white" }}>
+            <h4 className="card-title fw-bolder text-center primary-text">Manage Tenancies</h4>
+            <p className="text-center text-secondary" style={{ fontSize: "90px" }}>
+              <i className="bi bi-file-earmark-text-fill"></i>
+            </p>
+            <p className="text-center text-muted">Track and manage your active tenancies</p>
+            <div className="text-center">
+              <button className="btn primary-text" style={{ border: "2px solid", borderColor: "#077990", borderRadius: "7px" }}>
+                Tenancies
+              </button>
+            </div>
           </div>
         </div>
-        <div className="card">
-          <div className="card-body">
-            <h5 className="card-title">Favourites</h5>
-            This is some text within a card body.
+        <div
+          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-3"
+          style={{ padding: "30px", backgroundColor: "white", borderRadius: "15px" }}
+        >
+          <div className="card-body" style={{ backgroundColor: "white" }}>
+            <h4 className="card-title fw-bolder text-center primary-text">Saved Properties</h4>
+            <p className="text-center" style={{ fontSize: "90px", color: "pink" }}>
+              <i className="bi bi-heart"></i>
+            </p>
+            <p className="card-text text-center text-muted">View all of your favourite properties saved</p>
+            <div className="text-center">
+              <button className="btn primary-text" style={{ border: "2px solid", borderColor: "#077990", borderRadius: "7px" }}>
+                View
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-3"
+          style={{ padding: "30px", backgroundColor: "white", borderRadius: "15px" }}
+        >
+          <div className="card-body" style={{ backgroundColor: "white" }}>
+            <h4 className="card-title fw-bolder text-center primary-text">Ready to list a property?</h4>
+            <p className="text-center text-info" style={{ fontSize: "90px" }}>
+              <i className="bi bi-house-fill"></i>
+            </p>
+            <p className="card-text text-center text-muted">Find out how to create a listing to find new tenants today</p>
+            <div className="text-center">
+              <button className="btn primary-text" style={{ border: "2px solid", borderColor: "#077990", borderRadius: "7px" }}>
+                Add Listing
+              </button>
+            </div>
           </div>
         </div>
       </div>

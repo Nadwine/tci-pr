@@ -45,7 +45,7 @@ const Products = props => {
       </div>
       <div className="col-12 d-flex flex-row justify-content-center flex-wrap px-md-5">
         <div className="w-100 text-center">
-          <h4 className="m-4 bolder-text text-muted">Our Pricing</h4>
+          <h4 className="m-5 bolder-text text-muted">Our Pricing</h4>
         </div>
         <div className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-sm" style={{ padding: "30px", backgroundColor: "white" }}>
           <div className="card-body" style={{ backgroundColor: "white" }}>
@@ -55,9 +55,7 @@ const Products = props => {
             <p className="text-center greyed-text">
               <i className="bi bi-check-lg"></i> Fee for advertising and receiving enquiries. $20 for each listing renewal every month
             </p>
-            <p className="text-center greyed-text">
-              <i className="bi bi-check-lg"></i> Videos for listings additional
-            </p>
+            <p className="text-center greyed-text">* Videos for listings at additional fee</p>
             <div className="text-center pt-5">
               <button className="btn greyed-text" style={{ border: "2px solid", borderColor: "#c9cdd0", borderRadius: "7px" }}>
                 Add Listing Now
@@ -129,7 +127,7 @@ const Products = props => {
             <Card.Header style={{ height: "100px", backgroundColor: "white" }}>
               <div className="d-flex h-100 align-items-center px-md-5">
                 <i className="theme-text bi bi-postcard fs-1 pe-3" />
-                <span className="fs-5 col-5 products-accordions-text">Property Listing</span>
+                <span className="col-5 products-accordions-text">Property Listing</span>
                 <CustomButton eventKey="0">More Info +</CustomButton>
               </div>
             </Card.Header>
