@@ -136,7 +136,7 @@ export const MyTenancy = props => {
 
   return (
     <div className="px-md-5">
-      <h4 className="py-4">My Tenancies</h4>
+      <h4 className="py-4 ms-5 strong-text">My Tenancies</h4>
       {!tenancies && (
         <div className="my-3 text-center" style={{ justifyItems: "center" }}>
           {" "}

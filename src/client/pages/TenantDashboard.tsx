@@ -1,12 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const TenantDashboard = props => {
+  const navigate = useNavigate();
+
   return (
     <div>
       <div className="ms-md-5">
         <h3 className="ms-md-5 mt-md-5 fw-bolder w-100 ms-2 mt-3 mb-3">Dashboard</h3>
-        <p className="text-muted ms-md-5 mb-3 mb-md-5 text-break ms-2">
+        <p className="text-muted ms-md-5 mb-3 mb-md-5 text-break ms-2" style={{ padding: "7px", borderLeft: "4px solid #e3e7ea" }}>
           Welcome to your dashboard! Everything you need to manage your move, all in one place. As you use our services{" "}
           <span className="text-break">your dashboard will serve relevant content here.</span>
         </p>
@@ -23,7 +26,11 @@ const TenantDashboard = props => {
             </p>
             <p className="text-center text-muted">Track and manage your active tenancies</p>
             <div className="text-center">
-              <button className="btn primary-text" style={{ border: "2px solid", borderColor: "#077990", borderRadius: "7px" }}>
+              <button
+                className="btn primary-text"
+                style={{ border: "2px solid", borderColor: "#077990", borderRadius: "7px" }}
+                onClick={() => navigate(`/my-tenancy`)}
+              >
                 Tenancies
               </button>
             </div>
@@ -40,7 +47,11 @@ const TenantDashboard = props => {
             </p>
             <p className="card-text text-center text-muted">View all of your favourite properties saved</p>
             <div className="text-center">
-              <button className="btn primary-text" style={{ border: "2px solid", borderColor: "#077990", borderRadius: "7px" }}>
+              <button
+                className="btn primary-text"
+                style={{ border: "2px solid", borderColor: "#077990", borderRadius: "7px" }}
+                onClick={() => navigate(`/about/landlord`)}
+              >
                 View
               </button>
             </div>
@@ -57,7 +68,11 @@ const TenantDashboard = props => {
             </p>
             <p className="card-text text-center text-muted">Find out how to create a listing to find new tenants today</p>
             <div className="text-center">
-              <button className="btn primary-text" style={{ border: "2px solid", borderColor: "#077990", borderRadius: "7px" }}>
+              <button
+                className="btn primary-text"
+                style={{ border: "2px solid", borderColor: "#077990", borderRadius: "7px" }}
+                onClick={() => navigate(`/about/landlord`)}
+              >
                 Add Listing
               </button>
             </div>
