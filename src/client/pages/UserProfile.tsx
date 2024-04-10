@@ -160,7 +160,7 @@ const UserProfile = props => {
                 <div className="d-flex py-2 align-items-center">
                   <div className="px-3">
                     <Avatar
-                      style={{ border: "solid 2px black", width: "70px", height: "70px" }}
+                      style={{ border: "solid 2px black", width: "50px", height: "50px" }}
                       src={profile && profile.ProfileMedia?.length > 0 ? profile?.ProfileMedia[0]?.mediaUrl : ""}
                     />
                   </div>

@@ -45,7 +45,7 @@ const Products = props => {
       </div>
       <div className="col-12 d-flex flex-row justify-content-center flex-wrap px-md-5">
         <div className="w-100 text-center">
-          <h4 className="m-5 bolder-text text-muted">Our Pricing</h4>
+          <h4 className="m-md-5 m-4 bolder-text text-muted">Our Pricing</h4>
         </div>
         <div className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-sm" style={{ padding: "30px", backgroundColor: "white" }}>
           <div className="card-body" style={{ backgroundColor: "white" }}>

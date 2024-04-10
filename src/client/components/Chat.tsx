@@ -129,15 +129,15 @@ export const Chat = (props: Props) => {
                           setShowDesktopOfferModal(!showDesktopOfferModal);
                           setShowDesktopOptionsMenu(false);
                         }}
-                        className="list-group-item"
+                        className="list-group-item fs-5"
                       >
                         Make an offer
                       </li>
                     )}
-                    <li className="list-group-item" onClick={() => navigate(`/property/rent/${activeConversation.Listing.id}`)}>
+                    <li className="list-group-item fs-5" onClick={() => navigate(`/property/rent/${activeConversation.Listing.id}`)}>
                       View Property
                     </li>
-                    <li className="list-group-item">Add to Favorites</li>
+                    <li className="list-group-item fs-5">Add to Favourites</li>
                   </ul>
                 </div>
               )}
