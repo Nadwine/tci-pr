@@ -3,6 +3,7 @@ import sequelize from "../sequelize-connection";
 import PropertyForRent from "./property_for_rent";
 import Tenant from "./tenant";
 import TenancyDocument from "./tenancy_document";
+import User from "./user";
 
 // for typeScript typing
 export default class Tenancy extends Model<InferAttributes<Tenancy>, InferCreationAttributes<Tenancy>> {
@@ -116,3 +117,6 @@ Tenancy.init(
 
 PropertyForRent.hasMany(Tenancy, { foreignKey: "propertyForRentId" });
 Tenancy.belongsTo(PropertyForRent, { foreignKey: "propertyForRentId" });
+
+User.hasMany(Tenancy, { foreignKey: "userId" });
+Tenancy.belongsTo(User, { foreignKey: "userId" });

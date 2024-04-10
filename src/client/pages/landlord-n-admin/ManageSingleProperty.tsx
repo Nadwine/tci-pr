@@ -212,7 +212,7 @@ const ManageSingleProperty = props => {
           <Accordion.Body>
             {allowPDFDownload && (
               <div className="pb-4">
-                {tenancyAgreement && <div className="d-md-none text-center text-danger pb-3">Web-view not avalible on mobile. download to view</div>}
+                {tenancyAgreement && <div className="d-md-none text-center text-danger pb-3">Download to view</div>}
                 <div className="point" onClick={() => downloadPDF()} style={{ width: "fit-content" }}>
                   {downloadText} <i className="bi bi-download ps-2" />
                 </div>

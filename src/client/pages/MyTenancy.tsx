@@ -151,32 +151,41 @@ export const MyTenancy = props => {
       <div>
         {tenancies?.map((currTenancy, i) => {
           const leadTenant = currTenancy?.Tenants?.find(t => t.id === currTenancy.leadTenantid);
+          const isMyTenancy = currTenancy.userId === loginUsr?.id;
           const tenancyAgreement = currTenancy.TenancyDocuments.find(doc => doc.documentType === "tenancy-agreement");
-          const showViewAndSignButton =
-            tenancyAgreement &&
-            !tenancyAgreement.metadata?.tenantsSignData.find(sd => sd.email === loginUsr?.email) &&
-            tenancyAgreement.tenancyId === myTenancy?.id;
+          const showViewAndSignButton = isMyTenancy && tenancyAgreement && !tenancyAgreement.metadata?.tenantsSignData.find(sd => sd.email === loginUsr?.email);
+          // && tenancyAgreement.tenancyId === myTenancy?.id;
           return (
             <div key={i}>
-              <div className="pb-5">
+              <div className="pb-5 ps-5">
                 <h5>
                   {currTenancy?.addressString}
-                  <span style={{ color: "#8d8d8d", paddingLeft: "0.5em", WebkitTextStroke: "0.7px" }}>
-                    - {"("} {currTenancy?.tenancyStatus} {")"}
-                  </span>
+                  {currTenancy?.tenancyStatus !== "ongoing" ? (
+                    <span style={{ paddingLeft: "0.5em", WebkitTextStroke: "0.7px" }} className="text-danger">
+                      <button type="button" className="btn btn-outline-danger disabled">
+                        {currTenancy?.tenancyStatus}
+                      </button>
+                    </span>
+                  ) : (
+                    <span style={{ paddingLeft: "0.5em", WebkitTextStroke: "0.7px" }} className="text-secondary">
+                      <button type="button" className="btn btn-outline-secondary">
+                        {currTenancy?.tenancyStatus}
+                      </button>
+                    </span>
+                  )}
                 </h5>
               </div>
               <div className="mx-5">
-                <h5>Tenants</h5>
+                <h5>Tenant</h5>
                 <table className="table table table-borderless">
                   <tbody>
                     {currTenancy?.Tenants.map((currTenant, i) => (
                       <tr key={i}>
                         <td>
-                          {currTenant.firstName} {currTenant.lastName}
+                          {currTenant.firstName} {currTenant.lastName} {i}
                         </td>
                         <td>
-                          Signature: {currTenant.rentalAgreementDate ? currTenancy.rentalAgreementDate : "pending"}{" "}
+                          Signature: {currTenant.rentalAgreementDate ? currTenancy.rentalAgreementDate : <span className="text-danger">Pending</span>}{" "}
                           {showViewAndSignButton && (
                             <button
                               onClick={() => {
@@ -208,11 +217,11 @@ export const MyTenancy = props => {
                 </table>
                 <hr />
               </div>
-              <div className="mx-5">
+              <div className="ms-5">
                 <h5>Tenancy</h5>
                 <table className="table table table-borderless">
                   <thead>
-                    <tr style={{ color: "#8d8d8d", WebkitTextStroke: "0.5px" }}>
+                    <tr style={{ WebkitTextStroke: "0.5px" }}>
                       <th scope="col">Start Date</th>
                       <th scope="col">Lead Tenant</th>
                     </tr>
@@ -220,14 +229,12 @@ export const MyTenancy = props => {
                   <tbody>
                     <tr>
                       <td>{currTenancy?.rentalAgreementDate ? dayjs(currTenancy?.rentalAgreementDate).format("MMM D, YYYY") : "Pending"}</td>
-                      <td>
-                        {leadTenant?.firstName} {leadTenant?.lastName}
-                      </td>
+                      <td>{currTenancy.firstName !== leadTenant?.firstName ? "No" : "Yes"}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="mx-5">
+              <div className="ms-5">
                 <h5>Deposit Information</h5>
                 <table className="table table table-borderless">
                   <thead>
@@ -242,13 +249,14 @@ export const MyTenancy = props => {
                       <td>
                         {currTenancy?.isDepositPaid && "Paid"}{" "}
                         <td>
-                          {currTenancy?.isDepositReleased && "Released"} {!currTenancy.isDepositPaid && !currTenancy.isDepositReleased && "Pending"}
+                          {currTenancy?.isDepositReleased && "Released"}{" "}
+                          {!currTenancy.isDepositPaid && !currTenancy.isDepositReleased && <span className="text-danger">Pending</span>}
                         </td>
                       </td>
                     </tr>
                   </tbody>
                 </table>
-                <hr />
+                <hr style={{ marginTop: "100px" }} />
               </div>
             </div>
           );
@@ -268,7 +276,7 @@ export const MyTenancy = props => {
         <Modal.Body>
           {allowPDFDownload && (
             <div className="pb-4">
-              {currentAgreement && <div className="d-md-none text-center text-danger pb-3">Web-view not avalible on mobile. download to view</div>}
+              {currentAgreement && <div className="d-md-none text-center text-danger pb-3">Download to view</div>}
               <div className="point" onClick={() => downloadPDF()} style={{ width: "fit-content" }}>
                 {downloadText} <i className="bi bi-download ps-2" />
               </div>

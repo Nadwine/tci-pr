@@ -1184,6 +1184,16 @@ const migrationCommands = [
           },
           allowNull: true,
           type: Sequelize.INTEGER
+        },
+        userId: {
+          onDelete: "SET NULL",
+          onUpdate: "CASCADE",
+          references: {
+            model: "users",
+            key: "id"
+          },
+          allowNull: true,
+          type: Sequelize.INTEGER
         }
       },
       {}
