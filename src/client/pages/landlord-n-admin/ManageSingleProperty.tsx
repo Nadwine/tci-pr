@@ -40,6 +40,7 @@ const ManageSingleProperty = props => {
   const allowNewSignature = tenancyAgreement && !tenancyAgreement.metadata?.landlordSignData;
   const landlordSigned = tenancyAgreement && tenancyAgreement.metadata?.landlordSignData?.dateTime;
   const tenantSigned = tenancyAgreement && tenancyAgreement?.metadata?.tenantsSignData?.length && tenancyAgreement?.metadata?.tenantsSignData?.length > 0;
+  const tenantSignData = tenancyAgreement && tenancyAgreement?.metadata?.tenantsSignData;
   const allowPDFDownload = tenancyAgreement; // && (tenancyAgreement.metadata?.landlordSignData || tenancyAgreement.metadata?.tenantsSignData);
   const downloadText = tenantSigned || landlordSigned ? "Download Signed PDF" : "Download Unsigned PDF";
 
@@ -244,7 +245,12 @@ const ManageSingleProperty = props => {
               </div>
             )}
             {landlordSigned && <div style={{ fontSize: "13px" }}>Agent Signed: {tenancyAgreement.metadata?.landlordSignData.dateTime}</div>}
-            {tenantSigned && <div style={{ fontSize: "13px" }}>Tenant Signed: {tenancyAgreement.metadata?.tenantsSignData[0].dateTime}</div>}
+            {tenantSigned &&
+              tenantSignData?.map((sd, i) => (
+                <div key={i} style={{ fontSize: "13px" }}>
+                  {sd.name} Signed: {sd.dateTime}
+                </div>
+              ))}
             <form ref={uploadTAgreemFormRef} onSubmit={uploadTenancyAgrem}>
               <hr />
               <div className="d-flex pt-3 flex-row align-items-center">

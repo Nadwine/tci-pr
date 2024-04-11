@@ -1,15 +1,16 @@
 import { Express, Response, Request } from "express";
 import AWS, { AWSError } from "aws-sdk";
 import S3 from "aws-sdk/clients/s3";
-import TenancyDocument from "../../database/models/tenancy_document";
+import TenancyDocument, { SignData, TenancyDocMeta } from "../../database/models/tenancy_document";
 import fs from "fs";
 import Tenancy from "../../database/models/tenancy";
 import Profile from "../../database/models/profile";
+import _ from "lodash";
 
 export const uploadTenancyAgreement = async (req: Request, res: Response) => {
   const files = req.files ?? [];
   const sessionUsr = req.session.user;
-  const tenancyId = req.body.tenancyId;
+  const tenancyId = Number(req.body.tenancyId);
   const signer = req.body.signer;
   const signing = Boolean(signer);
   const dateTime = req.body.dateTime;
@@ -68,14 +69,15 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
         const mediaURl = val.Location;
 
         if (signing) {
-          const meta = { ...existingAgreement?.metadata };
+          //@ts-ignore
+          const meta: TenancyDocMeta | never = _.cloneDeep(existingAgreement?.metadata || {});
           if (signer === "tenant") {
-            meta.tenantsSignData
-              ? meta.tenantsSignData?.push({ name: name, email: email, dateTime: dateTime })
-              : (meta.tenantsSignData = [{ name: name, email: email, dateTime: dateTime }]);
+            meta!.tenantsSignData
+              ? meta!.tenantsSignData?.push({ name: name, email: email, dateTime: dateTime, tenancyId: tenancyId })
+              : (meta!.tenantsSignData = [{ name: name, email: email, dateTime: dateTime, tenancyId: tenancyId }]);
           } else {
             // Property Manager is signing
-            meta.landlordSignData = { name: name, email: email, dateTime: dateTime };
+            meta!.landlordSignData = { name: name, email: email, dateTime: dateTime, tenancyId: tenancyId };
           }
 
           await existingAgreement?.update({

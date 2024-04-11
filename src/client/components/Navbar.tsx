@@ -4,13 +4,14 @@ import { connect } from "react-redux";
 import { RootState } from "../redux/store";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Avatar } from "@mui/material";
 
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isCollapsed, setIsCollapse] = useState(true);
   const [userDropDownShow, setUserDropDownShow] = useState(false);
-  const user: any = useSelector((reduxState: RootState) => reduxState.auth.user);
+  const user = useSelector((reduxState: RootState) => reduxState.auth.user);
   const isLoggedIn = Boolean(user?.id);
   const numberOfNewMessages = useSelector((root: RootState) => root.message.numberOfNewMessages);
   const [isHome, setIsHome] = useState(false);
@@ -92,17 +93,31 @@ function Navbar() {
           {user && (
             <ul className="nav navbar-nav ms-auto pe-2">
               <li className="nav-item dropdown">
-                <span
-                  className="btn btn-link nav-link rounded-circle fw-bold text-light fs-5"
-                  style={{ width: "45px", height: "45px", backgroundColor: "#087990" }}
-                  onClick={() => {
-                    setUserDropDownShow(!userDropDownShow);
-                    setIsCollapse(true);
-                  }}
-                  onBlur={() => setUserDropDownShow(false)}
-                >
-                  {user?.email.charAt(0).toUpperCase()}
-                </span>
+                {!user.Profile && (
+                  <span
+                    className="btn btn-link nav-link rounded-circle fw-bold text-light fs-5"
+                    style={{ width: "45px", height: "45px", backgroundColor: "#087990" }}
+                    onClick={() => {
+                      setUserDropDownShow(!userDropDownShow);
+                      setIsCollapse(true);
+                    }}
+                    onBlur={() => setUserDropDownShow(false)}
+                  >
+                    {!user.Profile && user?.email.charAt(0).toUpperCase()}
+                  </span>
+                )}
+                {user.Profile && (
+                  <Avatar
+                    className="point"
+                    src={user.Profile.ProfileMedia[0].mediaUrl}
+                    style={{ width: "45px", height: "45px" }}
+                    onClick={() => {
+                      setUserDropDownShow(!userDropDownShow);
+                      setIsCollapse(true);
+                    }}
+                    onBlur={() => setUserDropDownShow(false)}
+                  />
+                )}
                 <div className={`dropdown-menu dropdown-menu-light mt-3 ${shouldShowUserDropDown}`} style={{ left: "auto", right: 0 }}>
                   <a href="/user" className="dropdown-item">
                     Profile & Settings

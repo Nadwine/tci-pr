@@ -1,5 +1,6 @@
 // declare modules here
 import express from "express";
+import Profile from "../src/database/models/profile";
 declare module "express-session" {
   interface SessionData {
     user:
@@ -9,6 +10,7 @@ declare module "express-session" {
           username: string;
           allowed: number[];
           accountType: "landlord" | "tenant" | "admin";
+          Profile?: Profile;
         }
       | undefined
       | null;

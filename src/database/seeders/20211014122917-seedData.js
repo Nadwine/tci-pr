@@ -11,6 +11,7 @@ const messagesArray = require("../fake-data/messages");
 const adminArray = require("../fake-data/admin");
 const listingLandlordArray = require("../fake-data/listing_landlord");
 const profileArray = require("../fake-data/profile");
+const profileMedia = require("../fake-data/profile_media");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -57,6 +58,15 @@ module.exports = {
     } catch (err) {
       // @ts-ignore
       console.log("Error occured while bulk insert Profiles", err?.original?.message);
+    }
+
+    try {
+      // ProfileMedia
+      await queryInterface.bulkInsert("profile_media", profileMedia, {});
+      await queryInterface.sequelize.query(`ALTER SEQUENCE profile_media_id_seq RESTART WITH ${profileMedia.length + 1}`);
+    } catch (err) {
+      // @ts-ignore
+      console.log("Error occured while bulk insert ProfileMedia", err?.original?.message);
     }
 
     try {

@@ -14,6 +14,8 @@ import { loginRequestValidation } from "../../utils/validation-schemas/schema-lo
 import dayjs from "dayjs";
 import Admin from "../../database/models/admin";
 import ListingLandlord from "../../database/models/listing_landlord";
+import Profile from "../../database/models/profile";
+import ProfileMedia from "../../database/models/profile_media";
 const router = express.Router();
 
 export const getUserCredentials = async (req: Request, res: Response, next: NextFunction) => {
@@ -25,16 +27,17 @@ export const refreshUserPermission = async (req: Request, res: Response) => {
     if (!req.session.user) {
       return res.json({ result: "success" });
     } else {
-      const dbUser: User | null = await User.findByPk(req.session.user.id);
+      const foundUser: User | null = await User.findByPk(req.session.user.id, { include: [{ model: Profile, include: [ProfileMedia] }] });
 
       // TODO compare difference and send back a updated version to client
-      if (dbUser && dbUser.accountType) {
+      if (foundUser && foundUser.accountType) {
         req.session.user = {
-          id: dbUser.id,
-          username: dbUser.username || "",
-          email: dbUser.email,
+          id: foundUser.id,
+          username: foundUser.username || "",
+          email: foundUser.email,
           allowed: [],
-          accountType: dbUser.accountType || ""
+          accountType: foundUser.accountType || "",
+          Profile: foundUser.Profile
         };
       }
       return res.json({ result: "success" });
@@ -314,7 +317,8 @@ export const loginUser = async (req: Request, res: Response) => {
 
     // username or email match query
     const foundUser: User | null = await User.findOne({
-      where: { email: nameOrEmail.toLowerCase() }
+      where: { email: nameOrEmail.toLowerCase() },
+      include: [{ model: Profile, include: [ProfileMedia] }]
     });
 
     if (!foundUser) {
@@ -335,7 +339,8 @@ export const loginUser = async (req: Request, res: Response) => {
           email: foundUser.email,
           username: foundUser.username || "",
           allowed: [],
-          accountType: foundUser.accountType
+          accountType: foundUser.accountType,
+          Profile: foundUser.Profile
         };
         // req.session.cookie.expires = dayjs(); // Expires sets an expiry date for when a cookie gets deleted;
         // req.session.cookie.maxAge = thirtyDays;   //  Max-age sets the time in seconds for when a cookie will be deleted

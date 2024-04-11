@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AccountTypeEnum } from "../../../../types/enums";
+import Profile from "../../../database/models/profile";
 
 type stateType = {
-  user?: { id: number; email: string; username?: string; allowed: []; accountType: "landlord" | "admin" | "tenant" };
+  user?: { id: number; email: string; username?: string; allowed: []; accountType: "landlord" | "admin" | "tenant"; Profile?: Profile };
   visitorId?: string;
   browserInfo?: string;
 };

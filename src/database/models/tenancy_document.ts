@@ -2,7 +2,8 @@ import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttri
 import sequelize from "../sequelize-connection";
 import Tenancy from "./tenancy";
 
-type SignData = { dateTime: string; name: string; email: string };
+export type SignData = { dateTime: string; name: string; email: string; tenancyId: number };
+export type TenancyDocMeta = { landlordSignData: SignData; [key: string]: any; tenantsSignData: SignData[] };
 
 export default class TenancyDocument extends Model<InferAttributes<TenancyDocument>, InferCreationAttributes<TenancyDocument>> {
   // Only Used for typescript to pick up intellisense and types
@@ -22,7 +23,7 @@ export default class TenancyDocument extends Model<InferAttributes<TenancyDocume
     | "payslip"
     | "bank-statement"
     | "previous-tenancy-agreement";
-  declare metadata?: { landlordSignData: SignData; [key: string]: any; tenantsSignData: SignData[] };
+  declare metadata?: TenancyDocMeta;
   declare tenancyId: number;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;

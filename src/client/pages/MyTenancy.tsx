@@ -29,6 +29,7 @@ export const MyTenancy = props => {
   const allowNewSignature = currentAgreement && !currentAgreement.metadata?.tenantsSignData.find(sd => sd.email === loginUsr?.email);
   const landlordSigned = currentAgreement && currentAgreement.metadata?.landlordSignData?.dateTime;
   const tenantSigned = currentAgreement && currentAgreement?.metadata?.tenantsSignData?.length && currentAgreement?.metadata?.tenantsSignData?.length > 0;
+  const tenantSignData = currentAgreement && currentAgreement?.metadata?.tenantsSignData;
   const allowPDFDownload = currentAgreement; // && (tenancyAgreement.metadata?.landlordSignData || tenancyAgreement.metadata?.tenantsSignData);
   const downloadText = tenantSigned || landlordSigned ? "Download Signed PDF" : "Download Unsigned PDF";
 
@@ -134,6 +135,9 @@ export const MyTenancy = props => {
     fetchTenancy();
   }, [showSignaturePad, showSignModal]);
 
+  // Refactor
+  // TODO Seperate Owned Tenancy and then loop the Related Tenants Under Same HouseHold
+  // Instead of trying to figure this out in the loop below
   return (
     <div className="px-md-5">
       <h4 className="py-4 ms-5 strong-text">My Tenancies</h4>
@@ -151,9 +155,12 @@ export const MyTenancy = props => {
       <div>
         {tenancies?.map((currTenancy, i) => {
           const leadTenant = currTenancy?.Tenants?.find(t => t.id === currTenancy.leadTenantid);
-          const isMyTenancy = currTenancy.userId === loginUsr?.id;
-          const tenancyAgreement = currTenancy.TenancyDocuments.find(doc => doc.documentType === "tenancy-agreement");
-          const showViewAndSignButton = isMyTenancy && tenancyAgreement && !tenancyAgreement.metadata?.tenantsSignData.find(sd => sd.email === loginUsr?.email);
+          const currIsMyTenancy = currTenancy.userId === loginUsr?.id;
+          const currTenancyAgreement = currTenancy.TenancyDocuments.find(doc => doc.documentType === "tenancy-agreement");
+          const currShowViewAndSignButton =
+            currIsMyTenancy && currTenancyAgreement && currTenancyAgreement.metadata?.tenantsSignData.find(sd => sd.email === loginUsr?.email) == undefined;
+          const signData = currTenancyAgreement?.metadata?.tenantsSignData;
+          const mySignData = currIsMyTenancy && signData?.find(sd => sd.email === loginUsr?.email);
           // && tenancyAgreement.tenancyId === myTenancy?.id;
           return (
             <div key={i}>
@@ -179,28 +186,34 @@ export const MyTenancy = props => {
                 <h5>Tenant</h5>
                 <table className="table table table-borderless">
                   <tbody>
-                    {currTenancy?.Tenants.map((currTenant, i) => (
-                      <tr key={i}>
-                        <td>
-                          {currTenant.firstName} {currTenant.lastName} {i}
-                        </td>
-                        <td>
-                          Signature: {currTenant.rentalAgreementDate ? currTenancy.rentalAgreementDate : <span className="text-danger">Pending</span>}{" "}
-                          {showViewAndSignButton && (
-                            <button
-                              onClick={() => {
-                                setShowSignModal(true);
-                                setCurrentTenancySignId(currTenancy.id);
-                              }}
-                              className="btn-sm btn-success ms-3"
-                            >
-                              {" "}
-                              View & Sign
-                            </button>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
+                    {currTenancy?.Tenants.map((currTenant, i) => {
+                      const currentSignFromMyTenancy = currTenancyAgreement?.metadata?.tenantsSignData.find(sd => sd.tenancyId === currTenancy.id);
+                      const isCurrentSignOwnedByMe = currentSignFromMyTenancy?.email == loginUsr?.email;
+                      const signed = currentSignFromMyTenancy?.email === loginUsr?.email;
+                      return (
+                        <tr key={i}>
+                          <td>
+                            {currTenant.firstName} {currTenant.lastName}
+                          </td>
+                          <td>
+                            {signed ? "Signed:" : "Signature:"}{" "}
+                            {currentSignFromMyTenancy ? currentSignFromMyTenancy.dateTime : <span className="text-danger">Pending</span>}{" "}
+                            {currShowViewAndSignButton && !signed && (
+                              <button
+                                onClick={() => {
+                                  setShowSignModal(true);
+                                  setCurrentTenancySignId(currTenancy.id);
+                                }}
+                                className="btn-sm btn-success ms-3"
+                              >
+                                {" "}
+                                View & Sign
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -308,7 +321,12 @@ export const MyTenancy = props => {
             </div>
           )}
           {landlordSigned && <div style={{ fontSize: "13px" }}>Agent Signed: {currentAgreement.metadata?.landlordSignData.dateTime}</div>}
-          {tenantSigned && <div style={{ fontSize: "13px" }}>Tenant Signed: {currentAgreement.metadata?.tenantsSignData[0].dateTime}</div>}
+          {tenantSigned &&
+            tenantSignData?.map((sd, i) => (
+              <div key={i} style={{ fontSize: "13px" }}>
+                {sd.name} Signed: {sd.dateTime}
+              </div>
+            ))}
         </Modal.Body>
       </Modal>
     </div>
