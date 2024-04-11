@@ -45,8 +45,8 @@ const CookieTerms = props => {
         other websites.
       </div>
       <div className="py-3">
-        See
-        <button className="btn text-primary ps-0" onClick={() => navigate(`/privacy-terms`)}>
+        See{" "}
+        <button className="btn text-primary ps-0 pe-1" onClick={() => navigate(`/privacy-terms`)}>
           Privacy Policy
         </button>
         for more about your privacy.

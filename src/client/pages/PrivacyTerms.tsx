@@ -254,8 +254,8 @@ const PrivacyTerms = props => {
         to our data retention framework.
       </div>
       <div className="py-3">
-        See
-        <button className="btn text-primary ps-0" onClick={() => navigate(`/cookie-terms`)}>
+        See{" "}
+        <button className="btn text-primary ps-0 pe-1" onClick={() => navigate(`/cookie-terms`)}>
           Cookie Policy
         </button>
         for more info about your data storage.

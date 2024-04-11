@@ -22,7 +22,7 @@ const AboutLandlord = props => {
           <button className="btn text-primary ps-0" onClick={() => navigate(`/register`)}>
             Go to our signup form here and select I am a landlord
           </button>
-          . Once you have filled out the form, You will be asked to verify your email. If you are having problems with this step, call us.
+          .Once you have filled out the form, You will be asked to verify your email. If you are having problems with this step, call us.
         </div>
       )
     },
