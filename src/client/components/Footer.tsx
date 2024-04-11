@@ -14,7 +14,7 @@ const Footer = () => {
             </a>
           </div>
           <div className="col-md-3">
-            <a className="text-white text-decoration-none" href="#">
+            <a className="text-white text-decoration-none" href="https://www.instagram.com/tcihomebase/?igsh=Z2MwaTVjZzlobHNj">
               Follow us on instagram <i className="bi bi-instagram"></i>
             </a>
           </div>

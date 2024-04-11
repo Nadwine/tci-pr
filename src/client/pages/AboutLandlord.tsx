@@ -12,14 +12,14 @@ import Typography from "@mui/material/Typography";
 
 const steps = [
   {
-    label: "Create an account",
+    label: "Create landlord account",
     description: (
       <div className="pe-5">
         The first step to begin the process is by creating an account.{" "}
         <a href="/register" className="link-underline-light">
-          Go to our signup form here
+          Go to our signup form here and select I am a landlord
         </a>
-        .Once you have filled out the form, You will be asked to verify your email. If you are having problems with this step, call us.
+        . Once you have filled out the form, You will be asked to verify your email. If you are having problems with this step, call us.
       </div>
     )
   },
@@ -60,12 +60,12 @@ const steps = [
     )
   },
   {
-    label: "Finding a tenant",
+    label: "Finding a tenant (Optional)",
     description: `If you choose to rent through us, its time to relax and have a piece of mind. Its our turn now. During this stage we will be screening potential tenants for you by 
               checking their details, employment status, etc. To ensure we find you the right tenant.`
   },
   {
-    label: "Payments",
+    label: "Payments (Optional)",
     description: `Try out different ad text to see what brings in the most customers,
     and learn how to enhance your ads using features like ad extensions.
     If you run into any problems with your ads, find out how to tell if
@@ -89,9 +89,9 @@ const AboutLandlord = props => {
   };
   return (
     <div>
-      <h2 className="fw-bolder mt-5 mx-5 my-5">How-to Guide</h2>
-      <div className="mt-2 my-5 mx-5">
-        <p className="me-5 fs-6 py-3" style={{ color: "#032830" }}>
+      <h2 className="fw-bolder mt-5 mx-3 my-4">How-to Guide</h2>
+      <div className="mt-2 my-3 mx-3">
+        <p className="m-3 fs-6 py-3" style={{ color: "#032830" }}>
           We find you reliable tenants and ensure your proprietary stays in good condition. At TCI Homebase, we offer more than simply listing your properties.
           Browse our list of services available{" "}
           <a href="/products" className="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">

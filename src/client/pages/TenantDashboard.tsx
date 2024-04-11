@@ -8,15 +8,15 @@ const TenantDashboard = props => {
   return (
     <div>
       <div className="ms-md-5">
-        <h3 className="ms-md-5 mt-md-5 fw-bolder w-100 ms-2 mt-3 mb-3">Dashboard</h3>
-        <p className="text-muted ms-md-5 mb-3 mb-md-5 text-break ms-2" style={{ padding: "7px", borderLeft: "4px solid #e3e7ea" }}>
+        <h3 className="ms-md-5 mt-md-5 fw-bolder w-100 ms-2 mt-5 mb-4">Dashboard</h3>
+        <p className="text-muted ms-md-5 mb-3 mb-md-5 text-break ms-2 mb-4" style={{ padding: "7px", borderLeft: "4px solid #e3e7ea" }}>
           Welcome to your dashboard! Everything you need to manage your move, all in one place. As you use our services{" "}
           <span className="text-break">your dashboard will serve relevant content here.</span>
         </p>
       </div>
       <div className="col-12 d-flex flex-row justify-content-center flex-wrap px-md-5">
         <div
-          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-3"
+          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-3 border-0 m-2"
           style={{ padding: "30px", backgroundColor: "white", borderRadius: "15px" }}
         >
           <div className="card-body" style={{ backgroundColor: "white" }}>
@@ -37,7 +37,7 @@ const TenantDashboard = props => {
           </div>
         </div>
         <div
-          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-3"
+          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-3 border-0 m-2"
           style={{ padding: "30px", backgroundColor: "white", borderRadius: "15px" }}
         >
           <div className="card-body" style={{ backgroundColor: "white" }}>
@@ -58,7 +58,7 @@ const TenantDashboard = props => {
           </div>
         </div>
         <div
-          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-3"
+          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-3 border-0 m-2"
           style={{ padding: "30px", backgroundColor: "white", borderRadius: "15px" }}
         >
           <div className="card-body" style={{ backgroundColor: "white" }}>

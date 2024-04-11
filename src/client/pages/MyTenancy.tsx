@@ -269,7 +269,7 @@ export const MyTenancy = props => {
                     </tr>
                   </tbody>
                 </table>
-                <hr style={{ marginTop: "100px" }} />
+                <hr />
               </div>
             </div>
           );

@@ -114,7 +114,7 @@ const Register = () => {
                 Send us you feedback
               </a>{" "}
               <br />
-              <a href="#" className="text-white text-opacity-75 text-decoration-none">
+              <a href="https://www.instagram.com/tcihomebase/?igsh=Z2MwaTVjZzlobHNj" className="text-white text-opacity-75 text-decoration-none">
                 Follow us on instagram <i className="bi bi-instagram"></i>
               </a>
             </div>
