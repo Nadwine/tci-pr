@@ -261,6 +261,15 @@ const MessageEnquiries = props => {
                 placeholder="Preferred Start Date"
                 required
               />
+              <div className="card my-4 border-info" style={{ borderLeft: "5px solid #cff4fc", backgroundColor: "#cff4fc" }}>
+                <div className="card-body">
+                  {" "}
+                  <i className="bi bi-info-circle-fill"></i> We recommend viewing the property before making an offer. Find out more about our safety tips
+                  <button className="btn text-primary ps-1" onClick={() => navigate(`/rent/safety`)}>
+                    here
+                  </button>
+                </div>
+              </div>
               <button className="btn btn mt-4 text-light" style={{ backgroundColor: "#087990" }} type="submit">
                 Submit
               </button>
