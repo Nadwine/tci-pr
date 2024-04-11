@@ -58,7 +58,7 @@ const MeetTheTeam = props => {
           <Collapse in={chrisOpen}>
             <div className="px-md-5 text-center">{chrisFullText}</div>
           </Collapse>
-          <Button onClick={() => setChrisOpen(!chrisOpen)} aria-controls="example-collapse-text" variant="link">
+          <Button onClick={() => setChrisOpen(!chrisOpen)} aria-controls="example-collapse-text" variant="link" style={{ color: "#11828d" }}>
             {chrisOpen ? "Close" : "Read More"}
           </Button>
         </div>
@@ -76,7 +76,7 @@ const MeetTheTeam = props => {
           <Collapse in={herbyOpen}>
             <div className="px-md-5 text-center">{herbyFullText}</div>
           </Collapse>
-          <Button onClick={() => setHerbyOpen(!herbyOpen)} aria-controls="example-collapse-text" variant="link">
+          <Button onClick={() => setHerbyOpen(!herbyOpen)} aria-controls="example-collapse-text" variant="link" style={{ color: "#11828d" }}>
             {herbyOpen ? "Close" : "Read More"}
           </Button>
         </div>
@@ -94,7 +94,7 @@ const MeetTheTeam = props => {
           <Collapse in={samaOpen}>
             <div className="px-md-5 text-center">{samaFullText}</div>
           </Collapse>
-          <Button onClick={() => setSamaOpen(!samaOpen)} aria-controls="example-collapse-text" variant="link">
+          <Button onClick={() => setSamaOpen(!samaOpen)} aria-controls="example-collapse-text" variant="link" style={{ color: "#11828d" }}>
             {samaOpen ? "Close" : "Read More"}
           </Button>
         </div>
@@ -112,7 +112,7 @@ const MeetTheTeam = props => {
           <Collapse in={naeOpen}>
             <div className="px-md-5 text-center">{naeFullText}</div>
           </Collapse>
-          <Button onClick={() => setNamOpen(!naeOpen)} aria-controls="example-collapse-text" variant="link">
+          <Button onClick={() => setNamOpen(!naeOpen)} aria-controls="example-collapse-text" variant="link" style={{ color: "#11828d" }}>
             {naeOpen ? "Close" : "Read More"}
           </Button>
         </div>

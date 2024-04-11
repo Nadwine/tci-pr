@@ -10,8 +10,8 @@ const TenantDashboard = props => {
       <div className="ms-md-5">
         <h3 className="ms-md-5 mt-md-5 fw-bolder w-100 ms-2 mt-5 mb-4">Dashboard</h3>
         <p className="text-muted ms-md-5 mb-3 mb-md-5 text-break ms-2 mb-4" style={{ padding: "7px", borderLeft: "4px solid #e3e7ea" }}>
-          Welcome to your dashboard! Everything you need to manage your move, all in one place. As you use our services{" "}
-          <span className="text-break">your dashboard will serve relevant content here.</span>
+          Welcome to your dashboard! Everything you need to manage your move, all in one place. As you use our services your <br /> dashboard will serve
+          relevant content here.
         </p>
       </div>
       <div className="col-12 d-flex flex-row justify-content-center flex-wrap px-md-5">
@@ -73,7 +73,7 @@ const TenantDashboard = props => {
                 style={{ border: "2px solid", borderColor: "#077990", borderRadius: "7px" }}
                 onClick={() => navigate(`/about/landlord`)}
               >
-                Add Listing
+                Get Started
               </button>
             </div>
           </div>
