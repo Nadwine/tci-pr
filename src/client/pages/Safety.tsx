@@ -61,7 +61,7 @@ const Safety = props => {
             Getting in touch
           </div>
           <div className="answer">
-            If you think you may have been a victim of a scam or you’re unsure and want some help, you can email us at fraud@rightmove.co.uk or call us on
+            If you think you may have been a victim of a scam or you’re unsure and want some help, you can email us at tci.homebase.tc@gmail.com
           </div>
         </div>
       </div>
