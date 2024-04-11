@@ -89,29 +89,29 @@ const Products = props => {
         </div>
         <div className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-sm" style={{ padding: "30px", backgroundColor: "white" }}>
           <div className="card-body" style={{ backgroundColor: "white" }}>
-            <h4 className="card-title fw-bolder text-center text-primary">Premium</h4>
-            <h1 className="card-title fw-bolder text-center text-primary">15%</h1>
-            <p className="text-center text-primary smaller-text">of gross monthly income</p>
-            <p className="card-text text-center text-primary">
+            <h4 className="card-title fw-bolder text-center text-primary-2">Premium</h4>
+            <h1 className="card-title fw-bolder text-center text-primary-2">15%</h1>
+            <p className="text-center text-primary-2 smaller-text">of gross monthly income</p>
+            <p className="card-text text-center text-primary-2">
               <i className="bi bi-check-lg"></i> Full property management services including property maintenance
             </p>
-            <p className="card-text text-center text-primary">
+            <p className="card-text text-center text-primary-2">
               <i className="bi bi-check-lg"></i> Tenant interaction and communication including routine checks and reporting
             </p>
-            <p className="card-text text-center text-primary">
+            <p className="card-text text-center text-primary-2">
               <i className="bi bi-check-lg"></i> Rent and expense tracking
             </p>
-            <p className="card-text text-center text-primary">
+            <p className="card-text text-center text-primary-2">
               <i className="bi bi-check-lg"></i> Inventory builder
             </p>
-            <p className="card-text text-center text-primary">
+            <p className="card-text text-center text-primary-2">
               <i className="bi bi-check-lg"></i> Certificate reminder
             </p>
-            <p className="card-text text-center text-primary">
+            <p className="card-text text-center text-primary-2">
               <i className="bi bi-check-lg"></i> Compliance checklists
             </p>
             <div className="text-center pt-3">
-              <button className="btn text-primary border-primary" style={{ border: "2px solid", borderRadius: "7px" }}>
+              <button className="btn text-primary-2 border-primary" style={{ border: "2px solid", borderRadius: "7px" }}>
                 Add Listing Now
               </button>
             </div>
@@ -128,7 +128,9 @@ const Products = props => {
               <div className="d-flex h-100 align-items-center px-md-5">
                 <i className="theme-text bi bi-postcard fs-1 pe-3" />
                 <span className="col-5 products-accordions-text">Property Listing</span>
-                <CustomButton eventKey="0">More Info +</CustomButton>
+                <CustomButton eventKey="0">
+                  <span className="text-primary">More Info +</span>
+                </CustomButton>
               </div>
             </Card.Header>
             <Accordion.Collapse eventKey="0">
@@ -142,7 +144,9 @@ const Products = props => {
               <div className="d-flex h-100 align-items-center px-md-5">
                 <i className="theme-text bi bi-person-check fs-1 pe-3" />
                 <span className="fs-5 col-5 products-accordions-text">Tenant Screening & Referencing</span>
-                <CustomButton eventKey="0">More Info +</CustomButton>
+                <CustomButton eventKey="0">
+                  <span className="text-primary">More Info +</span>
+                </CustomButton>
               </div>
             </Card.Header>
             <Accordion.Collapse eventKey="0">
@@ -159,7 +163,9 @@ const Products = props => {
               <div className="d-flex h-100 align-items-center px-md-5">
                 <i className="theme-text bi bi-eye fs-1 pe-3" />
                 <span className="fs-5 col-5 products-accordions-text">Accompanied Viewing Service</span>
-                <CustomButton eventKey="0">More Info +</CustomButton>
+                <CustomButton eventKey="0">
+                  <span className="text-primary">More Info +</span>
+                </CustomButton>
               </div>
             </Card.Header>
             <Accordion.Collapse eventKey="0">
@@ -175,7 +181,9 @@ const Products = props => {
                  */}
                 <FontAwesomeIcon icon={faHandHoldingDollar} className="theme-text fs-2 pe-3" />
                 <span className="fs-5 col-5 products-accordions-text">Rent Collection</span>
-                <CustomButton eventKey="0">More Info +</CustomButton>
+                <CustomButton eventKey="0">
+                  <span className="text-primary">More Info +</span>
+                </CustomButton>
               </div>
             </Card.Header>
             <Accordion.Collapse eventKey="0">
@@ -194,7 +202,9 @@ const Products = props => {
                  */}
                 <i className="theme-text bi bi-house-add fs-1 pe-3" />
                 <span className="fs-5 col-5 products-accordions-text">Full Property Management Services</span>
-                <CustomButton eventKey="0">More Info +</CustomButton>
+                <CustomButton eventKey="0">
+                  <span className="text-primary">More Info +</span>
+                </CustomButton>
               </div>
             </Card.Header>
             <Accordion.Collapse eventKey="0">
@@ -213,7 +223,9 @@ const Products = props => {
                  */}
                 <i className="theme-text bi bi-door-open fs-1 pe-3" />
                 <span className="fs-5 products-accordions-text">Tenant Check In and Check Out</span>
-                <CustomButton eventKey="0">More Info +</CustomButton>
+                <CustomButton eventKey="0">
+                  <span className="text-primary">More Info +</span>
+                </CustomButton>
               </div>
             </Card.Header>
             <Accordion.Collapse eventKey="0">
