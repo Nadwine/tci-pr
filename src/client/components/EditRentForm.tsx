@@ -145,7 +145,9 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
           </button>
         </div>
         <div className="pb-5">
-          <a href={`/manage-property/rent/${listing.id}`}>Property Management</a>
+          <button className="btn text-primary ps-0" onClick={() => navigate(`/manage-property/rent/${listing.id}`)}>
+            Property Management
+          </button>
         </div>
         <form onSubmit={handleSubmit} onKeyPress={e => e.key === "Enter" && e.preventDefault()} onKeyUp={e => e.key === "Enter" && e.preventDefault()}>
           <div className={`${isDisabled && "disabled-section"}`} style={disableStyle}>

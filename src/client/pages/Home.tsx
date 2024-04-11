@@ -238,7 +238,7 @@ const Home = props => {
                     Long & short term Leases
                   </h6>
                   <p>
-                    <a className="link-dark link-underline-light" href=""></a>
+                    <button className="btn text-dark ps-0" onClick={() => navigate(`/`)}></button>
                   </p>
                 </div>
               </div>
@@ -249,7 +249,7 @@ const Home = props => {
                     List a property
                   </h6>
                   <p className="card-text">
-                    <a className="link-dark link-underline-light" href=""></a>
+                    <button className="btn text-dark ps-0" onClick={() => navigate(`/`)}></button>
                   </p>
                 </div>
               </div>
@@ -260,7 +260,7 @@ const Home = props => {
                     Commercial Properties for rent
                   </h6>
                   <p className="card-text">
-                    <a className="link-dark link-underline-light" href=""></a>
+                    <button className="btn text-dark ps-0" onClick={() => navigate(`/`)}></button>
                   </p>
                 </div>
               </div>

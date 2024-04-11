@@ -1,6 +1,9 @@
 /* eslint-disable react/react-in-jsx-scope */
+import { useNavigate } from "react-router-dom";
 
 const Help = props => {
+  const navigate = useNavigate();
+
   return (
     <div>
       <div className="justify-content-center shadow-sm align-items-center" style={{ height: "270px", marginLeft: "0px" }}>
@@ -41,7 +44,10 @@ const Help = props => {
             <i className="bi bi-dot" /> How to search
           </div>
           <div className="answer">
-            Searching TCI Homebase for your next property is very simple. You can Find the Search Functionality on our homepage found <a href="/">here.</a>
+            Searching TCI Homebase for your next property is very simple. You can Find the Search Functionality on our homepage found{" "}
+            <button className="btn text-primary ps-0" onClick={() => navigate(`/`)}>
+              here
+            </button>
             <br />
             Searching for properties on the website does not require creating an account. Simply type in your desired settlement or island in the search box.
             Each property posted will be linked with a specific settlement and island to make your search more convenient.

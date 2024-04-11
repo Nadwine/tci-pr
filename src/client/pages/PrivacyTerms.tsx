@@ -1,7 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const PrivacyTerms = props => {
+  const navigate = useNavigate();
+
   return (
     <div className="page-privacy-terms px-md-5">
       <h5 className="py-4"> Privacy Policy</h5>
@@ -251,7 +254,11 @@ const PrivacyTerms = props => {
         to our data retention framework.
       </div>
       <div className="py-3">
-        See <a href="/cookie-terms">Cookie Policy</a> for more info about your data storage.
+        See
+        <button className="btn text-primary ps-0" onClick={() => navigate(`/cookie-terms`)}>
+          Cookie Policy
+        </button>
+        for more info about your data storage.
       </div>
     </div>
   );

@@ -94,32 +94,6 @@ export const LandlordDashboard = props => {
             </Accordion.Collapse>
           </Accordion.Item>
         </Accordion>
-        {/* <div className="m-5" style={{ height: "490px", width: "910px", justifyContent: "center" }}>
-          <Bar
-            data={{
-              labels: ["Mar", "Apr", "May", "Jun", "Jul", "Aug"],
-              datasets: [
-                {
-                  label: "New Users",
-                  data: [10, 20, 10, 30, 20, 40]
-                }
-              ]
-            }}
-          ></Bar>
-        </div> */}
-
-        {/* <div className="col-12 d-flex justify-content-center" style={{ marginTop: "150px" }}>
-            <div className="card" style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}>
-              <img src={listing1?.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
-              <div className="card-body">
-                <h5 className="card-title">{listing1?.title}</h5>
-                <p>
-                  <a className="link-dark link-underline-light" href={`property/rent/${listing1?.id}`}>
-                    {listing1?.Address.addressLine1}
-                  </a>
-                </p>
-              </div>
-            </div> */}
       </div>
     </div>
   );

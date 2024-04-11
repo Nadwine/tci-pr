@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useAppContext } from "../Context";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -8,9 +8,10 @@ const Login = () => {
   const { name, setName } = useAppContext();
   const [urlQuery, setUrlQuery] = useSearchParams();
   const [serverError, setServerError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("register page mounted the DOM with server data >>", name, serverError);
+    // console.log("register page mounted the DOM with server data >>", name, serverError);
 
     // setting page error from url and removing it immediately
     if (urlQuery.has("error")) {
@@ -41,17 +42,17 @@ const Login = () => {
           <div className="mt-32 mb-20">
             <h1 className="ls-tight font-bolder fs-2 pt-5 text-white mb-5">Login to start your journey in finding or renting a property.</h1>
             <div style={{ paddingTop: "30px" }}>
-              <a href="/help" className="text-white text-opacity-75 text-decoration-none">
+              <button className="btn text-white ps-0" onClick={() => navigate(`/help`)}>
                 Need any help?
-              </a>
+              </button>
               <br />
-              <a href="/feedback" className="text-white text-opacity-75 text-decoration-none">
+              <button className="btn text-white ps-0" onClick={() => navigate(`/feedback`)}>
                 Send us your feedback
-              </a>{" "}
+              </button>
               <br />
-              <a href="https://www.instagram.com/tcihomebase/?igsh=Z2MwaTVjZzlobHNj" className="text-white text-opacity-75 text-decoration-none">
+              <button className="btn text-white ps-0" onClick={() => navigate(`https://www.instagram.com/tcihomebase/?igsh=Z2MwaTVjZzlobHNj`)}>
                 Follow us on instagram <i className="bi bi-instagram"></i>
-              </a>
+              </button>
             </div>
           </div>
           {/* <!-- Circle --> */}
@@ -88,9 +89,9 @@ const Login = () => {
                     <label className="form-check-label" htmlFor="check_example">
                       Keep me logged in
                     </label> */}
-                    <a className="float-end" href="/forget-password/null?status=pending">
+                    <button className="btn  float-end text-primary ps-0 ms-0" onClick={() => navigate(`/forget-password/null?status=pending`)}>
                       Forgot Password?
-                    </a>
+                    </button>
                   </div>
                 </div>
                 <div>
@@ -221,10 +222,9 @@ const Login = () => {
               </div>
               <div className="my-6 mt-5">
                 <small>{"Don't"} have an account? </small>
-                <a href="/register" className="text-primary text-sm font-semibold">
-                  {"  "}
-                  Sign up
-                </a>
+                <button className="btn text-primary ps-0" onClick={() => navigate(`/register`)}>
+                  Sign Up
+                </button>
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { FormEventHandler, FormHTMLAttributes, MutableRefObject, useEffect, useRef, useState } from "react";
 import { useAppContext } from "../Context";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import stringToBoolean from "../../utils/stringToBoolean";
 import { connect } from "react-redux";
 import { registerBodySchema } from "../../utils/validation-schemas/schema-register";
@@ -20,6 +20,7 @@ const Register = () => {
   const [registerReason, setRegisterReason] = useState("tenant");
   const [touched, setTouched] = useState({});
   const [errors, setErrors]: any = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("register page mounted the DOM with server data >>", name, serverError);
@@ -106,17 +107,17 @@ const Register = () => {
           <div className="mt-32 mb-20">
             <h1 className="ls-tight font-bolder fs-2 pt-5 text-white mb-5">Register to start your journey in finding or renting a property.</h1>
             <div style={{ paddingTop: "30px" }}>
-              <a href="/help" className="text-white text-opacity-75 text-decoration-none">
+              <button className="btn text-white ps-0" onClick={() => navigate(`/help`)}>
                 Need any help?
-              </a>
+              </button>
               <br />
-              <a href="/feedback" className="text-white text-opacity-75 text-decoration-none">
-                Send us you feedback
-              </a>{" "}
+              <button className="btn text-white ps-0" onClick={() => navigate(`/feedback`)}>
+                Send us your feedback
+              </button>
               <br />
-              <a href="https://www.instagram.com/tcihomebase/?igsh=Z2MwaTVjZzlobHNj" className="text-white text-opacity-75 text-decoration-none">
+              <button className="btn text-white ps-0" onClick={() => navigate(`https://www.instagram.com/tcihomebase/?igsh=Z2MwaTVjZzlobHNj`)}>
                 Follow us on instagram <i className="bi bi-instagram"></i>
-              </a>
+              </button>
             </div>
           </div>
           {/* <!-- Circle --> */}
@@ -209,7 +210,11 @@ const Register = () => {
                       value={terms.toString()}
                     />
                     <label className="form-check-label" htmlFor="terms">
-                      I agree to the <a href="/privacy-terms">terms</a> to use this website
+                      I agree to the{" "}
+                      <button className="btn text-primary ps-0 pe-1" onClick={() => navigate(`/privacy-terms`)}>
+                        terms
+                      </button>
+                      to use this website
                     </label>
                   </div>
                 </div>
@@ -340,9 +345,9 @@ const Register = () => {
               </div>
               <div className="my-6 mt-5">
                 <small>Already have an account? </small>
-                <a href="/login" className="text-primary text-sm font-semibold">
+                <button className="btn text-primary ps-0" onClick={() => navigate(`/login`)}>
                   Login
-                </a>
+                </button>
               </div>
             </div>
           </div>

@@ -9,71 +9,71 @@ import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-
-const steps = [
-  {
-    label: "Create landlord account",
-    description: (
-      <div className="pe-5">
-        The first step to begin the process is by creating an account.{" "}
-        <a href="/register" className="link-underline-light">
-          Go to our signup form here and select I am a landlord
-        </a>
-        . Once you have filled out the form, You will be asked to verify your email. If you are having problems with this step, call us.
-      </div>
-    )
-  },
-  {
-    label: "Complete your profile",
-    description: (
-      <div className="pe-5">
-        Now that your account has been created, next is to fill out your details on your profile,{" "}
-        <a href="/user" className="link-underline-light">
-          Click here
-        </a>
-      </div>
-    )
-  },
-  {
-    label: "List your property",
-    description: (
-      <div className="pe-5">
-        If you have a property and would like to list it on our site, you will need to go here and{" "}
-        <a href="/landlord/create-listing" className="link-underline-light">
-          fill this form
-        </a>
-      </div>
-    )
-  },
-  {
-    label: "Wait for approval",
-    description: (
-      <div className="pe-5">
-        After submitting your form, the next step is to wait for approval. During this stage, a colleague will be reviewing your post, and if it meets the
-        standards and rules, we will approve it and add the property to our site for you. Please keep track of the status of your listing by going on your
-        dashboard.{" "}
-        <a href="/landlord/dashboard" className="link-underline-light">
-          Click here to view
-        </a>
-        .
-      </div>
-    )
-  },
-  {
-    label: "Finding a tenant (Optional)",
-    description: `If you choose to rent through us, its time to relax and have a piece of mind. Its our turn now. During this stage we will be screening potential tenants for you by 
-              checking their details, employment status, etc. To ensure we find you the right tenant.`
-  },
-  {
-    label: "Payments (Optional)",
-    description: `Try out different ad text to see what brings in the most customers,
-    and learn how to enhance your ads using features like ad extensions.
-    If you run into any problems with your ads, find out how to tell if
-    they're running and how to resolve approval issues.`
-  }
-];
+import { useNavigate } from "react-router-dom";
 
 const AboutLandlord = props => {
+  const navigate = useNavigate();
+  const steps = [
+    {
+      label: "Create landlord account",
+      description: (
+        <div className="pe-5">
+          The first step to begin the process is by creating an account.{" "}
+          <button className="btn text-primary ps-0" onClick={() => navigate(`/register`)}>
+            Go to our signup form here and select I am a landlord
+          </button>
+          . Once you have filled out the form, You will be asked to verify your email. If you are having problems with this step, call us.
+        </div>
+      )
+    },
+    {
+      label: "Complete your profile",
+      description: (
+        <div className="pe-5">
+          Now that your account has been created, next is to fill out your details on your profile,{" "}
+          <button className="btn text-primary ps-0" onClick={() => navigate(`/user`)}>
+            Click here
+          </button>
+        </div>
+      )
+    },
+    {
+      label: "List your property",
+      description: (
+        <div className="pe-5">
+          If you have a property and would like to list it on our site, you will need to go here and{" "}
+          <button className="btn text-primary ps-0" onClick={() => navigate(`/landlord/create-listing`)}>
+            fill this form
+          </button>
+        </div>
+      )
+    },
+    {
+      label: "Wait for approval",
+      description: (
+        <div className="pe-5">
+          After submitting your form, the next step is to wait for approval. During this stage, a colleague will be reviewing your post, and if it meets the
+          standards and rules, we will approve it and add the property to our site for you. Please keep track of the status of your listing by going on your
+          dashboard.{" "}
+          <button className="btn text-primary ps-0" onClick={() => navigate(`/landlord/dashboard`)}>
+            Click here to view
+          </button>
+        </div>
+      )
+    },
+    {
+      label: "Finding a tenant (Optional)",
+      description: `If you choose to rent through us, its time to relax and have a piece of mind. Its our turn now. During this stage we will be screening potential tenants for you by 
+                checking their details, employment status, etc. To ensure we find you the right tenant.`
+    },
+    {
+      label: "Payments (Optional)",
+      description: `Try out different ad text to see what brings in the most customers,
+      and learn how to enhance your ads using features like ad extensions.
+      If you run into any problems with your ads, find out how to tell if
+      they're running and how to resolve approval issues.`
+    }
+  ];
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -94,9 +94,9 @@ const AboutLandlord = props => {
         <p className="m-3 fs-6 py-3" style={{ color: "#032830" }}>
           We find you reliable tenants and ensure your proprietary stays in good condition. At TCI Homebase, we offer more than simply listing your properties.
           Browse our list of services available{" "}
-          <a href="/products" className="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+          <button className="btn text-primary ps-0" onClick={() => navigate(`/products`)}>
             here
-          </a>
+          </button>
         </p>
 
         <Stepper activeStep={activeStep} orientation="vertical">

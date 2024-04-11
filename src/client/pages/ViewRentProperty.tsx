@@ -122,7 +122,11 @@ const ViewRentProperty = props => {
           )}
           {alreadySubmitted && (
             <div className="p-5">
-              You have already submitted an enquiry for this property. Click <a href="/enquiries">here</a> to see your enquiry
+              You have already submitted an enquiry for this property. Click
+              <button className="btn text-primary ps-0" onClick={() => navigate(`/enquiries`)}>
+                here
+              </button>
+              to see your enquiry
               <br /> <br />
               Or Select{" "}
               <strong style={{ fontWeight: "bolder" }}>

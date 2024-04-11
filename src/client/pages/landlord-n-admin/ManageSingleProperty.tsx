@@ -296,9 +296,9 @@ const ManageSingleProperty = props => {
                 <div key={curIndex}>
                   <div>
                     {tenantName}{" "}
-                    <a href={`/manage-tenancy/${curTenancy.id}`} className="ms-5 btn btn-link">
+                    <button className="btn text-primary ps-0" onClick={() => navigate(`/manage-tenancy/${curTenancy.id}`)}>
                       Manage Tenant
-                    </a>
+                    </button>
                   </div>
                 </div>
               );
@@ -308,9 +308,9 @@ const ManageSingleProperty = props => {
       </div>
       <div>
         <h5>Payments</h5>
-        <a href={`/property/rent/${listing && listing?.id}/payments`} className="point btn-link">
+        <button className="btn text-primary ps-0" onClick={() => navigate(`/property/rent/${listing && listing?.id}/payments`)}>
           Manage/Setup Payments
-        </a>
+        </button>
       </div>
       <div className="d-flex">
         <div className="ms-auto btn">

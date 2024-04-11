@@ -108,7 +108,10 @@ const CreateRentForm = props => {
           <h4 className="text-center pb-4 mt-5">Add property for rent</h4>
           <div className="py-5">
             <label>
-              Select your desired <a href="/products">package</a>
+              Select your desired
+              <button className="btn text-primary ps-0" onClick={() => navigate(`/products`)}>
+                package
+              </button>
             </label>
             <select name="productPackage" onChange={handleChange} value={values.productPackage} className="form-select">
               <option selected value="">

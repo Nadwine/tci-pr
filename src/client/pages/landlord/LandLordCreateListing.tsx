@@ -138,16 +138,19 @@ const LandLordCreateListing = props => {
             <div>
               <div className="mb-5 text-center" style={{ color: "#f86464" }}>
                 It seems you do not yet have a profile setup. You will not be able to submit your listing until this is complete.&nbsp;
-                <a href="/user" className="link">
+                <button className="btn text-primary ps-0" onClick={() => navigate(`/user`)}>
                   Click here
-                </a>{" "}
+                </button>
                 to complete your profile
               </div>
             </div>
           )}
           <div className="py-5">
             <label>
-              Select your desired <a href="/products">package</a>
+              Select your desired{" "}
+              <button className="btn text-primary ps-0" onClick={() => navigate(`/products`)}>
+                package
+              </button>
             </label>
             <select name="productPackage" onChange={handleChange} value={values.productPackage} className="form-select">
               <option selected value="">
