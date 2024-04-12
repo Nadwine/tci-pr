@@ -50,7 +50,7 @@ const TenantDashboard = props => {
               <button
                 className="btn primary-text"
                 style={{ border: "2px solid", borderColor: "#077990", borderRadius: "7px" }}
-                onClick={() => navigate(`/about/landlord`)}
+                onClick={() => navigate(`/rent/saved-properties`)}
               >
                 View
               </button>
