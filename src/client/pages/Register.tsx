@@ -115,7 +115,7 @@ const Register = () => {
                 Send us your feedback
               </button>
               <br />
-              <button className="btn text-white ps-0" onClick={() => navigate(`https://www.instagram.com/tcihomebase/?igsh=Z2MwaTVjZzlobHNj`)}>
+              <button className="btn text-white ps-0" onClick={() => (window.location.href = `https://www.instagram.com/tcihomebase/?igsh=Z2MwaTVjZzlobHNj`)}>
                 Follow us on instagram <i className="bi bi-instagram"></i>
               </button>
             </div>
