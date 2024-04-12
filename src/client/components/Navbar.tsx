@@ -91,7 +91,7 @@ function Navbar() {
           {user && (
             <ul className="nav navbar-nav ms-auto pe-2">
               <li className="nav-item dropdown">
-                {!user.Profile && (
+                {!user.Profile?.ProfileMedia.length > 0 && (
                   <span
                     className="btn btn-link nav-link rounded-circle fw-bold text-light fs-5"
                     style={{ width: "45px", height: "45px", backgroundColor: "#087990" }}
@@ -101,10 +101,10 @@ function Navbar() {
                     }}
                     onBlur={() => setUserDropDownShow(false)}
                   >
-                    {!user.Profile && user?.email.charAt(0).toUpperCase()}
+                    { user?.email.charAt(0).toUpperCase()}
                   </span>
                 )}
-                {user.Profile && (
+                {user.Profile?.ProfileMedia.length > 0 && (
                   <Avatar
                     className="point"
                     src={user.Profile.ProfileMedia[0].mediaUrl}

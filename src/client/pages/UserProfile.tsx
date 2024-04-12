@@ -173,7 +173,7 @@ const UserProfile = props => {
                         type="file"
                         accept="image/png, image/jpeg, image/jpg"
                       />
-                      <button className="btn btn-link" type="submit">
+                      <button className="btn text-primary" type="submit">
                         Upload
                       </button>
                     </div>
