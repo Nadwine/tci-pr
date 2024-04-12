@@ -2,7 +2,7 @@ import { DataTypes, Model, CreationOptional, InferAttributes, InferCreationAttri
 import sequelize from "../sequelize-connection";
 import Tenancy from "./tenancy";
 
-export type SignData = { dateTime: string; name: string; email: string; tenancyId: number };
+export type SignData = { dateTime: string; name: string; email: string; tenancyId: number; tenantId?: number };
 export type TenancyDocMeta = { landlordSignData: SignData; [key: string]: any; tenantsSignData: SignData[] };
 
 export default class TenancyDocument extends Model<InferAttributes<TenancyDocument>, InferCreationAttributes<TenancyDocument>> {

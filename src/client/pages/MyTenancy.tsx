@@ -83,17 +83,17 @@ export const MyTenancy = props => {
     const willAddPage = hasLandlordSigned || tenantSigned;
     const page = willAddPage ? newPDF.getPage(newPDF.getPageCount() - 1) : newPDF.addPage();
     const dateTime = dayjs().format("DD MMM, YYYY h:mm A");
-    const text = `Tenant's signature - ${dateTime}`;
+    const text = `${loginUsr?.Profile?.firstName} ${loginUsr?.Profile?.lastName} - ${dateTime}`;
 
     // ------- CHECK POINT
     // Goes from bottom to top
     // Draw the JPG image in the center of the page
-    const onGoingTenancies = tenancies?.filter(t => t.tenancyStatus !== "ended" && !t.isHistory);
+    const onGoingTenancies = tenancies?.filter(t => t.tenancyStatus !== "ended" && t.isHistory === false);
 
     // defaults to 200 multiply by * the amount of tenants already signed
     const verticalOffset =
-      currentAgreement?.metadata?.tenantsSignData.length && currentAgreement?.metadata?.tenantsSignData.length > 0
-        ? currentAgreement?.metadata?.tenantsSignData.length + 1 * 200
+      currentAgreement?.metadata?.tenantsSignData.length && currentAgreement?.metadata?.tenantsSignData.length >= 1
+        ? currentAgreement?.metadata?.tenantsSignData.length + 2 * 200
         : 200;
     page.drawImage(pngImage, {
       x: page.getWidth() / 2 - pngDims.width / 2,
@@ -104,7 +104,7 @@ export const MyTenancy = props => {
 
     // Draw the string of text on the page
     page.drawText(text, {
-      x: page.getWidth() / 2 - 150,
+      x: 40,
       y: page.getHeight() - (verticalOffset + 40),
       size: 15,
       color: rgb(0, 0.53, 0.71)
@@ -117,7 +117,14 @@ export const MyTenancy = props => {
     // upload doc for all tenancies on that 1 property
     for (let i = 0; i < onGoingTenancies.length; i++) {
       const curTenancy = onGoingTenancies[i];
-      const body: any = { tenancyId: curTenancy.id, file: bytes.buffer, signer: "tenant", dateTime: dateTime };
+      const body: any = {
+        tenancyId: curTenancy.id,
+        tenantId:
+          curTenancy.Tenants.find(t => t.userId === loginUsr?.id)?.id || onGoingTenancies.map(t => t.Tenants.find(t => t.userId === loginUsr?.id)?.id)[0],
+        file: bytes.buffer,
+        signer: "tenant",
+        dateTime: dateTime
+      };
       if (!body.file) {
         toast.error("please select a file to upload");
         return;
@@ -125,10 +132,10 @@ export const MyTenancy = props => {
       const uploaRes = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
       if (uploaRes.status === 200) {
         toast.success("Upload Success");
-        fetchTenancy();
       }
       if (uploaRes.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
     }
+    fetchTenancy();
   };
 
   useEffect(() => {
@@ -140,7 +147,7 @@ export const MyTenancy = props => {
   // Instead of trying to figure this out in the loop below
   return (
     <div className="px-md-5">
-      <h4 className="py-4 ms-5 strong-text">My Tenancies</h4>
+      <h4 className="py-4 ps-md-5 strong-text">My Tenancies</h4>
       {!tenancies && (
         <div className="my-3 text-center" style={{ justifyItems: "center" }}>
           {" "}
@@ -156,20 +163,20 @@ export const MyTenancy = props => {
         {tenancies?.map((currTenancy, i) => {
           const leadTenant = currTenancy?.Tenants?.find(t => t.id === currTenancy.leadTenantid);
           const currIsMyTenancy = currTenancy.userId === loginUsr?.id;
-          const currTenancyAgreement = currTenancy.TenancyDocuments.find(doc => doc.documentType === "tenancy-agreement");
+          const currTenancyAgreement = currTenancy.TenancyDocuments.find(doc => doc.documentType === "tenancy-agreement" && doc.tenancyId === currTenancy.id);
           const currShowViewAndSignButton =
-            currIsMyTenancy && currTenancyAgreement && currTenancyAgreement.metadata?.tenantsSignData.find(sd => sd.email === loginUsr?.email) == undefined;
+            currIsMyTenancy && currTenancyAgreement && currTenancyAgreement.metadata?.tenantsSignData?.find(sd => sd.email === loginUsr?.email) == undefined;
           const signData = currTenancyAgreement?.metadata?.tenantsSignData;
           const mySignData = currIsMyTenancy && signData?.find(sd => sd.email === loginUsr?.email);
           // && tenancyAgreement.tenancyId === myTenancy?.id;
           return (
             <div key={i}>
-              <div className="pb-5 ps-5">
+              <div className="pb-5 ps-md-5">
                 <h5>
                   {currTenancy?.addressString}
                   {currTenancy?.tenancyStatus !== "ongoing" ? (
                     <span style={{ paddingLeft: "0.5em", WebkitTextStroke: "0.7px" }} className="text-danger">
-                      <button type="button" className="btn btn-outline-danger disabled">
+                      <button type="button" className="btn btn-sm btn-outline-danger disabled">
                         {currTenancy?.tenancyStatus}
                       </button>
                     </span>
@@ -182,23 +189,36 @@ export const MyTenancy = props => {
                   )}
                 </h5>
               </div>
-              <div className="mx-5">
+              <div className="mx-md-5">
                 <h5>Tenant</h5>
                 <table className="table table table-borderless">
                   <tbody>
                     {currTenancy?.Tenants.map((currTenant, i) => {
-                      const currentSignFromMyTenancy = currTenancyAgreement?.metadata?.tenantsSignData.find(sd => sd.tenancyId === currTenancy.id);
-                      const isCurrentSignOwnedByMe = currentSignFromMyTenancy?.email == loginUsr?.email;
-                      const signed = currentSignFromMyTenancy?.email === loginUsr?.email;
+                      const isTenancyOwnedByMe = currTenancy.userId == loginUsr?.id;
+                      const matchedSignFromCurrTenancy = currTenancyAgreement?.metadata?.tenantsSignData?.find(
+                        sd => sd.tenancyId === currTenancy.id && sd.tenantId === currTenant.id
+                      );
+                      const currentSignByMeFromMyTenancy = currTenancyAgreement?.metadata?.tenantsSignData?.find(
+                        sd => sd.tenancyId === currTenancy.id && sd.email === loginUsr?.email
+                      );
+                      const isSignedByMe = matchedSignFromCurrTenancy?.email === loginUsr?.email;
+                      // const matchedSignedByOther = cur
                       return (
                         <tr key={i}>
                           <td>
                             {currTenant.firstName} {currTenant.lastName}
                           </td>
                           <td>
-                            {signed ? "Signed:" : "Signature:"}{" "}
-                            {currentSignFromMyTenancy ? currentSignFromMyTenancy.dateTime : <span className="text-danger">Pending</span>}{" "}
-                            {currShowViewAndSignButton && !signed && (
+                            {isSignedByMe ? "Signed:" : "Signature:"}{" "}
+                            {isTenancyOwnedByMe
+                              ? currentSignByMeFromMyTenancy?.dateTime
+                                ? currentSignByMeFromMyTenancy?.dateTime
+                                : "Pending"
+                              : matchedSignFromCurrTenancy?.dateTime
+                              ? matchedSignFromCurrTenancy?.dateTime
+                              : "Pending"}{" "}
+                            {/**: <span className="text-danger">Pending</span>}{" "} */}
+                            {currShowViewAndSignButton && !isSignedByMe && (
                               <button
                                 onClick={() => {
                                   setShowSignModal(true);
@@ -217,7 +237,7 @@ export const MyTenancy = props => {
                   </tbody>
                 </table>
               </div>
-              <div className="mx-5">
+              <div className="mx-md-5">
                 <h5>Landlord</h5>
                 <table className="table table table-borderless">
                   <tbody>
@@ -230,7 +250,7 @@ export const MyTenancy = props => {
                 </table>
                 <hr />
               </div>
-              <div className="ms-5">
+              <div className="ms-md-5">
                 <h5>Tenancy</h5>
                 <table className="table table table-borderless">
                   <thead>
@@ -247,7 +267,7 @@ export const MyTenancy = props => {
                   </tbody>
                 </table>
               </div>
-              <div className="ms-5">
+              <div className="ms-md-5">
                 <h5>Deposit Information</h5>
                 <table className="table table table-borderless">
                   <thead>
@@ -263,7 +283,7 @@ export const MyTenancy = props => {
                         {currTenancy?.isDepositPaid && "Paid"}{" "}
                         <td>
                           {currTenancy?.isDepositReleased && "Released"}{" "}
-                          {!currTenancy.isDepositPaid && !currTenancy.isDepositReleased && <span className="text-danger">Pending</span>}
+                          {!currTenancy.isDepositPaid && !currTenancy.isDepositReleased && <span className="text-danger">Awaiting</span>}
                         </td>
                       </td>
                     </tr>

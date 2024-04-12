@@ -6,11 +6,13 @@ import fs from "fs";
 import Tenancy from "../../database/models/tenancy";
 import Profile from "../../database/models/profile";
 import _ from "lodash";
+import Tenant from "../../database/models/tenant";
 
 export const uploadTenancyAgreement = async (req: Request, res: Response) => {
   const files = req.files ?? [];
   const sessionUsr = req.session.user;
   const tenancyId = Number(req.body.tenancyId);
+  const tenantId = Number(req.body.tenantId);
   const signer = req.body.signer;
   const signing = Boolean(signer);
   const dateTime = req.body.dateTime;
@@ -31,7 +33,12 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
     const isProd = process.env.NODE_ENV === "production" || "test";
 
     const existingAgreement = await TenancyDocument.findOne({ where: { documentType: "tenancy-agreement", tenancyId: tenancyId } });
-    await s3Bucket.deleteObject({ Bucket: process.env.AWS_S3_BUCKET_NAME, Key: existingAgreement?.s3BucketKey || "" }, (err, data) => {});
+    await s3Bucket
+      .deleteObject({ Bucket: process.env.AWS_S3_BUCKET_NAME, Key: existingAgreement?.s3BucketKey || "" }, async (err, data) => {
+        err && console.log("S3 delete Error", err);
+      })
+      .promise()
+      .catch(err => console.log(err));
 
     // If enter here means we are trying to upload a fresh copy.
     if (existingAgreement) {
@@ -73,11 +80,12 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
           const meta: TenancyDocMeta | never = _.cloneDeep(existingAgreement?.metadata || {});
           if (signer === "tenant") {
             meta!.tenantsSignData
-              ? meta!.tenantsSignData?.push({ name: name, email: email, dateTime: dateTime, tenancyId: tenancyId })
-              : (meta!.tenantsSignData = [{ name: name, email: email, dateTime: dateTime, tenancyId: tenancyId }]);
+              ? meta!.tenantsSignData?.push({ name: name, email: email, dateTime: dateTime, tenancyId: tenancyId, tenantId: tenantId })
+              : (meta!.tenantsSignData = [{ name: name, email: email, dateTime: dateTime, tenancyId: tenancyId, tenantId: tenantId }]);
           } else {
             // Property Manager is signing
             meta!.landlordSignData = { name: name, email: email, dateTime: dateTime, tenancyId: tenancyId };
+            meta.tenantsSignData = [];
           }
 
           await existingAgreement?.update({
@@ -97,9 +105,8 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
             documentType: "tenancy-agreement"
           });
         }
+        return res.status(200).json({ message: "success" });
       });
-
-    return res.json({ message: "success" });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server Error", err });
   }

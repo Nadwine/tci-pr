@@ -96,7 +96,7 @@ const ManageSingleProperty = props => {
     // Add a blank page to the document if none was added yet
     const page = hasTenantSigned ? newPDF.getPage(newPDF.getPageCount() - 1) : newPDF.addPage();
     const dateTime = dayjs().format("DD MMM, YYYY h:mm A");
-    const text = `Property manager's signature - ${dateTime}`;
+    const text = `${loginUsr?.Profile?.firstName} ${loginUsr?.Profile?.lastName} - ${dateTime}`;
 
     // Goes from bottom to top
     // Draw the JPG image in the center of the page
@@ -109,7 +109,7 @@ const ManageSingleProperty = props => {
 
     // Draw the string of text on the page
     page.drawText(text, {
-      x: page.getWidth() / 2 - 200,
+      x: 40,
       y: page.getHeight() - 40,
       size: 15,
       color: rgb(0, 0.53, 0.71)
@@ -165,7 +165,10 @@ const ManageSingleProperty = props => {
       toast.error("Find a tenant before uploading documents for this tenancy period");
       return;
     }
-    if (!onGoingTenancies) return;
+    if (!onGoingTenancies) {
+      console.log("no ongoing tenancies");
+      return;
+    }
 
     for (let i = 0; i < onGoingTenancies.length; i++) {
       const curTenancy = onGoingTenancies[i];
@@ -183,10 +186,10 @@ const ManageSingleProperty = props => {
       const res = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
       if (res.status === 200) {
         toast.success("Upload Success");
-        initialLoad();
       }
       if (res.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
     }
+    initialLoad();
   };
 
   useEffect(() => {
