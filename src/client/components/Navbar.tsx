@@ -122,6 +122,11 @@ function Navbar() {
                       Dashboard
                     </a>
                   )}
+                  {user.accountType === "tenant" && (
+                    <a href="/rent/saved-properties" className="dropdown-item">
+                      Saved Properties
+                    </a>
+                  )}
                   <a href="/user" className="dropdown-item">
                     Profile & Settings
                   </a>

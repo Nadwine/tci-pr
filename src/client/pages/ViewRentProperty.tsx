@@ -156,8 +156,17 @@ const ViewRentProperty = props => {
       <EnquiryModal />
       {listing && (
         <div className="card mb-3 shadow-lg mx-md-5">
-          <div className="d-flex w-100 px-5 pt-2">
+          <div className="d-flex flex-column text-center w-100 px-5 pt-2">
             <i onClick={() => saveListing()} style={{ color: "#ff617d" }} className={`ms-auto fs-3 bi bi-heart${isListingSaved ? "-fill" : ""} point`} />
+            {isListingSaved ? (
+              <p className="ms-auto" style={{ fontSize: "12px" }}>
+                Saved
+              </p>
+            ) : (
+              <p className="ms-auto" style={{ fontSize: "12px" }}>
+                Save
+              </p>
+            )}
           </div>
           <div className="card-body d-flex flex-wrap justify-content-center">
             <div className="image-container col-10 me-2 pb-3">

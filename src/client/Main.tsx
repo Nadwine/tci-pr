@@ -65,6 +65,7 @@ import PrivacyTerms from "./pages/PrivacyTerms";
 import MeetTheTeam from "./pages/MeetTheTeam";
 import TenantDashboard from "./pages/TenantDashboard";
 import Safety from "./pages/Safety";
+import Favourites from "./pages/Favourites";
 const tenMinute = 600000;
 
 function initTranslations() {
@@ -197,6 +198,7 @@ const Main = () => {
             <Route path="my-tenancy" element={<MyTenancy />} />
             <Route path="about" element={<AboutUs />} />
             <Route path="rent/safety" element={<Safety />} />
+            <Route path="rent/saved-properties" element={<RequireLogin view={<Favourites />} />} />
             <Route path="team" element={<MeetTheTeam />} />
             <Route path="manage-property/rent/:id" element={<RequirePermission view={<ManageSingleProperty />} roles={["landlord", "admin"]} />} />
             <Route path="manage-tenancy/:property_tenant_id" element={<div></div>} />
