@@ -10,10 +10,24 @@ import DocumentList from "../../components/landlord-n-admin/DocumentList";
 import { setActiveConversation } from "../../redux/reducers/messagesReducer";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { Accordion, Offcanvas } from "react-bootstrap";
+import { Accordion, Modal, Offcanvas } from "react-bootstrap";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import SignaturePad from "signature_pad";
 import dayjs from "dayjs";
+
+const UploadModal = (props: any) => {
+  return (
+    <>
+      <Modal show={props.show} backdrop="static" keyboard={false} centered>
+        <Modal.Header>
+          <Modal.Title>Upload</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>In Progress....</Modal.Body>
+        <Modal.Footer></Modal.Footer>
+      </Modal>
+    </>
+  );
+};
 
 const ManageSingleProperty = props => {
   const dispatch = useDispatch();
@@ -37,6 +51,7 @@ const ManageSingleProperty = props => {
   const pdf = useRef<any>();
   const [fetchedPDF, setFetchedPDF] = useState<any>();
   const [showSignaturePad, setshowSignaturePad] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const allowNewSignature = tenancyAgreement && !tenancyAgreement.metadata?.landlordSignData;
   const landlordSigned = tenancyAgreement && tenancyAgreement.metadata?.landlordSignData?.dateTime;
   const tenantSigned = tenancyAgreement && tenancyAgreement?.metadata?.tenantsSignData?.length && tenancyAgreement?.metadata?.tenantsSignData?.length > 0;
@@ -120,8 +135,10 @@ const ManageSingleProperty = props => {
     const bytes = await newPDF.save();
     if (!onGoingTenancies) return;
 
+    const resultArray: string[] = [];
     // upload doc for all tenancies on that 1 property
     for (let i = 0; i < onGoingTenancies.length; i++) {
+      setUploading(true);
       const curTenancy = onGoingTenancies[i];
       const body: any = { tenancyId: curTenancy.id, file: bytes.buffer, signer: "property_manager", dateTime: dateTime };
       if (!body.file) {
@@ -129,13 +146,20 @@ const ManageSingleProperty = props => {
         return;
       }
 
-      const uploaRes = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
-      if (uploaRes.status === 200) {
-        toast.success("Upload Success");
-        initialLoad();
+      const uploadRes = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
+      if (uploadRes.status === 200) {
+        resultArray.push("success");
       }
-      if (uploaRes.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
+      if (uploadRes.status !== 200) resultArray.push("failed");
     }
+    const failedUploads = resultArray.find(r => r === "failed");
+    if (failedUploads) {
+      toast.error("Oops, Something went wrong uploading file. Please Try again");
+    } else {
+      toast.success("Upload Success.");
+    }
+    initialLoad();
+    setUploading(false);
   };
 
   //Accept or decline
@@ -170,7 +194,10 @@ const ManageSingleProperty = props => {
       return;
     }
 
+    const resultArray: string[] = [];
+
     for (let i = 0; i < onGoingTenancies.length; i++) {
+      setUploading(true);
       const curTenancy = onGoingTenancies[i];
 
       const formData = new FormData(uploadTAgreemFormRef.current || undefined);
@@ -185,11 +212,19 @@ const ManageSingleProperty = props => {
 
       const res = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
       if (res.status === 200) {
-        toast.success("Upload Success");
+        resultArray.push("success");
       }
-      if (res.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
+      if (res.status !== 200) resultArray.push("failed");
+    }
+
+    const failedUploads = resultArray.find(r => r === "failed");
+    if (failedUploads) {
+      toast.error("Oops, Something went wrong uploading your file. Please Try again");
+    } else {
+      toast.success("Upload Success. You Will have to re-upload this doc for newly added tenants");
     }
     initialLoad();
+    setUploading(false);
   };
 
   useEffect(() => {
@@ -200,6 +235,7 @@ const ManageSingleProperty = props => {
 
   return (
     <div className="p-md-5">
+      <UploadModal show={uploading} />
       <h3 className="pt-2">Manage Property</h3>
       <div className="pt-5 pb-5">
         <h5>Offers</h5>

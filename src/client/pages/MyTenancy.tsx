@@ -11,6 +11,20 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
+const UploadModal = (props: any) => {
+  return (
+    <>
+      <Modal show={props.show} backdrop="static" keyboard={false} centered>
+        <Modal.Header>
+          <Modal.Title>Upload</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>In Progress....</Modal.Body>
+        <Modal.Footer></Modal.Footer>
+      </Modal>
+    </>
+  );
+};
+
 export const MyTenancy = props => {
   const loginUsr = useSelector((r: RootState) => r.auth.user);
   const [tenancies, setTenancies] = useState<Tenancy[]>();
@@ -26,6 +40,7 @@ export const MyTenancy = props => {
   const pdf = useRef<any>();
   const [fetchedPDF, setFetchedPDF] = useState<any>();
   const [showSignaturePad, setshowSignaturePad] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const allowNewSignature = currentAgreement && !currentAgreement.metadata?.tenantsSignData.find(sd => sd.email === loginUsr?.email);
   const landlordSigned = currentAgreement && currentAgreement.metadata?.landlordSignData?.dateTime;
   const tenantSigned = currentAgreement && currentAgreement?.metadata?.tenantsSignData?.length && currentAgreement?.metadata?.tenantsSignData?.length > 0;
@@ -114,8 +129,10 @@ export const MyTenancy = props => {
     const bytes = await newPDF.save();
     if (!onGoingTenancies) return;
 
+    const resultArray: string[] = [];
     // upload doc for all tenancies on that 1 property
     for (let i = 0; i < onGoingTenancies.length; i++) {
+      setUploading(true);
       const curTenancy = onGoingTenancies[i];
       const body: any = {
         tenancyId: curTenancy.id,
@@ -129,13 +146,21 @@ export const MyTenancy = props => {
         toast.error("please select a file to upload");
         return;
       }
-      const uploaRes = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
-      if (uploaRes.status === 200) {
-        toast.success("Upload Success");
+      const uploadRes = await axios.post("/api/tenancy-document/upload-agreement", body, { headers: { "Content-Type": "multipart/form-data" } });
+      if (uploadRes.status === 200) {
+        resultArray.push("success");
       }
-      if (uploaRes.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
+      if (uploadRes.status !== 200) resultArray.push("failed");
+    }
+
+    const failedUploads = resultArray.find(r => r === "failed");
+    if (failedUploads) {
+      toast.error("Oops, Something went wrong uploading your file. Please Try again");
+    } else {
+      toast.success("Upload Success.");
     }
     fetchTenancy();
+    setUploading(false);
   };
 
   useEffect(() => {
@@ -147,6 +172,7 @@ export const MyTenancy = props => {
   // Instead of trying to figure this out in the loop below
   return (
     <div className="px-md-5">
+      <UploadModal show={uploading} />
       <h4 className="py-4 ps-md-5 strong-text">My Tenancies</h4>
       {!tenancies && (
         <div className="my-3 text-center" style={{ justifyItems: "center" }}>
