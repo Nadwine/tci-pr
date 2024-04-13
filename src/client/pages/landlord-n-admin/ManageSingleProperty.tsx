@@ -96,12 +96,12 @@ const ManageSingleProperty = props => {
     // Add a blank page to the document if none was added yet
     const page = hasTenantSigned ? newPDF.getPage(newPDF.getPageCount() - 1) : newPDF.addPage();
     const dateTime = dayjs().format("DD MMM, YYYY h:mm A");
-    const text = `${loginUsr?.Profile?.firstName} ${loginUsr?.Profile?.lastName} - ${dateTime}`;
+    const text = `${loginUsr?.Profile?.firstName} ${loginUsr?.Profile?.lastName} - ${dateTime}_____________________`;
 
     // Goes from bottom to top
     // Draw the JPG image in the center of the page
     page.drawImage(pngImage, {
-      x: page.getWidth() / 2 - pngDims.width / 2,
+      x: page.getWidth() / 1.5 - pngDims.width / 2,
       y: page.getHeight() - 130,
       width: pngDims.width,
       height: pngDims.height
@@ -110,7 +110,7 @@ const ManageSingleProperty = props => {
     // Draw the string of text on the page
     page.drawText(text, {
       x: 40,
-      y: page.getHeight() - 40,
+      y: page.getHeight() - 140,
       size: 15,
       color: rgb(0, 0.53, 0.71)
     });

@@ -83,7 +83,7 @@ export const MyTenancy = props => {
     const willAddPage = hasLandlordSigned || tenantSigned;
     const page = willAddPage ? newPDF.getPage(newPDF.getPageCount() - 1) : newPDF.addPage();
     const dateTime = dayjs().format("DD MMM, YYYY h:mm A");
-    const text = `${loginUsr?.Profile?.firstName} ${loginUsr?.Profile?.lastName} - ${dateTime}`;
+    const text = `${loginUsr?.Profile?.firstName} ${loginUsr?.Profile?.lastName} - ${dateTime}_____________________`;
 
     // ------- CHECK POINT
     // Goes from bottom to top
@@ -93,10 +93,10 @@ export const MyTenancy = props => {
     // defaults to 200 multiply by * the amount of tenants already signed
     const verticalOffset =
       currentAgreement?.metadata?.tenantsSignData.length && currentAgreement?.metadata?.tenantsSignData.length >= 1
-        ? currentAgreement?.metadata?.tenantsSignData.length + 2 * 200
+        ? currentAgreement?.metadata?.tenantsSignData.length + 2 * 150
         : 200;
     page.drawImage(pngImage, {
-      x: page.getWidth() / 2 - pngDims.width / 2,
+      x: page.getWidth() / 1.5 - pngDims.width / 2,
       y: page.getHeight() - (verticalOffset + 30),
       width: pngDims.width,
       height: pngDims.height
