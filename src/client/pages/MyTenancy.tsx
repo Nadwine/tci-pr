@@ -236,14 +236,17 @@ export const MyTenancy = props => {
                           </td>
                           <td>
                             {isSignedByMe ? "Signed:" : "Signature:"}{" "}
-                            {isTenancyOwnedByMe
-                              ? currentSignByMeFromMyTenancy?.dateTime
-                                ? currentSignByMeFromMyTenancy?.dateTime
-                                : "Pending"
-                              : matchedSignFromCurrTenancy?.dateTime
-                              ? matchedSignFromCurrTenancy?.dateTime
-                              : "Pending"}{" "}
-                            {/**: <span className="text-danger">Pending</span>}{" "} */}
+                            {isTenancyOwnedByMe ? (
+                              currentSignByMeFromMyTenancy?.dateTime ? (
+                                currentSignByMeFromMyTenancy?.dateTime
+                              ) : (
+                                <span className="text-danger">Pending</span>
+                              )
+                            ) : matchedSignFromCurrTenancy?.dateTime ? (
+                              matchedSignFromCurrTenancy?.dateTime
+                            ) : (
+                              <span className="text-danger">Pending</span>
+                            )}
                             {currShowViewAndSignButton && !isSignedByMe && (
                               <button
                                 onClick={() => {

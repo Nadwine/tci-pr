@@ -17,7 +17,7 @@ export const createListingSchema: yup.AnyObjectSchema = yup.object({
   availability: yup.string().required(),
   addressLine1: yup.string().required(),
   addressLine2: yup.string(),
-  settlement: yup.string().required(),
+  settlement: yup.string().optional(),
   city: yup.string().required(),
   postcode: yup.string().required(),
   country: yup.string().required(),
