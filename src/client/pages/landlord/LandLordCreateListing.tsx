@@ -147,8 +147,8 @@ const LandLordCreateListing = props => {
           )}
           <div className="py-5">
             <label>
-              Select your desired{" "}
-              <button className="btn text-primary ps-0" onClick={() => navigate(`/products`)}>
+              Select your desired
+              <button className="btn text-primary ps-1" onClick={() => navigate(`/products`)}>
                 package
               </button>
             </label>

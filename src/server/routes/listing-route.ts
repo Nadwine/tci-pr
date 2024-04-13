@@ -91,7 +91,7 @@ export const adminCreateRentListingRoute = async (req: Request, res: Response) =
       const newAddress = await Address.create({
         addressLine1: addressLine1,
         addressLine2: addressLine2,
-        settlement: settlement,
+        settlement: settlement || city,
         city: city,
         postcode: postcode,
         country: country,
@@ -300,7 +300,7 @@ export const landLordSubmitRentListingRoute = async (req: Request, res: Response
       const newAddress = await Address.create({
         addressLine1: addressLine1,
         addressLine2: addressLine2,
-        settlement: settlement,
+        settlement: settlement || city,
         city: city,
         postcode: postcode,
         country: country,
@@ -702,7 +702,7 @@ export const adminUpdateRentListingById = async (req: Request, res: Response) =>
     await relatedAddress?.update({
       addressLine1: addressLine1,
       addressLine2: addressLine2,
-      settlement: settlement,
+      settlement: settlement || city,
       city: city,
       postcode: postcode,
       country: country

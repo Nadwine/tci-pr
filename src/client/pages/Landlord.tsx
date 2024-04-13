@@ -1,7 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const AboutUs = props => {
   const mql = window.matchMedia("(max-width: 600px)");
+  const navigate = useNavigate();
 
   let mobileView = mql.matches;
   return (
@@ -24,7 +26,7 @@ const AboutUs = props => {
         style={{ paddingTop: "5vh", alignItems: "center", borderRadius: "0px" }}
       >
         <div className="card col-md-4 m-md-5 mb-5" style={{ borderRadius: "0px", backgroundColor: "#ffffff00", border: "none" }}>
-          <h5 className="strong-text fst-italic text-center text-white pb-3  text-decoration-underline" style={{ backgroundColor: "#ffffff00" }}>
+          <h5 className="strong-text fst-italic fs-3 text-center text-white pb-3  text-decoration-underline" style={{ backgroundColor: "#ffffff00" }}>
             Why Choose Us?
           </h5>
           <img src="/static/example.jpeg" className="card-img-top" alt="..." />
@@ -42,7 +44,7 @@ const AboutUs = props => {
                 From strategically marketing your property on our site to conducting thorough tenant screenings and managing lease agreements, we handle every
                 aspect of the rental process with precision and care. Our cutting-edge digital platform enable us to attract high-quality tenants who not only
                 meet your criteria but also respect your property as if it were their own.{" "}
-                <span className="fw-bolder" style={{ color: "#032830", fontStyle: "italic" }}>
+                <span className="fw-bolder point text-primary" style={{ fontStyle: "italic" }} onClick={() => navigate(`/products`)}>
                   {" "}
                   Browse our list of services available here.
                 </span>

@@ -21,6 +21,9 @@ const AdminSidebar = props => {
       {isOpen && (
         <div>
           <ul className="list-group mt-3 bg-dark">
+            <li className="list-group-item bg-dark text-light border-0 point" onClick={() => navigate("/create-listing")}>
+              <i className="bi bi-pencil-square"></i> Create listing
+            </li>
             <li className="list-group-item bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard/listing-for-aproval")}>
               <i className="bi bi-check-square-fill"></i> Approve listing
             </li>
@@ -45,22 +48,25 @@ const AdminSidebar = props => {
       {!isOpen && (
         <div>
           <ul className="list-group mt-3">
-            <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard/listing-for-aproval")}>
+            <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("/create-listing")}>
+              <i className="bi bi-pencil-square text-light"></i>
+            </li>
+            <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard/listing-for-aproval")}>
               <i className="bi bi-check-square-fill text-light"></i>
             </li>
-            <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard/listings")}>
+            <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard/listings")}>
               <i className="bi bi-card-list text-light"></i>
             </li>
-            <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard/landlords")}>
+            <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard/landlords")}>
               <i className="bi bi-house-fill text-light"></i>
             </li>
-            <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard/users")}>
+            <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard/users")}>
               <i className="bi bi-people-fill text-light"></i>
             </li>
-            <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard/tenancies")}>
+            <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard/tenancies")}>
               <i className="bi bi-file-earmark-text-fill"></i>
             </li>
-            <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("admin/dashboard")}>
+            <li className="list-group-item ps-0 bg-dark text-light border-0 point" onClick={() => navigate("/admin/dashboard")}>
               <i className="bi bi-graph-up text-light"></i>
             </li>
           </ul>
