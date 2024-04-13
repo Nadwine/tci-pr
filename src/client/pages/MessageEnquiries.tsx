@@ -249,7 +249,15 @@ const MessageEnquiries = props => {
               <input name="amount" className="form-control" type="text" placeholder="Rent Price" required />
             </div>
             <div className="mb-3">
-              <input name="tenancyLengthDays" className="form-control" type="text" placeholder="Tenancy Length (Days)" required />
+              <input
+                name="tenancyLengthDays"
+                readOnly
+                defaultValue={activeConversation?.Listing.PropertyForRent.tenancyLength}
+                className="form-control"
+                type="text"
+                placeholder="Tenancy Length (Days)"
+                required
+              />
             </div>
             <div className="mb-3">
               <label className="text-muted">Preferred Tenancy Start date</label>

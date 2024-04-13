@@ -9,6 +9,7 @@ import { cloneDeep } from "lodash";
 import { AccountTypeEnum } from "../../../types/enums";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
+import verifyAuthState from "../../utils/verifyAuthState";
 
 const UserProfile = props => {
   const navigate = useNavigate();
@@ -73,6 +74,8 @@ const UserProfile = props => {
     if (res.status === 200) {
       toast.success("Upload Success");
       fetchProfile();
+      await axios.get("/api/auth/refresh-perms");
+      await verifyAuthState();
     }
     if (res.status !== 200) toast.error("Oops, Something went wrong uploading your file.");
   };

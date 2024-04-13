@@ -100,7 +100,7 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
         phoneNumber: userProfile?.phoneNumber,
         addressString: userProfile?.addressLine1 || "" + userProfile?.addressLine2 || "" + userProfile?.settlement || "" + userProfile?.city || "",
         propertyForRentId: offerPropertyForRent.id,
-        tenancyStatus: "awaiting-signatures",
+        tenancyStatus: "generating-documents",
         isLeadTenant: true,
         userId: offerUser.id || 0
       });
@@ -113,7 +113,7 @@ export const acceptOrDeclineOffer = async (req: Request, res: Response) => {
         mainContactNumber: userProfile?.phoneNumber,
         addressString: offerAddress?.addressLine1 || "" + offerAddress?.addressLine2 || "" + offerAddress?.settlement || "" + offerAddress?.city || "",
         propertyForRentId: offerPropertyForRent.id,
-        tenancyStatus: "awaiting-signatures",
+        tenancyStatus: "generating-documents",
         leadTenantid: tenant.id,
         isPaymentTogether: false,
         userId: offerUser.id || 0,

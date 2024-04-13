@@ -130,11 +130,14 @@ export const uploadSessionUserProfilePicture = async (req: Request, res: Respons
     // transform to small thumbnail and fix aspect ratio
     const imageBuffer = await sharp(currentFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer();
 
-    const existing = await ProfileMedia.findOne({ where: { profileId: profile[0].id } });
+    const existing_DB_Media = await ProfileMedia.findOne({ where: { profileId: profile[0].id } });
 
-    if (existing) {
-      await s3Bucket.deleteObject({ Bucket: process.env.AWS_S3_BUCKET_NAME, Key: existing?.s3BucketKey }, (err, data) => {});
-      await existing.destroy();
+    if (existing_DB_Media) {
+      await s3Bucket
+        .deleteObject({ Bucket: process.env.AWS_S3_BUCKET_NAME, Key: existing_DB_Media?.s3BucketKey }, (err, data) => {})
+        .promise()
+        .catch(err => console.log(err));
+      await existing_DB_Media.destroy();
     }
 
     await s3Bucket
