@@ -89,7 +89,7 @@ const Login = () => {
                     <label className="form-check-label" htmlFor="check_example">
                       Keep me logged in
                     </label> */}
-                    <button className="btn  float-end text-primary ps-0 ms-0" onClick={() => navigate(`/forget-password/null?status=pending`)}>
+                    <button type="button" className="btn  float-end text-primary ps-0 ms-0" onClick={() => navigate(`/forget-password/null?status=pending`)}>
                       Forgot Password?
                     </button>
                   </div>
