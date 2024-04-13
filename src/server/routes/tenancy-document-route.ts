@@ -7,6 +7,7 @@ import Tenancy from "../../database/models/tenancy";
 import Profile from "../../database/models/profile";
 import _ from "lodash";
 import Tenant from "../../database/models/tenant";
+import { sleepTimer } from "../../utils/sleep";
 
 export const uploadTenancyAgreement = async (req: Request, res: Response) => {
   const files = req.files ?? [];
@@ -39,6 +40,9 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
       })
       .promise()
       .catch(err => console.log(err));
+
+    // since this endpoint is called in a loop it happens too fast for local-s3
+    if (process.env.NODE_ENV === "development") await sleepTimer(1000);
 
     // If enter here means we are trying to upload a fresh copy.
     if (existingAgreement) {

@@ -49,6 +49,7 @@ declare global {
       AWS_SDK_JS_SUPPRESS_MAINTENANCE_MODE_MESSAGE: string;
       STRIPE_PUBLIC_KEY: string;
       STRIPE_SECRET_KEY: string;
+      NODE_ENV: "development" | "test" | "production";
     }
   }
 }
