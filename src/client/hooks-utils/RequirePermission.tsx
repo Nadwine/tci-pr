@@ -23,7 +23,7 @@ const RequirePermission: React.FC<ComponentProps> = ({ view, roles }: { view: Re
     return view;
   }
 
-  return <h3 className="text-center pt-5">Sorry you do not have required permission to view this page</h3>;
+  return <h3 className="text-center text-danger mt-5 pt-5">Sorry you do not have required permission to view this page</h3>;
 };
 
 export default connect()(RequirePermission);
