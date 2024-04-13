@@ -85,7 +85,7 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
           } else {
             // Property Manager is signing
             meta!.landlordSignData = { name: name, email: email, dateTime: dateTime, tenancyId: tenancyId };
-            meta.tenantsSignData = [];
+            if (!meta.tenantsSignData) meta.tenantsSignData = [];
           }
 
           await existingAgreement?.update({
