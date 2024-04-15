@@ -67,20 +67,26 @@ const EditTenancyModal = (props: Props) => {
           <div></div>
           <div className="py-2 d-flex align-items-center">
             <label className="pe-4">Rental Agreement Date</label>
-            <input
-              value={dayjs(rentalAgreementDate).format("YYYY-MM-DD")}
-              onChange={e => setRentalAgreementDate(e.target.value)}
-              className="col-4"
-              type="date"
-            />
+            <div className="col-4">
+              <input
+                value={dayjs(rentalAgreementDate).format("YYYY-MM-DD")}
+                onChange={e => setRentalAgreementDate(e.target.value)}
+                className="form-control"
+                type="date"
+              />
+            </div>
           </div>
           <div className="py-2 d-flex align-items-center">
             <label className="pe-4">Tenancy Length</label>
-            <input value={lenghtInDays} onChange={e => setLenghtInDays(Number(e.target.value))} className="col-4" type="number" />
+            <div className="col-4">
+              <input value={lenghtInDays} onChange={e => setLenghtInDays(Number(e.target.value))} className="form-control" type="number" />
+            </div>
           </div>
           <div className="py-2 d-flex align-items-center">
             <label className="pe-4">Deposit Amount</label>
-            <input value={depositAmount} onChange={e => setDepositAmount(Number(e.target.value))} className="col-4" type="number" />
+            <div className="col-4">
+              <input value={depositAmount} onChange={e => setDepositAmount(Number(e.target.value))} className="form-control" type="number" />
+            </div>
           </div>
           <div className="py-2 d-flex align-items-center">
             <label className="pe-4">Deposit Paid</label>
@@ -94,7 +100,9 @@ const EditTenancyModal = (props: Props) => {
           </div>
           <div className="py-2 d-flex align-items-center">
             <label className="pe-4">Outstanding Rent Amount</label>
-            <input value={outstandingRent} onChange={e => setOutstandingRent(Number(e.target.value))} className="col-4" type="number" />
+            <div className="col-4">
+              <input value={outstandingRent} onChange={e => setOutstandingRent(Number(e.target.value))} className="form-control" type="number" />
+            </div>
           </div>
           <div className="py-2 d-flex align-items-center">
             <label className="pe-4 col-6">Tenancy Status</label>
