@@ -211,7 +211,7 @@ const Register = () => {
                     />
                     <label className="form-check-label" htmlFor="terms">
                       I agree to the{" "}
-                      <button className="btn text-primary ps-0 pe-1" onClick={() => navigate(`/privacy-terms`)}>
+                      <button type="button" className="btn text-primary ps-0 pe-1" onClick={() => navigate(`/privacy-terms`)}>
                         terms
                       </button>
                       to use this website

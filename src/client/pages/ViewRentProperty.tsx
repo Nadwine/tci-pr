@@ -123,7 +123,7 @@ const ViewRentProperty = props => {
           {alreadySubmitted && (
             <div className="p-5">
               You have already submitted an enquiry for this property. Click
-              <button className="btn text-primary ps-0" onClick={() => navigate(`/enquiries`)}>
+              <button type="button" className="btn text-primary ps-0" onClick={() => navigate(`/enquiries`)}>
                 here
               </button>
               to see your enquiry
@@ -136,7 +136,7 @@ const ViewRentProperty = props => {
             </div>
           )}
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowEnquiryModal(false)}>
+            <Button type="button" variant="secondary" onClick={() => setShowEnquiryModal(false)}>
               Cancel
             </Button>
             <Button style={{ backgroundColor: "#087990" }} type="submit">

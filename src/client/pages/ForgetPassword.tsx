@@ -131,7 +131,9 @@ const ForgetPassword = () => {
                   placeholder="Email"
                   onChange={e => setEmail(e.target.value)}
                 />
-                <button className="btn btn-dark fw-bold ms-3">Send</button>
+                <button type="submit" className="btn btn-dark fw-bold ms-3">
+                  Send
+                </button>
               </form>
             </div>
           </div>
@@ -139,6 +141,7 @@ const ForgetPassword = () => {
       )}
       {forgetPasswordStatus === "sent" && (
         <div>
+          <div className="text-danger pt-5">{typeof errors === "object" ? errors?.password || errors?.confirmPassword : ""}</div>
           <h3 className="fw-bold mt-4 my-4">Enter New Password</h3>
           <form onSubmit={handlePasswordReset}>
             <input
@@ -159,8 +162,8 @@ const ForgetPassword = () => {
               placeholder="Confirm Password"
               onChange={e => setConfirmPassword(e.target.value)}
             />
-            <button onClick={() => submitPasswordReset()} className="btn btn-dark fw-bold my-3">
-              Send
+            <button type="submit" className="btn btn-dark fw-bold my-3">
+              Confirm
             </button>
           </form>
         </div>

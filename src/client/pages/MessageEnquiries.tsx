@@ -273,7 +273,7 @@ const MessageEnquiries = props => {
                 <div className="card-body">
                   {" "}
                   <i className="bi bi-info-circle-fill"></i> We recommend viewing the property before making an offer. Find out more about our safety tips
-                  <button className="btn text-primary ps-1" onClick={() => navigate(`/rent/safety`)}>
+                  <button type="button" className="btn text-primary ps-1" onClick={() => navigate(`/rent/safety`)}>
                     here
                   </button>
                 </div>

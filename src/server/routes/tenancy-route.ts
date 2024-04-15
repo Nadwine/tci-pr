@@ -102,7 +102,7 @@ export const createTenancyRoute = async (req: Request, res: Response) => {
 
 export const sendInviteLinkToTenantEmail = async (req: Request, res: Response) => {
   const { email, propertyForRentId, firstName, lastName } = req.body;
-  // ENSURE PERSON OWNS RESOURCE
+  // TODO ENSURE PERSON OWNS RESOURCE
   try {
     const hashSecret = process.env.EMAIL_TOKEN_HASH_SECRET || "";
     const emailToken = jwt.sign({ email: email, propertyForRentId: propertyForRentId, firstName: firstName, lastName: lastName }, hashSecret, {
