@@ -18,6 +18,7 @@ import Tenancy from "../../../database/models/tenancy";
 import InvitationCanvas from "../../components/InvitationCanvas";
 import { tenancyStatusSequence } from "../../../utils/statusSequence";
 import stringToBoolean from "../../../utils/stringToBoolean";
+import EditTenancyModal from "../../components/EditTenancyModal";
 
 const UploadModal = (props: any) => {
   return (
@@ -251,131 +252,16 @@ const ManageSingleProperty = props => {
     initialLoad();
   }, [showSignaturePad]);
 
-  const EditTenancyModal = () => {
-    const [rentalAgreementDate, setRentalAgreementDate] = useState(selectedTenToManage?.rentalAgreementDate);
-    const [lenghtInDays, setLenghtInDays] = useState(selectedTenToManage?.lenghtInDays);
-    const [depositAmount, setDepositAmount] = useState(selectedTenToManage?.deposit);
-    const [isDepositPaid, setIsDepositPaid] = useState(selectedTenToManage?.isDepositPaid);
-    const [outstandingRent, setOutstandingRent] = useState(selectedTenToManage?.outstandingRent);
-    const [tenancyStatus, setTenancyStatus] = useState(String(selectedTenToManage?.tenancyStatus));
-    const [showArchiveWarning, setShowArchiveWarning] = useState(false);
-
-    const updateTenancy = async () => {
-      const body = {
-        rentalAgreementDate: rentalAgreementDate,
-        lenghtInDays: lenghtInDays,
-        deposit: depositAmount,
-        isDepositPaid: isDepositPaid,
-        outstandingRent: outstandingRent,
-        tenancyStatus: tenancyStatus,
-        tenancyId: selectedTenToManage?.id,
-        propertyForRentId: property?.id
-      };
-      console.log(body);
-      // axios call
-      const res = await axios.put("/api/tenancy/update", body);
-      if (res.status === 200) toast.success("Updated");
-      if (res.status !== 200) toast.error("Oops Something went wrong updating this record. Please Try Again");
-      setSelectedTenToManage(undefined);
-      initialLoad();
-    };
-
-    const removeTenancy = async () => {
-      const body = { tenancyId: selectedTenToManage?.id, propertyForRentId: property?.id };
-      const res = await axios.put("/api/tenancy/archive", body);
-      if (res.status === 200) toast.success("Removed");
-      if (res.status !== 200) toast.error("Oops Something went wrong deleting this record. Please Try Again");
-      setSelectedTenToManage(undefined);
-      initialLoad();
-    };
-
-    return (
-      <Modal centered show={Boolean(selectedTenToManage)}>
-        <Modal.Header>
-          <Modal.Title>
-            {selectedTenToManage?.firstName} {selectedTenToManage?.lastName}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="d-flex flex-column">
-            <div></div>
-            <div className="py-2 d-flex align-items-center">
-              <label className="pe-4">Rental Agreement Date</label>
-              <input
-                value={dayjs(rentalAgreementDate).format("YYYY-MM-DD")}
-                onChange={e => setRentalAgreementDate(e.target.value)}
-                className="col-4"
-                type="date"
-              />
-            </div>
-            <div className="py-2 d-flex align-items-center">
-              <label className="pe-4">Tenancy Length</label>
-              <input value={lenghtInDays} onChange={e => setLenghtInDays(Number(e.target.value))} className="col-4" type="number" />
-            </div>
-            <div className="py-2 d-flex align-items-center">
-              <label className="pe-4">Deposit Amount</label>
-              <input value={depositAmount} onChange={e => setDepositAmount(Number(e.target.value))} className="col-4" type="number" />
-            </div>
-            <div className="py-2 d-flex align-items-center">
-              <label className="pe-4">Deposit Paid</label>
-              <input
-                value={String(isDepositPaid)}
-                checked={Boolean(isDepositPaid)}
-                onChange={e => setIsDepositPaid(e.target.checked)}
-                className="col-4"
-                type="checkbox"
-              />
-            </div>
-            <div className="py-2 d-flex align-items-center">
-              <label className="pe-4">Outstanding Rent Amount</label>
-              <input value={outstandingRent} onChange={e => setOutstandingRent(Number(e.target.value))} className="col-4" type="number" />
-            </div>
-            <div className="py-2 d-flex align-items-center">
-              <label className="pe-4 col-6">Tenancy Status</label>
-              <select onChange={e => setTenancyStatus(e.target.value)} className="form-select">
-                {tenancyStatusSequence.map((stat, i) => (
-                  <option selected={tenancyStatus === stat} key={i}>
-                    {stat}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <div className="me-auto">
-            <Button onClick={() => setShowArchiveWarning(true)} variant="secondary">
-              <i className="bi bi-trash" />
-            </Button>
-            {showArchiveWarning && (
-              <div className="position-fixed bg-white p-3" style={{ maxWidth: "400px" }}>
-                <div>
-                  Are you sure you want to remove tenant {selectedTenToManage?.firstName} {selectedTenToManage?.lastName} from this property?
-                </div>
-                <div className="w-100 d-flex" style={{ justifyContent: "end" }}>
-                  <button onClick={() => removeTenancy()} className="btn btn-danger">
-                    Remove
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-          <Button variant="secondary" onClick={() => setSelectedTenToManage(undefined)}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={() => updateTenancy()}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  };
-
   if (!allowedToView && listing) return <h3>You do not have permission to view this page</h3>;
 
   return (
     <div className="p-md-5">
-      <EditTenancyModal />
+      <EditTenancyModal
+        selectedTenToManage={selectedTenToManage}
+        property={property}
+        setSelectedTenToManage={setSelectedTenToManage}
+        initialLoad={initialLoad}
+      />
       <UploadModal show={uploading} />
       <InvitationCanvas
         onGoingTenancies={onGoingTenancies}

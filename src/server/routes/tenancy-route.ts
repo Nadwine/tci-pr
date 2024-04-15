@@ -15,13 +15,13 @@ import dayjs from "dayjs";
 
 export const getSessionUserTenancies = async (req: Request, res: Response) => {
   try {
-    const tenant = await Tenant.findOne({ where: { userId: req.session.user?.id } });
-    if (!tenant) return res.json(null);
+    const tenantIds = (await Tenant.findAll({ where: { userId: req.session.user?.id } })).map(t => t.id);
+    if (tenantIds.length === 0) return res.json(null);
 
     const myOngoingTenancies = await Tenancy.findAll({
       where: { isHistory: false },
       include: [
-        { model: Tenant, where: { id: tenant.id } },
+        { model: Tenant, where: { id: tenantIds } },
         { model: PropertyForRent, include: [{ model: Listing, include: [{ model: ListingLandlord }] }] },
         { model: TenancyDocument }
       ]
