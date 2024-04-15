@@ -167,6 +167,8 @@ export const MyTenancy = props => {
     fetchTenancy();
   }, [showSignaturePad, showSignModal]);
 
+  const showEmptyMessage = !tenancies || tenancies.length === 0;
+
   // Refactor
   // TODO Seperate Owned Tenancy and then loop the Related Tenants Under Same HouseHold
   // Instead of trying to figure this out in the loop below
@@ -174,7 +176,7 @@ export const MyTenancy = props => {
     <div className="px-md-5">
       <UploadModal show={uploading} />
       <h4 className="py-4 ps-md-5 strong-text">My Tenancies</h4>
-      {!tenancies && (
+      {showEmptyMessage && (
         <div className="my-3 text-center" style={{ justifyItems: "center" }}>
           {" "}
           <div>

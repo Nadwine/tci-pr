@@ -26,6 +26,9 @@ export const getSessionUserTenancies = async (req: Request, res: Response) => {
         { model: TenancyDocument }
       ]
     });
+    const hasTenancy = myOngoingTenancies.length > 0;
+    if (!hasTenancy) return res.status(200).json([]);
+
     const otherJointTenancies = await Tenancy.findAll({
       where: { propertyForRentId: myOngoingTenancies[0].PropertyForRent.id, isHistory: false },
       include: [{ model: Tenant }, { model: PropertyForRent, include: [{ model: Listing, include: [{ model: ListingLandlord }] }] }, { model: TenancyDocument }]
