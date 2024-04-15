@@ -55,6 +55,7 @@ import {
   updateTenancyRoute
 } from "./routes/tenancy-route";
 import { getTenancyAgreementFromS3Bucket, uploadTenancyAgreement } from "./routes/tenancy-document-route";
+import { uploadNewPropertyDoc } from "./routes/property_doc_route";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -166,6 +167,9 @@ router.put("/tenancy/archive", ensureAuthentication, archiveTenancyRoute);
 // /api/tenancy-document
 router.post("/tenancy-document/upload-agreement", ensureAuthentication, uploadMemory.any(), uploadTenancyAgreement);
 router.get("/tenancy-document/:tenancyId", ensureAuthentication, getTenancyAgreementFromS3Bucket);
+
+// /api/property-document
+router.post("/property-document/upload", ensureAuthentication, uploadMemory.any(), uploadNewPropertyDoc);
 
 // /api/invite
 router.get("/invite/accept-invitation", acceptInviteToTenancy);

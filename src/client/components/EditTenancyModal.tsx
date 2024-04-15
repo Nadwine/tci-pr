@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { connect } from "react-redux";
 import { tenancyStatusSequence } from "../../utils/statusSequence";
@@ -25,6 +25,7 @@ const EditTenancyModal = (props: Props) => {
   const [outstandingRent, setOutstandingRent] = useState(selectedTenToManage?.outstandingRent);
   const [tenancyStatus, setTenancyStatus] = useState(String(selectedTenToManage?.tenancyStatus));
   const [showArchiveWarning, setShowArchiveWarning] = useState(false);
+  const [reload, setReload] = useState<boolean>();
 
   const updateTenancy = async () => {
     const body = {
@@ -54,6 +55,15 @@ const EditTenancyModal = (props: Props) => {
     setSelectedTenToManage(undefined);
     initialLoad();
   };
+
+  useEffect(() => {
+    setRentalAgreementDate(selectedTenToManage?.rentalAgreementDate);
+    setLenghtInDays(selectedTenToManage?.lenghtInDays);
+    setDepositAmount(selectedTenToManage?.deposit);
+    setIsDepositPaid(selectedTenToManage?.isDepositPaid);
+    setOutstandingRent(selectedTenToManage?.outstandingRent);
+    setTenancyStatus(String(selectedTenToManage?.tenancyStatus));
+  }, [selectedTenToManage]);
 
   return (
     <Modal show={Boolean(selectedTenToManage)}>

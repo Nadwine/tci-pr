@@ -276,7 +276,7 @@ const ManageSingleProperty = props => {
       </div>
       <div className="pt-5 pb-5">
         <h5>Attached Documents</h5>
-        <DocumentList documents={[]} />
+        <DocumentList initialLoad={initialLoad} property={property} />
       </div>
       <div className="pt-5 pb-5">
         <h5>Tenancy Agreement</h5>

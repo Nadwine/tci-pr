@@ -123,18 +123,19 @@ export const updateTenancyRoute = async (req: Request, res: Response) => {
   }
 
   try {
-    const tenancy = await Tenancy.update(
-      {
-        rentalAgreementDate: rentalAgreementDate,
-        deposit: deposit,
-        isDepositPaid: isDepositPaid,
-        lenghtInDays: lenghtInDays,
-        outstandingRent: outstandingRent,
-        propertyForRentId: propertyForRentId,
-        tenancyStatus: tenancyStatus
-      },
-      { where: { id: tenancyId } }
-    );
+    const tenancy = await Tenancy.findByPk(tenancyId);
+
+    if (!tenancy) return res.status(400).json({ message: "Tenancy not found" });
+
+    await tenancy.update({
+      rentalAgreementDate: rentalAgreementDate,
+      deposit: deposit,
+      isDepositPaid: isDepositPaid,
+      lenghtInDays: lenghtInDays,
+      outstandingRent: outstandingRent,
+      propertyForRentId: propertyForRentId,
+      tenancyStatus: tenancyStatus
+    });
 
     return res.status(200).json({ message: "Success" });
   } catch (err) {
