@@ -35,6 +35,9 @@ function Navbar() {
 
   const dynamicClassName = isCollapsed ? "collapse navbar-collapse" : "navbar-collapse";
   const shouldShowUserDropDown = isCollapsed === false ? "show" : userDropDownShow ? "show" : "";
+
+  //@ts-ignore
+  const hasProfilePic = user?.Profile?.ProfileMedia?.length > 0;
   return (
     <nav className={`${isHome && "nav-home"} navbar navbar-expand-md navbar-light fixed-top bg-light px-0 shadow-sm`}>
       <div className="container-xl">
@@ -91,7 +94,7 @@ function Navbar() {
           {user && (
             <ul className="nav navbar-nav ms-auto pe-2">
               <li className="nav-item dropdown">
-                {!user.Profile?.ProfileMedia.length > 0 && (
+                {!hasProfilePic && (
                   <span
                     className="btn btn-link nav-link rounded-circle fw-bold text-light fs-5"
                     style={{ width: "45px", height: "45px", backgroundColor: "#087990" }}
@@ -101,13 +104,13 @@ function Navbar() {
                     }}
                     onBlur={() => setUserDropDownShow(false)}
                   >
-                    { user?.email.charAt(0).toUpperCase()}
+                    {user?.email.charAt(0).toUpperCase()}
                   </span>
                 )}
-                {user.Profile?.ProfileMedia.length > 0 && (
+                {hasProfilePic && (
                   <Avatar
                     className="point"
-                    src={user.Profile.ProfileMedia[0].mediaUrl}
+                    src={user?.Profile?.ProfileMedia[0].mediaUrl}
                     style={{ width: "45px", height: "45px" }}
                     onClick={() => {
                       setUserDropDownShow(!userDropDownShow);
