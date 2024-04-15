@@ -174,7 +174,7 @@ const CreateRentForm = props => {
           </div>
           <div className="mb-3">
             <label htmlFor="maxTenant" className="form-label">
-              Max tenant
+              Maximum number of tenants
             </label>
             <input name="maxTenant" value={values.maxTenant} onChange={handleChange} type="number" className="form-control" />
           </div>
@@ -186,7 +186,7 @@ const CreateRentForm = props => {
           </div>
           <div className="mb-3">
             <label htmlFor="numOfBathRooms" className="form-label">
-              Baths
+              Bathrooms
             </label>
             <input name="numOfBathRooms" value={values.numOfBathRooms} onChange={handleChange} type="number" className="form-control" />
           </div>

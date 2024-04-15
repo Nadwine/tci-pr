@@ -178,7 +178,14 @@ const ViewRentProperty = props => {
             </div>
             <div className="info col-10">
               <div className="title fw-bolder col-12">
-                {listing.title}
+                {listing.title}{" "}
+                {listing.listingStatus === "in offer" ? (
+                  <span className="badge rounded-pill text-light fw-bold" style={{ backgroundColor: "#ffc008" }}>
+                    UNDER OFFER
+                  </span>
+                ) : (
+                  ""
+                )}
                 <div className="availability col-6 col-md-3 float-end" style={{ fontSize: "15px" }}>
                   <span className="badge rounded-pill" style={{ backgroundColor: "#087990" }}>
                     Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}

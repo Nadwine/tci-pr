@@ -138,7 +138,7 @@ const LandLordCreateListing = props => {
             <div>
               <div className="mb-5 text-center" style={{ color: "#f86464" }}>
                 It seems you do not yet have a profile setup. You will not be able to submit your listing until this is complete.&nbsp;
-                <button type="button" className="btn text-primary ps-0" onClick={() => navigate(`/user`)}>
+                <button type="button" className="btn text-primary ps-0 pe-1" onClick={() => navigate(`/user`)}>
                   Click here
                 </button>
                 to complete your profile
@@ -213,7 +213,7 @@ const LandLordCreateListing = props => {
           </div>
           <div className="mb-3">
             <label htmlFor="maxTenant" className="form-label">
-              Max tenant
+              Maximum number of tenants
             </label>
             <input name="maxTenant" value={values.maxTenant} onChange={handleChange} type="number" className="form-control" />
           </div>
@@ -225,7 +225,7 @@ const LandLordCreateListing = props => {
           </div>
           <div className="mb-3">
             <label htmlFor="numOfBathRooms" className="form-label">
-              Baths
+              Bathrooms
             </label>
             <input name="numOfBathRooms" value={values.numOfBathRooms} onChange={handleChange} type="number" className="form-control" />
           </div>

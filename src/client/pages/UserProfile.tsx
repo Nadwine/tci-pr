@@ -354,7 +354,7 @@ const UserProfile = props => {
             <div className="card" style={{ margin: "15px", borderRadius: "15px" }}>
               <div className="card-body" style={{ backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
                 <h5 className="card-title">Link Your Bank Account</h5>
-                {!editingFields.payment && "details...."}
+                {!editingFields.payment && "No account linked"}
                 {editingFields.payment && (
                   <div className="name-edit">
                     <label>Bank Account Type</label>
