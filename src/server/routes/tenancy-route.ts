@@ -10,6 +10,8 @@ import User from "../../database/models/user";
 import jwt from "jsonwebtoken";
 import Profile from "../../database/models/profile";
 import bcrypt from "bcrypt";
+import Admin from "../../database/models/admin";
+import dayjs from "dayjs";
 
 export const getSessionUserTenancies = async (req: Request, res: Response) => {
   try {
@@ -93,8 +95,78 @@ export const createTenancyRoute = async (req: Request, res: Response) => {
     //   leadTenantid: 0,
     //   isPaymentTogether: isPaymentTogether
     // });
-
     return res.status(200).json();
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error 711", err });
+  }
+};
+
+export const updateTenancyRoute = async (req: Request, res: Response) => {
+  const { rentalAgreementDate, deposit, isDepositPaid, outstandingRent, tenancyStatus, tenancyId, propertyForRentId, lenghtInDays } = req.body;
+  const isAdmin = req.session.user!.accountType === "admin";
+  const isLandlord = req.session.user!.accountType === "landlord";
+  const allowed = req.session.user!.accountType === "admin" || req.session.user!.accountType === "landlord";
+
+  if (!allowed) return res.status(401).json({ message: "Unauthorized" });
+
+  const property = await PropertyForRent.findByPk(propertyForRentId, { include: [{ model: Listing, include: [ListingLandlord, Admin] }] });
+  // Ensuring Session user has access to View/Modify Property
+  if (isAdmin || isLandlord) {
+    if (isLandlord && property?.Listing.ListingLandlord?.userId !== req.session!.user!.id) {
+      return res.status(401).json({ message: "Unauthorised" });
+    }
+  } else {
+    return res.status(401).json({ message: "Unauthorised" });
+  }
+
+  try {
+    const tenancy = await Tenancy.update(
+      {
+        rentalAgreementDate: rentalAgreementDate,
+        deposit: deposit,
+        isDepositPaid: isDepositPaid,
+        lenghtInDays: lenghtInDays,
+        outstandingRent: outstandingRent,
+        propertyForRentId: propertyForRentId,
+        tenancyStatus: tenancyStatus
+      },
+      { where: { id: tenancyId } }
+    );
+
+    return res.status(200).json({ message: "Success" });
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error 711", err });
+  }
+};
+
+export const archiveTenancyRoute = async (req: Request, res: Response) => {
+  const { tenancyId, propertyForRentId } = req.body;
+  const isAdmin = req.session.user!.accountType === "admin";
+  const isLandlord = req.session.user!.accountType === "landlord";
+  const allowed = req.session.user!.accountType === "admin" || req.session.user!.accountType === "landlord";
+
+  if (!allowed) return res.status(401).json({ message: "Unauthorized" });
+
+  const property = await PropertyForRent.findByPk(propertyForRentId, { include: [{ model: Listing, include: [ListingLandlord, Admin] }] });
+  // Ensuring Session user has access to View/Modify Property
+  if (isAdmin || isLandlord) {
+    if (isLandlord && property?.Listing.ListingLandlord?.userId !== req.session!.user!.id) {
+      return res.status(401).json({ message: "Unauthorised" });
+    }
+  } else {
+    return res.status(401).json({ message: "Unauthorised" });
+  }
+
+  try {
+    const tenancy = await Tenancy.update(
+      {
+        isHistory: true,
+        tenancyStatus: "ended"
+      },
+      { where: { id: tenancyId } }
+    );
+
+    return res.status(200).json({ message: "Success" });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error 711", err });
   }
@@ -102,7 +174,18 @@ export const createTenancyRoute = async (req: Request, res: Response) => {
 
 export const sendInviteLinkToTenantEmail = async (req: Request, res: Response) => {
   const { email, propertyForRentId, firstName, lastName } = req.body;
-  // TODO ENSURE PERSON OWNS RESOURCE
+  const isLandlord = req.session.user?.accountType === "landlord";
+  const isAdmin = req.session.user?.accountType === "admin";
+
+  const property = await PropertyForRent.findByPk(propertyForRentId, { include: [{ model: Listing, include: [ListingLandlord, Admin] }] });
+  // Ensuring Session user has access to View/Modify Property
+  if (isAdmin || isLandlord) {
+    if (isLandlord && property?.Listing.ListingLandlord?.userId !== req.session!.user!.id) {
+      return res.status(401).json({ message: "Unauthorised" });
+    }
+  } else {
+    return res.status(401).json({ message: "Unauthorised" });
+  }
   try {
     const hashSecret = process.env.EMAIL_TOKEN_HASH_SECRET || "";
     const emailToken = jwt.sign({ email: email, propertyForRentId: propertyForRentId, firstName: firstName, lastName: lastName }, hashSecret, {

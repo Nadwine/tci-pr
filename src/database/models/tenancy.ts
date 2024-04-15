@@ -4,6 +4,7 @@ import PropertyForRent from "./property_for_rent";
 import Tenant from "./tenant";
 import TenancyDocument from "./tenancy_document";
 import User from "./user";
+import { TenancyStatusEnum } from "../../utils/statusSequence";
 
 // for typeScript typing
 export default class Tenancy extends Model<InferAttributes<Tenancy>, InferCreationAttributes<Tenancy>> {
@@ -23,7 +24,7 @@ export default class Tenancy extends Model<InferAttributes<Tenancy>, InferCreati
   declare outstandingRent?: number;
   declare isDepositReleased?: boolean;
   declare propertyForRentId: number;
-  declare tenancyStatus: "generating-documents" | "awaiting-signatures" | "ongoing" | "ended";
+  declare tenancyStatus: TenancyStatusEnum;
   declare isHistory: boolean;
   declare leadTenantid: number;
   declare userId: number;

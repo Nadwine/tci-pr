@@ -4,6 +4,7 @@ import sequelize from "../sequelize-connection";
 import { bool } from "aws-sdk/clients/signer";
 import PropertyForRent from "./property_for_rent";
 import Tenancy from "./tenancy";
+import { TenancyStatusEnum } from "../../utils/statusSequence";
 
 // for typeScript typing
 export default class Tenant extends Model<InferAttributes<Tenant>, InferCreationAttributes<Tenant>> {
@@ -21,7 +22,7 @@ export default class Tenant extends Model<InferAttributes<Tenant>, InferCreation
   declare outstandingRent?: number;
   declare isDepositReleased?: bool;
   declare propertyForRentId: number;
-  declare tenancyStatus: "generating-documents" | "awaiting-signatures" | "ongoing" | "ended";
+  declare tenancyStatus: TenancyStatusEnum;
   declare tenancyId: CreationOptional<number>;
   declare isLeadTenant: boolean;
   declare userId: number;

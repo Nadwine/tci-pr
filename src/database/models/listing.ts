@@ -8,7 +8,7 @@ import PropertyForRent from "./property_for_rent";
 import ListingMedia from "./listing_media";
 import ListingQuestion from "./listing_question";
 import ListingLandlord from "./listing_landlord";
-import { ListingStatusEnum } from "../../utils/listingStatusSequence";
+import { ListingStatusEnum } from "../../utils/statusSequence";
 import Offer from "./offer";
 
 type Capabilities =

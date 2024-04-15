@@ -10,10 +10,14 @@ import DocumentList from "../../components/landlord-n-admin/DocumentList";
 import { setActiveConversation } from "../../redux/reducers/messagesReducer";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { Accordion, Dropdown, DropdownButton, Modal, Offcanvas } from "react-bootstrap";
+import { Accordion, Button, Dropdown, DropdownButton, Modal, Offcanvas } from "react-bootstrap";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import SignaturePad from "signature_pad";
 import dayjs from "dayjs";
+import Tenancy from "../../../database/models/tenancy";
+import InvitationCanvas from "../../components/InvitationCanvas";
+import { tenancyStatusSequence } from "../../../utils/statusSequence";
+import stringToBoolean from "../../../utils/stringToBoolean";
 
 const UploadModal = (props: any) => {
   return (
@@ -40,7 +44,7 @@ const ManageSingleProperty = props => {
   const onGoingTenancies = tenancies?.filter(t => t.tenancyStatus !== "ended");
   const tenancyAgreement = onGoingTenancies && onGoingTenancies[0]?.TenancyDocuments?.find(d => d.documentType === "tenancy-agreement");
   const expenses = property?.Expenses;
-  const documents = property?.PropertyDocuments;
+  const propertyDocs = property?.PropertyDocuments;
   const offers = listing?.Offers;
   const loginUsr = useSelector((r: RootState) => r.auth.user);
   const [allowedToView, setAllowedToView] = useState(true);
@@ -59,6 +63,7 @@ const ManageSingleProperty = props => {
   const allowPDFDownload = tenancyAgreement; // && (tenancyAgreement.metadata?.landlordSignData || tenancyAgreement.metadata?.tenantsSignData);
   const downloadText = tenantSigned || landlordSigned ? "Download Signed PDF" : "Download Unsigned PDF";
   const [showInviteCanvas, setShowInviteCanvas] = useState(false);
+  const [selectedTenToManage, setSelectedTenToManage] = useState<Tenancy>();
 
   const loadPDF = async onGoingTenancies => {
     if (!onGoingTenancies || onGoingTenancies?.length === 0) return;
@@ -246,69 +251,123 @@ const ManageSingleProperty = props => {
     initialLoad();
   }, [showSignaturePad]);
 
-  const InvitationCanvas = () => {
-    const [email, setEmail] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [addTo, setAddTo] = useState("");
-    const [existingTenancyId, setExistingTenancyId] = useState("");
-    const selectedTenancy = onGoingTenancies?.filter(tc => tc.Tenants.find(t => t.id === tc.leadTenantid && tc.id === Number(existingTenancyId)))[0];
-    const selectedLead = selectedTenancy?.Tenants.find(t => t.id === selectedTenancy.leadTenantid);
-    const selectedLeadString = `${selectedLead?.firstName || ""} ${selectedLead?.lastName || ""}`.trim();
+  const EditTenancyModal = () => {
+    const [rentalAgreementDate, setRentalAgreementDate] = useState(selectedTenToManage?.rentalAgreementDate);
+    const [lenghtInDays, setLenghtInDays] = useState(selectedTenToManage?.lenghtInDays);
+    const [depositAmount, setDepositAmount] = useState(selectedTenToManage?.deposit);
+    const [isDepositPaid, setIsDepositPaid] = useState(selectedTenToManage?.isDepositPaid);
+    const [outstandingRent, setOutstandingRent] = useState(selectedTenToManage?.outstandingRent);
+    const [tenancyStatus, setTenancyStatus] = useState(String(selectedTenToManage?.tenancyStatus));
+    const [showArchiveWarning, setShowArchiveWarning] = useState(false);
+
+    const updateTenancy = async () => {
+      const body = {
+        rentalAgreementDate: rentalAgreementDate,
+        lenghtInDays: lenghtInDays,
+        deposit: depositAmount,
+        isDepositPaid: isDepositPaid,
+        outstandingRent: outstandingRent,
+        tenancyStatus: tenancyStatus,
+        tenancyId: selectedTenToManage?.id,
+        propertyForRentId: property?.id
+      };
+      console.log(body);
+      // axios call
+      const res = await axios.put("/api/tenancy/update", body);
+      if (res.status === 200) toast.success("Updated");
+      if (res.status !== 200) toast.error("Oops Something went wrong updating this record. Please Try Again");
+      setSelectedTenToManage(undefined);
+      initialLoad();
+    };
+
+    const removeTenancy = async () => {
+      const body = { tenancyId: selectedTenToManage?.id, propertyForRentId: property?.id };
+      const res = await axios.put("/api/tenancy/archive", body);
+      if (res.status === 200) toast.success("Removed");
+      if (res.status !== 200) toast.error("Oops Something went wrong deleting this record. Please Try Again");
+      setSelectedTenToManage(undefined);
+      initialLoad();
+    };
 
     return (
-      <Offcanvas show={showInviteCanvas} onHide={() => setShowInviteCanvas(false)}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Invite to tenancy</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
+      <Modal centered show={Boolean(selectedTenToManage)}>
+        <Modal.Header>
+          <Modal.Title>
+            {selectedTenToManage?.firstName} {selectedTenToManage?.lastName}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <div className="d-flex flex-column">
-            <div className="py-2">
-              <label>Tenant email address</label>
-              <input value={email} onChange={e => setEmail(e.target.value)} className="form-control" />
+            <div></div>
+            <div className="py-2 d-flex align-items-center">
+              <label className="pe-4">Rental Agreement Date</label>
+              <input
+                value={dayjs(rentalAgreementDate).format("YYYY-MM-DD")}
+                onChange={e => setRentalAgreementDate(e.target.value)}
+                className="col-4"
+                type="date"
+              />
             </div>
-            <div className="py-2">
-              <label>Tenant First Name</label>
-              <input value={firstName} onChange={e => setFirstName(e.target.value)} className="form-control" />
+            <div className="py-2 d-flex align-items-center">
+              <label className="pe-4">Tenancy Length</label>
+              <input value={lenghtInDays} onChange={e => setLenghtInDays(Number(e.target.value))} className="col-4" type="number" />
             </div>
-            <div className="py-2">
-              <label>Tenant Last Name</label>
-              <input value={lastName} onChange={e => setLastName(e.target.value)} className="form-control" />
+            <div className="py-2 d-flex align-items-center">
+              <label className="pe-4">Deposit Amount</label>
+              <input value={depositAmount} onChange={e => setDepositAmount(Number(e.target.value))} className="col-4" type="number" />
             </div>
-            {/* <div className="py-2 d-flex flex-row align-items-center">
-              <label>Add tenant to</label>
-              <DropdownButton onSelect={val => setAddTo(val || "")} className="ps-2" variant="secondary" title={addTo || "Options"}>
-                <Dropdown.Item eventKey="Existing Tenancy">Existing Tenancy</Dropdown.Item>
-                <Dropdown.Item eventKey="As new tenant">As new tenant</Dropdown.Item>
-              </DropdownButton>
-            </div> */}
-            {addTo === "Existing Tenancy" && (
-              <div className="py-2">
-                <DropdownButton
-                  onSelect={val => setExistingTenancyId(val || "")}
-                  className="ps-2"
-                  variant="secondary"
-                  title={selectedLeadString || "Select Tenancy"}
-                >
-                  {onGoingTenancies?.map((tc, i) => {
-                    const leadTenant = tc.Tenants.find(t => tc.leadTenantid === t.id);
-                    return (
-                      <Dropdown.Item key={i} eventKey={tc.id}>
-                        {leadTenant?.firstName} {leadTenant?.lastName}
-                      </Dropdown.Item>
-                    );
-                  })}
-                </DropdownButton>
+            <div className="py-2 d-flex align-items-center">
+              <label className="pe-4">Deposit Paid</label>
+              <input
+                value={String(isDepositPaid)}
+                checked={Boolean(isDepositPaid)}
+                onChange={e => setIsDepositPaid(e.target.checked)}
+                className="col-4"
+                type="checkbox"
+              />
+            </div>
+            <div className="py-2 d-flex align-items-center">
+              <label className="pe-4">Outstanding Rent Amount</label>
+              <input value={outstandingRent} onChange={e => setOutstandingRent(Number(e.target.value))} className="col-4" type="number" />
+            </div>
+            <div className="py-2 d-flex align-items-center">
+              <label className="pe-4 col-6">Tenancy Status</label>
+              <select onChange={e => setTenancyStatus(e.target.value)} className="form-select">
+                {tenancyStatusSequence.map((stat, i) => (
+                  <option selected={tenancyStatus === stat} key={i}>
+                    {stat}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <div className="me-auto">
+            <Button onClick={() => setShowArchiveWarning(true)} variant="secondary">
+              <i className="bi bi-trash" />
+            </Button>
+            {showArchiveWarning && (
+              <div className="position-fixed bg-white p-3" style={{ maxWidth: "400px" }}>
+                <div>
+                  Are you sure you want to remove tenant {selectedTenToManage?.firstName} {selectedTenToManage?.lastName} from this property?
+                </div>
+                <div className="w-100 d-flex" style={{ justifyContent: "end" }}>
+                  <button onClick={() => removeTenancy()} className="btn btn-danger">
+                    Remove
+                  </button>
+                </div>
               </div>
             )}
           </div>
-          <div>
-            <button onClick={() => sendInvite(email, firstName, lastName)} className="btn btn-primary">
-              Send Invite
-            </button>
-          </div>
-        </Offcanvas.Body>
-      </Offcanvas>
+          <Button variant="secondary" onClick={() => setSelectedTenToManage(undefined)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={() => updateTenancy()}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     );
   };
 
@@ -316,8 +375,14 @@ const ManageSingleProperty = props => {
 
   return (
     <div className="p-md-5">
+      <EditTenancyModal />
       <UploadModal show={uploading} />
-      <InvitationCanvas />
+      <InvitationCanvas
+        onGoingTenancies={onGoingTenancies}
+        showInviteCanvas={showInviteCanvas}
+        setShowInviteCanvas={setShowInviteCanvas}
+        sendInvite={sendInvite}
+      />
       <h3 className="pt-2">Manage Property</h3>
       <div className="pt-5 pb-5">
         <h5>Offers</h5>
@@ -417,7 +482,7 @@ const ManageSingleProperty = props => {
                 <div key={curIndex}>
                   <div>
                     {tenantName}{" "}
-                    <button className="btn text-primary ps-0" onClick={() => navigate(`/manage-tenancy/${curTenancy.id}`)}>
+                    <button className="btn text-primary ps-0" onClick={() => setSelectedTenToManage(curTenancy)}>
                       Manage Tenant
                     </button>
                   </div>

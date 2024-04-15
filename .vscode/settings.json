@@ -22,6 +22,7 @@
     "formik",
     "Homebase",
     "Offcanvas",
-    "providenciales"
+    "providenciales",
+    "Unauthorised"
   ]
 }
