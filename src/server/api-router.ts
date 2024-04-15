@@ -43,7 +43,15 @@ import { getProfileForLoggedInUser, updateSessionUrsProfile, uploadSessionUserPr
 import { sendContactUsMail } from "./routes/mailing-route";
 import { acceptOrDeclineOffer, sendOffer } from "./routes/offer-route";
 import { adminGetAllTenants, getTenantById } from "./routes/tenant-route";
-import { createTenancyRoute, getAllTenancies, getLandlordTenancies, getSessionUserTenancies, getTenancyById } from "./routes/tenancy-route";
+import {
+  acceptInviteToTenancy,
+  createTenancyRoute,
+  getAllTenancies,
+  getLandlordTenancies,
+  getSessionUserTenancies,
+  getTenancyById,
+  sendInviteLinkToTenantEmail
+} from "./routes/tenancy-route";
 import { getTenancyAgreementFromS3Bucket, uploadTenancyAgreement } from "./routes/tenancy-document-route";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
@@ -155,4 +163,9 @@ router.get("/tenancy/create", ensureAuthentication, createTenancyRoute);
 // /api/tenancy-document
 router.post("/tenancy-document/upload-agreement", ensureAuthentication, uploadMemory.any(), uploadTenancyAgreement);
 router.get("/tenancy-document/:tenancyId", ensureAuthentication, getTenancyAgreementFromS3Bucket);
+
+// /api/invite
+router.get("/invite/accept-invitation", acceptInviteToTenancy);
+router.post("/invite/send-invitation", ensureAuthentication, sendInviteLinkToTenantEmail);
+
 export default router;

@@ -16,7 +16,7 @@ export default class Tenancy extends Model<InferAttributes<Tenancy>, InferCreati
   declare mainContactNumber?: string;
   declare addressString?: string;
   declare rentalAgreementDate?: string;
-  declare lenghtInDays: number;
+  declare lenghtInDays?: number;
   declare isPaymentTogether: boolean;
   declare deposit?: number;
   declare isDepositPaid?: boolean;

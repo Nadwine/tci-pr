@@ -66,6 +66,7 @@ import MeetTheTeam from "./pages/MeetTheTeam";
 import TenantDashboard from "./pages/TenantDashboard";
 import Safety from "./pages/Safety";
 import Favourites from "./pages/Favourites";
+import AcceptInvitation from "./pages/AcceptInvitation";
 const tenMinute = 600000;
 
 function initTranslations() {
@@ -213,8 +214,9 @@ const Main = () => {
             <Route path="forget-password/:token" element={<ForgetPassword />} />
             <Route path="payments/rent/success" element={<ReoccurringPaymentNotify />} />
             <Route path="enquiries" element={<RequireLogin view={<MessageEnquiries />} />} />
+            <Route path="invite/accept" element={<AcceptInvitation />} />
             <Route path="admin/listings" element={<RequirePermission view={<AdminViewListings />} roles={["landlord", "admin"]} />} />
-            <Route path="user/dashboard" element={<TenantDashboard />} />
+            <Route path="user/dashboard" element={<RequirePermission view={<TenantDashboard />} roles={["tenant"]} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

@@ -10,7 +10,7 @@ import DocumentList from "../../components/landlord-n-admin/DocumentList";
 import { setActiveConversation } from "../../redux/reducers/messagesReducer";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { Accordion, Modal, Offcanvas } from "react-bootstrap";
+import { Accordion, Dropdown, DropdownButton, Modal, Offcanvas } from "react-bootstrap";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import SignaturePad from "signature_pad";
 import dayjs from "dayjs";
@@ -58,6 +58,7 @@ const ManageSingleProperty = props => {
   const tenantSignData = tenancyAgreement && tenancyAgreement?.metadata?.tenantsSignData;
   const allowPDFDownload = tenancyAgreement; // && (tenancyAgreement.metadata?.landlordSignData || tenancyAgreement.metadata?.tenantsSignData);
   const downloadText = tenantSigned || landlordSigned ? "Download Signed PDF" : "Download Unsigned PDF";
+  const [showInviteCanvas, setShowInviteCanvas] = useState(false);
 
   const loadPDF = async onGoingTenancies => {
     if (!onGoingTenancies || onGoingTenancies?.length === 0) return;
@@ -227,15 +228,96 @@ const ManageSingleProperty = props => {
     setUploading(false);
   };
 
+  const sendInvite = async (email, firstName, lastName) => {
+    if (!email || !firstName || !lastName) {
+      toast.error("Please fill in the details");
+      return;
+    }
+
+    const res = await axios.post("/api/invite/send-invitation", { email, firstName, lastName, propertyForRentId: property?.id });
+    if (res.status === 200) {
+      toast.success("Invitation Sent");
+      setShowInviteCanvas(false);
+    }
+    if (res.status !== 200) toast.error("Error sending invite. Please Try again");
+  };
+
   useEffect(() => {
     initialLoad();
   }, [showSignaturePad]);
+
+  const InvitationCanvas = () => {
+    const [email, setEmail] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [addTo, setAddTo] = useState("");
+    const [existingTenancyId, setExistingTenancyId] = useState("");
+    const selectedTenancy = onGoingTenancies?.filter(tc => tc.Tenants.find(t => t.id === tc.leadTenantid && tc.id === Number(existingTenancyId)))[0];
+    const selectedLead = selectedTenancy?.Tenants.find(t => t.id === selectedTenancy.leadTenantid);
+    const selectedLeadString = `${selectedLead?.firstName || ""} ${selectedLead?.lastName || ""}`.trim();
+
+    return (
+      <Offcanvas show={showInviteCanvas} onHide={() => setShowInviteCanvas(false)}>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Invite to tenancy</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <div className="d-flex flex-column">
+            <div className="py-2">
+              <label>Tenant email address</label>
+              <input value={email} onChange={e => setEmail(e.target.value)} className="form-control" />
+            </div>
+            <div className="py-2">
+              <label>Tenant First Name</label>
+              <input value={firstName} onChange={e => setFirstName(e.target.value)} className="form-control" />
+            </div>
+            <div className="py-2">
+              <label>Tenant Last Name</label>
+              <input value={lastName} onChange={e => setLastName(e.target.value)} className="form-control" />
+            </div>
+            {/* <div className="py-2 d-flex flex-row align-items-center">
+              <label>Add tenant to</label>
+              <DropdownButton onSelect={val => setAddTo(val || "")} className="ps-2" variant="secondary" title={addTo || "Options"}>
+                <Dropdown.Item eventKey="Existing Tenancy">Existing Tenancy</Dropdown.Item>
+                <Dropdown.Item eventKey="As new tenant">As new tenant</Dropdown.Item>
+              </DropdownButton>
+            </div> */}
+            {addTo === "Existing Tenancy" && (
+              <div className="py-2">
+                <DropdownButton
+                  onSelect={val => setExistingTenancyId(val || "")}
+                  className="ps-2"
+                  variant="secondary"
+                  title={selectedLeadString || "Select Tenancy"}
+                >
+                  {onGoingTenancies?.map((tc, i) => {
+                    const leadTenant = tc.Tenants.find(t => tc.leadTenantid === t.id);
+                    return (
+                      <Dropdown.Item key={i} eventKey={tc.id}>
+                        {leadTenant?.firstName} {leadTenant?.lastName}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </DropdownButton>
+              </div>
+            )}
+          </div>
+          <div>
+            <button onClick={() => sendInvite(email, firstName, lastName)} className="btn btn-primary">
+              Send Invite
+            </button>
+          </div>
+        </Offcanvas.Body>
+      </Offcanvas>
+    );
+  };
 
   if (!allowedToView && listing) return <h3>You do not have permission to view this page</h3>;
 
   return (
     <div className="p-md-5">
       <UploadModal show={uploading} />
+      <InvitationCanvas />
       <h3 className="pt-2">Manage Property</h3>
       <div className="pt-5 pb-5">
         <h5>Offers</h5>
@@ -343,6 +425,11 @@ const ManageSingleProperty = props => {
               );
             });
           })}
+          <div className="invitation-btn">
+            <button className="btn text-primary px-0 pt-5" onClick={() => setShowInviteCanvas(true)}>
+              Invite new tenant
+            </button>
+          </div>
         </div>
       </div>
       <div>
