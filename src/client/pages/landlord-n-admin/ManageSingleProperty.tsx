@@ -384,8 +384,8 @@ const ManageSingleProperty = props => {
         </div>
       </div>
       <div className="pb-5">
-        <h5>Expense & Financial Rent Data</h5>
-        <button className="btn text-primary ps-0" onClick={() => navigate(`/property/rent/${listing && listing?.id}/expense`)}>
+        <h5>Finance Expense & Rent Data Entry</h5>
+        <button className="btn text-primary ps-0" onClick={() => navigate(`/manage-property/rent/${listing && listing?.id}/finance`)}>
           Data Entry
         </button>
       </div>
