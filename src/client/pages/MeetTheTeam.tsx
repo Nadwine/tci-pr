@@ -45,7 +45,9 @@ const MeetTheTeam = props => {
       </div>
       <div className="d-flex flex-wrap pt-5">
         <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5 px-1">
-          <div className="img-container rounded" style={imgContainerStyle}></div>
+          <div className="img-container rounded" style={imgContainerStyle}>
+            <img src="/static/chrissy headshot.jpeg" style={{ height: "20px, width: 20px" }}></img>
+          </div>
           <div className="fs-5 pt-3">Christma Jean-Louis</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
             Chief Executive Officer
@@ -63,7 +65,9 @@ const MeetTheTeam = props => {
           </Button>
         </div>
         <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5 px-1">
-          <div className="img-container rounded" style={imgContainerStyle}></div>
+          <div className="img-container rounded" style={imgContainerStyle}>
+            <img src="/static/Herby Headshot.jpeg"></img>
+          </div>
           <div className="fs-5 pt-3">Herby Magny</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
             Chief Financial Officer
@@ -81,7 +85,9 @@ const MeetTheTeam = props => {
           </Button>
         </div>
         <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5 px-1">
-          <div className="img-container rounded" style={imgContainerStyle}></div>
+          <div className="img-container rounded" style={imgContainerStyle}>
+            <img src="/static/sama headshot.jpeg"></img>
+          </div>
           <div className="fs-5 pt-3">Brutchsama Jean-Louis</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
             Chief Technology Officer
@@ -99,10 +105,12 @@ const MeetTheTeam = props => {
           </Button>
         </div>
         <div className="col-12 col-md-6 d-flex align-items-center flex-column px-1">
-          <div className="img-container rounded" style={imgContainerStyle}></div>
+          <div className="img-container rounded" style={imgContainerStyle}>
+            <img src="/static/Nae Headshot.jpeg"></img>
+          </div>
           <div className="fs-5 pt-3">Nadwine Louis</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
-            Lead Software Engineer
+            Software Engineer
           </div>
           {!naeOpen && (
             <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden" }}>
