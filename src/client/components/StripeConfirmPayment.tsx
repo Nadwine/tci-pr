@@ -81,7 +81,7 @@ export const StripeConfirmPayment = (props: any) => {
       <div className="fs-4 pt-5">Link Debit Card</div>
       {/* <Swit options={{ supportedCountries: ["SEPA"] }} /> */}
       <input />
-      <button className="btn-sm mt-4 btn-success">Save</button>
+      <button className="btn-sm mt-4 bg-primary">Save</button>
     </form>
   );
 };

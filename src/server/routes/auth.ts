@@ -262,7 +262,10 @@ export const resendPasswordResetLinkToUserEmail = async (req: Request, res: Resp
     expiresIn: "5h"
   });
   const emailLink = `${process.env.BASE_URL}/forget-password/${emailToken}?status=sent`;
-  const html = `<html><p style="font-size: medium; font-weight: bold;">Hi!</p><br></br><p>Please click this link to reset your password</p><a href="${emailLink}">${emailLink}</a><html>`;
+  const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
+  <br></br>
+  <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
+  <p style="font-family: arial;">A password change has been requested for your account. If this was you, please click this link to reset your password:</p><a href="${emailLink}" style="font-family: arial; color: #087990;">Reset Password</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
 
   const AWS = require("aws-sdk");
   const ses = new AWS.SES({

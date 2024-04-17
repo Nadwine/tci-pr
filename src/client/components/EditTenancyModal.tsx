@@ -104,7 +104,7 @@ const EditTenancyModal = (props: Props) => {
               value={String(isDepositPaid)}
               checked={Boolean(isDepositPaid)}
               onChange={e => setIsDepositPaid(e.target.checked)}
-              className="col-4"
+              className="col-1"
               type="checkbox"
             />
           </div>
@@ -128,7 +128,7 @@ const EditTenancyModal = (props: Props) => {
       </Modal.Body>
       <Modal.Footer>
         <div className="me-auto">
-          <Button onClick={() => setShowArchiveWarning(true)} variant="secondary">
+          <Button onClick={() => setShowArchiveWarning(true)} variant="danger">
             <i className="bi bi-trash" />
           </Button>
           {showArchiveWarning && (
@@ -140,7 +140,7 @@ const EditTenancyModal = (props: Props) => {
                 <button onClick={() => setShowArchiveWarning(false)} className="btn text-primary">
                   Exit
                 </button>
-                <button onClick={() => removeTenancy()} className="btn btn-danger">
+                <button onClick={() => removeTenancy()} className="btn btn-danger" style={{ backgroundColor: "red" }}>
                   Remove
                 </button>
               </div>
@@ -150,7 +150,7 @@ const EditTenancyModal = (props: Props) => {
         <Button variant="secondary" onClick={() => setSelectedTenToManage(undefined)}>
           Cancel
         </Button>
-        <Button variant="primary" onClick={() => updateTenancy()}>
+        <Button onClick={() => updateTenancy()} style={{ backgroundColor: "#11828d" }}>
           Save Changes
         </Button>
       </Modal.Footer>

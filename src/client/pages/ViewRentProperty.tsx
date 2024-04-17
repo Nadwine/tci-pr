@@ -180,7 +180,7 @@ const ViewRentProperty = props => {
               <div className="title fw-bolder col-12">
                 {listing.title}{" "}
                 {listing.listingStatus === "in offer" ? (
-                  <span className="badge rounded-pill text-light fw-bold" style={{ backgroundColor: "#ffc008" }}>
+                  <span className="badge rounded-pill text-dark fw-bold" style={{ backgroundColor: "#ffc008" }}>
                     UNDER OFFER
                   </span>
                 ) : (

@@ -255,7 +255,7 @@ export const MyTenancy = props => {
                                   setShowSignModal(true);
                                   setCurrentTenancySignId(currTenancy.id);
                                 }}
-                                className="btn-sm btn-success ms-3"
+                                className="btn-sm bg-primary ms-3"
                               >
                                 {" "}
                                 View & Sign
@@ -285,15 +285,15 @@ export const MyTenancy = props => {
                 <h5>Tenancy</h5>
                 <table className="table table table-borderless">
                   <thead>
-                    <tr style={{ WebkitTextStroke: "0.5px" }}>
+                    <tr>
                       <th scope="col">Start Date</th>
-                      <th scope="col">Lead Tenant</th>
+                      {/* <th scope="col">Lead Tenant</th> */}
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td>{currTenancy?.rentalAgreementDate ? dayjs(currTenancy?.rentalAgreementDate).format("MMM D, YYYY") : "Pending"}</td>
-                      <td>{currTenancy.firstName !== leadTenant?.firstName ? "No" : "Yes"}</td>
+                      {/* <td>{currTenancy.firstName !== leadTenant?.firstName ? "No" : "Yes"}</td> */}
                     </tr>
                   </tbody>
                 </table>

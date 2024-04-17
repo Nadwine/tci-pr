@@ -127,7 +127,7 @@ const RentPaymentsAndExpense = props => {
       <>
         <Modal show={props.show} centered onHide={() => setShowCreateExpenseModal(false)}>
           <Modal.Header closeButton>
-            <Modal.Title>New Expense</Modal.Title>
+            <Modal.Title>Add Expense</Modal.Title>
           </Modal.Header>
           <form ref={formRef} onSubmit={uploadDoc} className="d-flex flex-column justify-content-center">
             <Modal.Body>
@@ -180,13 +180,13 @@ const RentPaymentsAndExpense = props => {
               )}
               {documentType && documentType === "receipt" && (
                 <div className="py-2 d-flex align-items-center">
-                  <label className="pe-4">Attach Expense Data</label>
+                  <label>Attach Expense Data</label>
                   <input
                     name="attachExpense"
                     value={String(attachExpense)}
                     checked={Boolean(attachExpense)}
                     onChange={e => setAttachExpense(e.target.checked)}
-                    className="col-4"
+                    className="col-1"
                     type="checkbox"
                   />
                 </div>
@@ -266,9 +266,9 @@ const RentPaymentsAndExpense = props => {
   return (
     <div className="finance-page px-md-5">
       <CreateExpenseModal show={showCreateExpenseModal} />
-      <h5 className="pt-3">Rent & Financial Data</h5>
+      <h5 className="pt-4">Rent & Financial Data</h5>
       <div className="creation-menu py-4">
-        <button onClick={() => setShowCreateExpenseModal(true)} className="btn btn-success">
+        <button onClick={() => setShowCreateExpenseModal(true)} className="btn bg-primary">
           Log New Expense
         </button>
       </div>

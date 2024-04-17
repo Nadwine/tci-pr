@@ -197,7 +197,7 @@ const ManageSingleProperty = props => {
       return;
     }
     if (!onGoingTenancies) {
-      console.log("no ongoing tenancies");
+      console.log("No ongoing tenancies");
       return;
     }
 
@@ -213,7 +213,7 @@ const ManageSingleProperty = props => {
         body[pair[0]] = pair[1];
       }
       if (!body.file.name) {
-        toast.error("please select a file to upload");
+        toast.error("Please select a file to upload");
         return;
       }
 
@@ -270,7 +270,16 @@ const ManageSingleProperty = props => {
         sendInvite={sendInvite}
       />
       <h3 className="pt-2">Manage Property</h3>
-      <div className="pt-5 pb-5">
+      {listing?.listingStatus === "in offer" && (
+        <div className="card my-4 border-info p-0" style={{ borderLeft: "5px solid #cff4fc", backgroundColor: "#cff4fc", width: "85%" }}>
+          <div className="card-body">
+            {" "}
+            <i className="bi bi-exclamation-triangle"></i> Now that you have accepted an offer, please ensure that the relevant documents are uploaded for
+            tenancies.
+          </div>
+        </div>
+      )}
+      <div className="pt-4 pb-5">
         <h5>Offers</h5>
         <OfferList offers={offers} onSubmitOffer={onSubmitOffer} onClickViewEnquiry={onClickViewEnquiry} />
       </div>
@@ -349,8 +358,8 @@ const ManageSingleProperty = props => {
               <div>Main Contact Email: {onGoingTenancies[0]?.mainContactEmail}</div>
               <div>Main Contact Number: {onGoingTenancies[0]?.mainContactNumber}</div>
               <div className="pt-4">
-                Status: <br /> {!tenantSigned && "Tenant"} <br />
-                {!landlordSigned && "Property Manager"}
+                Status: <br /> {!tenantSigned && "Tenant: need to sign"} <br />
+                {!landlordSigned && "Property Manager: need to sign"}
                 <br /> {onGoingTenancies[0]?.tenancyStatus}
               </div>
             </Accordion.Body>
@@ -368,7 +377,7 @@ const ManageSingleProperty = props => {
                 <div key={curIndex}>
                   <div>
                     {tenantName}{" "}
-                    <button className="btn text-primary ps-0" onClick={() => setSelectedTenToManage(curTenancy)}>
+                    <button className="btn text-light ms-1 p-1" onClick={() => setSelectedTenToManage(curTenancy)} style={{ backgroundColor: "#11828d" }}>
                       Manage Tenant
                     </button>
                   </div>
@@ -377,7 +386,7 @@ const ManageSingleProperty = props => {
             });
           })}
           <div className="invitation-btn">
-            <button className="btn text-primary px-0 pt-5" onClick={() => setShowInviteCanvas(true)}>
+            <button className="btn text-primary px-0 pt-3" onClick={() => setShowInviteCanvas(true)}>
               Invite new tenant
             </button>
           </div>

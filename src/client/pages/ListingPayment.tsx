@@ -112,9 +112,9 @@ const ListingPayment = props => {
 
   return (
     <div className="listing-payment">
-      <div className="d-flex flex-column justify-content-center mx-5">
-        <h3 className="m-5">Listing Payment</h3>
-        <Accordion>
+      <div className="d-flex flex-column justify-content-center mx-1 mx-md-5">
+        <h3 className="my-5">Listing Payment</h3>
+        <Accordion defaultActiveKey={"0"}>
           <Accordion.Item eventKey="0">
             <Accordion.Header>Tenant Payment Link</Accordion.Header>
             <Accordion.Body>
@@ -138,13 +138,13 @@ const ListingPayment = props => {
               )}
               <div className="mt-5">{linkGeneratedAt && "Please send this link to the respected tenant"}</div>
               <div className="mt-2">
-                <button disabled={linkGeneratedAt ? !islinkExpired : false} onClick={() => submitPaymentLinkCreation()} className="btn btn-success">
+                <button disabled={linkGeneratedAt ? !islinkExpired : false} onClick={() => submitPaymentLinkCreation()} className="btn bg-primary">
                   Generate New Link
                 </button>
               </div>
             </Accordion.Body>
           </Accordion.Item>
-          <Accordion.Item eventKey="1">
+          {/* <Accordion.Item eventKey="1">
             <Accordion.Header>LandLord Details</Accordion.Header>
             <Accordion.Body>
               <h4>Landlord to Pay</h4>
@@ -173,7 +173,7 @@ const ListingPayment = props => {
                   <label>Address</label>
                   <input name="address" className="form-control" defaultValue={landlordUser?.ListingLandlord?.addressString} required />
                 </div>
-                <button className="btn btn-primary">+ Add Credit Card</button>
+                <button className="btn bg-primary">+ Add Credit Card</button>
               </form>
               <div className="text-danger pt-3">TODO Show card alrady linked and make remove card button</div>
               {clientSecret && (
@@ -186,9 +186,11 @@ const ListingPayment = props => {
           <Accordion.Item eventKey="2">
             <Accordion.Header>Pay Landlord</Accordion.Header>
             <Accordion.Body>
-              <button onClick={() => payoutlandlord()}>Pay</button>
+              <button className="btn bg-primary" onClick={() => payoutlandlord()}>
+                Pay
+              </button>
             </Accordion.Body>
-          </Accordion.Item>
+          </Accordion.Item> */}
         </Accordion>
       </div>
     </div>
