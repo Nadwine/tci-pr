@@ -262,7 +262,7 @@ export const resendPasswordResetLinkToUserEmail = async (req: Request, res: Resp
     expiresIn: "5h"
   });
   const emailLink = `${process.env.BASE_URL}/forget-password/${emailToken}?status=sent`;
-  const html = `<html>Please click this link to reset your password <a href="${emailLink}">${emailLink}</a><html>`;
+  const html = `<html><p style="font-size: medium; font-weight: bold;">Hi!</p><br></br><p>Please click this link to reset your password</p><a href="${emailLink}">${emailLink}</a><html>`;
 
   const AWS = require("aws-sdk");
   const ses = new AWS.SES({

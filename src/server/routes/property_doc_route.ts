@@ -77,11 +77,12 @@ export const uploadNewPropertyDoc = async (req: Request, res: Response) => {
               description: description,
               amount: expenseAmount,
               operation: operation,
+              propertyForRentId: propertyForRentId,
               category: category
             })
           : null;
         //create new pic
-        await PropertyDocument.create({
+        const propertyDocument = await PropertyDocument.create({
           mediaType: mediaType,
           mediaFormat: format,
           s3BucketKey: val.Key,
@@ -91,6 +92,12 @@ export const uploadNewPropertyDoc = async (req: Request, res: Response) => {
           propertyForRentId: propertyForRentId,
           label: `${filename}`
         });
+
+        if (attachExpense) {
+          expense?.update({
+            propertyDocumentId: propertyDocument.id
+          });
+        }
       });
 
     return res.json({ message: "success" });

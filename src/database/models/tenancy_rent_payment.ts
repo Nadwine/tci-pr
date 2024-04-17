@@ -9,6 +9,7 @@ export default class TenancyRentPayment extends Model<InferAttributes<TenancyRen
   declare id: CreationOptional<number>;
   declare amount: number;
   declare payedAt: string;
+  declare expenseId: number;
   declare metadata?: any;
   declare tenancyId: number;
   declare createdAt: CreationOptional<Date>;

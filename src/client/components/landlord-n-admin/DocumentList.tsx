@@ -85,17 +85,19 @@ const DocumentList = (props: Props) => {
                   </option>
                 </select>
               </div>
-              <div className="py-2 d-flex align-items-center">
-                <label className="pe-4">Attach Expense Data</label>
-                <input
-                  name="attachExpense"
-                  value={String(attachExpense)}
-                  checked={Boolean(attachExpense)}
-                  onChange={e => setAttachExpense(e.target.checked)}
-                  className="col-4"
-                  type="checkbox"
-                />
-              </div>
+              {documentType && documentType === "receipt" && (
+                <div className="py-2 d-flex align-items-center">
+                  <label className="pe-4">Attach Expense Data</label>
+                  <input
+                    name="attachExpense"
+                    value={String(attachExpense)}
+                    checked={Boolean(attachExpense)}
+                    onChange={e => setAttachExpense(e.target.checked)}
+                    className="col-4"
+                    type="checkbox"
+                  />
+                </div>
+              )}
               {attachExpense && (
                 <div>
                   <div className="py-2 d-flex align-items-center">

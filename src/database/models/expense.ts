@@ -10,6 +10,8 @@ export default class Expense extends Model<InferAttributes<Expense>, InferCreati
   declare description: string;
   declare amount: number;
   declare category: "rent_payment" | "purchase";
+  declare propertyForRentId: number;
+  declare propertyDocumentId: CreationOptional<number>;
   declare stripePaymentInfo: any;
   declare operation: "add" | "minus";
 }
