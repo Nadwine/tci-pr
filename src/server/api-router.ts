@@ -56,6 +56,7 @@ import {
 } from "./routes/tenancy-route";
 import { getTenancyAgreementFromS3Bucket, uploadTenancyAgreement } from "./routes/tenancy-document-route";
 import { uploadNewPropertyDoc } from "./routes/property_doc_route";
+import { createNewExpenseWithDoc } from "./routes/expense-route";
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
@@ -174,5 +175,8 @@ router.post("/property-document/upload", ensureAuthentication, uploadMemory.any(
 // /api/invite
 router.get("/invite/accept-invitation", acceptInviteToTenancy);
 router.post("/invite/send-invitation", ensureAuthentication, sendInviteLinkToTenantEmail);
+
+// /api/expense
+router.post("/expense/create", ensureAuthentication, uploadMemory.any(), createNewExpenseWithDoc);
 
 export default router;

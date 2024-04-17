@@ -8,13 +8,12 @@ import S3 from "aws-sdk/clients/s3";
 import sharp from "sharp";
 import PropertyDocument from "../../database/models/property_document";
 import Expense from "../../database/models/expense";
+import TenancyRentPayment from "../../database/models/tenancy_rent_payment";
 
 export const createNewExpenseWithDoc = async (req: Request, res: Response) => {
-  const { propertyForRentId, documentType, expenseType, date, attachExpense, description, expenseAmount, operation, category } = req.body;
+  const { propertyForRentId, documentType, expenseType, date, attachExpense, description, expenseAmount, operation, category, selectedTenancyId } = req.body;
   const files = req.files ?? [];
   const sessionUsr = req.session.user;
-
-  if (files.length === 0) return res.status(400).json({ message: "Bad request, Please Fill in All Required Data" });
 
   try {
     const isAdmin = req.session.user!.accountType === "admin";
@@ -43,6 +42,15 @@ export const createNewExpenseWithDoc = async (req: Request, res: Response) => {
           category: category
         })
       : null;
+
+    if (selectedTenancyId) {
+      await TenancyRentPayment.create({
+        amount: expenseAmount,
+        payedAt: date,
+        expenseId: expense?.id || 0,
+        tenancyId: selectedTenancyId
+      });
+    }
 
     if (files[0]) {
       const s3Bucket = new S3({
@@ -90,7 +98,7 @@ export const createNewExpenseWithDoc = async (req: Request, res: Response) => {
             mediaFormat: format,
             s3BucketKey: val.Key,
             mediaUrl: mediaURl,
-            documentType: documentType,
+            documentType: documentType || expenseType,
             expenseId: expense?.id,
             propertyForRentId: propertyForRentId,
             label: `${filename}`

@@ -60,6 +60,7 @@ const RentPaymentsAndExpense = props => {
   const tenancies = property?.Tenancies;
   const onGoingTenancies = tenancies?.filter(t => t.tenancyStatus !== "ended" && t.isHistory === false);
   const tenancyAgreement = onGoingTenancies && onGoingTenancies[0]?.TenancyDocuments?.find(d => d.documentType === "tenancy-agreement");
+  const allTenants = onGoingTenancies?.map(tc => tc.Tenants.find(t => t));
   const expenses = property?.Expenses;
   const propertyDocs = property?.PropertyDocuments;
   const offers = listing?.Offers;
@@ -83,6 +84,7 @@ const RentPaymentsAndExpense = props => {
     const [expenseAmount, setExpenseAmount] = useState<number>();
     const [date, setDate] = useState("");
     const [description, setDescription] = useState("");
+    const [selectedTenancyId, setSelectedTenancyId] = useState<number>();
     const formRef = useRef(null);
 
     const uploadDoc = async e => {
@@ -92,9 +94,16 @@ const RentPaymentsAndExpense = props => {
       for (var pair of formData.entries()) {
         body[pair[0]] = pair[1];
       }
-      if (!body.file.name) {
-        toast.error("please select a file to upload");
-        return;
+      if (body.expenseType === "rent_payment") {
+        if (!body.attachExpense) {
+          toast.error("Please attach expense data for this rent payment.");
+          return;
+        }
+        if (!body.selectedTenancyId) {
+          toast.error("Please select a tenant");
+          return;
+        }
+        body.category = "rent_payment";
       }
 
       if (attachExpense) {
@@ -104,7 +113,7 @@ const RentPaymentsAndExpense = props => {
         }
       }
 
-      const res = await axios.post("/api/property-document/upload", body, { headers: { "Content-Type": "multipart/form-data" } });
+      const res = await axios.post("/api/expense/create", body, { headers: { "Content-Type": "multipart/form-data" } });
       if (res.status === 200) {
         toast.success("Success");
         setShowCreateExpenseModal(false);
@@ -126,15 +135,30 @@ const RentPaymentsAndExpense = props => {
                 <label className="pe-5">Expense Type</label>
                 <div className="col-7">
                   <select name="expenseType" onChange={e => setExpenseType(e.target.value)} className="form-select">
-                    <option selected={expenseType === "rent_payment"} value="receipt">
+                    <option selected={expenseType === "rent_payment"} value="rent_payment">
                       Rent Payment
                     </option>
-                    <option selected={expenseType === "purchase"} value="inspection">
+                    <option selected={expenseType === "purchase"} value="purchase">
                       Purchase
                     </option>
                   </select>
                 </div>
               </div>
+              {expenseType === "rent_payment" && (
+                <div className="py-2 d-flex align-items-center">
+                  <label className="pe-4">Choose Tenant</label>
+                  <select name="selectedTenancyId" onChange={e => setSelectedTenancyId(Number(e.target.value))} className="form-select">
+                    <option selected value="">
+                      Select an option
+                    </option>
+                    {onGoingTenancies?.map((tc, i) => (
+                      <option key={i} selected={selectedTenancyId === tc.id} value={tc.id}>
+                        {tc.Tenants[0]?.firstName} {tc.Tenants[0]?.lastName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
               <div className="py-2 d-flex align-items-center">
                 <label className="pe-5">File</label>
                 <div className="col-7">
@@ -224,7 +248,7 @@ const RentPaymentsAndExpense = props => {
             <Modal.Footer>
               <div>
                 <button className="btn text-primary" type="submit">
-                  Upload
+                  Log
                 </button>
               </div>
             </Modal.Footer>
