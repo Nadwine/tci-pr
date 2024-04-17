@@ -26,7 +26,7 @@ const MeetTheTeam = props => {
   const [samaOpen, setSamaOpen] = useState(false);
   const [naeOpen, setNamOpen] = useState(false);
   const imgContainerStyle = {
-    width: "210px",
+    width: "220px",
     height: "250px",
     backgroundColor: "grey"
   };
