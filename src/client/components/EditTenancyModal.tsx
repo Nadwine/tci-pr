@@ -147,11 +147,11 @@ const EditTenancyModal = (props: Props) => {
             </div>
           )}
         </div>
-        <Button variant="secondary" onClick={() => setSelectedTenToManage(undefined)}>
+        <Button variant="link" className="text-secondary text-decoration-none" onClick={() => setSelectedTenToManage(undefined)}>
           Cancel
         </Button>
-        <Button onClick={() => updateTenancy()} style={{ backgroundColor: "#11828d" }}>
-          Save Changes
+        <Button onClick={() => updateTenancy()} style={{ border: "none", backgroundColor: "#11828d" }}>
+          Save
         </Button>
       </Modal.Footer>
     </Modal>

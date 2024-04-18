@@ -377,7 +377,7 @@ const ManageSingleProperty = props => {
                 <div key={curIndex}>
                   <div>
                     {tenantName}{" "}
-                    <button className="btn text-light ms-1 p-1" onClick={() => setSelectedTenToManage(curTenancy)} style={{ backgroundColor: "#11828d" }}>
+                    <button className="btn text-light ms-3 p-1" onClick={() => setSelectedTenToManage(curTenancy)} style={{ backgroundColor: "#11828d" }}>
                       Manage Tenant
                     </button>
                   </div>

@@ -236,6 +236,12 @@ color: #077990;
 color: #075ad3;
 }
 
+.accordion-button:not(.collapsed){
+  color: black;
+  background-color: #f3f7fd;
+}
+
+
 .greyed-text{
   color: #4d6384;
 }
