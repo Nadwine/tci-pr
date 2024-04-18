@@ -21,18 +21,18 @@ const CookieConsentModal = props => {
     <div className="px-md-5">
       <Offcanvas show={show} scroll onHide={handleClose} placement="bottom" {...props}>
         <Offcanvas.Header style={{ height: "1em", padding: "20px 0px 0px 20px" }}>
-          <Offcanvas.Title>Cookie consent</Offcanvas.Title>
+          <Offcanvas.Title>Cookie Consent</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body style={{ fontSize: "13px" }}>
           <div className="py-md-3">
             By using this website you agree to the processing of{" "}
-            <button onClick={() => navigate("/cookie-terms")} style={{ fontSize: "13px" }} className="btn btn-link m-0 p-0">
+            <button onClick={() => navigate("/cookie-terms")} style={{ fontSize: "13px" }} className="btn btn-link link-dark m-0 p-0">
               cookies
             </button>{" "}
             to enable the basic functions of the site.
           </div>
-          <div className="w-100">
-            <button className="float-end btn btn-sm btn-primary" onClick={handleAcceptAll}>
+          <div className="w-100 text-center">
+            <button className="float-start mt-2 btn btn-sm btn-dark" onClick={handleAcceptAll}>
               Accept All
             </button>
           </div>
