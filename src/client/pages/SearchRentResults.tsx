@@ -10,6 +10,7 @@ import { faBed, faBath } from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
 import LandlordProfileModal from "../components/LandlordProfileModal";
 import GonePropertyOverlay from "../components/GonePropertyOverlay";
+import { Avatar } from "@mui/material";
 
 const SearchRentResults = props => {
   const navigate = useNavigate();
@@ -100,6 +101,86 @@ const SearchRentResults = props => {
     navigate(`/property/rent/${id}`);
   };
 
+  const getUserPicFromListing = (listing: Listing, width?: number, height?: number, enablePlaceHolder?: boolean): React.ReactElement => {
+    const listingManager = listing.listingManager;
+
+    if (listingManager === "admin") {
+      const adminProfile = listing.Admin?.User?.Profile;
+      if (adminProfile?.ProfileMedia?.length === 0) {
+        // if do not have media return text circle
+        if (!enablePlaceHolder) {
+          return (
+            <span
+              onClick={() => {
+                setViewListingProfile(listing);
+                setShowProfileModal(true);
+              }}
+              className="btn btn-link bg-white border-info rounded-circle text-black fs-5"
+              style={{ width: width || "45px", height: height || "45px", marginLeft: "7px" }}
+            >
+              {adminProfile?.firstName?.charAt(0)}
+            </span>
+          );
+        } else {
+          // render placeholder pic
+          return <img src="/static/avatar.png" style={{ width: width || "45px", height: height || "45px" }}></img>;
+        }
+      } else {
+        // return MUI avatar
+        return (
+          <Avatar
+            style={{ width: width || "45px", height: height || "45px" }}
+            className="point"
+            onClick={() => {
+              setViewListingProfile(listing);
+              setShowProfileModal(true);
+            }}
+            src={adminProfile?.ProfileMedia[0].mediaUrl}
+          />
+        );
+      }
+    }
+
+    if (listingManager === "landlord") {
+      const landlordProfile = listing.ListingLandlord?.User?.Profile;
+      if (landlordProfile?.ProfileMedia?.length === 0) {
+        // if do not have media return text circle
+        if (!enablePlaceHolder) {
+          return (
+            <span
+              onClick={() => {
+                setViewListingProfile(listing);
+                setShowProfileModal(true);
+              }}
+              className="btn btn-link bg-white border-info rounded-circle text-black fs-5"
+              style={{ width: width || "45px", height: height || "45px", marginLeft: "7px" }}
+            >
+              {landlordProfile?.firstName?.charAt(0)}
+            </span>
+          );
+        } else {
+          // render Placeholderpic
+          return <img src="/static/avatar.png" style={{ width: width || "45px", height: height || "45px" }}></img>;
+        }
+      } else {
+        // return MUI avatar
+        return (
+          <Avatar
+            style={{ width: width || "45px", height: height || "45px" }}
+            className="point"
+            onClick={() => {
+              setViewListingProfile(listing);
+              setShowProfileModal(true);
+            }}
+            src={landlordProfile?.ProfileMedia[0].mediaUrl}
+          />
+        );
+      }
+    }
+
+    return <div></div>;
+  };
+
   return (
     <div className="search-results d-flex row-cols-auto flex-wrap">
       <div className="w-100 text-center text-danger">{serverError}</div>
@@ -158,16 +239,7 @@ const SearchRentResults = props => {
                     <p className="fw-bold" style={{ color: "#087990", fontSize: "12px" }}>
                       Posted by
                     </p>
-                    <span
-                      onClick={() => {
-                        setViewListingProfile(listing);
-                        setShowProfileModal(true);
-                      }}
-                      className="btn btn-link bg-white border-info rounded-circle text-black fs-5"
-                      style={{ width: "45px", height: "45px", marginLeft: "7px" }}
-                    >
-                      {listing?.Admin?.User?.email?.charAt(0) || listing?.ListingLandlord?.firstName?.charAt(0)}
-                    </span>
+                    {getUserPicFromListing(listing)}
                   </div>
                 </div>
                 <div onClick={() => viewProperty(listing.id)} className="filler point" style={{ width: "100%", height: "40%" }} />
@@ -189,7 +261,14 @@ const SearchRentResults = props => {
           Next
         </button>
       </div>
-      {viewListingProfile && <LandlordProfileModal setShow={setShowProfileModal} listing={viewListingProfile} show={showProfileModal} />}
+      {viewListingProfile && (
+        <LandlordProfileModal
+          setShow={setShowProfileModal}
+          profileElement={getUserPicFromListing(viewListingProfile, 120, 120, true)}
+          listing={viewListingProfile}
+          show={showProfileModal}
+        />
+      )}
     </div>
   );
 };

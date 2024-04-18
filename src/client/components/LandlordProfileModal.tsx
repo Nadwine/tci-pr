@@ -11,16 +11,17 @@ type Props = {
   show: boolean;
   listing: Listing;
   setShow: (boolean) => void;
+  profileElement: React.ReactElement;
 };
 
 export const LandlordProfileModal = (props: Props) => {
-  const { show, listing, setShow } = props;
+  const { show, listing, setShow, profileElement } = props;
   const [landlordProperties, setLandlordProperties] = useState<Listing[]>([]);
   const navigate = useNavigate();
 
-  const isPostByAdmin = listing.adminId != null;
+  const isManagedByAdmin = listing.listingManager === "admin";
   const landlordPostButProfileIncomplete = listing.adminId == null && listing.ListingLandlord == null;
-  const showHomeBase = isPostByAdmin || landlordPostButProfileIncomplete;
+  const showHomeBase = isManagedByAdmin || landlordPostButProfileIncomplete;
 
   const getProperties = async () => {
     const res = await axios.get(`/api/listing/landlord/profile-properties/${listing.ListingLandlord?.userId || listing.Admin?.userId}`);
@@ -48,31 +49,32 @@ export const LandlordProfileModal = (props: Props) => {
               <h6>
                 Posted by <span className="fw-bold">TCI HOMEBASE PROPERTY MANAGEMENT</span>
               </h6>
+              <div className="d-flex justify-content-center">{profileElement}</div>
               <p className="pt-3">Find out more about TCI Homebase on here-make link</p>
             </div>
           )}
-          {!isPostByAdmin && listing.ListingLandlord && (
+          {!isManagedByAdmin && listing.ListingLandlord && (
             <div>
               <div className="d-flex flex-column align-items-center">
                 <h5 className="mb-3 justify-content-center" style={{ fontWeight: "700px" }}>
                   {listing.ListingLandlord?.firstName} {listing.ListingLandlord.lastName}
                 </h5>
-                <img src="/static/avatar.png" style={{ width: "120px", height: "115px" }}></img>
+                {profileElement}
               </div>
               <hr className="mt-5" />
               <h6 style={{ fontWeight: "700px" }}>Date Joined</h6>
               <p className="text-secondary">{dayjs(listing.ListingLandlord?.createdAt).fromNow()}</p>
               <h6 style={{ fontWeight: "700px" }}>Home Island</h6>
               <p className="text-secondary">{listing.ListingLandlord?.homeIsland}</p>
-              <h6 style={{ fontWeight: "700px" }}>Contact</h6>
-              <p className="text-secondary">{listing.ListingLandlord?.phoneNumber}</p>
+              {/* <h6 style={{ fontWeight: "700px" }}>Contact</h6>
+              <p className="text-secondary">{listing.ListingLandlord?.phoneNumber}</p> */}
               <hr />
               <h6 style={{ fontWeight: "700px" }}>Properties</h6>
               {landlordProperties.map((l, i) => (
                 <div key={i}>
-                  <a className="link-opacity-10 link-dark pointer" onClick={() => navigate(`/property/rent/${listing.id}`)}>
+                  <button className="btn text-primary point ps-0" onClick={() => navigate(`/property/rent/${listing.id}`)}>
                     {l.title}, {l.Address.settlement}
-                  </a>
+                  </button>
                 </div>
               ))}
             </div>
