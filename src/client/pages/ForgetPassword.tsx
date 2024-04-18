@@ -127,7 +127,7 @@ const ForgetPassword = () => {
                 <input
                   type="text"
                   className=" form-control"
-                  style={{ width: "20em", height: "3em" }}
+                  style={{ minWidth: "16em", height: "3em" }}
                   placeholder="Email"
                   onChange={e => setEmail(e.target.value)}
                 />
