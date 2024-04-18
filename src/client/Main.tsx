@@ -58,7 +58,6 @@ import Landlord from "./pages/Landlord";
 import MyTenancy from "./pages/MyTenancy";
 import ManageSingleProperty from "./pages/landlord-n-admin/ManageSingleProperty";
 import AdminTenancyTable from "./components/admin/AdminTenancyTable";
-import AboutUsMobile from "./pages/AboutUsMobile";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import CookieTerms from "./pages/CookieTerms";
 import PrivacyTerms from "./pages/PrivacyTerms";
@@ -191,7 +190,6 @@ const Main = () => {
             <Route path="feedback" element={<Feedback />} />
             <Route path="temp" element={<TempHome />} />
             <Route path="about/us/landlord" element={<Landlord />} />
-            <Route path="/test-mobile" element={<AboutUsMobile />} />
             <Route path="user" element={<RequireLogin view={<UserProfile />} />} />
             <Route path="listing-success" element={<SubmitListingRedirect />} />
             <Route path="landlord/dashboard" element={<RequirePermission view={<LandlordDashboard />} roles={["landlord"]} />} />

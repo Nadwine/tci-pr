@@ -18,7 +18,8 @@ function Navbar() {
 
   const contactClick = () => {
     if (window.location.pathname === "/about") {
-      document.getElementById("contact-btn")?.focus();
+      document.getElementById("contact-btn-mobile")?.focus();
+      document.getElementById("contact-btn-desktop")?.focus();
       setIsCollapse(true);
     } else {
       navigate("/about?focus-contact=true");
