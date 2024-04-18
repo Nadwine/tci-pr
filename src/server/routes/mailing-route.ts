@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 export const sendContactUsMail = async (req: Request, res: Response) => {
   const { email, firstName, lastName, message, phone } = req.body;
   const emailOrPhone = email || phone;
-  const inValid = !email || !firstName || !lastName || !message || !emailOrPhone;
+  const inValid = !email || !firstName || !lastName || !message;
   if (inValid) return res.status(400).json({ message: "Provide the required fields" });
 
   const mailText = `
