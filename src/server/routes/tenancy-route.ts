@@ -201,7 +201,7 @@ export const sendInviteLinkToTenantEmail = async (req: Request, res: Response) =
     <hr></hr>
     <br></br>
     <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
-    <p style="font-family: arial;">You have been invited to join a tenancy. Please click the link to accept and join this tenancy: </p><a href="${emailLink}" style="font-family: arial; color: #087990">Join Tenancy</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+    <p style="font-family: arial;">You have been invited to join a tenancy. Please click the button below to accept and join this tenancy: </p><a href="${emailLink}" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Join Tenancy</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
 
     // Send Invitation Email
     const AWS = require("aws-sdk");
@@ -326,7 +326,7 @@ export const acceptInviteToTenancy = async (req: Request, res: Response) => {
       <hr></hr>
       <br></br>
       <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
-      <p style="font-family: arial;">Here are your TCI Homebase login details. We recommend that you change your password after you've suceessfully logged in.</p><p style="font-family: arial">Email: ${email} Password: ${newPassword} </p><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+      <p style="font-family: arial;">Here are your TCI Homebase login details. We recommend that you change your password after you've successfully logged in.</p><p style="font-family: arial">Email: ${email} Password: ${newPassword} </p><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
 
       // Send Invitation Email
       const AWS = require("aws-sdk");

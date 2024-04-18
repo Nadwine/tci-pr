@@ -144,7 +144,7 @@ export const adminCreateLandLordForListing = async (req: Request, res: Response)
       <hr></hr>
       <br></br>
       <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
-      <p style="font-family: arial;">Please click this link to reset your password:</p><a href="${emailLink}" style="font-family: arial; color: #087990;">Reset Password</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+      <p style="font-family: arial;">Please click the button below to reset your password:</p><a href="${emailLink}" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Reset Password</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
 
       const AWS = require("aws-sdk");
       const ses = new AWS.SES({

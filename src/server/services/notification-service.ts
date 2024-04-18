@@ -41,7 +41,7 @@ export const emailLandlord_on_EnquiryReceived = async (landlordEmail: string) =>
   const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
   <br></br>
   <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
-  <p style="font-family: arial;">You have received an enquiry for your property. <a href="${process.env.BASE_URL}/login" style="font-family: arial; color: #087990;">Please login to view</a></p><br></br><br></br><p style="font-size: 10px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+  <p style="font-family: arial;">You have received an enquiry for your property. <a href="${process.env.BASE_URL}/login" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Login to view</a></p><br></br><br></br><p style="font-size: 10px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
   try {
     await sendMail(subject, [landlordEmail], text, html);
   } catch {
@@ -54,7 +54,7 @@ export const emailLandlord_on_OfferReceived = async (landlordEmail: string) => {
   const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
   <br></br>
   <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
-  <p style="font-family: arial;">You have received an offer for your property. <a href="${process.env.BASE_URL}/login" style="font-family: arial; color: #087990;">Please login to view</a></p><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+  <p style="font-family: arial;">You have received an offer for your property. <a href="${process.env.BASE_URL}/login" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Login to view</a></p><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
   try {
     await sendMail(subject, [landlordEmail], text, html);
   } catch {
@@ -68,7 +68,7 @@ export const emailLandlord_on_TenantSigned = async (landlordEmail: string) => {
   const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
   <br></br>
   <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
-  <p style="font-family: arial;">Your new tenant has signed a document. <a href="${process.env.BASE_URL}/login" style="font-family: arial; color: #087990;">Please login to view</a></p><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+  <p style="font-family: arial;">Your new tenant has signed a document. <a href="${process.env.BASE_URL}/login" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Login to view</a></p><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
   try {
     await sendMail(subject, [landlordEmail], text, html);
   } catch {
@@ -82,7 +82,7 @@ export const emailLandlord_on_TenantDocUpload = async (landlordEmail: string) =>
   const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
   <br></br>
   <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
-  <p style="font-family: arial;">Your new tenant has uploaded a document. <a href="${process.env.BASE_URL}/login" style="font-family: arial; color: #087990;">Please login to view</a></p><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+  <p style="font-family: arial;">Your new tenant has uploaded a document. <a href="${process.env.BASE_URL}/login" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Login to view</a></p><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
   try {
     await sendMail(subject, [landlordEmail], text);
   } catch {
@@ -96,7 +96,7 @@ export const emailTenant_on_OfferAccepted = async (tenantEmail: string) => {
   const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
   <br></br>
   <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
-  <p style="font-family: arial;">Congratulations, your offer has been accepted!</p> <p style="font-family: arial;">Keep your eye on your tenancy page to complete any pending actions. </p> <a href="${process.env.BASE_URL}/login" style="font-family: arial; color: #087990;">Please login to view</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+  <p style="font-family: arial;">Congratulations, your offer has been accepted!</p> <p style="font-family: arial;">Keep your eye on your tenancy page to complete any pending actions. </p> <a href="${process.env.BASE_URL}/login" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Login to view</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
   try {
     await sendMail(subject, [tenantEmail], text, html);
   } catch {
@@ -110,7 +110,7 @@ export const emailTenant_on_OfferDeclined = async (tenantEmail: string) => {
   const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
   <br></br>
   <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
-  <p style="font-family: arial;">We're sorry, your offer has been declined.</p> <p style="font-family: arial;">Not to worry, please take a look on the search page to view more properties available. </p> <a href="${process.env.BASE_URL}/login" style="font-family: arial; color: #087990;">Login</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+  <p style="font-family: arial;">We're sorry, your offer has been declined.</p> <p style="font-family: arial;">Not to worry, please take a look on the search page to view more properties available. </p> <a href="${process.env.BASE_URL}/login" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Login</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
   try {
     await sendMail(subject, [tenantEmail], text, html);
   } catch {
@@ -124,7 +124,7 @@ export const emailTenants_on_LandlordAgreementUpload = async (tenantEmailList: s
   const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
   <br></br>
   <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
-  <p style="font-family: arial;">Your potential landlord has uploaded a document. Keep your eye on your tenancy page to complete any pending actions. <a href="${process.env.BASE_URL}/login" style="font-family: arial; color: #087990;">Please login to view</a></p><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+  <p style="font-family: arial;">Your potential landlord has uploaded a document. Keep your eye on your tenancy page to complete any pending actions. <a href="${process.env.BASE_URL}/login" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Login to view</a></p><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
   try {
     await sendMail(subject, tenantEmailList, text, html);
   } catch {
