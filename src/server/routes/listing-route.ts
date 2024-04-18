@@ -519,8 +519,8 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
           }
         },
         { model: ListingMedia, order: [["id", "ASC"]] },
-        { model: Admin, include: [User] },
-        { model: ListingLandlord }
+        { model: Admin, include: [{ model: User, include: [{ model: Profile, include: [ProfileMedia] }] }] },
+        { model: ListingLandlord, include: [{ model: User, include: [{ model: Profile, include: [ProfileMedia] }] }] }
       ],
       order: [["createdAt", "DESC"]]
     });
