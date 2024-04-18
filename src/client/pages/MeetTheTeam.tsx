@@ -26,9 +26,10 @@ const MeetTheTeam = props => {
   const [samaOpen, setSamaOpen] = useState(false);
   const [naeOpen, setNamOpen] = useState(false);
   const imgContainerStyle = {
-    width: "220px",
-    height: "250px",
-    backgroundColor: "grey"
+    width: "150px",
+    height: "170px",
+    // backgroundColor: "grey",
+    borderRadius: "30px"
   };
   return (
     <div className="page-met-the-team">
@@ -46,7 +47,7 @@ const MeetTheTeam = props => {
       <div className="d-flex flex-wrap pt-5">
         <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5 px-1">
           <div className="img-container rounded" style={imgContainerStyle}>
-            <img className="rounded" src="/static/chrissy headshot.jpeg" style={{ width: "100%", height: "100%" }}></img>
+            <img src="/static/chrissy headshot.jpeg" style={imgContainerStyle}></img>
           </div>
           <div className="fs-5 pt-3">Christma Jean-Louis</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
@@ -66,7 +67,7 @@ const MeetTheTeam = props => {
         </div>
         <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5 px-1">
           <div className="img-container rounded" style={imgContainerStyle}>
-            <img className="rounded" src="/static/Herby Headshot.jpeg" style={{ width: "100%", height: "100%" }}></img>
+            <img src="/static/Herby Headshot.jpeg" style={imgContainerStyle}></img>
           </div>
           <div className="fs-5 pt-3">Herby Magny</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
@@ -86,7 +87,7 @@ const MeetTheTeam = props => {
         </div>
         <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5 px-1">
           <div className="img-container rounded" style={imgContainerStyle}>
-            <img className="rounded" src="/static/sama headshot.jpeg" style={{ width: "100%", height: "100%" }}></img>
+            <img src="/static/sama headshot.jpeg" style={imgContainerStyle}></img>
           </div>
           <div className="fs-5 pt-3">Brutchsama Jean-Louis</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
@@ -106,7 +107,7 @@ const MeetTheTeam = props => {
         </div>
         <div className="col-12 col-md-6 d-flex align-items-center flex-column px-1">
           <div className="img-container rounded" style={imgContainerStyle}>
-            <img className="rounded" src="/static/Nae Headshot.jpeg" style={{ width: "100%", height: "100%" }}></img>
+            <img src="/static/Nae Headshot.jpeg" style={imgContainerStyle}></img>
           </div>
           <div className="fs-5 pt-3">Nadwine Louis</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
