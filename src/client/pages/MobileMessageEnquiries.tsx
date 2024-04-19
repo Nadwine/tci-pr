@@ -14,7 +14,7 @@ import { Button, Modal, ModalProps, Offcanvas } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import listing from "../../database/models/listing";
 
-const MessageEnquiries = props => {
+const MobileMessageEnquiries = props => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const enquiries = useSelector((root: RootState) => root.message.conversations);
@@ -28,6 +28,14 @@ const MessageEnquiries = props => {
   const isAdmin = loginUsr?.accountType === "admin";
   const isTenant = loginUsr?.accountType === "tenant";
   const alreadySentOffer = activeConversation?.Listing.Offers?.find(off => off.userId === loginUsr?.id);
+
+  const isLandlord = loginUsr?.accountType === "landlord";
+  const managedByAdmin = activeConversation?.Listing?.listingManager === "admin";
+  const managedByLandlord = activeConversation?.Listing?.listingManager === "landlord";
+  const isBasic = activeConversation?.Listing?.productPackage?.name === "basic";
+  const isStandard = activeConversation?.Listing?.productPackage?.name === "standard";
+  const isPremium = activeConversation?.Listing?.productPackage?.name === "premium";
+  const isStandard_OR_Premium = isStandard || isPremium;
 
   const mql = window.matchMedia("(max-width: 600px)");
 
@@ -129,6 +137,12 @@ const MessageEnquiries = props => {
     loadData();
   }, []);
 
+  const saveUnsaveListing = async () => {
+    const res = await axios.post(`/api/listing/${activeConversation?.Listing?.id}/save-unsave`);
+    if (res.status === 200) toast.info(res.data.message);
+    if (res.status !== 200) toast.error("Something went wrong saving this listing");
+  };
+
   return enquiries.length > 0 ? (
     <div>
       {mobileView && (
@@ -144,10 +158,18 @@ const MessageEnquiries = props => {
                 {showMobileOptionsMenu && (
                   <div
                     className="options-menu rounded"
-                    style={{ backgroundColor: "#46778399", marginLeft: "150px", marginTop: "2em", width: "170px", position: "absolute", zIndex: +10 }}
+                    style={{
+                      backgroundColor: "#46778399",
+                      marginLeft: "150px",
+                      marginTop: "2em",
+                      width: "170px",
+                      position: "absolute",
+                      zIndex: +10,
+                      fontSize: "15px"
+                    }}
                   >
                     <ul className="list-group">
-                      {isTenant && (
+                      {isTenant && isStandard_OR_Premium && (
                         <li
                           onClick={() => {
                             setShowMobileOfferModal(!showMobileOfferModal);
@@ -158,8 +180,12 @@ const MessageEnquiries = props => {
                           Make an offer
                         </li>
                       )}
-                      <li className="list-group-item">View Property</li>
-                      <li className="list-group-item">Add to Favorites</li>
+                      <li onClick={() => navigate(`/property/rent/${activeConversation.Listing.id}`)} className="list-group-item">
+                        View Property
+                      </li>
+                      <li onClick={() => saveUnsaveListing()} className="list-group-item">
+                        <i className="bi bi-heart" style={{ color: "pink" }} /> Favorite
+                      </li>
                     </ul>
                   </div>
                 )}
@@ -173,6 +199,8 @@ const MessageEnquiries = props => {
               const lastMessage = enq.Messages[enq.Messages.length - 1];
               const hasUnreadMessages = enq.Messages.filter(m => m.userId !== userId && m.seenAt == null).length > 0;
               const landlordManaged = enq.Listing.listingManager === "landlord";
+              const disablePreview = isLandlord && enq.Listing.listingManager === "admin";
+
               return (
                 <div onClick={() => onClickCovo(enq)} key={i} className="row" style={{ height: "95px" }}>
                   <div
@@ -188,7 +216,10 @@ const MessageEnquiries = props => {
                         <small>{dayjs(enq.createdAt).format("MMM D")}</small>
                       </p>
                       {/**todo: fix elipsis on bigger screen */}
-                      <p style={{ width: "300px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{lastMessage?.messageText}</p>
+                      <p style={{ width: "300px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+                        {!disablePreview && lastMessage?.messageText}
+                        {disablePreview && "Handled TCI Homebase"}
+                      </p>
                       {isAdmin && landlordManaged && <span className="text-danger">Managed by Landlord</span>}
                     </div>
                   </div>
@@ -206,39 +237,7 @@ const MessageEnquiries = props => {
       )}
       {!mobileView && <DesktopMessageEnquires />}
 
-      {/* Mobile Offer Modal */}
-      {/* <Modal show={showMobileOfferModal} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-        <form ref={formRef} onSubmit={submitOffer}>
-          <Modal.Header>
-            <Modal.Title id="contained-modal-title-vcenter">Submit an Offer</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="mb-3">
-              <input name="amount" className="form-control" type="text" placeholder="Rent Price" required />
-            </div>
-            <div className="mb-3">
-              <input name="tenancyLengthDays" className="form-control" type="text" placeholder="Tenancy Length (Days)" required />
-            </div>
-            <div className="mb-3">
-              <label className="text-muted">Preferred Tenancy Start date</label>
-              <input
-                name="preferredStartDate"
-                min={dayjs().format("YYYY-MM-DD")}
-                type="date"
-                className="form-control"
-                placeholder="Preferred Start Date"
-                required
-              />
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button type="button" variant="secondary" onClick={() => setShowMobileOfferModal(false)}>
-              Cancel
-            </Button>
-            <Button type="submit">Submit</Button>
-          </Modal.Footer>
-        </form>
-      </Modal> */}
+      {/* Mobile Offer Canvas */}
       <Offcanvas show={showMobileOfferModal} onHide={() => setShowMobileOfferModal(false)}>
         <form ref={formRef} onSubmit={submitOffer}>
           <Offcanvas.Header closeButton>
@@ -299,4 +298,4 @@ const MessageEnquiries = props => {
   );
 };
 
-export default connect()(MessageEnquiries);
+export default connect()(MobileMessageEnquiries);

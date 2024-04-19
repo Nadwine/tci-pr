@@ -13,9 +13,10 @@ type Props = {
   offers?: Offer[];
   onClickViewEnquiry: (userId: number) => void;
   onSubmitOffer: (offerId: number, status: string) => void;
+  isOffersEnabled: boolean;
 };
 const OfferList = (props: Props) => {
-  const { offers, onClickViewEnquiry, onSubmitOffer } = props;
+  const { offers, isOffersEnabled, onClickViewEnquiry, onSubmitOffer } = props;
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [offerAction, setOfferAction] = useState({ offerId: 0, status: "" });
   const noOffers = offers?.length === 0;
@@ -24,8 +25,9 @@ const OfferList = (props: Props) => {
   return (
     <div className="offer-list">
       {noOffers && (
-        <div className="rounded py-2 text-center" style={{ maxWidth: "500px", height: "3em", backgroundColor: "#d4d3d3" }}>
-          No Offers to display
+        <div className="rounded py-2 text-center" style={{ maxWidth: "500px", minHeight: "3em", backgroundColor: "#d4d3d3" }}>
+          {isOffersEnabled && "No Offers to display"}
+          {!isOffersEnabled && "Your current subscription does not include viewing and accepting offers from tenants"}
         </div>
       )}
       {offers?.map((currOffer, currIndex) => {

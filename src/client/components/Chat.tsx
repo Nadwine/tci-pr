@@ -36,6 +36,15 @@ export const Chat = (props: Props) => {
   const isTenant = logInUsr?.accountType === "tenant";
   const alreadySentOffer = activeConversation?.Listing.Offers?.find(off => off.userId === logInUsr?.id);
 
+  const isLandlord = logInUsr?.accountType === "landlord";
+  const isAdmin = logInUsr?.accountType === "admin";
+  const managedByAdmin = listing?.listingManager === "admin";
+  const managedByLandlord = listing?.listingManager === "landlord";
+  const isBasic = listing?.productPackage?.name === "basic";
+  const isStandard = listing?.productPackage?.name === "standard";
+  const isPremium = listing?.productPackage?.name === "premium";
+  const isStandard_Or_Premium = isStandard || isPremium;
+
   const mql = window.matchMedia("(max-width: 600px)");
 
   let mobileView = mql.matches;
@@ -105,6 +114,20 @@ export const Chat = (props: Props) => {
     }
   };
 
+  const saveUnsaveListing = async () => {
+    const res = await axios.post(`/api/listing/${activeConversation?.Listing?.id}/save-unsave`);
+    if (res.status === 200) toast.info(res.data.message);
+    if (res.status !== 200) toast.error("Something went wrong saving this listing");
+  };
+
+  if (isLandlord && managedByAdmin) {
+    return (
+      <div className="px-md-5 py-5 text-muted">
+        You have choose to have your property managed by us with your {listing?.productPackage?.name} package. Sit Back and let us handle this bit for you.
+      </div>
+    );
+  }
+
   return (
     <div className="enquiry-message-wrapper">
       <div className="d-flex w-100 flex-column align-items-center">
@@ -123,7 +146,7 @@ export const Chat = (props: Props) => {
                   style={{ backgroundColor: "#46778399", marginLeft: "-150px", width: "170px", position: "absolute", zIndex: +10 }}
                 >
                   <ul className="list-group point">
-                    {isTenant && (
+                    {isTenant && isStandard_Or_Premium && (
                       <li
                         onClick={() => {
                           setShowDesktopOfferModal(!showDesktopOfferModal);
@@ -137,7 +160,9 @@ export const Chat = (props: Props) => {
                     <li className="list-group-item fs-5" onClick={() => navigate(`/property/rent/${activeConversation.Listing.id}`)}>
                       View Property
                     </li>
-                    <li className="list-group-item fs-5">Add to Favourites</li>
+                    <li onClick={() => saveUnsaveListing()} className="list-group-item fs-5">
+                      <i className="bi bi-heart" style={{ color: "pink" }} /> Favorite
+                    </li>
                   </ul>
                 </div>
               )}
@@ -205,41 +230,7 @@ export const Chat = (props: Props) => {
           </button>
         </div>
       </div>
-      {/* Mobile Offer Modal */}
-      {/* <Modal show={showDesktopOfferModal} aria-labelledby="contained-modal-title-vcenter" centered>
-        <form ref={formRef} onSubmit={submitOffer}>
-          <Modal.Header>
-            <Modal.Title id="contained-modal-title-vcenter">Submit an Offer</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="mb-3">
-              <input name="amount" className="form-control" type="text" placeholder="Rent Price" required />
-            </div>
-            <div className="mb-3">
-              <input name="tenancyLengthDays" className="form-control" type="text" placeholder="Tenancy Length (Days)" required />
-            </div>
-            <div className="mb-3">
-              <label className="text-muted">Preferred Tenancy Start date</label>
-              <input
-                name="preferredStartDate"
-                min={dayjs().format("YYYY-MM-DD")}
-                type="date"
-                className="form-control"
-                placeholder="Preferred Start Date"
-                required
-              />
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button type="button" variant="secondary" onClick={() => setShowDesktopOfferModal(false)}>
-              Cancel
-            </Button>
-            <Button style={{ backgroundColor: "#087990" }} type="submit">
-              Submit
-            </Button>
-          </Modal.Footer>
-        </form>
-      </Modal> */}
+      {/* Desktop Offer Canvas */}
       <Offcanvas show={showDesktopOfferModal} onHide={() => setShowDesktopOfferModal(false)}>
         <form ref={formRef} onSubmit={submitOffer}>
           <Offcanvas.Header closeButton>

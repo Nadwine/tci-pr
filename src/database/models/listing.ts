@@ -32,7 +32,7 @@ type Capabilities =
 
 type Extras = "video-listing";
 export type ProductPackage = {
-  name: string;
+  name: "basic" | "standard" | "premium";
   paymentType: "per-listing" | "per-term" | "percentage";
   capabilities: Capabilities[];
   extras: Extras[];
@@ -51,7 +51,7 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare isApproved: boolean;
   declare stripePaymentLink?: { url: string; expiresAtUnixSeconds: number; generatedAt: string };
   declare category: "PropertyForRent";
-  declare productPackage: any;
+  declare productPackage?: ProductPackage;
   declare landlordId?: number;
   declare Admin?: CreationOptional<Admin>;
   declare listingManager: "landlord" | "admin";

@@ -84,7 +84,7 @@ export const LandlordDashboard = props => {
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
-        <Accordion className=" px-md-5 mx-md-5">
+        {/* <Accordion className=" px-md-5 mx-md-5">
           <Accordion.Item eventKey="0">
             <Accordion.Header>
               <strong>Tenancies</strong>
@@ -93,7 +93,7 @@ export const LandlordDashboard = props => {
               <p>You have no active tenancies</p>
             </Accordion.Collapse>
           </Accordion.Item>
-        </Accordion>
+        </Accordion> */}
       </div>
     </div>
   );

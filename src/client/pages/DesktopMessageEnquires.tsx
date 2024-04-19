@@ -20,6 +20,7 @@ const MessageEnquiries = props => {
   const [chatTextbox, setChatTextbox] = useState("");
   const userId = loginUsr!.id;
   const isAdmin = loginUsr?.accountType === "admin";
+  const isLandlord = loginUsr?.accountType === "landlord";
   const isTenant = loginUsr?.accountType === "tenant";
 
   const loadData = async () => {
@@ -103,12 +104,13 @@ const MessageEnquiries = props => {
           const lastMessage = hasMessages && enq.Messages[enq.Messages.length - 1];
           const hasUnreadMessages = enq.Messages?.filter(m => m.userId !== userId && m.seenAt == null).length > 0;
           const landlordManaged = enq.Listing.listingManager === "landlord";
+          const disablePreview = isLandlord && enq.Listing.listingManager === "admin";
           return (
             <div className="p-0" onClick={() => onClickConvo(enq)} key={i}>
               {/* <hr style={{ color: "grey" }}></hr> */}
 
               <div className="card-body border-bottom col-12 d-flex justify-content-start point" style={{ color: hasUnreadMessages ? "black" : "grey" }}>
-                <div className="card-title col-1 d-flex justify-content-end">
+                <div className="card-title col-1 d-flex justify-content-end overflow-hidden">
                   <img src={enq.Listing.ListingMedia[0]?.mediaUrl} style={{ height: "30px", width: "40px" }} />
                 </div>
                 <div style={{ marginLeft: "10px", width: "100%" }} className="card-title pe-1">
@@ -121,9 +123,14 @@ const MessageEnquiries = props => {
                     </p>
                   </div>
                   {/**todo: fix elipsis on bigger screen */}
-                  <p className="card-text" style={{ width: "300px", overflow: "scroll", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+                  <p className="card-text" style={{ width: "300px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
                     {/** TODO ADD USERNAME OR EMAIL OF MESSAGE SENDER HERE */}
-                    <span className="strong-text">{getConvoUser(enq)}:</span> {lastMessage && lastMessage?.messageText}
+                    <span className="strong-text">
+                      {getConvoUser(enq)}
+                      {":"}
+                    </span>
+                    {!disablePreview && lastMessage && lastMessage?.messageText}
+                    {disablePreview && "Handled TCI Homebase"}
                   </p>
                   {isAdmin && landlordManaged && <span className="text-danger">Managed by Landlord</span>}
                 </div>

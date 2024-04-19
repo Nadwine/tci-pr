@@ -30,7 +30,7 @@ import CreateListing from "./pages/CreateListing";
 import SearchRentResults from "./pages/SearchRentResults";
 import ViewRentProperty from "./pages/ViewRentProperty";
 import Help from "./pages/Help";
-import MessageEnquiries from "./pages/MessageEnquiries";
+import MobileMessageEnquiries from "./pages/MobileMessageEnquiries";
 import { setActiveConversation, setConversations } from "./redux/reducers/messagesReducer";
 import { RootState, store } from "./redux/store";
 import AdminViewListings from "./pages/AdminViewListings";
@@ -213,7 +213,7 @@ const Main = () => {
             <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin", "landlord"]} />} />
             <Route path="forget-password/:token" element={<ForgetPassword />} />
             <Route path="payments/rent/success" element={<ReoccurringPaymentNotify />} />
-            <Route path="enquiries" element={<RequireLogin view={<MessageEnquiries />} />} />
+            <Route path="enquiries" element={<RequireLogin view={<MobileMessageEnquiries />} />} />
             <Route path="invite/accept" element={<AcceptInvitation />} />
             <Route path="admin/listings" element={<RequirePermission view={<AdminViewListings />} roles={["landlord", "admin"]} />} />
             <Route path="user/dashboard" element={<RequirePermission view={<TenantDashboard />} roles={["tenant"]} />} />

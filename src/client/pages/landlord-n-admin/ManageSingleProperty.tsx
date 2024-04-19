@@ -66,6 +66,15 @@ const ManageSingleProperty = props => {
   const [showInviteCanvas, setShowInviteCanvas] = useState(false);
   const [selectedTenToManage, setSelectedTenToManage] = useState<Tenancy>();
 
+  const loginUserIsLandlord = loginUsr?.accountType === "landlord";
+  const loginUserIsAdmin = loginUsr?.accountType === "admin";
+  const managedByAdmin = listing?.listingManager === "admin";
+  const managedByLandlord = listing?.listingManager === "landlord";
+  const isBasic = listing?.productPackage?.name === "basic";
+  const isStandard = listing?.productPackage?.name === "standard";
+  const isPremium = listing?.productPackage?.name === "premium";
+  const isStandard_Or_Premium = isStandard || isPremium;
+
   const loadPDF = async onGoingTenancies => {
     if (!onGoingTenancies || onGoingTenancies?.length === 0) return;
     const existingPdfBytes = await fetch(`/api/tenancy-document/${onGoingTenancies[0].id}`).then(res => res.arrayBuffer());
@@ -254,6 +263,13 @@ const ManageSingleProperty = props => {
 
   if (!allowedToView && listing) return <h3>You do not have permission to view this page</h3>;
 
+  const isOffersEnabled = (): boolean => {
+    if (managedByAdmin && loginUserIsAdmin && isStandard_Or_Premium) return true;
+    if (managedByLandlord && isStandard_Or_Premium) return true;
+
+    return false;
+  };
+
   return (
     <div className="p-md-5">
       <EditTenancyModal
@@ -281,7 +297,7 @@ const ManageSingleProperty = props => {
       )}
       <div className="pt-4 pb-5">
         <h5>Offers</h5>
-        <OfferList offers={offers} onSubmitOffer={onSubmitOffer} onClickViewEnquiry={onClickViewEnquiry} />
+        {<OfferList offers={offers} isOffersEnabled={isOffersEnabled()} onSubmitOffer={onSubmitOffer} onClickViewEnquiry={onClickViewEnquiry} />}
       </div>
       <div className="pt-5 pb-5">
         <h5>Attached Documents</h5>
