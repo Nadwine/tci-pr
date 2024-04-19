@@ -49,7 +49,7 @@ const RegisterConfirm = () => {
           <input
             type="text"
             className=" form-control"
-            style={{ width: "20em", height: "3em" }}
+            style={{ width: "15em", height: "3em" }}
             placeholder="example@mail.com"
             onChange={e => setEmailResender(e.target.value)}
           />

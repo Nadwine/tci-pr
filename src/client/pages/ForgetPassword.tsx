@@ -127,7 +127,7 @@ const ForgetPassword = () => {
                 <input
                   type="text"
                   className=" form-control"
-                  style={{ minWidth: "16em", height: "3em" }}
+                  style={{ minWidth: "15em", height: "3em" }}
                   placeholder="Email"
                   onChange={e => setEmail(e.target.value)}
                 />
@@ -149,7 +149,7 @@ const ForgetPassword = () => {
               name="password"
               value={password}
               className=" form-control"
-              style={{ width: "20em", height: "3em", marginBottom: "2px" }}
+              style={{ width: "15em", height: "3em", marginBottom: "2px" }}
               placeholder="New Password"
               onChange={e => setPassword(e.target.value)}
             />
@@ -158,7 +158,7 @@ const ForgetPassword = () => {
               name="confirmPassword"
               value={confirmPassword}
               className=" form-control"
-              style={{ width: "20em", height: "3em" }}
+              style={{ width: "15em", height: "3em" }}
               placeholder="Confirm Password"
               onChange={e => setConfirmPassword(e.target.value)}
             />

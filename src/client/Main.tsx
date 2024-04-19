@@ -200,7 +200,7 @@ const Main = () => {
             <Route path="rent/safety" element={<Safety />} />
             <Route path="rent/saved-properties" element={<RequireLogin view={<Favourites />} />} />
             <Route path="team" element={<MeetTheTeam />} />
-            <Route path="/manage-property/rent/:id/finance" element={<RequirePermission view={<RentPaymentsAndExpense />} roles={["admin", "landlord"]} />} />
+            <Route path="manage-property/rent/:id/finance" element={<RequirePermission view={<RentPaymentsAndExpense />} roles={["admin", "landlord"]} />} />
             <Route path="manage-property/rent/:id" element={<RequirePermission view={<ManageSingleProperty />} roles={["landlord", "admin"]} />} />
             <Route path="manage-tenancy/:property_tenant_id" element={<div></div>} />
             <Route path="admin/dashboard/listing-for-aproval" element={<RequirePermission view={<AdminApproveListingTable />} roles={["admin"]} />} />
