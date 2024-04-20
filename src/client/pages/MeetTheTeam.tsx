@@ -111,7 +111,7 @@ const MeetTheTeam = props => {
           </div>
           <div className="fs-5 pt-3">Nadwine Louis</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
-            Software Engineer
+            Lead Software Engineer
           </div>
           {!naeOpen && (
             <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden" }}>
