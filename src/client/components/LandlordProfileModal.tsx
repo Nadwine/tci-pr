@@ -50,7 +50,7 @@ export const LandlordProfileModal = (props: Props) => {
                 Posted by <span className="fw-bold">TCI HOMEBASE PROPERTY MANAGEMENT</span>
               </h6>
               <div className="d-flex justify-content-center">{profileElement}</div>
-              <p className="pt-3">Find out more about TCI Homebase on here-make link</p>
+              <p className="pt-3">Add brief info about company here</p>
             </div>
           )}
           {!isManagedByAdmin && listing.ListingLandlord && (
