@@ -87,7 +87,7 @@ const EditTenancyModal = (props: Props) => {
             </div>
           </div>
           <div className="py-2 d-flex align-items-center">
-            <label className="pe-4">Tenancy Length</label>
+            <label className="pe-4">Tenancy Length (days)</label>
             <div className="col-4">
               <input value={lenghtInDays} onChange={e => setLenghtInDays(Number(e.target.value))} className="form-control" type="number" />
             </div>
