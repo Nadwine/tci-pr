@@ -1,2 +1,2 @@
 web: sh -c 'echo --------------------New Deployment Attempt--------------------------'
-web: sh -c 'npx ts-node ./server'
+web: sh -c 'npm install && npx ts-node ./server'
