@@ -323,8 +323,7 @@ export const acceptInviteToTenancy = async (req: Request, res: Response) => {
       return res.redirect("/my-tenancy");
     } else {
       // new user created email credentials
-      const html = `<html><h2 style="color: #087990; text-align: center;font-family: arial">TCI Homebase</h2>
-      <hr></hr>
+      const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
       <br></br>
       <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
       <p style="font-family: arial;">Here are your TCI Homebase login details. We recommend that you change your password after you've successfully logged in.</p><p style="font-family: arial">Email: ${email} Password: ${newPassword} </p><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
