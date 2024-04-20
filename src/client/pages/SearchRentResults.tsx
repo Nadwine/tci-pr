@@ -191,7 +191,7 @@ const SearchRentResults = props => {
       <div style={{ minHeight: "70vh" }} className="list col-12 col-md-8 col-lg-8 col-xl-8">
         {searchResults.map((listing, i) => (
           <div key={i} className="card mb-3 shadow-sm">
-            {listing.listingStatus === "gone" && <GonePropertyOverlay />}
+            {/* {listing.listingStatus === "gone" && <GonePropertyOverlay />} */}
             <div className="card-body d-flex flex-wrap">
               <div onClick={() => viewProperty(listing.id)} className="image-container point col-12 col-md-5 me-2 pb-3">
                 {listing.ListingMedia[0].mediaType === "image" && <img width="100%" src={listing.ListingMedia[0]?.mediaUrl} />}

@@ -414,18 +414,20 @@ const ManageSingleProperty = props => {
           Data Entry
         </button>
       </div>
-      <div>
-        <h5>Payments</h5>
-        <button className="btn text-primary ps-0" onClick={() => navigate(`/property/rent/${listing && listing?.id}/payments`)}>
-          Manage/Setup Payments
-        </button>
-      </div>
-      <div className="d-flex">
+      {loginUserIsAdmin && (
+        <div>
+          <h5>Payments</h5>
+          <button className="btn text-primary ps-0" onClick={() => navigate(`/property/rent/${listing && listing?.id}/payments`)}>
+            Manage/Setup Payments
+          </button>
+        </div>
+      )}
+      {/* <div className="d-flex">
         <div className="ms-auto btn">
           <i className="bi bi-pencil pe-1" />
           Edit
         </div>
-      </div>
+      </div> */}
       <ViewRentProperty />
     </div>
   );

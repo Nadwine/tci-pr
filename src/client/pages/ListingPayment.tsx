@@ -70,6 +70,22 @@ const ListingPayment = props => {
     initialFetch();
   };
 
+  const submitOneTimePaymentLinkCreation = async () => {
+    if (!listing) return;
+
+    try {
+      const res = await axios.post("/api/payment/single-collect", {
+        amountUSD: listing?.PropertyForRent.rentAmount,
+        listingId: listing?.id,
+        landlordUserId: landlordId
+      });
+      if (res.status === 200) toast.success("Payment link successfully generated");
+    } catch {
+      toast.error("Error while generating this link");
+    }
+    initialFetch();
+  };
+
   const payoutlandlord = async () => {
     // /api/payment/pay-out-landlord
     // const propertyForRentId = req.body.propertyForRentId;
@@ -139,6 +155,35 @@ const ListingPayment = props => {
               <div className="mt-5">{linkGeneratedAt && "Please send this link to the respected tenant"}</div>
               <div className="mt-2">
                 <button disabled={linkGeneratedAt ? !islinkExpired : false} onClick={() => submitPaymentLinkCreation()} className="btn bg-primary">
+                  Generate New Link
+                </button>
+              </div>
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>Tenant Payment Link</Accordion.Header>
+            <Accordion.Body>
+              <h6 className="pb-3">Reoccurring Payment</h6>
+              <div>
+                <div>
+                  Amount ${listing?.PropertyForRent.rentAmount}
+                  <br />
+                  Interval: Monthly
+                </div>
+              </div>
+              {listing?.stripePaymentLink && (
+                <div className="pt-5">
+                  Generated At: {dayjs(linkGeneratedAt).format("MMMM DD YYYY HH:MM:ss a")}
+                  <br />
+                  Link Status: {islinkExpired ? "Expired" : "Active"}
+                  <code className="card">
+                    <a href={listing.stripePaymentLink.url}>{listing.stripePaymentLink.url}</a>
+                  </code>
+                </div>
+              )}
+              <div className="mt-5">{linkGeneratedAt && "Please send this link to the respected tenant"}</div>
+              <div className="mt-2">
+                <button disabled={linkGeneratedAt ? !islinkExpired : false} onClick={() => submitOneTimePaymentLinkCreation()} className="btn bg-primary">
                   Generate New Link
                 </button>
               </div>

@@ -210,7 +210,7 @@ const Main = () => {
             <Route path="admin/dashboard/listings" element={<RequirePermission view={<AdminListingsTable />} roles={["admin"]} />} />
             <Route path="admin/dashboard" element={<RequirePermission view={<AdminDashboard />} roles={["admin"]} />} />
             <Route path="property/rent/:id" element={<ViewRentProperty />} />
-            <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin", "landlord"]} />} />
+            <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
             <Route path="forget-password/:token" element={<ForgetPassword />} />
             <Route path="payments/rent/success" element={<ReoccurringPaymentNotify />} />
             <Route path="enquiries" element={<RequireLogin view={<MobileMessageEnquiries />} />} />

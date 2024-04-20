@@ -800,7 +800,8 @@ export const deleteRentListingById = async (req: Request, res: Response) => {
       return res.status(410).json({ message: "unauthorized" });
     }
 
-    await Listing.destroy({ where: { id: listingId }, cascade: true });
+    // no deletions allowed as yet may just archive the data
+    // await Listing.destroy({ where: { id: listingId }, cascade: true });
 
     return res.status(200).json({ message: "Success" });
   } catch (err) {
