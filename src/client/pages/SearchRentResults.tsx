@@ -96,8 +96,6 @@ const SearchRentResults = props => {
 
   const viewProperty = (id: number) => {
     const listingToView = searchResults.find(l => l.id === id);
-
-    if (listingToView?.listingStatus === "gone") return;
     navigate(`/property/rent/${id}`);
   };
 

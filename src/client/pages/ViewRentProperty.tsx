@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { RootState, store } from "../redux/store";
 import { Navigate, useNavigate } from "react-router-dom";
 import Carousel from "../components/Carousel";
+import GonePropertyOverlay from "../components/GonePropertyOverlay";
 
 const ViewRentProperty = props => {
   const params = useParams();
@@ -170,7 +171,7 @@ const ViewRentProperty = props => {
           </div>
           <div className="card-body d-flex flex-wrap justify-content-center">
             <div className="image-container col-10 me-2 pb-3">
-              <Carousel images={listing.ListingMedia} />
+              <Carousel listing={listing} images={listing.ListingMedia} />
               <div className="price fw-bolder fs-5" style={{ backgroundColor: "#ebf8ff", borderBottomLeftRadius: "7px", borderBottomRightRadius: "7px" }}>
                 {"$"}
                 {listing?.PropertyForRent.rentAmount} <span style={{ fontSize: "0.6em" }}>Monthly</span>{" "}
@@ -248,7 +249,7 @@ const ViewRentProperty = props => {
               {/* TODO grey out after 1 submission and search data to know if to disable on view 
                     or show a "view your submitted enquiry" button instead
               */}
-              {showEnqBtn && listing.listingStatus !== "gone" && (
+              {showEnqBtn && (
                 <>
                   <hr />
                   <div className="text">
@@ -257,7 +258,7 @@ const ViewRentProperty = props => {
                   <div>Phone: {listing.Admin.phone || "N/A"}</div> */}
                   </div>
                   <div className="mt-4 pb-5">
-                    <button onClick={() => handleRedirect()} className="btn btn-success">
+                    <button disabled={listing.listingStatus === "gone"} onClick={() => handleRedirect()} className="btn btn-success">
                       Submit online enquiry
                     </button>
                   </div>
@@ -265,8 +266,7 @@ const ViewRentProperty = props => {
               )}
               {listing.listingStatus === "gone" && (
                 <h6 className="text-danger py-3 text-center">
-                  Sorry Enquiries are no longer being accepted. <br />
-                  This Property already been secured.
+                  Sorry enquiries are no longer being accepted. <br />
                 </h6>
               )}
             </div>

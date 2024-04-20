@@ -7,7 +7,9 @@ export const GonePropertyOverlay = props => {
       className="gone-cover d-flex justify-content-center align-items-center"
       style={{ width: "100%", height: "100%", position: "absolute", backgroundColor: "#ffffffb3" }}
     >
-      <h3 className="text-danger">Property Gone</h3>
+      <h3 style={{ color: "#da6c77" }} className="">
+        Property Gone
+      </h3>
     </div>
   );
 };

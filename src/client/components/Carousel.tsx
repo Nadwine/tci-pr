@@ -2,13 +2,17 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import ListingMedia from "../../database/models/listing_media";
+import Listing from "../../database/models/listing";
+import GonePropertyOverlay from "./GonePropertyOverlay";
 
 type Props = {
   images: ListingMedia[];
+  listing: Listing;
 };
 
 const Carousel = (props: Props) => {
   const images = props.images;
+  const listing = props.listing;
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeImageFound, setActiveImageFound] = useState(true);
 
@@ -52,6 +56,7 @@ const Carousel = (props: Props) => {
     <div id="carouselExample" className="carousel slide m-auto" style={{ minHeight: 200, maxWidth: 700 }}>
       <div className="carousel-inner">
         <div className="carousel-item active">
+          {listing.listingStatus === "gone" && <GonePropertyOverlay />}
           {currentImage.mediaType === "image" && <img src={images[activeIndex].mediaUrl} className="d-block w-100" alt="..." />}
           {currentImage.mediaType === "video" && <video controls src={images[activeIndex].mediaUrl} className="d-block w-100" />}
           {!activeImageFound && (

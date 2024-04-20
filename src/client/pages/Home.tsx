@@ -116,7 +116,7 @@ const Home = props => {
                 onChange={e => setSearchText(e.target.value)}
                 type="text"
                 className="form-control"
-                placeholder="Try 'provo' or 'Providenciales'"
+                placeholder="Try 'Provo' or 'Cockburn Town'"
                 id="home-search-input"
               />
               <div className="input-group-append">
