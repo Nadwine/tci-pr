@@ -119,7 +119,7 @@ const AboutUs = props => {
             </div>
           </div>
           <div className="d-flex flex-row flex-wrap justify-content-start">
-            <div className="card col-12 w-100 mt-3 shadow-sm" style={{ backgroundColor: "#055160", borderRadius: "0px" }}>
+            <div className="card col-12 w-100 mt-3 shadow-sm" style={{ backgroundColor: "#298ea4", borderRadius: "0px" }}>
               <div className="card-body">
                 <p className="ms-3 text-light fw-bolder" style={{ fontSize: "40px" }}>
                   CONTACT US!
