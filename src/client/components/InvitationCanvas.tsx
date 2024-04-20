@@ -69,7 +69,7 @@ const InvitationCanvas = (props: Props) => {
           )}
         </div>
         <div>
-          <button onClick={() => sendInvite(email, firstName, lastName)} className="btn btn-primary">
+          <button onClick={() => sendInvite(email, firstName, lastName)} className="btn bg-primary">
             Send Invite
           </button>
         </div>
