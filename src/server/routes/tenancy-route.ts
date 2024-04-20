@@ -255,7 +255,9 @@ export const acceptInviteToTenancy = async (req: Request, res: Response) => {
     const existingTenancy = await Tenancy.findOne({ where: { propertyForRentId: property.id, isHistory: false } });
     const foundUser = await User.findOne({ where: { email: email }, include: [Profile] });
 
-    if (foundUser?.accountType !== "tenant") return res.redirect("/invite/accept?result=failed&message=Error, Invalid Request. Invalid account type");
+    if (foundUser && foundUser.accountType !== "tenant") {
+      return res.redirect("/invite/accept?result=failed&message=Error, Invalid Request. Invalid account type");
+    }
 
     let newUser: User;
     const newPassword = Math.random().toString(36).slice(-8);
