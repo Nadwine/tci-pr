@@ -72,7 +72,7 @@ export const LandlordProfileModal = (props: Props) => {
               <h6 style={{ fontWeight: "700px" }}>Properties</h6>
               {landlordProperties.map((l, i) => (
                 <div key={i}>
-                  <button className="btn text-primary point ps-0" onClick={() => navigate(`/property/rent/${listing.id}`)}>
+                  <button className="btn text-primary point ps-0 mb-2" onClick={() => navigate(`/property/rent/${listing.id}`)} style={{ textAlign: "left" }}>
                     {l.title}, {l.Address.settlement}
                   </button>
                 </div>

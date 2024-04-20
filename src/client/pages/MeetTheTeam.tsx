@@ -54,7 +54,7 @@ const MeetTheTeam = props => {
             Chief Executive Officer
           </div>
           {!chrisOpen && (
-            <div className="px-md-5 text-center" style={{ height: "70px", overflow: "hidden" }}>
+            <div className="px-md-5 text-center" style={{ height: "70px", overflow: "hidden", maxWidth: "410px" }}>
               Christma has managed a number of teams and brings a wealth of experience in operation management, business..
             </div>
           )}
@@ -74,7 +74,7 @@ const MeetTheTeam = props => {
             Chief Financial Officer
           </div>
           {!herbyOpen && (
-            <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden" }}>
+            <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden", maxWidth: "410px" }}>
               Herby has built a reputation for transforming entrepreneurial organizations into sustainable growth enterprises..
             </div>
           )}
@@ -94,7 +94,7 @@ const MeetTheTeam = props => {
             Chief Technology Officer
           </div>
           {!samaOpen && (
-            <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden" }}>
+            <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden", maxWidth: "410px" }}>
               As Chief Technology Officer, Sama oversees all aspects of data management and information technology within..
             </div>
           )}
@@ -114,7 +114,7 @@ const MeetTheTeam = props => {
             Lead Software Engineer
           </div>
           {!naeOpen && (
-            <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden" }}>
+            <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden", maxWidth: "410px" }}>
               Nadwine is a Software Engineer with expertise in full-stack development, demonstrating a strong proficiency in her..
             </div>
           )}
