@@ -62,7 +62,7 @@ const CreateRentForm = props => {
         settlement: formValues.settlement,
         city: formValues.city,
         tenancyLength: formValues.tenancyLength,
-        listingManager: formValues.listingManager,
+        listingManager: formValues.productPackage === "basic" ? "landlord" : "admin", //formValues.listingManager,
         postcode: "TKCA 1ZZ",
         country: "Turks and Caicos Islands",
         questions: JSON.stringify(formValues.questions),
@@ -266,7 +266,7 @@ const CreateRentForm = props => {
               Furnished
             </label>
           </div>
-          <div className="managment type">
+          {/* <div className="managment type">
             <div className="pb-2">Managed By Admin?</div>
             <select
               value={values.listingManager}
@@ -280,7 +280,7 @@ const CreateRentForm = props => {
               <option value="admin">Yes</option>
               <option value="landlord">No</option>
             </select>
-          </div>
+          </div> */}
           <div className="inclusions">
             <p className="fs-5 w-100 pt-2 mb-1">Photos/Videos</p>
           </div>
