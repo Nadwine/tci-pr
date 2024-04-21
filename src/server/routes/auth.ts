@@ -67,6 +67,12 @@ export const registerUser = async (req: Request, res: Response) => {
 
   if (matchedEmail) return res.redirect(`/register/?error=A user with email "${email}" already exist`);
 
+  let accountType: AccountTypeEnum = registerReason === "landlord" ? "landlord" : "tenant";
+
+  if (email.toLowerCase() === "tci.homebase.tc@gmail.com") {
+    accountType = "admin";
+  }
+
   // Create hash password and save user
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(password, salt);
@@ -77,7 +83,7 @@ export const registerUser = async (req: Request, res: Response) => {
     company: "",
     verified: false,
     termsAccepted: true,
-    accountType: registerReason === "landlord" ? "landlord" : "tenant"
+    accountType: accountType
   });
 
   // if (isLandlord && createdUserCallback) {

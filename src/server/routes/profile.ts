@@ -8,6 +8,7 @@ import AWS, { AWSError } from "aws-sdk";
 import sharp from "sharp";
 import S3 from "aws-sdk/clients/s3";
 import ProfileMedia from "../../database/models/profile_media";
+import Admin from "../../database/models/admin";
 
 export const getProfileForLoggedInUser = async (req: Request, res: Response) => {
   const sessionUsr = req.session.user;
@@ -88,6 +89,23 @@ export const updateSessionUrsProfile = async (req: Request, res: Response) => {
             homeIsland: city,
             userId: sessionUsr!.id,
             addressString: `${settlement && settlement + ","}${city && city + ","}${postcode && postcode + ","}${country && country}`
+          });
+        }
+      }
+      if (accountType === "admin") {
+        const foundAdmin = await Admin.findOne({ where: { userId: sessionUsr?.id } });
+        if (foundAdmin) {
+          await foundAdmin.update({
+            address: `${settlement && settlement + ","}${city && city + ","}${postcode && postcode + ","}${country && country}`,
+            phone: phoneNumber
+          });
+        } else {
+          await Admin.create({
+            verified: true,
+            userId: sessionUsr!.id,
+            phone: phoneNumber,
+            address: `${settlement && settlement + ","}${city && city + ","}${postcode && postcode + ","}${country && country}`,
+            email: sessionUsr!.email
           });
         }
       }

@@ -98,7 +98,7 @@ export const getLatestEnquiry = async (req: Request, res: Response) => {
 
   if (isLandlord) {
     const landlordRecord = await ListingLandlord.findOne({ where: { userId: req.session.user!.id } });
-    if (!landlordRecord) return res.status(200).json([]);
+    if (!landlordRecord) return res.status(200).json([]); // No landlord record exist so we will just send an empty array
     const myListings = await Listing.findAll({ where: { landlordId: landlordRecord?.id } });
     conversations = await EnquiryConversation.findAll({
       where: { listingId: { [Op.in]: myListings.map(l => l.id) } },
