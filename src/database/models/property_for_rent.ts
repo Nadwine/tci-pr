@@ -13,7 +13,7 @@ export default class PropertyForRent extends Model<InferAttributes<PropertyForRe
   declare numOfRooms: number;
   declare numOfBathRooms: number;
   declare maxTenant: number;
-  declare sqFt: number;
+  declare sqFt?: number;
   declare billsIncluded: boolean;
   declare internetIncluded: boolean;
   declare electricityIncluded: boolean;
