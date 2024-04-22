@@ -369,6 +369,12 @@ const ManageSingleProperty = props => {
           <Accordion.Header>Tenancy Details</Accordion.Header>
           {onGoingTenancies?.length && (
             <Accordion.Body>
+              <div>
+                Listing package:{" "}
+                <button onClick={e => navigate("/products")} className="btn text-primary">
+                  {listing?.productPackage?.name.toUpperCase()}
+                </button>
+              </div>
               <div>Length: {onGoingTenancies[0]?.lenghtInDays} days</div>
               <div>Start Date: {onGoingTenancies[0]?.rentalAgreementDate}</div>
               <div>Main Contact Email: {onGoingTenancies[0]?.mainContactEmail}</div>

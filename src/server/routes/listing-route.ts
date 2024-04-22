@@ -134,14 +134,15 @@ export const adminCreateRentListingRoute = async (req: Request, res: Response) =
         const s3Key = `listings/${req.session.user!.id}/${newListing.id}/${filename}`;
 
         // transform to small thumbnail and fix aspect ratio
-        const imageBuffer = await sharp(currentFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer();
+        const isImage = currentFile.mimetype.includes("image");
+        const imageBuffer = isImage && (await sharp(currentFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer());
 
         await s3Bucket
           .upload(
             {
               Bucket: String(process.env.AWS_S3_BUCKET_NAME),
               Key: s3Key,
-              Body: imageBuffer,
+              Body: isImage ? imageBuffer : currentFile.buffer,
               ACL: isProd ? "public-read" : "bucket-owner-full-control"
             },
             (err, data) => {
@@ -341,16 +342,16 @@ export const landLordSubmitRentListingRoute = async (req: Request, res: Response
         const currentFile: Express.Multer.File = files[i];
         const filename = `${new Date().getTime()}_${currentFile.originalname}`;
         const s3Key = `listings/${req.session.user!.id}/${newListing.id}/${filename}`;
-        const isimage = currentFile.mimetype.includes("image");
         // transform to small thumbnail and fix aspect ratio
-        const imageBuffer = isimage ? await sharp(currentFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer() : currentFile.buffer;
+        const isImage = currentFile.mimetype.includes("image");
+        const imageBuffer = isImage && (await sharp(currentFile.buffer).resize(1080, 720, { fit: "contain" }).toFormat("jpg").toBuffer());
 
         await s3Bucket
           .upload(
             {
               Bucket: String(process.env.AWS_S3_BUCKET_NAME),
               Key: s3Key,
-              Body: imageBuffer,
+              Body: isImage ? imageBuffer : currentFile.buffer,
               ACL: isProd ? "public-read" : "bucket-owner-full-control"
             },
             (err, data) => {

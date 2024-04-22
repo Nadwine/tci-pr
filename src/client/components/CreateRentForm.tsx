@@ -41,7 +41,7 @@ const CreateRentForm = props => {
       productPackage: ""
     },
     async onSubmit(formValues, formikHelpers) {
-      if (formValues.files.length === 0) {
+      if (formValues.files.length === 0 || !formValues.files.find(f => f.type.includes("image"))) {
         toast.error("Please upload at least one picture with this listing");
         return;
       }
