@@ -162,6 +162,13 @@ const Main = () => {
     </h5>
   );
 
+  const SuccessPaymentNotify = () => (
+    <h5 className="text-center mt-5 text-success">
+      Payment Success <br />
+      <i className="fs-2 bi bi-check" />
+    </h5>
+  );
+
   return (
     <div className="d-flex flex-column bg-light" style={{ minHeight: "95vh" }}>
       <Navbar />
@@ -213,6 +220,7 @@ const Main = () => {
             <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
             <Route path="forget-password/:token" element={<ForgetPassword />} />
             <Route path="payments/rent/success" element={<ReoccurringPaymentNotify />} />
+            <Route path="payments/success" element={<SuccessPaymentNotify />} />
             <Route path="enquiries" element={<RequireLogin view={<MobileMessageEnquiries />} />} />
             <Route path="invite/accept" element={<AcceptInvitation />} />
             <Route path="admin/listings" element={<RequirePermission view={<AdminViewListings />} roles={["landlord", "admin"]} />} />

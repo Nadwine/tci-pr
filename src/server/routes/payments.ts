@@ -43,7 +43,7 @@ export const collectSinglePayment = async (req: Request, res: Response) => {
     const paymentSession = await stripeConnector.checkout.sessions.create({
       line_items: [{ price: newPrice.id, quantity: 1 }],
       mode: "payment",
-      success_url: `${process.env.BASE_URL}/payments/rent/success`,
+      success_url: `${process.env.BASE_URL}/payments/success`,
       cancel_url: `${process.env.BASE_URL}/`
     });
 
