@@ -44,8 +44,9 @@ const Favourites = () => {
             <div key={i} className="card mb-3 shadow-sm">
               <div className="card-body d-flex flex-wrap">
                 <div onClick={() => viewProperty(listing.id)} className="image-container point col-12 col-md-5 me-2 pb-3">
-                  {listing.ListingMedia[0].mediaType === "image" && <img width="100%" src={listing.ListingMedia[0]?.mediaUrl} />}
-                  {listing.ListingMedia[0].mediaType === "video" && <video width="100%" src={listing.ListingMedia[0]?.mediaUrl} />}
+                  {listing.ListingMedia[0].mediaType === "image" && (
+                    <img width="100%" src={listing.ListingMedia.find(m => m.mediaType === "image")?.mediaUrl} />
+                  )}
                   <div className="price fw-bold fs-5" style={{ backgroundColor: "#ebf8ff", borderBottomLeftRadius: "7px", borderBottomRightRadius: "7px" }}>
                     {"$"}
                     {listing?.PropertyForRent.rentAmount} <span style={{ fontSize: "0.6em" }}>Monthly</span>{" "}

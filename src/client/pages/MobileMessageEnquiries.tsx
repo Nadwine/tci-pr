@@ -208,7 +208,10 @@ const MobileMessageEnquiries = props => {
                     style={{ height: "70px", color: hasUnreadMessages ? "black" : "grey" }}
                   >
                     <div className="col-1 d-flex justify-content-end">
-                      <img src={enq.Listing.ListingMedia[0]?.mediaUrl} style={{ height: "40px", width: "40px", borderRadius: "5px" }} />
+                      <img
+                        src={enq.Listing.ListingMedia.find(m => m.mediaType === "image")?.mediaUrl}
+                        style={{ height: "40px", width: "40px", borderRadius: "5px" }}
+                      />
                     </div>
                     <div style={{ marginLeft: "25px", width: "100%" }} className=" pe-1 pe-md-5 pe-lg-5">
                       <span style={{ fontWeight: "bold" }}>{getConvoUser(enq)}</span>

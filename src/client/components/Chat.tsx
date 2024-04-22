@@ -133,7 +133,7 @@ export const Chat = (props: Props) => {
       <div className="d-flex w-100 flex-column align-items-center">
         <div className="d-flex chat-header py-3 px-md-5 px-lg-5 w-100" style={{ borderBottom: "2px solid #eaecef", marginBottom: "10px" }}>
           <img
-            src={listing?.ListingMedia.find(m => m.label === "1")?.mediaUrl}
+            src={listing?.ListingMedia.find(m => m.mediaType === "image")?.mediaUrl}
             style={{ height: "40px", width: "40px", borderRadius: "5px", marginRight: "30px" }}
           />
           <strong>{activeConvoTitle}</strong>

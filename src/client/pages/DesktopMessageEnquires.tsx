@@ -111,7 +111,7 @@ const MessageEnquiries = props => {
 
               <div className="card-body border-bottom col-12 d-flex justify-content-start point" style={{ color: hasUnreadMessages ? "black" : "grey" }}>
                 <div className="card-title col-1 d-flex justify-content-end overflow-hidden">
-                  <img src={enq.Listing.ListingMedia[0]?.mediaUrl} style={{ height: "30px", width: "40px" }} />
+                  <img src={enq.Listing.ListingMedia.find(m => m.mediaType === "image")?.mediaUrl} style={{ height: "30px", width: "40px" }} />
                 </div>
                 <div style={{ marginLeft: "10px", width: "100%" }} className="card-title pe-1">
                   <div className="d-flex flex-row">

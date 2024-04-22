@@ -55,7 +55,7 @@ export const LandlordDashboard = props => {
                         className="card shadow-lg point"
                         style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}
                       >
-                        <img src={curListing.ListingMedia[0].mediaUrl} className="card-img-top" alt="..."></img>
+                        <img src={curListing.ListingMedia.find(m => m.mediaType === "image")?.mediaUrl} className="card-img-top" alt="..."></img>
                         <div className="card-body">
                           <h6 className="card-title">{curListing.title}</h6>
                           <p className="card-text w-100">
