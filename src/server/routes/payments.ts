@@ -13,6 +13,48 @@ const dollarsToCent = (amountUSD: number) => {
   return parseFloat(`${amountUSD}`) * 100;
 };
 
+export const collectSinglePayment = async (req: Request, res: Response) => {
+  if (req.session.user?.accountType !== "admin") return res.status(401).json({ message: "Unauthorized " });
+  // TODO Validation
+  const { amountUSD, listingId, ref } = req.body;
+  // paymentReference: paymentReference,
+  //     amountUSD: amountUSD,
+  //     cardHolderName: cardHolderName,
+  //     cardNumber: cardNumber,
+  //     expiration: expiration,
+  //     cvv: cvv
+
+  try {
+    const USDCents = parseFloat(amountUSD) * 100;
+    const stripeConnector = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2023-10-16" });
+
+    // let foundProduct = await stripeConnector.products.search({
+    //   query: `name:'monthly_rent_${listingId}'`
+    // });
+
+    const newPrice = await stripeConnector.prices.create({
+      currency: "usd",
+      unit_amount: USDCents,
+      product_data: {
+        name: `${ref}_${listingId}_d=${dayjs().format("YYYY-MM-DD")}`
+      }
+    });
+
+    const paymentSession = await stripeConnector.checkout.sessions.create({
+      line_items: [{ price: newPrice.id, quantity: 1 }],
+      mode: "payment",
+      success_url: `${process.env.BASE_URL}/payments/rent/success`,
+      cancel_url: `${process.env.BASE_URL}/`
+    });
+
+    const now = dayjs();
+
+    return res.json({ url: paymentSession.url, expiresAtUnixSeconds: paymentSession.expires_at, generatedAt: now.format("YYYY-MM-DD HH:MM:ss:SSS ZZ") });
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
 export const createNewRentMonthly = async (req: Request, res: Response) => {
   if (req.session.user?.accountType !== "admin") return res.status(401).json({ message: "Unauthorized " });
   // TODO Validation
@@ -70,7 +112,7 @@ export const createNewRentMonthly = async (req: Request, res: Response) => {
     );
 
     // TODO save recent PaymentURL in DB
-    return res.json({ paymentURL: paymentSession.url });
+    return res.json({ url: paymentSession.url, expiresAtUnixSeconds: paymentSession.expires_at, generatedAt: now.format("YYYY-MM-DD HH:MM:ss:SSS ZZ") });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error", err });
   }

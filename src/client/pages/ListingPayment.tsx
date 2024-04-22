@@ -32,6 +32,9 @@ const ListingPayment = props => {
   const loginUsr = useSelector((r: RootState) => r.auth.user);
   const landlordFormRef = useRef<HTMLFormElement>(null);
   const stripePromise = loadStripe("pk_test_51OYZbBIGvo7mWPbtUd3Dvc2lKOTPTdp2Ic8uD7uVcxbMbFERYYCu5ulgjJZ7EcPkQxSqp0rYi0AagRNAZ43sRJ7P00Zj8d0CEX");
+  const [oneTimeDataResponse, setOneTimeDataResponse] = useState<any>(null); // url: string, expiresAtUnixSeconds: number, generatedAt: string
+  const [singlePaymentRef, setSinglePaymentRef] = useState("");
+  const [singleAmountUSD, setSingleAmountUSD] = useState("");
 
   const isLanlord = loginUsr?.accountType === "landlord";
   const landlordId = isLanlord ? loginUsr.id : listing?.ListingLandlord?.userId;
@@ -63,7 +66,7 @@ const ListingPayment = props => {
         listingId: listing?.id,
         landlordUserId: landlordId
       });
-      if (res.status === 200) toast.success("Payment link successfully generated");
+      if (res.status === 200) toast.success("Reoccurring payment link successfully generated");
     } catch {
       toast.error("Error while generating this link");
     }
@@ -73,13 +76,26 @@ const ListingPayment = props => {
   const submitOneTimePaymentLinkCreation = async () => {
     if (!listing) return;
 
+    if (!singleAmountUSD || !singlePaymentRef) {
+      toast.error("Please fill in all required details");
+      return;
+    }
+    if (typeof Number(amountUSD) !== "number" && Number(amountUSD) < 5) {
+      toast.error("Minimum supported: $5");
+      return;
+    }
+
     try {
       const res = await axios.post("/api/payment/single-collect", {
-        amountUSD: listing?.PropertyForRent.rentAmount,
+        ref: singlePaymentRef,
+        amountUSD: singleAmountUSD,
         listingId: listing?.id,
         landlordUserId: landlordId
       });
-      if (res.status === 200) toast.success("Payment link successfully generated");
+      if (res.status === 200) {
+        toast.success("On-Time payment link successfully generated");
+        setOneTimeDataResponse(res.data);
+      }
     } catch {
       toast.error("Error while generating this link");
     }
@@ -160,30 +176,43 @@ const ListingPayment = props => {
               </div>
             </Accordion.Body>
           </Accordion.Item>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header>Tenant Payment Link</Accordion.Header>
+          <Accordion.Item eventKey="1">
+            <Accordion.Header>One-time Payment Link</Accordion.Header>
             <Accordion.Body>
-              <h6 className="pb-3">Reoccurring Payment</h6>
+              <h6 className="pb-3">Single Collect Payment</h6>
               <div>
                 <div>
-                  Amount ${listing?.PropertyForRent.rentAmount}
+                  Amount USD{" "}
+                  <input
+                    value={singleAmountUSD}
+                    onChange={e => setSingleAmountUSD(e.target.value)}
+                    style={{ width: "18em" }}
+                    className="form-control"
+                    type="number"
+                  />
                   <br />
-                  Interval: Monthly
+                  Payment Reference{" "}
+                  <input value={singlePaymentRef} onChange={e => setSinglePaymentRef(e.target.value)} className="form-control" style={{ width: "18em" }} />
+                  <br />
+                  Interval: Single
                 </div>
               </div>
-              {listing?.stripePaymentLink && (
+              {oneTimeDataResponse && (
                 <div className="pt-5">
-                  Generated At: {dayjs(linkGeneratedAt).format("MMMM DD YYYY HH:MM:ss a")}
+                  Generated At: {dayjs(oneTimeDataResponse.generatedAt).format("MMMM DD YYYY HH:MM:ss a")}
                   <br />
-                  Link Status: {islinkExpired ? "Expired" : "Active"}
+                  Link Status: {dayjs(oneTimeDataResponse.generatedAt).add(23, "hours").isBefore(dayjs()) ? "Expired" : "Active"}
                   <code className="card">
-                    <a href={listing.stripePaymentLink.url}>{listing.stripePaymentLink.url}</a>
+                    <a href={oneTimeDataResponse.url}>{oneTimeDataResponse.url}</a>
                   </code>
                 </div>
               )}
-              <div className="mt-5">{linkGeneratedAt && "Please send this link to the respected tenant"}</div>
+              <div className="mt-5">
+                {oneTimeDataResponse &&
+                  "Please send this link to the respected payee. Store in a safe location. Exiting this page will result in losing the link"}
+              </div>
               <div className="mt-2">
-                <button disabled={linkGeneratedAt ? !islinkExpired : false} onClick={() => submitOneTimePaymentLinkCreation()} className="btn bg-primary">
+                <button disabled={oneTimeDataResponse} onClick={() => submitOneTimePaymentLinkCreation()} className="btn bg-primary">
                   Generate New Link
                 </button>
               </div>
