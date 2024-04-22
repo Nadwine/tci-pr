@@ -61,6 +61,10 @@ const LandLordCreateListing = props => {
         toast.error("Please complete your profile");
         return;
       }
+      if (formValues.files.length === 0) {
+        toast.error("Please upload at least one picture with this listing");
+        return;
+      }
       const body = {
         files: formValues.files,
         title: formValues.title,
@@ -152,7 +156,7 @@ const LandLordCreateListing = props => {
                 package
               </button>
             </label>
-            <select name="productPackage" onChange={handleChange} value={values.productPackage} className="form-select">
+            <select name="productPackage" onChange={handleChange} value={values.productPackage} className="form-select" required>
               <option selected value="">
                 Select an option
               </option>
@@ -165,7 +169,7 @@ const LandLordCreateListing = props => {
             <label htmlFor="title" className="form-label">
               Island
             </label>
-            <select name="city" onChange={handleChange} value={values.city} className="form-select">
+            <select name="city" onChange={handleChange} value={values.city} className="form-select" required>
               <option selected value="">
                 Select an option
               </option>
@@ -181,7 +185,7 @@ const LandLordCreateListing = props => {
               <label htmlFor="title" className="form-label">
                 Settlement
               </label>
-              <select name="settlement" onChange={handleChange} value={values.settlement} className="form-select">
+              <select name="settlement" onChange={handleChange} value={values.settlement} className="form-select" required>
                 <option selected value="">
                   Select an option
                 </option>
@@ -197,7 +201,7 @@ const LandLordCreateListing = props => {
             <label htmlFor="addressLine1" className="form-label">
               Address Line 1
             </label>
-            <input name="addressLine1" value={values.addressLine1} onChange={handleChange} type="text" className="form-control" />
+            <input name="addressLine1" value={values.addressLine1} onChange={handleChange} type="text" className="form-control" required />
           </div>
           <div className="mb-3">
             <label htmlFor="addressLine2" className="form-label">
@@ -209,25 +213,25 @@ const LandLordCreateListing = props => {
             <label htmlFor="title" className="form-label">
               Advert title
             </label>
-            <input name="title" value={values.title} onChange={handleChange} type="text" className="form-control" />
+            <input name="title" value={values.title} onChange={handleChange} type="text" className="form-control" required />
           </div>
           <div className="mb-3">
             <label htmlFor="maxTenant" className="form-label">
               Maximum number of tenants
             </label>
-            <input name="maxTenant" value={values.maxTenant} onChange={handleChange} type="number" className="form-control" />
+            <input name="maxTenant" value={values.maxTenant} onChange={handleChange} type="number" className="form-control" required />
           </div>
           <div className="mb-3">
             <label htmlFor="numOfRooms" className="form-label">
               Rooms
             </label>
-            <input name="numOfRooms" value={values.numOfRooms} onChange={handleChange} type="number" className="form-control" />
+            <input name="numOfRooms" value={values.numOfRooms} onChange={handleChange} type="number" className="form-control" required />
           </div>
           <div className="mb-3">
             <label htmlFor="numOfBathRooms" className="form-label">
               Bathrooms
             </label>
-            <input name="numOfBathRooms" value={values.numOfBathRooms} onChange={handleChange} type="number" className="form-control" />
+            <input name="numOfBathRooms" value={values.numOfBathRooms} onChange={handleChange} type="number" className="form-control" required />
           </div>
           <div className="mb-3">
             <label htmlFor="sqFt" className="form-label">
@@ -246,13 +250,14 @@ const LandLordCreateListing = props => {
               onKeyUp={e => e.key === "Enter" && setFieldValue("description", values.description + "\r\n")}
               className="form-control"
               placeholder="Additional details"
+              required
             />
           </div>
           <div className="mb-3">
             <label htmlFor="availability" className="form-label">
               Available From
             </label>
-            <input name="availability" value={values.availability} onChange={handleChange} className="form-control" type="date" />
+            <input name="availability" value={values.availability} onChange={handleChange} className="form-control" type="date" required />
           </div>
           <div className="mb-3">
             <label htmlFor="tenancyLength" className="form-label">
@@ -275,7 +280,7 @@ const LandLordCreateListing = props => {
               Rent per month
             </label>
             <span className="input-group-text">$</span>
-            <input name="rentAmount" value={values.rentAmount} onChange={handleChange} type="number" className="form-control" />
+            <input name="rentAmount" value={values.rentAmount} onChange={handleChange} type="number" className="form-control" required />
             <span className="input-group-text">.00</span>
           </div>
           <div className="inclusions pt-4">
@@ -388,7 +393,7 @@ const LandLordCreateListing = props => {
           </div>
           <div>
             <input
-              style={{ width: "7.3em" }}
+              style={{ width: "7.5em" }}
               className="form-control mb-5 ms-auto mt-2"
               type="file"
               id="formFileMultiple"
