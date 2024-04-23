@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import * as yup from "yup";
 import _ from "lodash";
 import { ValidationError } from "yup";
@@ -19,6 +19,7 @@ const passwordValidationSchema: yup.AnyObjectSchema = yup.object({
 });
 
 const ForgetPassword = () => {
+  const navigate = useNavigate();
   // searching url for registration query param
   const { token } = useParams();
   const [searchParams] = useSearchParams();
@@ -170,7 +171,10 @@ const ForgetPassword = () => {
       )}
       {forgetPasswordStatus === "completed" && (
         <h4 className="text-success m-5">
-          Your Password has now been changed! Click here to <a href="/login">Login</a>
+          Your Password has now been changed! Click here to{" "}
+          <button className="btn text-primary" onClick={() => navigate("/login")}>
+            Login
+          </button>
         </h4>
       )}
     </div>
