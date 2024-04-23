@@ -12,6 +12,7 @@ import Profile from "../../database/models/profile";
 import bcrypt from "bcrypt";
 import Admin from "../../database/models/admin";
 import dayjs from "dayjs";
+import { emailLandlord_on_TenantAcceptInvite } from "../services/notification-service";
 
 export const getSessionUserTenancies = async (req: Request, res: Response) => {
   try {
@@ -247,7 +248,17 @@ export const acceptInviteToTenancy = async (req: Request, res: Response) => {
     const hashSecret = process.env.EMAIL_TOKEN_HASH_SECRET || "";
     // @ts-ignore
     const { email, propertyForRentId, firstName, lastName } = jwt.verify(token, hashSecret); // throws to catch if failed to verify
-    const property = await PropertyForRent.findByPk(propertyForRentId);
+    const property = await PropertyForRent.findByPk(propertyForRentId, {
+      include: [
+        {
+          model: Listing,
+          include: [
+            { model: ListingLandlord, include: [User] },
+            { model: Admin, include: [User] }
+          ]
+        }
+      ]
+    });
     if (!property) return res.redirect("/invite/accept?result=failed&message=Error, Invalid Request. Property not found");
 
     // Can be Null if first tenant ???????
@@ -318,7 +329,10 @@ export const acceptInviteToTenancy = async (req: Request, res: Response) => {
     });
 
     await tenant.update({ tenancyId: tenancy.id });
-
+    const listing = property.Listing;
+    const managerEmail = listing.listingManager === "landlord" ? listing?.ListingLandlord?.User.email : listing?.Admin?.User?.email;
+    const tenantName = `${foundUser?.Profile?.firstName || firstName} ${foundUser?.Profile?.lastName || lastName}`;
+    await emailLandlord_on_TenantAcceptInvite(managerEmail || "", tenantName);
     if (foundUser) {
       return res.redirect("/my-tenancy");
     } else {

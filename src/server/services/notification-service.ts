@@ -48,6 +48,21 @@ export const emailLandlord_on_EnquiryReceived = async (landlordEmail: string) =>
     return;
   }
 };
+
+export const emailLandlord_on_TenantAcceptInvite = async (landlordEmail: string, tenantName: string) => {
+  const subject = "TCI Homebase - Invitation Accepted";
+  const text = `${tenantName} has accepted your invite to the tenancy. Please login to view and fill out ${tenantName}'s details`;
+  const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
+  <br></br>
+  <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
+  <p style="font-family: arial;">${tenantName} has accepted your invite to the tenancy. Please login to view and fill out ${tenantName}'s details. <a href="${process.env.BASE_URL}/login" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Login</a></p><br></br><br></br><p style="font-size: 10px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+  try {
+    await sendMail(subject, [landlordEmail], text, html);
+  } catch {
+    return;
+  }
+};
+
 export const emailLandlord_on_OfferReceived = async (landlordEmail: string) => {
   const subject = "TCI Homebase - New Offer Received";
   const text = "You have received an offer for your property. Please login to view";

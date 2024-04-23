@@ -5,6 +5,8 @@ import bcrypt from "bcrypt";
 import ListingLandlord from "../../database/models/listing_landlord";
 import Listing from "../../database/models/listing";
 import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+dayjs.extend(duration);
 import User from "../../database/models/user";
 import messages from "../../database/fake-data/messages";
 import PropertyForRent from "../../database/models/property_for_rent";
@@ -101,7 +103,8 @@ export const redirectStripePackagePayment = async (req: Request, res: Response) 
         listingId: listingId,
         reference: `${packageName} package`,
         reason: "package-payment"
-      }
+      },
+      expires_at: dayjs().add(35, "minute").unix()
     });
 
     if (paymentSession.url) {
