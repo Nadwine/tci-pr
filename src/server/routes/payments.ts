@@ -60,7 +60,6 @@ export const collectSinglePayment = async (req: Request, res: Response) => {
 };
 
 export const collectPackagePayment = async (req: Request, res: Response) => {
-  if (req.session.user?.accountType !== "admin") return res.status(401).json({ message: "Unauthorized " });
   // TODO Validation
   const { listingId } = req.params;
 
