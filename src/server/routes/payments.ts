@@ -477,37 +477,44 @@ export const attachCardToLandlord = async (req: Request, res: Response) => {
 };
 
 export const stripeWebhook = async (req: Request, res: Response) => {
-  const signature = req.headers["stripe-signature"];
+  process.env.NODE_ENV === "development" && console.log("STRIPE WebHook Hit");
 
+  const signature = req.headers["stripe-signature"];
   let stripeEvent = req.body.type;
 
-  switch (stripeEvent) {
-    case "payment_intent.succeeded":
-      // const paymentIntentSucceeded = req.body.data.object;
-      // Then define and call a function to handle the event payment_intent.succeeded
-      break;
-    case "checkout.session.completed":
-      {
-        const dataObject = req.body.data.object;
-        const metadata = dataObject?.metadata;
-        const listingId = metadata && metadata?.listingId;
-        const reference = metadata && metadata?.reference;
-        const reason = metadata && metadata?.reason;
+  try {
+    switch (stripeEvent) {
+      case "payment_intent.succeeded":
+        // const paymentIntentSucceeded = req.body.data.object;
+        // Then define and call a function to handle the event payment_intent.succeeded
+        break;
+      case "checkout.session.completed":
+        {
+          const dataObject = req.body.data.object;
+          const metadata = dataObject?.metadata;
+          const listingId = metadata && metadata?.listingId;
+          const reference = metadata && metadata?.reference;
+          const reason = metadata && metadata?.reason;
 
-        if (reason === "package-payment") {
-          await Listing.update({ hasPaid: true }, { where: { id: listingId } });
+          if (reason === "package-payment") {
+            await Listing.update({ hasPaid: true }, { where: { id: listingId } });
+          }
         }
-      }
-      break;
-    case "setup_intent.succeeded":
-      // We will pull in the setup intent and update the landlord connect account with the payment method
-      console.log();
-      break;
-    // ... handle other event types
-    default:
-      console.log(`Unhandled stripe event type ${stripeEvent}`);
+        break;
+      case "setup_intent.succeeded":
+        // We will pull in the setup intent and update the landlord connect account with the payment method
+        console.log();
+        break;
+      // ... handle other event types
+      default:
+        console.log(`Unhandled stripe event type ${stripeEvent}`);
+    }
+    // let stripe know we captured the event
+    return res.json({ received: true });
+  } catch (err) {
+    // let stripe know we captured the event
+    return res.json({ received: true });
   }
-  console.log("STRIPE WebHook Hit");
 };
 
 // Hello i am a software developer and im trying to setup a model where i can collect rent from tenants and send that money to landlords. I am unsure whats the best way/stripeflow to accomplish this.
