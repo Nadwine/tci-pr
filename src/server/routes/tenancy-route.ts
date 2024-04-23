@@ -106,7 +106,8 @@ export const createTenancyRoute = async (req: Request, res: Response) => {
 };
 
 export const updateTenancyRoute = async (req: Request, res: Response) => {
-  const { rentalAgreementDate, deposit, isDepositPaid, outstandingRent, tenancyStatus, tenancyId, propertyForRentId, lenghtInDays } = req.body;
+  const { rentalAgreementDate, deposit, isDepositPaid, outstandingRent, tenancyStatus, tenancyId, propertyForRentId, lenghtInDays, isDepositReleased } =
+    req.body;
   const isAdmin = req.session.user!.accountType === "admin";
   const isLandlord = req.session.user!.accountType === "landlord";
   const allowed = req.session.user!.accountType === "admin" || req.session.user!.accountType === "landlord";
@@ -135,7 +136,8 @@ export const updateTenancyRoute = async (req: Request, res: Response) => {
       lenghtInDays: lenghtInDays,
       outstandingRent: outstandingRent,
       propertyForRentId: propertyForRentId,
-      tenancyStatus: tenancyStatus
+      tenancyStatus: tenancyStatus,
+      isDepositReleased: isDepositReleased
     });
 
     return res.status(200).json({ message: "Success" });

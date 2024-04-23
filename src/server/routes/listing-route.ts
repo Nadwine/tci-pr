@@ -26,6 +26,7 @@ import ProfileMedia from "../../database/models/profile_media";
 import TenancyDocument from "../../database/models/tenancy_document";
 import packageDefaultValues from "../../utils/packageDefaultValues";
 import { emailLandlord_on_ListingApproved } from "../services/notification-service";
+import TenancyRentPayment from "../../database/models/tenancy_rent_payment";
 
 const s3Bucket = new S3({
   s3ForcePathStyle: true,
@@ -457,7 +458,14 @@ export const getExpandedRentListingById = async (req: Request, res: Response) =>
     const listing = await Listing.findByPk(id, {
       include: [
         { model: Address },
-        { model: PropertyForRent, include: [{ model: Tenancy, include: [Tenant, TenancyDocument] }, PropertyDocument, Expense] },
+        {
+          model: PropertyForRent,
+          include: [
+            { model: Tenancy, include: [Tenant, TenancyDocument] },
+            PropertyDocument,
+            { model: Expense, include: [{ model: TenancyRentPayment, include: [Tenancy] }] }
+          ]
+        },
         { model: ListingLandlord },
         { model: ListingMedia, order: [["id", "ASC"]] },
         { model: Admin, include: [User] },

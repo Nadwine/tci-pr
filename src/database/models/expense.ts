@@ -3,6 +3,7 @@ import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, 
 import sequelize from "../sequelize-connection";
 import PropertyForRent from "./property_for_rent";
 import PropertyDocument from "./property_document";
+import TenancyRentPayment from "./tenancy_rent_payment";
 
 export default class Expense extends Model<InferAttributes<Expense>, InferCreationAttributes<Expense>> {
   declare id: CreationOptional<number>;
@@ -14,6 +15,7 @@ export default class Expense extends Model<InferAttributes<Expense>, InferCreati
   declare propertyDocumentId: CreationOptional<number>;
   declare stripePaymentInfo: any;
   declare operation: "add" | "minus";
+  declare TenancyRentPayment: CreationOptional<TenancyRentPayment>;
 }
 
 Expense.init(

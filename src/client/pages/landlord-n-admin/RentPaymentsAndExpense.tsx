@@ -48,6 +48,10 @@ const columns = [
   columnHelper.accessor("description", {
     header: "Description",
     footer: info => info.column.id
+  }),
+  columnHelper.accessor("TenancyRentPayment.Tenancy.firstName", {
+    header: "Tenant",
+    footer: info => info.column.id
   })
 ];
 

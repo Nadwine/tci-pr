@@ -14,6 +14,7 @@ export default class TenancyRentPayment extends Model<InferAttributes<TenancyRen
   declare tenancyId: number;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
+  declare Tenancy: CreationOptional<Tenancy>;
 }
 
 // allowNull defaults to true if not set
@@ -52,3 +53,4 @@ Tenancy.hasMany(TenancyRentPayment, { foreignKey: "tenancyId" });
 TenancyRentPayment.belongsTo(Tenancy, { foreignKey: "tenancyId" });
 
 TenancyRentPayment.belongsTo(Expense, { foreignKey: "expenseId" });
+Expense.hasOne(TenancyRentPayment, { foreignKey: "expenseId" });

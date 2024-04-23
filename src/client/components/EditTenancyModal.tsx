@@ -22,6 +22,7 @@ const EditTenancyModal = (props: Props) => {
   const [lenghtInDays, setLenghtInDays] = useState(selectedTenToManage?.lenghtInDays);
   const [depositAmount, setDepositAmount] = useState(selectedTenToManage?.deposit);
   const [isDepositPaid, setIsDepositPaid] = useState(selectedTenToManage?.isDepositPaid);
+  const [isDepositReleased, setIsDepositReleased] = useState(selectedTenToManage?.isDepositReleased);
   const [outstandingRent, setOutstandingRent] = useState(selectedTenToManage?.outstandingRent);
   const [tenancyStatus, setTenancyStatus] = useState(String(selectedTenToManage?.tenancyStatus));
   const [showArchiveWarning, setShowArchiveWarning] = useState(false);
@@ -33,6 +34,7 @@ const EditTenancyModal = (props: Props) => {
       lenghtInDays: lenghtInDays,
       deposit: depositAmount,
       isDepositPaid: isDepositPaid,
+      isDepositReleased: isDepositReleased,
       outstandingRent: outstandingRent,
       tenancyStatus: tenancyStatus,
       tenancyId: selectedTenToManage?.id,
@@ -61,6 +63,7 @@ const EditTenancyModal = (props: Props) => {
     setLenghtInDays(selectedTenToManage?.lenghtInDays);
     setDepositAmount(selectedTenToManage?.deposit);
     setIsDepositPaid(selectedTenToManage?.isDepositPaid);
+    setIsDepositReleased(selectedTenToManage?.isDepositReleased);
     setOutstandingRent(selectedTenToManage?.outstandingRent);
     setTenancyStatus(String(selectedTenToManage?.tenancyStatus));
   }, [selectedTenToManage]);
@@ -93,6 +96,22 @@ const EditTenancyModal = (props: Props) => {
             </div>
           </div>
           <div className="py-2 d-flex align-items-center">
+            <label className="pe-4">Outstanding Rent Amount</label>
+            <div className="col-4">
+              <input value={outstandingRent} onChange={e => setOutstandingRent(Number(e.target.value))} className="form-control" type="number" />
+            </div>
+          </div>
+          <div className="py-2 d-flex align-items-center">
+            <label className="pe-4 col-6">Tenancy Status</label>
+            <select onChange={e => setTenancyStatus(e.target.value)} className="form-select">
+              {tenancyStatusSequence.map((stat, i) => (
+                <option selected={tenancyStatus === stat} key={i}>
+                  {stat}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="py-2 d-flex align-items-center">
             <label className="pe-4">Deposit Amount</label>
             <div className="col-4">
               <input value={depositAmount} onChange={e => setDepositAmount(Number(e.target.value))} className="form-control" type="number" />
@@ -109,20 +128,14 @@ const EditTenancyModal = (props: Props) => {
             />
           </div>
           <div className="py-2 d-flex align-items-center">
-            <label className="pe-4">Outstanding Rent Amount</label>
-            <div className="col-4">
-              <input value={outstandingRent} onChange={e => setOutstandingRent(Number(e.target.value))} className="form-control" type="number" />
-            </div>
-          </div>
-          <div className="py-2 d-flex align-items-center">
-            <label className="pe-4 col-6">Tenancy Status</label>
-            <select onChange={e => setTenancyStatus(e.target.value)} className="form-select">
-              {tenancyStatusSequence.map((stat, i) => (
-                <option selected={tenancyStatus === stat} key={i}>
-                  {stat}
-                </option>
-              ))}
-            </select>
+            <label className="pe-4">Deposit Released</label>
+            <input
+              value={String(isDepositReleased)}
+              checked={Boolean(isDepositReleased)}
+              onChange={e => setIsDepositReleased(e.target.checked)}
+              className="col-1"
+              type="checkbox"
+            />
           </div>
         </div>
       </Modal.Body>
