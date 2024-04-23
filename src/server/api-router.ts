@@ -38,6 +38,7 @@ import { getMessagesByEnquiryConversationId, sendMessageToConversation, setMessa
 import {
   adminCreateLandLordForListing,
   attachCardToLandlord,
+  collectPackagePayment,
   collectSinglePayment,
   createNewRentMonthly,
   payLandlordForProperty,
@@ -133,6 +134,7 @@ router.post("/payment/single-collect", ensureAdmin, collectSinglePayment);
 router.post("/payment/rent/attach-landlord", ensureAuthentication, adminCreateLandLordForListing);
 router.post("/payment/add-landlord-card", ensureAuthentication, attachCardToLandlord);
 router.post("/payment/pay-out-landlord", ensureAuthentication, payLandlordForProperty);
+router.get("/payment/package/:listingId", collectPackagePayment); // public-route
 router.post("/payment/webhook", express.raw({ type: "application/json" }), stripeWebhook);
 
 // /api/feedback

@@ -59,6 +59,63 @@ export const collectSinglePayment = async (req: Request, res: Response) => {
   }
 };
 
+export const collectPackagePayment = async (req: Request, res: Response) => {
+  if (req.session.user?.accountType !== "admin") return res.status(401).json({ message: "Unauthorized " });
+  // TODO Validation
+  const { listingId } = req.params;
+
+  try {
+    const listing = await Listing.findByPk(listingId);
+    if (!listing) return res.status(404).json({ message: "Listing not found" });
+    const packageName = listing.productPackage?.name;
+    let unit_cost = 0;
+    if (packageName === "basic") unit_cost = 20.0;
+    if (packageName === "standard") unit_cost = 150.0;
+    const USDCents = dollarsToCent(unit_cost);
+    const stripeConnector = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2023-10-16" });
+
+    let newPrice;
+    let foundProduct = await stripeConnector.products.search({
+      query: `name:'${packageName}'`
+    });
+
+    if (foundProduct.data.length === 0) {
+      newPrice = await stripeConnector.prices.create({
+        currency: "usd",
+        unit_amount: USDCents,
+        product_data: {
+          name: `${packageName}`
+        }
+      });
+    } else {
+      newPrice = await stripeConnector.prices.search({
+        query: `product:'${foundProduct.data[0].id}'`
+      });
+    }
+
+    const paymentSession = await stripeConnector.checkout.sessions.create({
+      line_items: [{ price: foundProduct.data.length === 0 ? newPrice.id : newPrice.data[0].id, quantity: 1 }],
+      mode: "payment",
+      success_url: `${process.env.BASE_URL}/payments/success`,
+      cancel_url: `${process.env.BASE_URL}/`,
+      metadata: {
+        listingId: listingId,
+        reference: `${packageName} package`,
+        reason: "package-payment"
+      }
+    });
+
+    if (paymentSession.url) {
+      return res.redirect(paymentSession.url);
+    } else {
+      return res.status(500).json({ message: "Something went wrong while sending you to the payment portal. Try again or contact us for additional help" });
+    }
+    // return res.json({ url: paymentSession.url, expiresAtUnixSeconds: paymentSession.expires_at });
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server error", err });
+  }
+};
+
 export const createNewRentMonthly = async (req: Request, res: Response) => {
   if (req.session.user?.accountType !== "admin") return res.status(401).json({ message: "Unauthorized " });
   // TODO Validation
@@ -433,8 +490,10 @@ export const stripeWebhook = async (req: Request, res: Response) => {
     case "checkout.session.completed":
       {
         const dataObject = req.body.data.object;
-        const metadata = dataObject.metadata;
-        const { listingId, reference, reason } = metadata;
+        const metadata = dataObject?.metadata;
+        const listingId = metadata && metadata?.listingId;
+        const reference = metadata && metadata?.reference;
+        const reason = metadata && metadata?.reason;
 
         if (reason === "package-payment") {
           await Listing.update({ hasPaid: true }, { where: { id: listingId } });

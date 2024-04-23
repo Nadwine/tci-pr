@@ -73,17 +73,18 @@ export const adminCreateRentListingRoute = async (req: Request, res: Response) =
   let createdMediaIds: number[] = [];
   try {
     await createListingSchema.validate(req.body); // need to sit inside catch block
-    const landlord = await Admin.findOne({ where: { userId: req.session.user?.id } });
+    const adminRecord = await Admin.findOne({ where: { userId: req.session.user?.id } });
 
-    if (landlord) {
+    if (adminRecord) {
       const newListing = await Listing.create({
         title: title,
         description: description,
         listingType: ListingTypeEnum.RENT,
         listingManager: productPackage === "basic" ? "landlord" : "admin",
         listingStatus: "approved",
-        adminId: landlord!.id,
+        adminId: adminRecord!.id,
         isApproved: true,
+        hasPaid: true,
         category: "PropertyForRent",
         productPackage: packageDefaultValues.find(p => p.name === productPackage)
       });
@@ -819,6 +820,8 @@ export const setApprovalValueRoute = async (req: Request, res: Response) => {
 
   try {
     const listing = await Listing.findByPk(id, { include: [{ model: ListingLandlord, include: [User] }] });
+    if (!listing) return res.status(404).json({ message: "Listing not found" });
+
     await Listing.update(
       {
         isApproved: isApproved,
@@ -828,7 +831,8 @@ export const setApprovalValueRoute = async (req: Request, res: Response) => {
     );
 
     if (isApproved == true) {
-      await emailLandlord_on_ListingApproved(listing?.ListingLandlord?.User.email || "");
+      const paymentApiRedirectLink = `${process.env.BASE_URL}/api/payment/package/${listing.id}`;
+      await emailLandlord_on_ListingApproved(listing?.ListingLandlord?.User.email || "", paymentApiRedirectLink);
     }
 
     res.status(200).json({ message: "success" });
