@@ -79,7 +79,7 @@ export const adminCreateRentListingRoute = async (req: Request, res: Response) =
         title: title,
         description: description,
         listingType: ListingTypeEnum.RENT,
-        listingManager: "admin",
+        listingManager: productPackage === "basic" ? "landlord" : "admin",
         listingStatus: "approved",
         adminId: landlord!.id,
         isApproved: true,
@@ -291,7 +291,7 @@ export const landLordSubmitRentListingRoute = async (req: Request, res: Response
         listingType: ListingTypeEnum.RENT,
         landlordId: landlord[0].id,
         listingStatus: "awaiting approval",
-        listingManager: listingManager,
+        listingManager: productPackage === "basic" ? "landlord" : "admin",
         isApproved: false,
         category: "PropertyForRent",
         productPackage: packageDefaultValues.find(p => p.name === productPackage)

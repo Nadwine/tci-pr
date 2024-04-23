@@ -25,6 +25,7 @@ export default class TenancyDocument extends Model<InferAttributes<TenancyDocume
     | "previous-tenancy-agreement";
   declare metadata?: TenancyDocMeta;
   declare tenancyId: number;
+  declare Tenancy: CreationOptional<Tenancy>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }

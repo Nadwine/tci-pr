@@ -8,6 +8,9 @@ import Profile from "../../database/models/profile";
 import _ from "lodash";
 import Tenant from "../../database/models/tenant";
 import { sleepTimer } from "../../utils/sleep";
+import { emailLandlord_on_TenantSigned, emailTenants_on_LandlordAgreementUpload } from "../services/notification-service";
+import PropertyForRent from "../../database/models/property_for_rent";
+import Listing from "../../database/models/listing";
 
 export const uploadTenancyAgreement = async (req: Request, res: Response) => {
   const files = req.files ?? [];
@@ -33,7 +36,11 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
     });
     const isProd = process.env.NODE_ENV === "production" || "test";
 
-    const existingAgreement = await TenancyDocument.findOne({ where: { documentType: "tenancy-agreement", tenancyId: tenancyId } });
+    const existingAgreement = await TenancyDocument.findOne({
+      where: { documentType: "tenancy-agreement", tenancyId: tenancyId },
+      include: [{ model: Tenancy, include: [{ model: PropertyForRent, include: [Listing] }] }]
+    });
+    const listing = existingAgreement?.Tenancy?.PropertyForRent?.Listing;
     await s3Bucket
       .deleteObject({ Bucket: process.env.AWS_S3_BUCKET_NAME, Key: existingAgreement?.s3BucketKey || "" }, async (err, data) => {
         err && console.log("S3 delete Error", err);
@@ -86,6 +93,9 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
             meta!.tenantsSignData
               ? meta!.tenantsSignData?.push({ name: name, email: email, dateTime: dateTime, tenancyId: tenancyId, tenantId: tenantId })
               : (meta!.tenantsSignData = [{ name: name, email: email, dateTime: dateTime, tenancyId: tenancyId, tenantId: tenantId }]);
+
+            const managerEmail = listing!.listingManager === "landlord" ? listing?.ListingLandlord?.User.email : listing?.Admin?.User?.email;
+            await emailLandlord_on_TenantSigned(managerEmail || "");
           } else {
             // Property Manager is signing
             meta!.landlordSignData = { name: name, email: email, dateTime: dateTime, tenancyId: tenancyId };
@@ -108,6 +118,7 @@ export const uploadTenancyAgreement = async (req: Request, res: Response) => {
             label: `${filename}`,
             documentType: "tenancy-agreement"
           });
+          await emailTenants_on_LandlordAgreementUpload([existingAgreement?.Tenancy.mainContactEmail || ""]);
         }
         return res.status(200).json({ message: "success" });
       });

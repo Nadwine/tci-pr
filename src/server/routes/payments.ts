@@ -117,9 +117,10 @@ export const createNewRentMonthly = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Internal Server error", err });
   }
 };
-
+// Inactive route
 export const adminCreateLandLordForListing = async (req: Request, res: Response) => {
   const sessUsr = req.session.user;
+  res.json();
   if (sessUsr?.accountType !== "landlord" && sessUsr?.accountType !== "admin") {
     return res.status(401).json({ message: "unauthorized" });
   }
