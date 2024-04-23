@@ -513,14 +513,16 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
       include: [
         {
           model: Address,
-          where: {
-            [Op.or]: [
-              { city: { [Op.iLike]: location } },
-              { settlement: { [Op.iLike]: location } },
-              { addressLine1: { [Op.iLike]: location } },
-              { addressLine2: { [Op.iLike]: location } }
-            ]
-          }
+          where: location
+            ? {
+                [Op.or]: [
+                  { city: { [Op.iLike]: location } },
+                  { settlement: { [Op.iLike]: location } },
+                  { addressLine1: { [Op.iLike]: location } },
+                  { addressLine2: { [Op.iLike]: location } }
+                ]
+              }
+            : undefined
         },
         {
           model: PropertyForRent,

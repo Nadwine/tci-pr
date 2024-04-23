@@ -56,9 +56,14 @@ const SearchRentResults = props => {
     if (res.status !== 200) setServerError("Error getting results");
   };
 
+  // keep the duplicate values in sync
   useEffect(() => {
     fetchInitialSearchResult();
   }, [searchParams]);
+
+  useEffect(() => {
+    setSearchText(searchTextFromURL);
+  }, [searchTextFromURL]);
 
   const goToNextPage = async () => {
     const newPage = Number(pageFromURL) + 1;
@@ -76,6 +81,16 @@ const SearchRentResults = props => {
     updatedSearchParams.set("page", `${newPage}`);
     setSearchParams(updatedSearchParams.toString());
     window.scrollTo(0, 0);
+  };
+
+  const searchAllProperties = async () => {
+    navigate(`/search/rent?&page=0`);
+    // const res = await axios.get(`/api/listing/rent/search?&page=0`);
+    // if (res.status === 200) {
+    //   setSearchResults(res.data.rows);
+    //   setTotalResults(res.data.count);
+    // }
+    // if (res.status !== 200) setServerError("Error getting results");
   };
 
   const searchRent = async text => {
@@ -244,7 +259,15 @@ const SearchRentResults = props => {
             </div>
           </div>
         ))}
-        {searchResults.length === 0 && <h6 className="text-center text-muted text-danger mt-5 pt-5">No property results to display</h6>}
+        {searchResults.length === 0 && (
+          <h6 className="text-center text-muted text-danger mt-5 pt-5">
+            No property results to display
+            <br />{" "}
+            <div onClick={() => searchAllProperties()} className="point text-primary pt-4">
+              Search all properties
+            </div>
+          </h6>
+        )}
       </div>
       <div
         style={{ zIndex: +1, borderBottomLeftRadius: "20px", borderBottomRightRadius: "20px", marginTop: "40px" }}
