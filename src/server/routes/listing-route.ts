@@ -435,6 +435,10 @@ export const getRentListingById = async (req: Request, res: Response) => {
       ]
     });
 
+    if (listing?.isApproved === false || listing?.hasPaid === false) {
+      return res.status(401).json({ message: "Listing not yet active" });
+    }
+
     return res.status(200).json(listing);
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error", err });

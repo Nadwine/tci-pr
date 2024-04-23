@@ -49,7 +49,7 @@ const ListingPayment = props => {
       setListing(listingRes.data);
       setLoading(false);
     } else {
-      console.log(`/api/listing/rent/${listingId}`, listingRes);
+      //
     }
   };
 

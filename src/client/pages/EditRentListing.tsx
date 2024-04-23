@@ -16,12 +16,12 @@ const EditRentListing = props => {
   const accountType = user?.accountType;
 
   const initialFetch = async () => {
-    const res = await axios.get(`/api/listing/rent/${id}`);
+    const res = await axios.get(`/api/listing/rent/expanded/${id}`);
     if (res.status === 200) {
       setListing(res.data);
       setLoading(false);
     } else {
-      console.log(`/api/listing/rent/${id}`, res);
+      console.log(`/api/listing/rent/expanded/${id}`, res);
     }
   };
 
