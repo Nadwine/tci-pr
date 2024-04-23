@@ -59,7 +59,7 @@ export const collectSinglePayment = async (req: Request, res: Response) => {
   }
 };
 
-export const collectPackagePayment = async (req: Request, res: Response) => {
+export const redirectStripePackagePayment = async (req: Request, res: Response) => {
   // TODO Validation
   const { listingId } = req.params;
 

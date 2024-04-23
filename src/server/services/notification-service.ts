@@ -68,7 +68,7 @@ export const emailLandlord_on_ListingApproved = async (landlordEmail: string, pa
   const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
   <br></br>
   <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
-  <p style="font-family: arial;">Congratulations! Your listing has been approved, Just one more step. <br></br> Upon payment, your listing will be viewable by search on TCI Homebase. You will shortly be able to receive enquiries from potential future tenants. Good luck and thank you for choosing TCI Homebase.<br></br> <a href="${paymentURL}" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Payment Link</a><br></br></p><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+  <p style="font-family: arial;">Congratulations! Your listing has been approved, Just one more step. <br></br> Upon payment, your listing will be viewable by search on TCI Homebase. You will shortly be able to receive enquiries from potential future tenants. Good luck and thank you for choosing TCI Homebase.<br></br><br></br> <a href="${paymentURL}" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Payment Link</a><br></br></p><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
   try {
     await sendMail(subject, [landlordEmail], text, html);
   } catch {
