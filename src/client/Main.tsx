@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import Footer from "./components/Footer";
 import { useAppContext } from "./Context";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -95,6 +95,8 @@ function initTranslations() {
 const Main = () => {
   const dispatcher = useDispatch();
   const { name, setName } = useAppContext();
+  const { pathname } = useLocation();
+
   const [loadingCredentials, setLoadingCredentials] = useState(true);
   const [showCookieConsent, setShowCookieConsent] = useState(false);
   const loginUsr = useSelector((r: RootState) => r.auth.user);
@@ -132,6 +134,11 @@ const Main = () => {
 
     return () => clearInterval(messageRefreshInterval);
   }, []);
+
+  // Automatically scrolls to top whenever pathname changes
+  useEffect(() => {
+    if (pathname !== "/about") window.scrollTo(0, 0);
+  }, [pathname]);
 
   useEffect(() => {
     // Cookie
