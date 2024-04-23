@@ -62,6 +62,20 @@ export const emailLandlord_on_OfferReceived = async (landlordEmail: string) => {
   }
 };
 
+export const emailLandlord_on_ListingApproved = async (landlordEmail: string) => {
+  const subject = "TCI Homebase - Listing Approval";
+  const text = "Congratulations! Your listing Has been Approved ";
+  const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
+  <br></br>
+  <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
+  <p style="font-family: arial;">Congratulations! Your listing has been approved, Just one more step. <br></br> Upon payment, your listing will be viewable by search on TCI Homebase. You will shortly be able to receive enquiries from potential future tenants. Good luck and thank you for choosing TCI Homebase.</p><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+  try {
+    await sendMail(subject, [landlordEmail], text, html);
+  } catch {
+    return;
+  }
+};
+
 export const emailLandlord_on_TenantSigned = async (landlordEmail: string) => {
   const subject = "TCI Homebase - New Document Signature";
   const text = "Your new tenant has signed a document. Please login to view";

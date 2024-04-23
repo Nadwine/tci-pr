@@ -25,6 +25,7 @@ import Tenancy from "../../database/models/tenancy";
 import ProfileMedia from "../../database/models/profile_media";
 import TenancyDocument from "../../database/models/tenancy_document";
 import packageDefaultValues from "../../utils/packageDefaultValues";
+import { emailLandlord_on_ListingApproved } from "../services/notification-service";
 
 const s3Bucket = new S3({
   s3ForcePathStyle: true,
@@ -816,6 +817,7 @@ export const setApprovalValueRoute = async (req: Request, res: Response) => {
   if (isApproved == null || !id) return res.status(400).json({ message: "bad request" });
 
   try {
+    const listing = await Listing.findByPk(id, { include: [{ model: ListingLandlord, include: [User] }] });
     await Listing.update(
       {
         isApproved: isApproved,
@@ -823,6 +825,10 @@ export const setApprovalValueRoute = async (req: Request, res: Response) => {
       },
       { where: { id: Number(id) } }
     );
+
+    if (isApproved == true) {
+      await emailLandlord_on_ListingApproved(listing?.ListingLandlord?.User.email || "");
+    }
 
     res.status(200).json({ message: "success" });
   } catch (err) {
