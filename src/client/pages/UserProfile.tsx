@@ -60,6 +60,10 @@ const UserProfile = props => {
 
   const uploadProfilePicture = async (e: any) => {
     e.preventDefault();
+    if (!profile?.firstName || !profile.lastName) {
+      toast.info("We would like to put a name to the face. Please fill out name section first");
+      return;
+    }
     const formData = new FormData(uploadFormRef.current || undefined);
     const body: any = {};
     for (var pair of formData.entries()) {
