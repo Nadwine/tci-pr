@@ -65,6 +65,10 @@ const LandLordCreateListing = props => {
         toast.error("Please upload at least one picture with this listing");
         return;
       }
+      if (formValues.productPackage === "basic" && formValues.files.find(f => f.type.includes("video"))) {
+        toast.error("You've selected 'Basic' package. Please select 'Standard' or 'Premium' to enable video uploads");
+        return;
+      }
       const body = {
         files: formValues.files,
         title: formValues.title,
