@@ -24,6 +24,7 @@ function Navbar() {
     } else {
       navigate("/about?focus-contact=true");
       setIsCollapse(true);
+      setUserDropDownShow(false);
     }
   };
   useEffect(() => {
@@ -43,10 +44,17 @@ function Navbar() {
     <nav className={`${isHome && "nav-home"} navbar navbar-expand-md navbar-light fixed-top bg-light px-0 shadow-sm`}>
       <div className="container-xl">
         {/* <!-- Logo --> */}
-        <a className="navbar-brand d-flex flex-row" href="/">
+        <span
+          className="point navbar-brand d-flex flex-row align-items-center"
+          onClick={() => {
+            navigate("/");
+            setIsCollapse(true);
+            setUserDropDownShow(false);
+          }}
+        >
           <img src="/static/web-logo-cyan.png" style={{ width: "40px" }} className="h-8" alt="..." />
           <span className="d-flex align-items-center fs-6 ps-2">TCI Homebase</span>
-        </a>
+        </span>
         {/* <!-- Navbar toggle --> */}
         <button
           className="navbar-toggler border-0"
@@ -69,27 +77,85 @@ function Navbar() {
         <div className={dynamicClassName} id="navbarCollapse">
           {/* <!-- Nav --> */}
           <div className="navbar-nav mx-lg-auto">
-            <a className="nav-item nav-link" href="/products" aria-current="page" style={{ color: "#032830" }}>
+            <span
+              className="point nav-item nav-link"
+              onClick={() => {
+                navigate("/products");
+                setIsCollapse(true);
+                setUserDropDownShow(false);
+              }}
+              aria-current="page"
+              style={{ color: "#032830" }}
+            >
               Products & Services
-            </a>
-            <a className="nav-item nav-link" href="/about/us/landlord" aria-current="page" style={{ color: "#032830" }}>
+            </span>
+            <span
+              className="point nav-item nav-link"
+              onClick={() => {
+                navigate("/about/us/landlord");
+                setIsCollapse(true);
+                setUserDropDownShow(false);
+              }}
+              aria-current="page"
+              style={{ color: "#032830" }}
+            >
               Landlord
-            </a>
-            <a className="nav-item nav-link  text-dark" href="/about" style={{ color: "#032830" }}>
+            </span>
+            <span
+              className="point nav-item nav-link  text-dark"
+              onClick={() => {
+                navigate("/about");
+                setIsCollapse(true);
+                setUserDropDownShow(false);
+              }}
+              style={{ color: "#032830" }}
+            >
               About Us
-            </a>
-            <a className="nav-item nav-link  text-dark" href="/help" style={{ color: "#032830" }}>
+            </span>
+            <span
+              className="point nav-item nav-link  text-dark"
+              onClick={() => {
+                navigate("/help");
+                setIsCollapse(true);
+                setUserDropDownShow(false);
+              }}
+              style={{ color: "#032830" }}
+            >
               Help
-            </a>
-            <a className="nav-item nav-link text-dark" href="/feedback" style={{ color: "#032830" }}>
+            </span>
+            <span
+              className="point nav-item nav-link text-dark"
+              onClick={() => {
+                navigate("/feedback");
+                setIsCollapse(true);
+                setUserDropDownShow(false);
+              }}
+              style={{ color: "#032830" }}
+            >
               Feedback
-            </a>
-            <a className="nav-item nav-link text-dark point" onClick={() => contactClick()} style={{ color: "#032830" }}>
+            </span>
+            <span
+              className="point nav-item nav-link text-dark"
+              onClick={() => {
+                contactClick();
+                setIsCollapse(true);
+                setUserDropDownShow(false);
+              }}
+              style={{ color: "#032830" }}
+            >
               Contact
-            </a>
-            <a className="nav-item nav-link text-dark point" href="/team" style={{ color: "#032830" }}>
+            </span>
+            <span
+              className="nav-item nav-link text-dark point"
+              onClick={() => {
+                navigate("/team");
+                setIsCollapse(true);
+                setUserDropDownShow(false);
+              }}
+              style={{ color: "#032830" }}
+            >
               Our Team
-            </a>
+            </span>
           </div>
           {/* <!-- Right navigation --> */}
           {user && (
@@ -122,45 +188,96 @@ function Navbar() {
                 )}
                 <div className={`dropdown-menu dropdown-menu-light mt-3 ${shouldShowUserDropDown}`} style={{ left: "auto", right: 0 }}>
                   {user.accountType === "tenant" && (
-                    <a href="/user/dashboard" className="dropdown-item">
+                    <span
+                      onClick={() => {
+                        navigate("/user/dashboard");
+                        setIsCollapse(true);
+                        setUserDropDownShow(false);
+                      }}
+                      className="point dropdown-item"
+                    >
                       Dashboard
-                    </a>
+                    </span>
                   )}
                   {user.accountType === "tenant" && (
-                    <a href="/rent/saved-properties" className="dropdown-item">
+                    <span
+                      onClick={() => {
+                        navigate("/rent/saved-properties");
+                        setIsCollapse(true);
+                        setUserDropDownShow(false);
+                      }}
+                      className="point dropdown-item"
+                    >
                       Saved Properties
-                    </a>
+                    </span>
                   )}
-                  <a href="/user" className="dropdown-item">
+                  <span
+                    onClick={() => {
+                      navigate("/user");
+                      setIsCollapse(true);
+                      setUserDropDownShow(false);
+                    }}
+                    className="point dropdown-item"
+                  >
                     Profile & Settings
-                  </a>
+                  </span>
                   {user.accountType === "landlord" && (
-                    <a href="/landlord/create-listing" className="dropdown-item">
+                    <span
+                      onClick={() => {
+                        navigate("/landlord/create-listing");
+                        setIsCollapse(true);
+                        setUserDropDownShow(false);
+                      }}
+                      className="point dropdown-item"
+                    >
                       Create a Listing
-                    </a>
+                    </span>
                   )}
-                  <a href="/enquiries" className="dropdown-item">
+                  <span
+                    onClick={() => {
+                      navigate("/enquiries");
+                      setIsCollapse(true);
+                      setUserDropDownShow(false);
+                    }}
+                    className="point dropdown-item"
+                  >
                     Enquiries
-                  </a>
+                  </span>
                   {user.accountType === "tenant" && (
-                    <a href="/my-tenancy" className="dropdown-item">
+                    <span
+                      onClick={() => {
+                        navigate("/my-tenancy");
+                        setIsCollapse(true);
+                        setUserDropDownShow(false);
+                      }}
+                      className="point dropdown-item"
+                    >
                       My Tenancy
-                    </a>
+                    </span>
                   )}
                   {user.accountType === "landlord" && (
-                    <a href="/landlord/dashboard" className="dropdown-item">
+                    <span
+                      onClick={() => {
+                        navigate("/landlord/dashboard");
+                        setIsCollapse(true);
+                        setUserDropDownShow(false);
+                      }}
+                      className="point dropdown-item"
+                    >
                       Dashboard
-                    </a>
+                    </span>
                   )}
                   {user.accountType === "admin" && (
-                    <a href="/create-listing" className="dropdown-item">
+                    <span
+                      onClick={() => {
+                        navigate("/create-listing");
+                        setIsCollapse(true);
+                        setUserDropDownShow(false);
+                      }}
+                      className="point dropdown-item"
+                    >
                       Create Listing
-                    </a>
-                  )}
-                  {user.accountType === "admin" && (
-                    <a href="/admin/listings" className="dropdown-item">
-                      View Listings
-                    </a>
+                    </span>
                   )}
                   <div className="dropdown-divider"></div>
                   <a href="/logout" className="dropdown-item">
@@ -172,17 +289,33 @@ function Navbar() {
           )}
           {!user && (
             <div className="navbar-nav ms-auto">
-              <a className="nav-item nav-link fw-bold" href="/login" style={{ color: "#032830" }}>
+              <span
+                className="point nav-item nav-link fw-bold"
+                onClick={() => {
+                  navigate("/login");
+                  setIsCollapse(true);
+                  setUserDropDownShow(false);
+                }}
+                style={{ color: "#032830" }}
+              >
                 Sign in
-              </a>
+              </span>
             </div>
           )}
           {/* <!-- Action --> */}
           {!user && (
             <div className="d-flex align-items-lg-center mt-lg-0">
-              <a href="/register" className="btn btn-md w-full w-lg-auto text-light fw-bold" style={{ borderRadius: "10px", backgroundColor: "#087990" }}>
+              <span
+                onClick={() => {
+                  navigate("/register");
+                  setIsCollapse(true);
+                  setUserDropDownShow(false);
+                }}
+                className="btn btn-md w-full w-lg-auto text-light fw-bold"
+                style={{ borderRadius: "10px", backgroundColor: "#087990" }}
+              >
                 Register
-              </a>
+              </span>
             </div>
           )}
         </div>

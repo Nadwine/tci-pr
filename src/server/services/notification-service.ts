@@ -62,7 +62,7 @@ export const emailLandlord_on_OfferReceived = async (landlordEmail: string) => {
   }
 };
 
-export const emailLandlord_on_ListingApproved = async (landlordEmail: string) => {
+export const emailLandlord_on_ListingApproved = async (landlordEmail: string, paymentURL?: string) => {
   const subject = "TCI Homebase - Listing Approval";
   const text = "Congratulations! Your listing Has been Approved ";
   const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
