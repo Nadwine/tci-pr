@@ -44,7 +44,11 @@ export const collectSinglePayment = async (req: Request, res: Response) => {
       line_items: [{ price: newPrice.id, quantity: 1 }],
       mode: "payment",
       success_url: `${process.env.BASE_URL}/payments/success`,
-      cancel_url: `${process.env.BASE_URL}/`
+      cancel_url: `${process.env.BASE_URL}/`,
+      metadata: {
+        listingId: listingId,
+        reference: ref
+      }
     });
 
     const now = dayjs();
@@ -425,6 +429,17 @@ export const stripeWebhook = async (req: Request, res: Response) => {
     case "payment_intent.succeeded":
       // const paymentIntentSucceeded = req.body.data.object;
       // Then define and call a function to handle the event payment_intent.succeeded
+      break;
+    case "checkout.session.completed":
+      {
+        const dataObject = req.body.data.object;
+        const metadata = dataObject.metadata;
+        const { listingId, reference, reason } = metadata;
+
+        if (reason === "package-payment") {
+          await Listing.update({ hasPaid: true }, { where: { id: listingId } });
+        }
+      }
       break;
     case "setup_intent.succeeded":
       // We will pull in the setup intent and update the landlord connect account with the payment method

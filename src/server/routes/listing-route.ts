@@ -494,7 +494,8 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
       subQuery: true,
       where: {
         listingType: ListingTypeEnum.RENT,
-        isApproved: true
+        isApproved: true,
+        hasPaid: true
       },
       include: [
         {

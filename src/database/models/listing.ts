@@ -50,6 +50,7 @@ export default class Listing extends Model<InferAttributes<Listing>, InferCreati
   declare adminId?: number;
   declare isApproved: boolean;
   declare stripePaymentLink?: { url: string; expiresAtUnixSeconds: number; generatedAt: string };
+  declare hasPaid: CreationOptional<boolean>;
   declare category: "PropertyForRent";
   declare productPackage?: ProductPackage;
   declare landlordId?: number;
@@ -113,6 +114,11 @@ Listing.init(
     productPackage: {
       type: DataTypes.JSON,
       allowNull: false
+    },
+    hasPaid: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   },
   {
