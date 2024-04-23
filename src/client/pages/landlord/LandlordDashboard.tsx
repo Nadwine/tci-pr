@@ -47,6 +47,7 @@ export const LandlordDashboard = props => {
                     const offers = curListing.Offers;
                     const numOfOffers = offers?.length || 0;
                     const hasOffers = curListing?.Offers!.length > 0;
+                    const showPayNowButton = curListing.isApproved && curListing.hasPaid === false;
 
                     return (
                       <div
@@ -74,6 +75,14 @@ export const LandlordDashboard = props => {
                           </p>
                           <div>
                             Offers: <span className={`badge rounded-pill bg-${hasOffers ? "danger" : "secondary"}`}>{numOfOffers}</span>
+                          </div>
+                          <div className="d-flex" style={{ height: "35px" }}>
+                            {showPayNowButton && (
+                              <button onClick={() => navigate(`/api/payment/package/${curListing.id}`)} className="btn btn-sm text-primary ms-auto">
+                                <i className="bi bi-credit-card-fill pe-1" />
+                                Pay now
+                              </button>
+                            )}
                           </div>
                         </div>
                       </div>
