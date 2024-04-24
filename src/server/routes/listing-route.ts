@@ -844,7 +844,8 @@ export const setApprovalValueRoute = async (req: Request, res: Response) => {
       { where: { id: Number(id) } }
     );
 
-    if (isApproved == true) {
+    const isBasic_or_Standard = listing.productPackage?.name === "basic" || listing.productPackage?.name === "standard";
+    if (isApproved == true && isBasic_or_Standard) {
       const paymentApiRedirectLink = `${process.env.BASE_URL}/api/payment/package/${listing.id}`;
       await emailLandlord_on_ListingApproved(listing?.ListingLandlord?.User.email || "", paymentApiRedirectLink);
     }
