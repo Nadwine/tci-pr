@@ -170,14 +170,14 @@ const Register = () => {
                 {registerReason === "landlord" && (
                   <div className="mb-4">
                     <label className="form-label" htmlFor="email">
-                      Business Registration {"#"}
+                      Business Registration Number
                     </label>
                     <input
                       type="text"
                       className="form-control form-control-muted"
                       id="registrationNumber"
                       name="registrationNumber"
-                      placeholder="Don't yet know this? Skip for now"
+                      placeholder="Optional"
                       onChange={e => setRegistrationNumber(e.target.value)}
                       onBlur={() => setElementAsTouched("registrationNumber")}
                       value={registrationNumber}
