@@ -116,7 +116,7 @@ const Home = props => {
                 onChange={e => setSearchText(e.target.value)}
                 type="text"
                 className="form-control"
-                placeholder="Try 'Provo' or 'Cockburn Town'"
+                placeholder="Try 'provo' or 'kew'"
                 id="home-search-input"
               />
               <div className="input-group-append">
@@ -321,7 +321,7 @@ const Home = props => {
             </div>
           </div>
         )}
-        <div className="text-center text-light mt-5" style={{ backgroundColor: "#055160", minHeight: "3.5rem" }}>
+        <div className="text-center text-light" style={{ backgroundColor: "#055160", minHeight: mobileView ? "8rem" : "3.5rem", alignItems: "center" }}>
           <p className="py-2">Interested in promoting your business on our website? Contact us on tci.homebase.tc@gmail.com or at +1(649) 348-4021</p>
         </div>
       </div>

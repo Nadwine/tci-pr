@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
   const enquiryPath = window.location.pathname === "/enquiries";
-  const footerClassName = `bg-dark text-white mt-4 ${enquiryPath ? "d-none" : ""}`;
+  const footerClassName = `bg-dark text-white  ${enquiryPath ? "d-none" : ""}`;
   const navigate = useNavigate();
 
   return (
