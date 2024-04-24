@@ -52,7 +52,13 @@ export const LandlordDashboard = props => {
 
                     return (
                       <div
-                        onClick={() => curListing.hasPaid && navigate(`/manage-property/rent/${curListing.id}`)}
+                        onClick={() => {
+                          if (curListing.hasPaid === false) {
+                            toast.info("This listing is still pending for payment. Please proceed with the  'Pay Now'  button to access management tools");
+                            return;
+                          }
+                          navigate(`/manage-property/rent/${curListing.id}`);
+                        }}
                         key={curIndex}
                         className="card shadow-lg point"
                         style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}
