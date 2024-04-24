@@ -8,7 +8,10 @@ export const createListingSchema: yup.AnyObjectSchema = yup.object({
   numOfRooms: yup.number().required(),
   numOfBathRooms: yup.number().required(),
   maxTenant: yup.number().required(),
-  sqFt: yup.number().optional().default(0),
+  sqFt: yup
+    .number()
+    .transform(value => (isNaN(value) ? 0 : value))
+    .nullable(),
   billsIncluded: yup.boolean().required(),
   internetIncluded: yup.boolean().required(),
   electricityIncluded: yup.boolean().required(),
