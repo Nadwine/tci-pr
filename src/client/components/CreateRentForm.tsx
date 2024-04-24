@@ -403,7 +403,7 @@ const CreateRentForm = props => {
             </div>
           ))}
           <hr></hr>
-          <button type="submit" id="create-rent-submit-button" className="btn btn-dark mt-3">
+          <button type="submit" id="create-rent-submit-button" className="btn btn-dark mt-3 mb-5">
             Submit
           </button>
         </form>
