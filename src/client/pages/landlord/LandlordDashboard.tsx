@@ -79,7 +79,10 @@ export const LandlordDashboard = props => {
                           </div>
                           <div className="d-flex" style={{ height: "35px" }}>
                             {showPayNowButton && (
-                              <button onClick={() => navigate(`/api/payment/package/${curListing.id}`)} className="btn btn-sm text-primary ms-auto">
+                              <button
+                                onClick={() => (window.location.pathname = `/api/payment/package/${curListing.id}`)}
+                                className="btn btn-sm text-primary ms-auto"
+                              >
                                 <i className="bi bi-credit-card-fill pe-1" />
                                 Pay now
                               </button>

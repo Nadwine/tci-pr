@@ -68,7 +68,9 @@ export const redirectStripePackagePayment = async (req: Request, res: Response) 
   try {
     const listing = await Listing.findByPk(listingId);
     if (!listing) return res.status(404).json({ message: "Listing not found" });
-    const packageName = listing.productPackage?.name;
+    const packageName = listing.productPackage!.name;
+    const packageNameCapital = packageName.charAt(0).toUpperCase() + packageName.slice(1);
+    const stripePackageName = `${packageNameCapital} Package`;
     let unit_cost = 0;
     if (packageName === "basic") unit_cost = 20.0;
     if (packageName === "standard") unit_cost = 150.0;
@@ -77,7 +79,7 @@ export const redirectStripePackagePayment = async (req: Request, res: Response) 
 
     let newPrice;
     let foundProduct = await stripeConnector.products.search({
-      query: `name:'${packageName}'`
+      query: `name:'${stripePackageName}'`
     });
 
     if (foundProduct.data.length === 0) {
@@ -85,7 +87,7 @@ export const redirectStripePackagePayment = async (req: Request, res: Response) 
         currency: "usd",
         unit_amount: USDCents,
         product_data: {
-          name: `${packageName}`
+          name: `${stripePackageName}`
         }
       });
     } else {
@@ -101,7 +103,7 @@ export const redirectStripePackagePayment = async (req: Request, res: Response) 
       cancel_url: `${process.env.BASE_URL}/`,
       metadata: {
         listingId: listingId,
-        reference: `${packageName} package`,
+        reference: stripePackageName,
         reason: "package-payment"
       },
       expires_at: dayjs().add(35, "minute").unix()
