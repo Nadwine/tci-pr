@@ -18,6 +18,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [terms, setTerms] = useState(false);
   const [registerReason, setRegisterReason] = useState("tenant");
+  const [registrationNumber, setRegistrationNumber] = useState("");
   const [touched, setTouched] = useState({});
   const [errors, setErrors]: any = useState({});
   const navigate = useNavigate();
@@ -43,7 +44,8 @@ const Register = () => {
       password: password,
       confirmPassword: confirmPassword,
       terms: terms,
-      registerReason: registerReason
+      registerReason: registerReason,
+      registrationNumber: registrationNumber
     };
     const newErrors = {};
     registerBodySchema.validate(formData, { abortEarly: false }).catch((errs: ValidationError) => {
@@ -165,6 +167,23 @@ const Register = () => {
                     value={email}
                   />
                 </div>
+                {registerReason === "landlord" && (
+                  <div className="mb-4">
+                    <label className="form-label" htmlFor="email">
+                      Business Registration {"#"}
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control form-control-muted"
+                      id="registrationNumber"
+                      name="registrationNumber"
+                      placeholder="Don't yet know this? Skip for now"
+                      onChange={e => setRegistrationNumber(e.target.value)}
+                      onBlur={() => setElementAsTouched("registrationNumber")}
+                      value={registrationNumber}
+                    />
+                  </div>
+                )}
                 <div className="text-danger text-sm">{errors.password && errors.password}</div>
                 <div className="mb-4">
                   <label className="form-label" htmlFor="password">

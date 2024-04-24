@@ -57,7 +57,13 @@ export const registerUser = async (req: Request, res: Response) => {
   if (!isValidRequest) {
     return res.redirect("/register/?error=invalid request");
   }
-  const { email, password, username, registerReason }: { email: string; password: string; username: string; registerReason: string } = req.body;
+  const {
+    email,
+    password,
+    username,
+    registerReason,
+    registrationNumber
+  }: { email: string; password: string; username: string; registerReason: AccountTypeEnum; registrationNumber: string } = req.body;
   const isLandlord = registerReason === "landlord";
 
   // Check if Email is not already existing
@@ -67,7 +73,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
   if (matchedEmail) return res.redirect(`/register/?error=A user with email "${email}" already exist`);
 
-  let accountType: AccountTypeEnum = registerReason === "landlord" ? "landlord" : "tenant";
+  let accountType = registerReason;
 
   if (email.toLowerCase() === "tci.homebase.tc@gmail.com") {
     accountType = "admin";
