@@ -52,7 +52,7 @@ export const LandlordDashboard = props => {
 
                     return (
                       <div
-                        onClick={() => navigate(`/manage-property/rent/${curListing.id}`)}
+                        onClick={() => curListing.hasPaid && navigate(`/manage-property/rent/${curListing.id}`)}
                         key={curIndex}
                         className="card shadow-lg point"
                         style={{ width: "18rem", marginTop: "25px", marginRight: "20px" }}
@@ -81,10 +81,10 @@ export const LandlordDashboard = props => {
                             {showPayNowButton && (
                               <button
                                 onClick={() => (window.location.pathname = `/api/payment/package/${curListing.id}`)}
-                                className="btn btn-sm text-primary ms-auto"
+                                className="btn btn-sm text-primary strong-text ms-auto"
                               >
                                 <i className="bi bi-credit-card-fill pe-1" />
-                                Pay now
+                                Pay Now
                               </button>
                             )}
                           </div>
