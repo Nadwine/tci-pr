@@ -47,7 +47,8 @@ export const LandlordDashboard = props => {
                     const offers = curListing.Offers;
                     const numOfOffers = offers?.length || 0;
                     const hasOffers = curListing?.Offers!.length > 0;
-                    const showPayNowButton = curListing.isApproved && curListing.hasPaid === false;
+                    const isBasic_or_Standard = curListing.productPackage?.name === "basic" || curListing.productPackage?.name === "standard";
+                    const showPayNowButton = curListing.isApproved && curListing.hasPaid === false && isBasic_or_Standard;
 
                     return (
                       <div
