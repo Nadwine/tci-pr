@@ -16,7 +16,7 @@ const TenantDashboard = props => {
       </div>
       <div className="col-12 d-flex flex-row justify-content-center flex-wrap px-md-5">
         <div
-          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-3 border-0 m-2"
+          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-5 border-0 m-2"
           style={{ padding: "30px", backgroundColor: "white", borderRadius: "15px" }}
         >
           <div className="card-body" style={{ backgroundColor: "white" }}>
@@ -37,7 +37,7 @@ const TenantDashboard = props => {
           </div>
         </div>
         <div
-          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-3 border-0 m-2"
+          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-5 border-0 m-2"
           style={{ padding: "30px", backgroundColor: "white", borderRadius: "15px" }}
         >
           <div className="card-body" style={{ backgroundColor: "white" }}>
@@ -58,7 +58,7 @@ const TenantDashboard = props => {
           </div>
         </div>
         <div
-          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-3 border-0 m-2"
+          className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-5 border-0 m-2"
           style={{ padding: "30px", backgroundColor: "white", borderRadius: "15px" }}
         >
           <div className="card-body" style={{ backgroundColor: "white" }}>
