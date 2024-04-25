@@ -248,25 +248,56 @@ const LandLordCreateListing = props => {
             <label htmlFor="maxTenant" className="form-label">
               Maximum number of tenants
             </label>
-            <input name="maxTenant" value={values.maxTenant} onChange={handleChange} type="number" className="form-control" required />
+            <input
+              name="maxTenant"
+              value={values.maxTenant}
+              onChange={handleChange}
+              type="number"
+              onWheel={e => (e.target as HTMLElement)!.blur()}
+              className="form-control"
+              required
+            />
           </div>
           <div className="mb-3">
             <label htmlFor="numOfRooms" className="form-label">
               Rooms
             </label>
-            <input name="numOfRooms" value={values.numOfRooms} onChange={handleChange} type="number" className="form-control" required />
+            <input
+              name="numOfRooms"
+              value={values.numOfRooms}
+              onChange={handleChange}
+              type="number"
+              onWheel={e => (e.target as HTMLElement)!.blur()}
+              className="form-control"
+              required
+            />
           </div>
           <div className="mb-3">
             <label htmlFor="numOfBathRooms" className="form-label">
               Bathrooms
             </label>
-            <input name="numOfBathRooms" value={values.numOfBathRooms} onChange={handleChange} type="number" className="form-control" required />
+            <input
+              name="numOfBathRooms"
+              value={values.numOfBathRooms}
+              onChange={handleChange}
+              type="number"
+              onWheel={e => (e.target as HTMLElement)!.blur()}
+              className="form-control"
+              required
+            />
           </div>
           <div className="mb-3">
             <label htmlFor="sqFt" className="form-label">
               Square feet
             </label>
-            <input name="sqFt" value={values.sqFt} onChange={handleChange} type="number" className="form-control" />
+            <input
+              name="sqFt"
+              value={values.sqFt}
+              onChange={handleChange}
+              type="number"
+              onWheel={e => (e.target as HTMLElement)!.blur()}
+              className="form-control"
+            />
           </div>
           <div className="mb-3">
             <label htmlFor="description" className="form-label">
@@ -299,6 +330,7 @@ const LandLordCreateListing = props => {
                 value={values.tenancyLength}
                 onChange={handleChange}
                 type="number"
+                onWheel={e => (e.target as HTMLElement)!.blur()}
                 className="form-control"
                 required
               />
@@ -309,7 +341,15 @@ const LandLordCreateListing = props => {
               Rent per month
             </label>
             <span className="input-group-text">$</span>
-            <input name="rentAmount" value={values.rentAmount} onChange={handleChange} type="number" className="form-control" required />
+            <input
+              name="rentAmount"
+              value={values.rentAmount}
+              onChange={handleChange}
+              type="number"
+              onWheel={e => (e.target as HTMLElement)!.blur()}
+              className="form-control"
+              required
+            />
             <span className="input-group-text">.00</span>
           </div>
           <div className="inclusions pt-4">

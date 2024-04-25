@@ -292,6 +292,7 @@ const UserProfile = props => {
                       className="form-control"
                       required
                       type="number"
+                      onWheel={e => (e.target as HTMLElement)!.blur()}
                     />
                   </div>
                 )}

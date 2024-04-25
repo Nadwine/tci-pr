@@ -141,19 +141,40 @@ const CreateSaleForm = props => {
             <label htmlFor="numOfRooms" className="form-label">
               Rooms
             </label>
-            <input name="numOfRooms" value={values.numOfRooms} onChange={handleChange} type="number" className="form-control" />
+            <input
+              name="numOfRooms"
+              value={values.numOfRooms}
+              onChange={handleChange}
+              type="number"
+              onWheel={e => (e.target as HTMLElement)!.blur()}
+              className="form-control"
+            />
           </div>
           <div className="mb-3">
             <label htmlFor="numOfBathRooms" className="form-label">
               Baths
             </label>
-            <input name="numOfBathRooms" value={values.numOfBathRooms} onChange={handleChange} type="number" className="form-control" />
+            <input
+              name="numOfBathRooms"
+              value={values.numOfBathRooms}
+              onChange={handleChange}
+              type="number"
+              onWheel={e => (e.target as HTMLElement)!.blur()}
+              className="form-control"
+            />
           </div>
           <div className="mb-3">
             <label htmlFor="sqFt" className="form-label">
               Square feet
             </label>
-            <input name="sqFt" value={values.sqFt} onChange={handleChange} type="number" className="form-control" />
+            <input
+              name="sqFt"
+              value={values.sqFt}
+              onChange={handleChange}
+              type="number"
+              onWheel={e => (e.target as HTMLElement)!.blur()}
+              className="form-control"
+            />
           </div>
           <div className="mb-3">
             <label htmlFor="description" className="form-label">
@@ -179,7 +200,14 @@ const CreateSaleForm = props => {
               Sale Amount
             </label>
             <span className="input-group-text">$</span>
-            <input name="saleAmount" value={values.saleAmount} onChange={handleChange} type="number" className="form-control" />
+            <input
+              name="saleAmount"
+              value={values.saleAmount}
+              onChange={handleChange}
+              type="number"
+              onWheel={e => (e.target as HTMLElement)!.blur()}
+              className="form-control"
+            />
             <span className="input-group-text">.00</span>
           </div>
           <div className="mb-5 form-check">

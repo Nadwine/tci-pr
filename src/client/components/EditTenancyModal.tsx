@@ -92,13 +92,25 @@ const EditTenancyModal = (props: Props) => {
           <div className="py-2 d-flex align-items-center">
             <label className="pe-4">Tenancy Length (days)</label>
             <div className="col-4">
-              <input value={lenghtInDays} onChange={e => setLenghtInDays(Number(e.target.value))} className="form-control" type="number" />
+              <input
+                value={lenghtInDays}
+                onChange={e => setLenghtInDays(Number(e.target.value))}
+                className="form-control"
+                type="number"
+                onWheel={e => (e.target as HTMLElement)!.blur()}
+              />
             </div>
           </div>
           <div className="py-2 d-flex align-items-center">
             <label className="pe-4">Outstanding Rent Amount</label>
             <div className="col-4">
-              <input value={outstandingRent} onChange={e => setOutstandingRent(Number(e.target.value))} className="form-control" type="number" />
+              <input
+                value={outstandingRent}
+                onChange={e => setOutstandingRent(Number(e.target.value))}
+                className="form-control"
+                type="number"
+                onWheel={e => (e.target as HTMLElement)!.blur()}
+              />
             </div>
           </div>
           <div className="py-2 d-flex align-items-center">
@@ -114,7 +126,13 @@ const EditTenancyModal = (props: Props) => {
           <div className="py-2 d-flex align-items-center">
             <label className="pe-4">Deposit Amount</label>
             <div className="col-4">
-              <input value={depositAmount} onChange={e => setDepositAmount(Number(e.target.value))} className="form-control" type="number" />
+              <input
+                value={depositAmount}
+                onChange={e => setDepositAmount(Number(e.target.value))}
+                className="form-control"
+                type="number"
+                onWheel={e => (e.target as HTMLElement)!.blur()}
+              />
             </div>
           </div>
           <div className="py-2 d-flex align-items-center">

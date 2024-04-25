@@ -119,6 +119,7 @@ const DocumentList = (props: Props) => {
                         value={expenseAmount}
                         onChange={e => setExpenseAmount(Number(e.target.value))}
                         type="number"
+                        onWheel={e => (e.target as HTMLElement)!.blur()}
                         className="form-control"
                       />
                     </div>

@@ -199,25 +199,53 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
               <label htmlFor="maxTenant" className="form-label">
                 Max tenant
               </label>
-              <input name="maxTenant" value={values.maxTenant} onChange={handleChange} type="number" className="form-control" />
+              <input
+                name="maxTenant"
+                value={values.maxTenant}
+                onChange={handleChange}
+                type="number"
+                onWheel={e => (e.target as HTMLElement)!.blur()}
+                className="form-control"
+              />
             </div>
             <div className="mb-3">
               <label htmlFor="numOfRooms" className="form-label">
                 Rooms
               </label>
-              <input name="numOfRooms" value={values.numOfRooms} onChange={handleChange} type="number" className="form-control" />
+              <input
+                name="numOfRooms"
+                value={values.numOfRooms}
+                onChange={handleChange}
+                type="number"
+                onWheel={e => (e.target as HTMLElement)!.blur()}
+                className="form-control"
+              />
             </div>
             <div className="mb-3">
               <label htmlFor="numOfBathRooms" className="form-label">
                 Baths
               </label>
-              <input name="numOfBathRooms" value={values.numOfBathRooms} onChange={handleChange} type="number" className="form-control" />
+              <input
+                name="numOfBathRooms"
+                value={values.numOfBathRooms}
+                onChange={handleChange}
+                type="number"
+                onWheel={e => (e.target as HTMLElement)!.blur()}
+                className="form-control"
+              />
             </div>
             <div className="mb-3">
               <label htmlFor="sqFt" className="form-label">
                 Square feet
               </label>
-              <input name="sqFt" value={values.sqFt} onChange={handleChange} type="number" className="form-control" />
+              <input
+                name="sqFt"
+                value={values.sqFt}
+                onChange={handleChange}
+                type="number"
+                onWheel={e => (e.target as HTMLElement)!.blur()}
+                className="form-control"
+              />
             </div>
             <div className="mb-3">
               <label htmlFor="description" className="form-label">
@@ -249,6 +277,7 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
                   value={values.tenancyLength}
                   onChange={handleChange}
                   type="number"
+                  onWheel={e => (e.target as HTMLElement)!.blur()}
                   className="form-control"
                   required
                 />
@@ -259,7 +288,14 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
                 Rent per month
               </label>
               <span className="input-group-text">$</span>
-              <input name="rentAmount" value={values.rentAmount} onChange={handleChange} type="number" className="form-control" />
+              <input
+                name="rentAmount"
+                value={values.rentAmount}
+                onChange={handleChange}
+                type="number"
+                onWheel={e => (e.target as HTMLElement)!.blur()}
+                className="form-control"
+              />
               <span className="input-group-text">.00</span>
             </div>
             <div className="inclusions pt-4">

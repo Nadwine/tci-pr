@@ -189,6 +189,7 @@ const ListingPayment = props => {
                     style={{ width: "18em" }}
                     className="form-control"
                     type="number"
+                    onWheel={e => (e.target as HTMLElement)!.blur()}
                   />
                   <br />
                   Payment Reference{" "}
