@@ -67,6 +67,7 @@ import Safety from "./pages/Safety";
 import Favourites from "./pages/Favourites";
 import AcceptInvitation from "./pages/AcceptInvitation";
 import RentPaymentsAndExpense from "./pages/landlord-n-admin/RentPaymentsAndExpense";
+import { HelmetProvider } from "react-helmet-async";
 const tenMinute = 600000;
 
 function initTranslations() {
@@ -178,66 +179,68 @@ const Main = () => {
 
   return (
     <div className="d-flex flex-column bg-light" style={{ minHeight: "95vh" }}>
-      <Navbar />
-      {showCookieConsent && <CookieConsentModal style={{ maxHeight: "150px" }} />}
-      <section id="root-div" className="container-fluid" style={{ flex: 1, paddingLeft: `${isAdmin ? "50px" : ""}` }}>
-        {" "}
-        {/** Padding for sidebar */}
-        <div className="row">
-          {isAdmin && <AdminSidebar />}
-          <ToastContainer hideProgressBar />
-          <Routes>
-            {/* Do not use Raw Strings as routes. Add it to enums stored in ./utils/enums */}
-            {/* TODO add all URLS in the enum and replace them on server and client */}
-            <Route index element={<Home />} />
-            <Route path={ReactRoutesEnum.REGISTERCONFIRM} element={<RegisterConfirm />} />
-            <Route path={ReactRoutesEnum.REGISTER} element={<RequireLogout view={<Register />} />} />
-            <Route path={ReactRoutesEnum.LOGIN} element={<RequireLogout view={<Login />} />} />
-            <Route path="condition-terms" element={<TermsAndConditions />} />
-            <Route path="cookie-terms" element={<CookieTerms />} />
-            <Route path="privacy-terms" element={<PrivacyTerms />} />
-            <Route path="create-listing" element={<RequirePermission view={<CreateListing />} roles={["admin"]} />} />
-            <Route path="edit-listing/rent/:id" element={<RequirePermission view={<EditRentListing />} roles={["landlord", "admin"]} />} />
-            <Route path="search/rent" element={<SearchRentResults />} />
-            <Route path="help" element={<Help />} />
-            <Route path="products" element={<Products />} />
-            <Route path="feedback" element={<Feedback />} />
-            <Route path="temp" element={<TempHome />} />
-            <Route path="about/us/landlord" element={<Landlord />} />
-            <Route path="user" element={<RequireLogin view={<UserProfile />} />} />
-            <Route path="listing-success" element={<SubmitListingRedirect />} />
-            <Route path="landlord/dashboard" element={<RequirePermission view={<LandlordDashboard />} roles={["landlord"]} />} />
-            <Route path="landlord/create-listing" element={<RequirePermission view={<LandLordCreateListing />} roles={["landlord"]} />} />
-            <Route path="about/landlord" element={<AboutLandlord />} />
-            <Route path="my-tenancy" element={<MyTenancy />} />
-            <Route path="about" element={<AboutUs />} />
-            <Route path="rent/safety" element={<Safety />} />
-            <Route path="rent/saved-properties" element={<RequireLogin view={<Favourites />} />} />
-            <Route path="team" element={<MeetTheTeam />} />
-            <Route path="manage-property/rent/:id/finance" element={<RequirePermission view={<RentPaymentsAndExpense />} roles={["admin", "landlord"]} />} />
-            <Route path="manage-property/rent/:id" element={<RequirePermission view={<ManageSingleProperty />} roles={["landlord", "admin"]} />} />
-            <Route path="manage-tenancy/:property_tenant_id" element={<div></div>} />
-            <Route path="admin/dashboard/listing-for-aproval" element={<RequirePermission view={<AdminApproveListingTable />} roles={["admin"]} />} />
-            <Route path="admin/dashboard/tenancies" element={<RequirePermission view={<AdminTenancyTable />} roles={["admin"]} />} />
-            <Route path="admin/dashboard/users" element={<RequirePermission view={<AdminUserTable />} roles={["admin"]} />} />
-            <Route path="admin/dashboard/landlords" element={<RequirePermission view={<AdminLandlordTable />} roles={["admin"]} />} />
-            <Route path="admin/dashboard/listings" element={<RequirePermission view={<AdminListingsTable />} roles={["admin"]} />} />
-            <Route path="admin/dashboard" element={<RequirePermission view={<AdminDashboard />} roles={["admin"]} />} />
-            <Route path="property/rent/:id" element={<ViewRentProperty />} />
-            <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
-            <Route path="forget-password/:token" element={<ForgetPassword />} />
-            <Route path="payments/rent/success" element={<ReoccurringPaymentNotify />} />
-            <Route path="payments/success" element={<SuccessPaymentNotify />} />
-            <Route path="enquiries" element={<RequireLogin view={<MobileMessageEnquiries />} />} />
-            <Route path="invite/accept" element={<AcceptInvitation />} />
-            <Route path="admin/listings" element={<RequirePermission view={<AdminViewListings />} roles={["landlord", "admin"]} />} />
-            <Route path="user/dashboard" element={<RequirePermission view={<TenantDashboard />} roles={["tenant"]} />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
-      </section>
-      <Footer />
-      {/* <LanguageSelector /> */}
+      <HelmetProvider>
+        <Navbar />
+        {showCookieConsent && <CookieConsentModal style={{ maxHeight: "150px" }} />}
+        <section id="root-div" className="container-fluid" style={{ flex: 1, paddingLeft: `${isAdmin ? "50px" : ""}` }}>
+          {" "}
+          {/** Padding for sidebar */}
+          <div className="row">
+            {isAdmin && <AdminSidebar />}
+            <ToastContainer hideProgressBar />
+            <Routes>
+              {/* Do not use Raw Strings as routes. Add it to enums stored in ./utils/enums */}
+              {/* TODO add all URLS in the enum and replace them on server and client */}
+              <Route index element={<Home />} />
+              <Route path={ReactRoutesEnum.REGISTERCONFIRM} element={<RegisterConfirm />} />
+              <Route path={ReactRoutesEnum.REGISTER} element={<RequireLogout view={<Register />} />} />
+              <Route path={ReactRoutesEnum.LOGIN} element={<RequireLogout view={<Login />} />} />
+              <Route path="condition-terms" element={<TermsAndConditions />} />
+              <Route path="cookie-terms" element={<CookieTerms />} />
+              <Route path="privacy-terms" element={<PrivacyTerms />} />
+              <Route path="create-listing" element={<RequirePermission view={<CreateListing />} roles={["admin"]} />} />
+              <Route path="edit-listing/rent/:id" element={<RequirePermission view={<EditRentListing />} roles={["landlord", "admin"]} />} />
+              <Route path="search/rent" element={<SearchRentResults />} />
+              <Route path="help" element={<Help />} />
+              <Route path="products" element={<Products />} />
+              <Route path="feedback" element={<Feedback />} />
+              <Route path="temp" element={<TempHome />} />
+              <Route path="about/us/landlord" element={<Landlord />} />
+              <Route path="user" element={<RequireLogin view={<UserProfile />} />} />
+              <Route path="listing-success" element={<SubmitListingRedirect />} />
+              <Route path="landlord/dashboard" element={<RequirePermission view={<LandlordDashboard />} roles={["landlord"]} />} />
+              <Route path="landlord/create-listing" element={<RequirePermission view={<LandLordCreateListing />} roles={["landlord"]} />} />
+              <Route path="about/landlord" element={<AboutLandlord />} />
+              <Route path="my-tenancy" element={<MyTenancy />} />
+              <Route path="about" element={<AboutUs />} />
+              <Route path="rent/safety" element={<Safety />} />
+              <Route path="rent/saved-properties" element={<RequireLogin view={<Favourites />} />} />
+              <Route path="team" element={<MeetTheTeam />} />
+              <Route path="manage-property/rent/:id/finance" element={<RequirePermission view={<RentPaymentsAndExpense />} roles={["admin", "landlord"]} />} />
+              <Route path="manage-property/rent/:id" element={<RequirePermission view={<ManageSingleProperty />} roles={["landlord", "admin"]} />} />
+              <Route path="manage-tenancy/:property_tenant_id" element={<div></div>} />
+              <Route path="admin/dashboard/listing-for-aproval" element={<RequirePermission view={<AdminApproveListingTable />} roles={["admin"]} />} />
+              <Route path="admin/dashboard/tenancies" element={<RequirePermission view={<AdminTenancyTable />} roles={["admin"]} />} />
+              <Route path="admin/dashboard/users" element={<RequirePermission view={<AdminUserTable />} roles={["admin"]} />} />
+              <Route path="admin/dashboard/landlords" element={<RequirePermission view={<AdminLandlordTable />} roles={["admin"]} />} />
+              <Route path="admin/dashboard/listings" element={<RequirePermission view={<AdminListingsTable />} roles={["admin"]} />} />
+              <Route path="admin/dashboard" element={<RequirePermission view={<AdminDashboard />} roles={["admin"]} />} />
+              <Route path="property/rent/:id" element={<ViewRentProperty />} />
+              <Route path="property/rent/:id/payments" element={<RequirePermission view={<ListingPayment />} roles={["admin"]} />} />
+              <Route path="forget-password/:token" element={<ForgetPassword />} />
+              <Route path="payments/rent/success" element={<ReoccurringPaymentNotify />} />
+              <Route path="payments/success" element={<SuccessPaymentNotify />} />
+              <Route path="enquiries" element={<RequireLogin view={<MobileMessageEnquiries />} />} />
+              <Route path="invite/accept" element={<AcceptInvitation />} />
+              <Route path="admin/listings" element={<RequirePermission view={<AdminViewListings />} roles={["landlord", "admin"]} />} />
+              <Route path="user/dashboard" element={<RequirePermission view={<TenantDashboard />} roles={["tenant"]} />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
+        </section>
+        <Footer />
+        {/* <LanguageSelector /> */}
+      </HelmetProvider>
     </div>
   );
 };

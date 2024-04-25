@@ -15,6 +15,7 @@ import { RootState, store } from "../redux/store";
 import { Navigate, useNavigate } from "react-router-dom";
 import Carousel from "../components/Carousel";
 import GonePropertyOverlay from "../components/GonePropertyOverlay";
+import SEOHelmetTags from "../components/SEOHelmetTags";
 
 const ViewRentProperty = props => {
   const params = useParams();
@@ -154,6 +155,7 @@ const ViewRentProperty = props => {
   if (!loading && !listing) return <h3 className="text-muted pt-5 text-center">The Property You Are Looking For No Longer Exists</h3>;
   return (
     <div>
+      <SEOHelmetTags title={listing?.title || ""} description="TCI Property for rent posted by landlord" type="website" />
       <EnquiryModal />
       {listing && (
         <div className="card mb-3 shadow-lg mx-md-5">

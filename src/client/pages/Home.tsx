@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { faClipboardList, faLayerGroup, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LandlordProposalButton from "../components/landlord/LandlordProposalButton";
+import SEOHelmetTags from "../components/SEOHelmetTags";
 
 let islandAndSettlements: string[] = [];
 
@@ -84,6 +85,7 @@ const Home = props => {
       className="home justify-content-center align-items-center"
       style={{ paddingLeft: "0px", paddingTop: "0px", paddingRight: "0px", backgroundColor: "white" }}
     >
+      <SEOHelmetTags title="TCI Homebase - Home" description="Search and list properties for rent in the Turks and caicos islands" type="website" />
       <div className="welcome-search justify-content-center">
         <div className="justify-content-center shadow-sm align-items-center" style={{ height: "270px", marginLeft: "0px" }}>
           <div
