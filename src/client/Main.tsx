@@ -179,6 +179,11 @@ const Main = () => {
 
   return (
     <div className="d-flex flex-column bg-light" style={{ minHeight: "95vh" }}>
+      {/* <div className="COVER_WEB" style={{ width: "100vw", height: "100vh", position: "fixed", backgroundColor: "#ffffffd9", zIndex: 9999, marginTop: "-65px" }}>
+        <div style={{ textAlign: "center", marginTop: "45vh", transform: "rotate(25deg)" }}>
+          TCI Homebase coming soon. Meanwhile, bookmark this website and come back here when we launch.
+        </div>
+      </div> */}
       <HelmetProvider>
         <Navbar />
         {showCookieConsent && <CookieConsentModal style={{ maxHeight: "150px" }} />}
