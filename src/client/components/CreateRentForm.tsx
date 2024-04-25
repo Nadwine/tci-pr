@@ -49,6 +49,10 @@ const CreateRentForm = props => {
         toast.error("You've selected 'Basic' package. Please select 'Standard' or 'Premium' to enable video uploads");
         return;
       }
+      if (formValues.files.find(f => f.size > 49283072)) {
+        toast.error("One or more of your files are too large for upload. max 45mb");
+        return;
+      }
       const billsIncluded = formValues.electricityIncluded || formValues.internetIncluded || formValues.waterIncluded;
       const body = {
         files: formValues.files,
@@ -79,7 +83,7 @@ const CreateRentForm = props => {
       const res = await axios.post("/api/listing/rent/create", body, axiosConfig);
       if (res.status === 200) navigate("/admin/dashboard/listings");
       if (res.status !== 200) {
-        toast.error("Oops something went wrong");
+        toast.error("Oops something went wrong. If you continue to see this issue please contact your administrator administrator for further assistance");
         console.log("/api/listing/rent/create", res);
       }
     },

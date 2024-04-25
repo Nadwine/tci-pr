@@ -83,7 +83,10 @@ export const LandlordDashboard = props => {
                           <div>
                             Offers: <span className={`badge rounded-pill bg-${hasOffers ? "danger" : "secondary"}`}>{numOfOffers}</span>
                           </div>
-                          <div className="d-flex" style={{ height: "35px" }}>
+                          <div className="d-flex" style={{ height: "32px", paddingTop: "5px" }}>
+                            <div className="text-muted">
+                              {curListing?.productPackage!.name.charAt(0).toUpperCase() + curListing?.productPackage?.name.slice(1)} Package
+                            </div>
                             {showPayNowButton && (
                               <button
                                 onClick={() => (window.location.pathname = `/api/payment/package/${curListing.id}`)}

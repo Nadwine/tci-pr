@@ -65,8 +65,13 @@ const LandLordCreateListing = props => {
         toast.error("Please upload at least one picture with this listing");
         return;
       }
+
       if (formValues.productPackage === "basic" && formValues.files.find(f => f.type.includes("video"))) {
         toast.error("You've selected 'Basic' package. Please select 'Standard' or 'Premium' to enable video uploads");
+        return;
+      }
+      if (formValues.files.find(f => f.size > 49283072)) {
+        toast.error("One or more of your files are too large for upload max 45mb");
         return;
       }
       const body = {
@@ -98,7 +103,7 @@ const LandLordCreateListing = props => {
       const res = await axios.post("/api/listing/rent/landlord/create", body, axiosConfig);
       if (res.status === 200) navigate("/listing-success");
       if (res.status !== 200) {
-        toast.error("Oops something went wrong");
+        toast.error("Oops something went wrong. If you continue to see this issue please contact administrator for further assistance");
         console.log("/api/listing/rent/landlord/create", res);
       }
     },
