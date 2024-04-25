@@ -180,7 +180,7 @@ const Main = () => {
 
   return (
     <div className="d-flex flex-column bg-light" style={{ minHeight: "95vh" }}>
-      <DisableWebsiteBanner />
+      {/* <DisableWebsiteBanner /> */}
       <HelmetProvider>
         <Navbar />
         {showCookieConsent && <CookieConsentModal style={{ maxHeight: "150px" }} />}
