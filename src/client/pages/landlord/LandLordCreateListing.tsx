@@ -91,7 +91,7 @@ const LandLordCreateListing = props => {
         );
         const El = React.createElement("div", { className: "d-flex flex-column" }, [message, compressButton]);
         // toast.error("One or more of your files are too large for upload max 45mb.");
-        toast.error(El, { autoClose: 100000, closeOnClick: false });
+        toast.error(El, { autoClose: 10000, closeOnClick: false });
         return;
       }
       const body = {
