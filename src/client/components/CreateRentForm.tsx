@@ -49,8 +49,28 @@ const CreateRentForm = props => {
         toast.error("You've selected 'Basic' package. Please select 'Standard' or 'Premium' to enable video uploads");
         return;
       }
+      //https://stackoverflow.com/questions/36485333/node-js-request-entity-too-large-with-multer-upload
       if (formValues.files.find(f => f.size > 49283072)) {
-        toast.error("One or more of your files are too large for upload. max 45mb");
+        // https://videocompress.prolab.sh/video
+        const message = React.createElement(
+          "div",
+          { className: "text-center", style: { fontSize: "11px" } },
+          "One or more of your files are too large for upload max 45mb. Try Compressing your video with the link below"
+        );
+        const compressButton = React.createElement(
+          "button",
+          {
+            className: "btn btn-sm btn-secondary",
+            style: { marginTop: "20px" },
+            onClick: async () => {
+              window.open("https://videocompress.prolab.sh/video", "_blank")?.focus();
+            }
+          },
+          "Compress"
+        );
+        const El = React.createElement("div", { className: "d-flex flex-column" }, [message, compressButton]);
+        // toast.error("One or more of your files are too large for upload max 45mb.");
+        toast.error(El, { autoClose: 100000, closeOnClick: false });
         return;
       }
       const billsIncluded = formValues.electricityIncluded || formValues.internetIncluded || formValues.waterIncluded;
