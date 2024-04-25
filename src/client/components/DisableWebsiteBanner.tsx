@@ -18,7 +18,8 @@ export default function DisableWebsiteBanner() {
           paddingBottom: "10px",
           display: "flex",
           alignItems: "center",
-          boxShadow: "0px 18px 32px 0px rgba(0,0,0,0.40)"
+          boxShadow: "0px 18px 32px 0px rgba(0,0,0,0.40)",
+          justifyContent: "center"
         }}
       >
         TCI Homebase coming soon. Meanwhile, bookmark this website and come back here when we launch!
