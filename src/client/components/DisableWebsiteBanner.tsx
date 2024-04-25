@@ -12,7 +12,13 @@ export default function DisableWebsiteBanner() {
           marginLeft: "-11vw",
           transform: "rotate(25deg)",
           paddingLeft: "30px",
-          paddingRight: "30px"
+          paddingRight: "30px",
+          minHeight: "4em",
+          paddingTop: "10px",
+          paddingBottom: "10px",
+          display: "flex",
+          alignItems: "center",
+          boxShadow: "0px 18px 32px 0px rgba(0,0,0,0.40)"
         }}
       >
         TCI Homebase coming soon. Meanwhile, bookmark this website and come back here when we launch!
