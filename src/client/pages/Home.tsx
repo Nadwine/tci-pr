@@ -107,7 +107,7 @@ const Home = props => {
             <img src="/static/home-photo3.jpg" style={{ position: "relative", marginTop: "-250px", width: 2000 }} className="home-photo.jpg"></img>
           </div>
           <h1
-            className="position-absolute fw-bold text-center w-100 mb-lg-3 mt-lg-2 mt-sm-5 mb-sm-2 px-3 pb-4"
+            className="position-absolute fw-bold text-center w-100 mb-lg-3 mt-lg-2 mt-sm-5 mb-sm-2 px-5 pb-4"
             style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center", color: "white" }}
           >
             The Perfect Space Awaits
