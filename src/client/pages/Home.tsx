@@ -85,7 +85,11 @@ const Home = props => {
       className="home justify-content-center align-items-center"
       style={{ paddingLeft: "0px", paddingTop: "0px", paddingRight: "0px", backgroundColor: "white" }}
     >
-      <SEOHelmetTags title="TCI Homebase - Home" description="Search and list properties for rent in the Turks and caicos islands" type="website" />
+      <SEOHelmetTags
+        title="TCI Homebase - Search and list properties for rent in the Turks and Caicos Islands"
+        description="The #1 destination for landlords advertising their rental property and residents looking to find their next rental home"
+        type="website"
+      />
       <div className="welcome-search justify-content-center">
         <div className="justify-content-center shadow-sm align-items-center" style={{ height: "270px", marginLeft: "0px" }}>
           <div

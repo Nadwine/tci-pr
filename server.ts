@@ -96,14 +96,14 @@ async function createServer(isProd = process.env.NODE_ENV === "production") {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DATABASE,
-    max: 20,
+    max: 20, // max pool size can up to maybe 50
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000
   });
 
   const app = express();
   app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.urlencoded({ extended: true, limit: "50mb" }));
   // Create Vite server in middleware mode and configure the app type as
   // 'custom', disabling Vite's own HTML serving logic so parent server
   // can take control

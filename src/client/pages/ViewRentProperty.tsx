@@ -155,7 +155,11 @@ const ViewRentProperty = props => {
   if (!loading && !listing) return <h3 className="text-muted pt-5 text-center">The Property You Are Looking For No Longer Exists</h3>;
   return (
     <div>
-      <SEOHelmetTags title={listing?.title || ""} description="TCI Property for rent posted by landlord" type="website" />
+      <SEOHelmetTags
+        title={`${listing?.Address.settlement} - ${listing?.title.slice(0, 40)}` || ""}
+        description={listing?.description.slice(0, 60) || ""}
+        type="website"
+      />
       <EnquiryModal />
       {listing && (
         <div className="card mb-3 shadow-lg mx-md-5">
