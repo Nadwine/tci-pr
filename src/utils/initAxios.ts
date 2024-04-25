@@ -49,9 +49,19 @@ export default function initAxios() {
         });
         const codeDiv = React.createElement("div", { className: "bg-white", style: { maxHeight: "300px", overflow: "scroll" } }, jsonV);
         const scroll = React.createElement("div", { style: { fontSize: "10px" } }, "Scroll");
-        const El = React.createElement("div", { className: "flex-column text-white" }, [hoveInfo, devInfo, urlInfo, scroll, codeDiv]);
+        const reportButton = React.createElement(
+          "button",
+          {
+            style: { marginTop: "20px" },
+            onClick: async () => {
+              navigator.clipboard.writeText(JSON.stringify({ requestMsg: error.message, ...error.response?.data }));
+            }
+          },
+          "Copy to clipboard"
+        );
+        const El = React.createElement("div", { className: "flex-column text-white" }, [hoveInfo, devInfo, urlInfo, scroll, codeDiv, reportButton]);
 
-        toast.dark(El, { autoClose: 60000, closeOnClick: true });
+        toast.dark(El, { autoClose: 60000, closeOnClick: false });
         console.error("Axios Error", error);
       }
 
