@@ -68,6 +68,7 @@ import Favourites from "./pages/Favourites";
 import AcceptInvitation from "./pages/AcceptInvitation";
 import RentPaymentsAndExpense from "./pages/landlord-n-admin/RentPaymentsAndExpense";
 import { HelmetProvider } from "react-helmet-async";
+import DisableWebsiteBanner from "./components/DisableWebsiteBanner";
 const tenMinute = 600000;
 
 function initTranslations() {
@@ -179,11 +180,7 @@ const Main = () => {
 
   return (
     <div className="d-flex flex-column bg-light" style={{ minHeight: "95vh" }}>
-      {/* <div className="COVER_WEB" style={{ width: "100vw", height: "100vh", position: "fixed", backgroundColor: "#ffffffd9", zIndex: 9999, marginTop: "-65px" }}>
-        <div style={{ textAlign: "center", marginTop: "45vh", transform: "rotate(25deg)" }}>
-          TCI Homebase coming soon. Meanwhile, bookmark this website and come back here when we launch.
-        </div>
-      </div> */}
+      {/* <DisableWebsiteBanner /> */}
       <HelmetProvider>
         <Navbar />
         {showCookieConsent && <CookieConsentModal style={{ maxHeight: "150px" }} />}
