@@ -261,7 +261,13 @@ const ManageSingleProperty = props => {
     initialLoad();
   }, [showSignaturePad]);
 
-  if (!allowedToView && listing) return <h3>You do not have permission to view this page</h3>;
+  if (!allowedToView && listing) return <h3 className="text-muted">You do not have permission to view this page</h3>;
+
+  if (listing?.hasPaid === false)
+    return <h3 className="pt-5 text-muted">This listing is still pending for payment. Management tool may be unavailable at this moment.</h3>;
+
+  if (listing?.isApproved === false)
+    return <h3 className="pt-5 text-muted">This listing is still pending for approval. Management tool may be unavailable at this moment.</h3>;
 
   const isOffersEnabled = (): boolean => {
     if (managedByAdmin && loginUserIsAdmin && isStandard_Or_Premium) return true;

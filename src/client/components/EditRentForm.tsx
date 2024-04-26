@@ -51,7 +51,8 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
       listingManager: listing.listingManager,
       files: listing.ListingMedia.sort((a, b) => Number(a.label) - Number(b.label)) as ListingMedia[],
       questions: listing.ListingQuestions as ListingQuestion[],
-      fullFiles: null
+      fullFiles: null,
+      productPackage: listing.productPackage?.name
     },
     async onSubmit(formValues, formikHelpers) {
       if (document.activeElement?.id === "edit-rent-btn") return;
@@ -80,7 +81,8 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
         postcode: "TKCA 1ZZ",
         country: "Turks and Caicos Islands",
         questions: JSON.stringify(formValues.questions),
-        fullFiles: JSON.stringify(formValues.fullFiles)
+        fullFiles: JSON.stringify(formValues.fullFiles),
+        productPackage: formValues.productPackage
       };
       await axios
         .put(`/api/listing/rent/${id}`, body, axiosConfig)
@@ -140,6 +142,9 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
           </button>
         </h4>
         <div className="w-100 text-center mb-5">
+          <div className="w-100 py-3" style={{ fontSize: "10px" }}>
+            Premium listings will skip payment steps <br /> and become viewable on the website
+          </div>
           <button onClick={() => flipApprovalVal()} className={`btn btn-lg btn-${!listing.isApproved ? "success" : "danger"}`}>
             {!listing.isApproved ? "Approve" : "Revoke Approval"}
           </button>
@@ -151,6 +156,28 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
         </div>
         <form onSubmit={handleSubmit} onKeyPress={e => e.key === "Enter" && e.preventDefault()} onKeyUp={e => e.key === "Enter" && e.preventDefault()}>
           <div className={`${isDisabled && "disabled-section"}`} style={disableStyle}>
+            <div className="py-5">
+              <label>
+                Select your desired
+                <button type="button" className="btn text-primary ps-1" onClick={() => navigate(`/products`)}>
+                  package
+                </button>
+              </label>
+              <select name="productPackage" onChange={handleChange} value={values.productPackage} className="form-select" required>
+                <option selected value="">
+                  Select an option
+                </option>
+                <option selected={values.productPackage === "basic"} value="basic">
+                  Basic
+                </option>
+                <option selected={values.productPackage === "standard"} value="standard">
+                  Standard
+                </option>
+                <option selected={values.productPackage === "premium"} value="premium">
+                  Premium
+                </option>
+              </select>
+            </div>
             <div className="mb-3">
               <label htmlFor="title" className="form-label">
                 Island
@@ -354,6 +381,7 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
               </label>
             </div>
             <div className="managment type">
+              <label>Managed by admin?</label>
               <select
                 value={values.listingManager}
                 onChange={e => setFieldValue("listingManager", e.target.value)}

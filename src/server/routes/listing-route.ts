@@ -437,7 +437,7 @@ export const getRentListingById = async (req: Request, res: Response) => {
     });
 
     if (listing?.isApproved === false || listing?.hasPaid === false) {
-      return res.status(401).json({ message: "Listing not yet active" });
+      return res.status(401).json({ message: "Listing not yet active", inactive: true });
     }
 
     return res.status(200).json(listing);
@@ -839,6 +839,7 @@ export const setApprovalValueRoute = async (req: Request, res: Response) => {
     await Listing.update(
       {
         isApproved: isApproved,
+        hasPaid: listing.productPackage?.name === "premium" ? true : false,
         listingStatus: "approved"
       },
       { where: { id: Number(id) } }
