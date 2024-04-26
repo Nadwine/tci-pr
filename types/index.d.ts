@@ -52,4 +52,7 @@ declare global {
       NODE_ENV: "development" | "test" | "production";
     }
   }
+  interface String {
+    capitalFirstLetter(): string;
+  }
 }

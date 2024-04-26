@@ -9,6 +9,7 @@ import serveStatic from "serve-static";
 import { createServer as createViteServer } from "vite";
 import { ModelDefined } from "sequelize";
 import { getS3MediaForTestEnvironment } from "./src/server/routes/media";
+import "./src/utils/initializeExtensions";
 
 const isTest = process.env.NODE_ENV === "test" || !!process.env.VITE_TEST_BUILD;
 
