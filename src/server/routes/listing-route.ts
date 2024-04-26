@@ -680,7 +680,8 @@ export const adminUpdateRentListingById = async (req: Request, res: Response) =>
     country,
     rentAmount,
     listingManager,
-    tenancyLength
+    tenancyLength,
+    productPackage
   } = req.body;
   const files = req.files ?? [];
   const questions: ListingQuestion[] = JSON.parse(req.body.questions);
@@ -699,7 +700,8 @@ export const adminUpdateRentListingById = async (req: Request, res: Response) =>
     await relatedListing.update({
       title: title,
       description: description,
-      listingManager: listingManager
+      listingManager: listingManager,
+      productPackage: packageDefaultValues.find(p => p.name === productPackage)
     });
 
     await relatedProperty?.update({

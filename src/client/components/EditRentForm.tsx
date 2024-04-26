@@ -77,7 +77,7 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
         settlement: formValues.settlement,
         city: formValues.city,
         tenancyLength: formValues.tenancyLength,
-        listingManager: formValues.listingManager,
+        listingManager: formValues.productPackage === "basic" ? "landlord" : "admin", //formValues.listingManager,
         postcode: "TKCA 1ZZ",
         country: "Turks and Caicos Islands",
         questions: JSON.stringify(formValues.questions),
@@ -380,7 +380,7 @@ const EditRentForm = ({ listing }: { listing: Listing }) => {
                 Furnished
               </label>
             </div>
-            <div className="managment type">
+            <div className="management type">
               <label>Managed by admin?</label>
               <select
                 value={values.listingManager}
