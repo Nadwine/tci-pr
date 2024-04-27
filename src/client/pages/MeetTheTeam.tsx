@@ -87,7 +87,7 @@ const MeetTheTeam = props => {
         </div>
         <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5 px-1">
           <div className="img-container rounded" style={imgContainerStyle}>
-            <img src="/static/IMG_2205.jpg" style={imgContainerStyle}></img>
+            <img src="/static/IMG_2205.JPG" style={imgContainerStyle}></img>
           </div>
           <div className="fs-5 pt-3">Brutchsama Jean-Louis</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
