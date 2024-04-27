@@ -176,7 +176,7 @@ const ViewRentProperty = props => {
             )}
           </div>
           <div className="card-body d-flex flex-wrap justify-content-center">
-            <div className="image-container col-10 me-2 pb-3">
+            <div className="image-container col-12 col-md-10 me-2 pb-3">
               <Carousel listing={listing} images={listing.ListingMedia} />
               <div className="price fw-bolder fs-5" style={{ backgroundColor: "#ebf8ff", borderBottomLeftRadius: "7px", borderBottomRightRadius: "7px" }}>
                 {"$"}
