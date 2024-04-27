@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useSearchParams } from "react-router-dom";
@@ -26,7 +26,12 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
 
   const autoCompleteFilterWithSearch = islandAndSettlements.filter(c => c.toLowerCase().includes(searchText.toLowerCase()));
 
-  const showAutoComplete = searchText && autoCompleteFilterWithSearch.length !== 0;
+  const [showAutoComplete, setShowAutoComplete] = useState(false);
+
+  useEffect(() => {
+    const shouldDisplay = Boolean(searchText && autoCompleteFilterWithSearch.length > 1);
+    setShowAutoComplete(shouldDisplay);
+  }, [searchText]);
 
   const handleSearch = (e: any) => {
     setSearchText(e.target.value);
@@ -152,6 +157,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
                 onClick={() => {
                   setSearchText(c);
                   searchRent(c);
+                  setShowAutoComplete(false);
                 }}
               >
                 {c}
