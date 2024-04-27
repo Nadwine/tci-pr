@@ -27,7 +27,9 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
   const [showAutoComplete, setShowAutoComplete] = useState(false);
 
   useEffect(() => {
-    const shouldDisplay = Boolean(searchText && autoCompleteFilterWithSearch.length > 1);
+    const shouldDisplay = Boolean(
+      searchText && autoCompleteFilterWithSearch.length !== 0 && autoCompleteFilterWithSearch[0].toLocaleLowerCase() !== searchText.toLocaleLowerCase()
+    );
     setShowAutoComplete(shouldDisplay);
   }, [searchText]);
 
