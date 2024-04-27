@@ -39,6 +39,20 @@ const UserProfile = props => {
       return;
     }
 
+    if (section === "address") {
+      if (!profile.addressLine1 || !profile.settlement || !profile.city) {
+        toast.error("Please fill in the required details");
+        return;
+      }
+    }
+
+    if (section === "phone") {
+      if (!profile.phoneNumber) {
+        toast.error("Please fill in the required details");
+        return;
+      }
+    }
+
     const res = await axios.put("/api/profile/my-profile", profileObj);
     if (res.status === 200) toast.success("Success");
     if (res.status !== 200) toast.error("Error updating");
@@ -141,7 +155,7 @@ const UserProfile = props => {
               </div>
             </div>
           )}
-          {loggedInUsr?.accountType === "landlord" && (
+          {/* {loggedInUsr?.accountType === "landlord" && (
             <div className="card border-white">
               <div
                 onClick={() => setCurrentView("Payment")}
@@ -152,7 +166,7 @@ const UserProfile = props => {
                 {currentView == "Payment" && <i className="bi bi-arrow-right" style={{ float: "right", fontWeight: "200px" }}></i>}
               </div>
             </div>
-          )}
+          )} */}
         </div>
         {/*--------------------------------- PERSONAL DETAILS CARD --------------------------------------------------------*/}
         {currentView === "PersonalDetails" && (
@@ -265,7 +279,9 @@ const UserProfile = props => {
                     <p
                       onClick={() => {
                         submitUpdate("address");
-                        setFieldEditStatus("addressLine1", false);
+                        if (profile?.addressLine1 && profile?.settlement && profile?.city) {
+                          setFieldEditStatus("addressLine1", false);
+                        }
                       }}
                     >
                       save
@@ -301,7 +317,9 @@ const UserProfile = props => {
                     <p
                       onClick={() => {
                         submitUpdate("phone");
-                        setFieldEditStatus("phoneNumber", false);
+                        if (profile?.phoneNumber) {
+                          setFieldEditStatus("phoneNumber", false);
+                        }
                       }}
                     >
                       save
