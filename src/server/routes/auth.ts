@@ -109,7 +109,7 @@ export const registerUser = async (req: Request, res: Response) => {
   const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
   <br></br>
   <h2 style="font-family: arial;">One more step...</h2>
-  <p style="font-family: arial;">Please click the button below to confirm your email:</p><a href="${emailLink}" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Confirm Email</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+  <p style="font-family: arial;">Please click the button below to confirm your email.</p><a href="${emailLink}" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Confirm Email</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
 
   // Send Verification Email
   const AWS = require("aws-sdk");
@@ -233,7 +233,7 @@ export const resendVerificationToUserEmail = async (req: Request, res: Response)
   const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
   <br></br>
   <h2 style="font-family: arial;">One more step...</h2>
-  <p style="font-family: arial;">Please click the button below to confirm your email:</p><a href="${emailLink}" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Confirm Email</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+  <p style="font-family: arial;">Please click the button below to confirm your email.</p><a href="${emailLink}" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 12px">Confirm Email</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
 
   const AWS = require("aws-sdk");
   const ses = new AWS.SES({
@@ -283,7 +283,7 @@ export const resendPasswordResetLinkToUserEmail = async (req: Request, res: Resp
   const html = `<html><h2 style="color: #087990; font-family: arial">TCI Homebase</h2>
   <br></br>
   <h2 style="font-family: arial;">Hi &#x1F44B;</h2>
-  <p style="font-family: arial;">A password change has been requested for your account. If this was you, please click the button below to reset your password:</p><a href="${emailLink}" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 11px;">Reset Password</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
+  <p style="font-family: arial;">A password change has been requested for your account. If this was you, please click the button below to reset your password.</p><a href="${emailLink}" style="background-color: #087990; color: white; padding: 6px; text-decoration: none; border-radius: 3px; font-family: arial; font-size: 11px;">Reset Password</a><br></br><br></br><p style="font-size: 9px; color: grey;">© 2024 TCI Homebase. All rights reserved.</p><html>`;
 
   const AWS = require("aws-sdk");
   const ses = new AWS.SES({
