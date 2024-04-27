@@ -28,6 +28,7 @@ const SearchRentResults = props => {
   const furnishedFromURL = searchParams.get("furnished");
   const [searchText, setSearchText] = useState(searchTextFromURL);
   const [searchResults, setSearchResults] = useState<Listing[]>([]);
+  const [doesAnyListingExist, setDoesAnyListingExist] = useState(false);
   const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(pageFromURL);
   const [serverError, setServerError] = useState("");
@@ -53,6 +54,7 @@ const SearchRentResults = props => {
     if (res.status === 200) {
       setSearchResults(res.data.rows);
       setTotalResults(res.data.count);
+      setDoesAnyListingExist(res.data.doesAnyListingExist);
     }
     if (res.status !== 200) setServerError("Error getting results");
   };
@@ -86,12 +88,7 @@ const SearchRentResults = props => {
 
   const searchAllProperties = async () => {
     navigate(`/search/rent?&page=0`);
-    // const res = await axios.get(`/api/listing/rent/search?&page=0`);
-    // if (res.status === 200) {
-    //   setSearchResults(res.data.rows);
-    //   setTotalResults(res.data.count);
-    // }
-    // if (res.status !== 200) setServerError("Error getting results");
+    window.scrollTo(0, 0);
   };
 
   const searchRent = async text => {
@@ -106,6 +103,7 @@ const SearchRentResults = props => {
     if (res.status === 200) {
       setSearchResults(res.data.rows);
       setTotalResults(res.data.count);
+      setDoesAnyListingExist(res.data.doesAnyListingExist);
     }
     if (res.status !== 200) setServerError("Error getting results");
   };
@@ -266,12 +264,21 @@ const SearchRentResults = props => {
           </div>
         ))}
         {searchResults.length === 0 && (
-          <h6 className="text-center text-muted text-danger mt-5 pt-5">
+          <h6 className="text-center text-muted mt-5 pt-5">
             No property results to display
-            <br />{" "}
-            <div onClick={() => searchAllProperties()} className="point text-primary pt-4">
-              Search all properties
-            </div>
+            {searchTextFromURL &&
+              ` for search
+            "${searchTextFromURL}"`}
+            <br />
+            <p className="mx-auto pt-5" style={{ fontSize: "12px", maxWidth: "300px", color: "#9a9999" }}>
+              You are seeing this either because you have reached the end of your search results or there are no properties to display for your search at the
+              moment
+            </p>
+            {doesAnyListingExist && (
+              <div onClick={() => searchAllProperties()} className="point text-primary pt-4">
+                Search all properties
+              </div>
+            )}
           </h6>
         )}
       </div>

@@ -501,6 +501,13 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
 
   try {
     const offset = page * limit;
+    const anyListingsExist = await Listing.findOne({
+      where: {
+        listingType: ListingTypeEnum.RENT,
+        isApproved: true,
+        hasPaid: true
+      }
+    });
     const listingResults = await Listing.findAll({
       offset: offset,
       limit: limit,
@@ -562,7 +569,7 @@ export const searchRentListingRoute = async (req: Request, res: Response) => {
       ]
     });
 
-    const data = { rows: listingResults, count: count };
+    const data = { rows: listingResults, count: count, doesAnyListingExist: Boolean(anyListingsExist) };
     return res.status(200).json(data);
   } catch (err) {
     return res.status(500).json({ message: "Internal Server error", err });
