@@ -221,7 +221,7 @@ const MobileMessageEnquiries = props => {
                       {/**todo: fix elipsis on bigger screen */}
                       <p style={{ width: "300px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
                         {!disablePreview && lastMessage?.messageText}
-                        {disablePreview && "Handled TCI Homebase"}
+                        {disablePreview && "Handled by TCI Homebase"}
                       </p>
                       {isAdmin && landlordManaged && <span className="text-danger">Managed by Landlord</span>}
                     </div>
