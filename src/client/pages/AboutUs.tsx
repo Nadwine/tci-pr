@@ -93,7 +93,7 @@ const AboutUs = props => {
               <hr className="mb-4" style={{ width: "40px", color: "#087990", height: "5px" }} />
             </div>
             <div className="mt-3 col-md-6">
-              <p className="ms-md-5 mt-3 fw-bold ms-lg-5 me-3" style={{ fontSize: "15px" }}>
+              <p className="ms-md-5 mt-3 ms-lg-5 me-3" style={{ fontSize: "15px" }}>
                 Helping the residents of the Turks and Caicos Islands find their next home! At TCI Homebase, we pride ourselves on pioneering digital solutions
                 that revolutionize the way properties are paired with their ideal occupants. Whether you{"'"}re a discerning landlord or a homeowner with a
                 property gem, our expert team is dedicated to showcasing your listing with precision and finesse, ensuring it finds its perfect match in record

@@ -18,11 +18,13 @@ const AboutLandlord = props => {
       label: "Create landlord account",
       description: (
         <div className="pe-5">
-          The first step to begin the process is by creating an account.{" "}
-          <button className="btn text-primary ps-0" onClick={() => navigate(`/register`)}>
-            Go to our signup form here and select I am a landlord
-          </button>
-          .Once you have filled out the form, You will be asked to verify your email. If you are having problems with this step, call us.
+          The first step to begin the process is by creating an account. Go to our sign up form here and select I am a landlord
+          <span>
+            <button className="btn text-primary ps-1 pe-1" onClick={() => navigate(`/register`)}>
+              here.
+            </button>
+          </span>
+          Once you have filled out the form, You will be asked to verify your email. If you are having problems with this step, call us.
         </div>
       )
     },
