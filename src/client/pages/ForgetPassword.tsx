@@ -115,7 +115,7 @@ const ForgetPassword = () => {
       {forgetPasswordStatus === "pending" && (
         <div>
           <h2 className="mt-4">Please enter your email address</h2>
-          <br /> A password reset link will been sent to your inbox
+          <br /> A password reset link will be sent to your inbox
           <div className="pt-2 mt-4">
             <br />
             <div className="text-danger">
