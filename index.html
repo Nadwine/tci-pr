@@ -1,28 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      content="width=device-width,initial-scale=1,maximum-scale=10,minimum-scale=.25,user-scalable=yes"
-      name="viewport"
-    />
-    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
 
-    <!-- ### Manifest and icons ### -->
-    <!-- General -->
-    <link rel="manifest" href="/static/site.webmanifest" />
-    <meta name="theme-color" content="#ffffff" />
-    <meta name="application-name" content="App" />
-    <link rel="shortcut icon" href="/static/mobile-logo-cyan.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/mobile-logo-cyan.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/static/mobile-logo-cyan.png" />
-    <!-- Apple -->
-    <meta name="apple-mobile-web-app-title" content="App" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/mobile-logo-cyan.png" />
-  </head>
-  <body>
-    <div id="app" style="height: 100%; width: 100%"><!--app-html--></div>
-    <script type="module" src="/src/client/entry-client.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta content="width=device-width,initial-scale=1,maximum-scale=10,minimum-scale=.25,user-scalable=yes"
+    name="viewport" />
+  <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+
+  <!-- ### Manifest and icons ### -->
+  <!-- General -->
+  <link rel="manifest" href="/static/site.webmanifest" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="application-name" content="App" />
+  <link rel="shortcut icon" href="/static/mobile-logo-cyan.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/mobile-logo-cyan.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/mobile-logo-cyan.png" />
+  <!-- Apple -->
+  <meta name="apple-mobile-web-app-title" content="App" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/mobile-logo-cyan.png" />
+</head>
+
+<body>
+  <div id="app" style="height: 100%; width: 100%"><!--app-html--></div>
+  <script>
+    // Add service worker
+    window.addEventListener("load", function () {
+      // if ("serviceWorker" in navigator) {
+      //   console.log("service worker found")
+      //   navigator.serviceWorker.register(`${window.location.origin}/static/service-worker.js`).then(
+      //     registration => {
+      //       // registration success
+      //       // window is available here
+      //       console.log("service-worker register success")
+      //       const thirtyMinutes = 1800000
+      //       const activeWorker = registration && registration.active;
+      //       if (activeWorker) {
+      //         activeWorker.onstatechange = (e) => {
+      //           window.alert("State Change")
+      //           const worker = event.currentTarget;
+      //           // can send message event here when service worker updated
+      //           // activeWorker.postMessage({ message: Date.now(), event: "clear-cache" })
+
+      //         }
+      //         activeWorker.onupdatefound = (e) => {
+      //           const worker = event.currentTarget;
+      //           window.alert("Software version update found")
+      //         }
+      //       }
+      //     },
+      //     /*catch*/ error => {
+      //       window?.alert(
+      //         `Service worker registration failed most likely due to unstable/slow network connection. Please try closing and reopening the application`
+      //       );
+      //     }
+      //   );
+      // } else {
+      //   console.log("no service worker on page")
+      // }
+    })
+  </script>
+  <script type="module" src="/src/client/entry-client.tsx"></script>
+</body>
+
 </html>
