@@ -85,7 +85,7 @@ export const LandlordDashboard = props => {
                           </div>
                           <div className="d-flex" style={{ height: "32px", paddingTop: "5px" }}>
                             <div className="text-muted">
-                              {curListing?.productPackage!.name.charAt(0).toUpperCase() + curListing?.productPackage?.name.slice(1)} Package
+                              {curListing?.productPackage!.name.charAt(0).toUpperCase() + curListing?.productPackage?.name.slice(1)}
                             </div>
                             {showPayNowButton && (
                               <button

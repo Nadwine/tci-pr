@@ -46,6 +46,28 @@ export const AdminChart = props => {
           }}
         ></Pie>
       </div>
+      <div className="card m-5" style={{ height: "490px", width: "910px", alignItems: "center" }}>
+        <Pie
+          data={{
+            labels: [...new Set(labels)],
+            datasets: [
+              {
+                label: "Users",
+                data: [users?.filter(u => u.accountType === "tenant").length, users?.filter(u => u.accountType === "landlord").length],
+                backgroundColor: [
+                  "rgb(255, 99, 132)",
+                  "rgb(54, 162, 235)",
+                  "rgba(255, 159, 64)",
+                  "rgb(255, 205, 86)",
+                  "rgba(75, 192, 192)",
+                  "rgba(153, 102, 255)",
+                  "rgba(201, 203, 207)"
+                ]
+              }
+            ]
+          }}
+        ></Pie>
+      </div>
     </div>
   );
 };

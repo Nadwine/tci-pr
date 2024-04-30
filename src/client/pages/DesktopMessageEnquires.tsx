@@ -130,7 +130,7 @@ const MessageEnquiries = props => {
                       {":"}
                     </span>
                     {!disablePreview && lastMessage && lastMessage?.messageText}
-                    {disablePreview && "Handled TCI Homebase"}
+                    {disablePreview && "Handled by TCI Homebase"}
                   </p>
                   {isAdmin && landlordManaged && <span className="text-danger">Managed by Landlord</span>}
                 </div>

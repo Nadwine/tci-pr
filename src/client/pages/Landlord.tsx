@@ -33,7 +33,7 @@ const AboutUs = props => {
         </div>
         <div className="card col-md-6 p-md-5 ml-mb-5 mt-sm-2 shadow-lg m-sm-1" style={{ borderRadius: "0px" }}>
           <div className="card-body">
-            <p className="card-text text-muted">
+            <p className="card-text">
               At TCI Homebase, we pride ourselves on being more than just a property management company, with a commitment to excellence and innovation at the
               forefront of everything we do, we go above and beyond to ensure your peace of mind and the utmost satisfaction.
               <p className="mt-3">
@@ -44,7 +44,7 @@ const AboutUs = props => {
                 From strategically marketing your property on our site to conducting thorough tenant screenings and managing lease agreements, we handle every
                 aspect of the rental process with precision and care. Our cutting-edge digital platform enable us to attract high-quality tenants who not only
                 meet your criteria but also respect your property as if it were their own.{" "}
-                <span className="fw-bolder point text-primary" style={{ fontStyle: "italic" }} onClick={() => navigate(`/products`)}>
+                <span className="point text-primary" style={{ fontStyle: "italic" }} onClick={() => navigate(`/products`)}>
                   {" "}
                   Browse our list of services available here.
                 </span>
