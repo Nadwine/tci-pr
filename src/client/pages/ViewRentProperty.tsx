@@ -215,10 +215,11 @@ const ViewRentProperty = props => {
                     <FontAwesomeIcon className="pe-1" icon={faPerson} />
                     Tenants {listing.PropertyForRent.maxTenant}
                   </div>
-                  <div className="tenants pt-2">
-                    <i className="bi bi-rulers"></i>
-                    Sqaure Ft. {listing.PropertyForRent.sqFt}
-                  </div>
+                  {listing.PropertyForRent.sqFt && (
+                    <div className="tenants pt-2">
+                      <i className="bi bi-rulers" style={{ fontSize: "13px" }}></i> {listing.PropertyForRent.sqFt} sq ft
+                    </div>
+                  )}
                 </div>
                 <div style={{ fontSize: "15px" }} className="col-5 col-md-3 pt-5 mt-2 me-2 float-end">
                   <div className="fw-bold">Address</div>
