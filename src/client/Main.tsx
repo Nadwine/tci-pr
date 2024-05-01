@@ -69,6 +69,7 @@ import AcceptInvitation from "./pages/AcceptInvitation";
 import RentPaymentsAndExpense from "./pages/landlord-n-admin/RentPaymentsAndExpense";
 import { HelmetProvider } from "react-helmet-async";
 import DisableWebsiteBanner from "./components/DisableWebsiteBanner";
+import { AddToHomeScreen } from "./pages/AddToHomeScreen";
 const tenMinute = 600000;
 
 function initTranslations() {
@@ -208,6 +209,7 @@ const Main = () => {
               <Route path={ReactRoutesEnum.REGISTERCONFIRM} element={<RegisterConfirm />} />
               <Route path={ReactRoutesEnum.REGISTER} element={<RequireLogout view={<Register />} />} />
               <Route path={ReactRoutesEnum.LOGIN} element={<RequireLogout view={<Login />} />} />
+              <Route path="app" element={<AddToHomeScreen />} />
               <Route path="condition-terms" element={<TermsAndConditions />} />
               <Route path="cookie-terms" element={<CookieTerms />} />
               <Route path="privacy-terms" element={<PrivacyTerms />} />

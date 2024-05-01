@@ -16,6 +16,27 @@
   -webkit-text-stroke: 0.8px;
 }
 
+.app-button{
+  position: absolute;
+  right: 70px;
+  overflow: hidden;
+}
+
+.app-button .shine{
+  animation: shine 2s infinite;
+  height: 3em;
+  top: 0px;
+  right: -30px;
+  position: absolute;
+  width: 50%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.58), transparent 70%);
+  -webkit-text-fill-color: transparent;
+}
+@keyframes shine {
+  from {left: 0%;}
+  to {left: 100%;}
+}
+
 .theme-text {
   color: #087990;
 }

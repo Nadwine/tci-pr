@@ -5,6 +5,8 @@ import { RootState } from "../redux/store";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Avatar } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMobileScreen } from "@fortawesome/free-solid-svg-icons";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -55,6 +57,13 @@ function Navbar() {
           <img src="/static/web-logo-cyan.png" style={{ width: "40px" }} className="h-8" alt="..." />
           <span className="d-flex align-items-center fs-6 ps-2">TCI Homebase</span>
         </span>
+
+        {isCollapsed && (
+          <span onClick={() => navigate("/app")} className="app-button ms-5 rounded-pill p-1 px-3 point" style={{ backgroundColor: "#89e7ce" }}>
+            <div className="shine"></div>
+            <FontAwesomeIcon icon={faMobileScreen} /> App
+          </span>
+        )}
         {/* <!-- Navbar toggle --> */}
         <button
           className="navbar-toggler border-0"
