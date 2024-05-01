@@ -28,6 +28,7 @@ declare global {
     interface ProcessEnv {
       SERVER_PORT: string;
       BASE_URL: string;
+      APP_BUILD_NUMBER: string;
       DB_USER: string;
       DB_PASSWORD: string;
       DATABASE: string;

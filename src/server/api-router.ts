@@ -3,6 +3,7 @@ import { validate } from "express-yup";
 import {
   changePasswordFromEmailToken,
   confirmUserAccountFromEmailToken,
+  getAppBuildInfo,
   getUserCredentials,
   loginUser,
   logoutUser,
@@ -92,6 +93,7 @@ router.get("/environment", (req, res) => res.send(process.env.NODE_ENV));
 //  api/auth    routes
 router.get("/auth/credentials", getUserCredentials);
 router.get("/auth/refresh-perms", refreshUserPermission);
+router.get("/auth/app-build-info", getAppBuildInfo);
 router.post("/auth/register", ensureLogout, registerUser);
 router.get("/auth/register-confirm/:token", confirmUserAccountFromEmailToken);
 router.post("/auth/resend-verification", resendVerificationToUserEmail);

@@ -22,10 +22,14 @@ export const getUserCredentials = async (req: Request, res: Response, next: Next
   return res.json(req.session.user || null);
 };
 
+export const getAppBuildInfo = async (req: Request, res: Response, next: NextFunction) => {
+  return res.json({ appBuildNumber: Number(process.env.APP_BUILD_NUMBER) });
+};
+
 export const refreshUserPermission = async (req: Request, res: Response) => {
   try {
     if (!req.session.user) {
-      return res.json({ result: "success" });
+      return res.json({ result: "success", sessionUser: null });
     } else {
       const foundUser: User | null = await User.findByPk(req.session.user.id, { include: [{ model: Profile, include: [ProfileMedia] }] });
 
@@ -40,7 +44,11 @@ export const refreshUserPermission = async (req: Request, res: Response) => {
           Profile: foundUser.Profile
         };
       }
-      return res.json({ result: "success" });
+      return res.json({
+        result: "success",
+        sessionUser: req.session.user,
+        appBuildNumber: Number(process.env.APP_BUILD_NUMBER)
+      });
     }
   } catch (err) {
     return res.status(500).json({ message: "Server failure", error: err });

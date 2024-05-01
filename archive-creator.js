@@ -1,6 +1,21 @@
-// require modules
 const fs = require("fs");
 const archiver = require("archiver");
+
+// Increment build number
+const envFiles = [".env.development", ".env.test", ".env.production"];
+for (let index = 0; index < envFiles.length; index++) {
+  const file = envFiles[index];
+
+  var data = fs.readFileSync(file, { encoding: "utf8" });
+  var indexLineStartsAt = data.indexOf("APP_BUILD_NUMBER");
+  var substring = data.substring(indexLineStartsAt, indexLineStartsAt + 52);
+  var buildNumberLineText = substring.split("\n")[0];
+  var currentBuildNumber = buildNumberLineText.split("=")[1];
+  var newBuildNumber = Number(currentBuildNumber) + 1;
+  var formatted = data.replace(buildNumberLineText, `APP_BUILD_NUMBER=${newBuildNumber}`);
+
+  fs.writeFileSync(file, formatted, { encoding: "utf8" });
+}
 
 // create a file to stream archive data to.
 const output = fs.createWriteStream(__dirname + "/prod-deploy.zip");
