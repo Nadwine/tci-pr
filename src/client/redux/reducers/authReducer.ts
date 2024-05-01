@@ -6,12 +6,14 @@ type stateType = {
   user?: { id: number; email: string; username?: string; allowed: []; accountType: "landlord" | "admin" | "tenant"; Profile?: Profile };
   visitorId?: string;
   browserInfo?: string;
+  appBuildNumber?: number;
 };
 
 const initialState: stateType = {
   user: undefined,
   visitorId: undefined,
-  browserInfo: undefined
+  browserInfo: undefined,
+  appBuildNumber: undefined
 };
 
 const authReducer = createSlice({
@@ -26,11 +28,14 @@ const authReducer = createSlice({
     },
     setBrowserInfo: (state, action) => {
       state.browserInfo = action.payload;
+    },
+    setAppBuildNumber: (state, action) => {
+      state.appBuildNumber = action.payload;
     }
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { setSessionUser, setVisitorId, setBrowserInfo } = authReducer.actions;
+export const { setSessionUser, setVisitorId, setBrowserInfo, setAppBuildNumber } = authReducer.actions;
 
 export default authReducer.reducer;

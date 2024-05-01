@@ -17,7 +17,7 @@ import axios from "axios";
 import { LoadingSpinnerWholePage } from "./components/LoadingSpinners";
 import Home from "./pages/Home";
 import CookieConsentModal from "./components/CookieConsentModal";
-import { setBrowserInfo, setVisitorId } from "./redux/reducers/authReducer";
+import { setAppBuildNumber, setBrowserInfo, setVisitorId } from "./redux/reducers/authReducer";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { ToastContainer } from "react-toastify";
@@ -111,9 +111,20 @@ const Main = () => {
       .catch(() => setLoadingCredentials(false));
 
     const interval = setInterval(async () => {
-      const now = new Date(Date.now());
-      await axios.get("/api/auth/refresh-perms").then(() => console.log(`${now.toISOString()} - refresh user permissions`));
+      const res = await axios.get("/api/auth/refresh-perms");
+      const newAppBuildNumber = res.data?.appBuildNumber;
+      console.log("checking new app version...");
+      const currentAppBuildNumber = store.getState().auth.appBuildNumber;
+      if (currentAppBuildNumber && currentAppBuildNumber < newAppBuildNumber) {
+        window.alert("New Software version. Confirm to update");
+        window.location.reload();
+      }
     }, tenMinute);
+
+    axios.get("/api/auth/refresh-perms").then(res => {
+      const newAppBuildNumber = res.data?.appBuildNumber;
+      dispatcher(setAppBuildNumber(newAppBuildNumber));
+    });
 
     return () => clearInterval(interval);
   }, []);
