@@ -18,6 +18,12 @@ function Navbar() {
   const numberOfNewMessages = useSelector((root: RootState) => root.message.numberOfNewMessages);
   const [isHome, setIsHome] = useState(false);
 
+  const isWebApp = () => {
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+      return true;
+    }
+    return false;
+  };
   const contactClick = () => {
     if (window.location.pathname === "/about") {
       document.getElementById("contact-btn-mobile")?.focus();
@@ -58,8 +64,8 @@ function Navbar() {
           <span className="d-flex align-items-center fs-6 ps-2">TCI Homebase</span>
         </span>
 
-        {isCollapsed && (
-          <span onClick={() => navigate("/app")} className="app-button ms-5 rounded-pill p-1 px-3 point" style={{ backgroundColor: "#89e7ce" }}>
+        {isCollapsed && !isWebApp() && (
+          <span onClick={() => navigate("/app")} className="app-button ms-5 rounded-pill p-1 px-3 d-md-none point" style={{ backgroundColor: "#89e7ce" }}>
             <div className="shine"></div>
             <FontAwesomeIcon icon={faMobileScreen} /> App
           </span>
