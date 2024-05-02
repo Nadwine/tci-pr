@@ -91,7 +91,7 @@ function Navbar() {
         {/* <!-- Collapse --> */}
         <div className={dynamicClassName} id="navbarCollapse">
           {/* <!-- Nav --> */}
-          <div className="navbar-nav mx-lg-auto">
+          <div className="main-nav-links navbar-nav mx-lg-auto">
             <span
               className="point nav-item nav-link"
               onClick={() => {
@@ -191,7 +191,7 @@ function Navbar() {
                 )}
                 {hasProfilePic && (
                   <Avatar
-                    className="point"
+                    className="point mx-auto"
                     src={user?.Profile?.ProfileMedia[0].mediaUrl}
                     style={{ width: "45px", height: "45px" }}
                     onClick={() => {
