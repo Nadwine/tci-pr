@@ -67,26 +67,6 @@ const MeetTheTeam = props => {
         </div>
         <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5 px-1">
           <div className="img-container rounded" style={imgContainerStyle}>
-            <img src="/static/Herby Headshot.jpeg" style={imgContainerStyle}></img>
-          </div>
-          <div className="fs-5 pt-3 fw-bold">Herby Magny</div>
-          <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
-            Chief Financial Officer
-          </div>
-          {!herbyOpen && (
-            <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden", maxWidth: "410px" }}>
-              Herby has built a reputation for transforming entrepreneurial organizations into sustainable growth enterprises..
-            </div>
-          )}
-          <Collapse in={herbyOpen}>
-            <div className="px-md-5 text-center">{herbyFullText}</div>
-          </Collapse>
-          <Button onClick={() => setHerbyOpen(!herbyOpen)} aria-controls="example-collapse-text" variant="link" style={{ color: "#11828d" }}>
-            {herbyOpen ? "Close" : "Read More"}
-          </Button>
-        </div>
-        <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5 px-1">
-          <div className="img-container rounded" style={imgContainerStyle}>
             <img src="/static/IMG_2205.JPG" style={imgContainerStyle}></img>
           </div>
           <div className="fs-5 pt-3 fw-bold">Brutchsama Jean-Louis</div>
@@ -115,7 +95,7 @@ const MeetTheTeam = props => {
           </div>
           {!naeOpen && (
             <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden", maxWidth: "410px" }}>
-              Nadwine is a Software Engineer with expertise in full-stack development. In her current capacity she serves as a..
+              Nadwine is a Software Engineer with expertise in full-stack development. In her current..
             </div>
           )}
           <Collapse in={naeOpen}>
@@ -123,6 +103,26 @@ const MeetTheTeam = props => {
           </Collapse>
           <Button onClick={() => setNamOpen(!naeOpen)} aria-controls="example-collapse-text" className="mb-5" variant="link" style={{ color: "#11828d" }}>
             {naeOpen ? "Close" : "Read More"}
+          </Button>
+        </div>
+        <div className="col-12 col-md-6 d-flex align-items-center flex-column pb-5 px-1">
+          <div className="img-container rounded" style={imgContainerStyle}>
+            <img src="/static/Herby Headshot.jpeg" style={imgContainerStyle}></img>
+          </div>
+          <div className="fs-5 pt-3 fw-bold">Herby Magny</div>
+          <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
+            Chief Financial Officer
+          </div>
+          {!herbyOpen && (
+            <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden", maxWidth: "410px" }}>
+              Herby has built a reputation for transforming entrepreneurial organizations into sustainable..
+            </div>
+          )}
+          <Collapse in={herbyOpen}>
+            <div className="px-md-5 text-center">{herbyFullText}</div>
+          </Collapse>
+          <Button onClick={() => setHerbyOpen(!herbyOpen)} aria-controls="example-collapse-text" variant="link" style={{ color: "#11828d" }}>
+            {herbyOpen ? "Close" : "Read More"}
           </Button>
         </div>
       </div>

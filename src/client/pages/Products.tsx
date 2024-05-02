@@ -147,7 +147,7 @@ const Products = props => {
                 {/* <i className="theme-text bi bi-eye fs-1 pe-3" />
                  */}
                 <i className="theme-text bi bi-door-open fs-1 pe-3" />
-                <span className="fs-5 products-accordions-text">Tenant Check In and Check Out</span>
+                <span className="fs-5 products-accordions-text">Tenant Check In & Check Out</span>
                 <CustomButton eventKey="0">
                   <span className="text-primary">More Info +</span>
                 </CustomButton>
