@@ -178,7 +178,7 @@ function Navbar() {
               <li className="nav-item dropdown">
                 {!hasProfilePic && (
                   <span
-                    className="btn btn-link nav-link rounded-circle fw-bold text-light fs-5"
+                    className="mx-auto btn btn-link nav-link rounded-circle fw-bold text-light fs-5"
                     style={{ width: "45px", height: "45px", backgroundColor: "#087990" }}
                     onClick={() => {
                       setUserDropDownShow(!userDropDownShow);
