@@ -207,7 +207,7 @@ const SearchRentResults = props => {
       </div>
       <div style={{ minHeight: "70vh" }} className="list col-12 col-md-8 col-lg-8 col-xl-8">
         {searchResults.map((listing, i) => (
-          <div key={i} className="card mb-3 shadow-sm">
+          <div key={i} className="card mb-3 shadow-lg">
             {/* {listing.listingStatus === "gone" && <GonePropertyOverlay />} */}
             <div className="card-body d-flex flex-wrap">
               <div onClick={() => viewProperty(listing.id)} className="image-container point col-12 col-md-5 me-2 pb-3">
@@ -246,15 +246,15 @@ const SearchRentResults = props => {
                     <div className="beds pt-3 col-sm-4 col-md-9" style={{ overflow: "hidden", textOverflow: "ellipsis", height: "5.5em" }}>
                       {listing.description}..
                     </div>
-                    <div className="beds pt-3" style={{ color: "#087990" }}>
+                    <div className="beds pt-3" style={{ color: "#087990", fontSize: "13px" }}>
                       {" "}
                       Added {dayjs(listing.createdAt).fromNow()}
                     </div>
                   </div>
                   <div className="col-2 pt-5 mt-2 float-end">
-                    <p className="fw-bold" style={{ color: "#087990", fontSize: "12px" }}>
+                    {/* <p className="fw-bold" style={{ color: "#087990", fontSize: "12px" }}>
                       Posted by
-                    </p>
+                    </p> */}
                     {getUserPicFromListing(listing)}
                   </div>
                 </div>

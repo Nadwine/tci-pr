@@ -50,7 +50,7 @@ const AboutUs = props => {
   }, []);
 
   return (
-    <div className="about-us" style={{ padding: 0 }}>
+    <div style={{ padding: 0 }}>
       <MobileOnly>
         <div className="p-0 w-100">
           <div className="welcome-search justify-content-center">
@@ -70,7 +70,7 @@ const AboutUs = props => {
                 <img src="/static/about.jpg" style={{ marginTop: "-575px", width: 2000 }} className="home-photo.jpg"></img>
               </div>
               <h1
-                className="position-absolute fw-bold mb-lg-3 mt-lg-2 mt-sm-5 mb-sm-2 ps-md-5 ps-3"
+                className="position-absolute fw-bold mb-lg-3 mt-lg-2 mt-sm-5 mb-sm-2 ps-md-5 ps-5 text-center"
                 style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center", color: "white", WebkitTextStroke: "1px" }}
               >
                 About TCI Homebase <p className="text-break">Property Management</p>
@@ -82,7 +82,7 @@ const AboutUs = props => {
               <h4 style={{ width: "20px" }}>Intro</h4>
               <hr className="mb-4" style={{ width: "40px", color: "#087990", height: "5px" }} />
             </div>
-            <div className="mx-lg-5 me-3" style={{ fontSize: "15px" }}>
+            <div className="mx-lg-5 me-3">
               Introducing TCI Homebase, your premier partner in property management across the breathtaking landscape of the Turks and Caicos Islands! Nestled
               in the heart of Providenciales, our licensed company extends its reach to serve all the islands within this captivating archipelago.
             </div>
@@ -93,7 +93,7 @@ const AboutUs = props => {
               <hr className="mb-4" style={{ width: "40px", color: "#087990", height: "5px" }} />
             </div>
             <div className="mt-3 col-md-6">
-              <p className="ms-md-5 mt-3 ms-lg-5 me-3" style={{ fontSize: "15px" }}>
+              <p className="ms-md-5 mt-3 ms-lg-5 me-3">
                 Helping the residents of the Turks and Caicos Islands find their next home! At TCI Homebase, we pride ourselves on pioneering digital solutions
                 that revolutionize the way properties are paired with their ideal occupants. Whether you{"'"}re a discerning landlord or a homeowner with a
                 property gem, our expert team is dedicated to showcasing your listing with precision and finesse, ensuring it finds its perfect match in record
@@ -113,7 +113,7 @@ const AboutUs = props => {
               <hr className="mb-4" style={{ width: "40px", color: "#087990", height: "5px" }} />
             </div>
             <div className="mt-3 col-md-6">
-              <p className="mt-4 me-3" style={{ fontSize: "15px" }}>
+              <p className="mt-4 me-3">
                 Are you interested in promoting your business on our site? Contact us on tci.homebase.tc@gmail.com or at +1(649) 348-4021
               </p>
             </div>
@@ -199,7 +199,7 @@ const AboutUs = props => {
               <hr className="mb-4" style={{ width: "40px", color: "#087990", height: "6px" }} />
             </div>
             <div className="mt-3 col-md-12">
-              <div className="mx-lg-5 me-3" style={{ fontSize: "14px" }}>
+              <div className="mx-lg-5 me-3">
                 Introducing TCI Homebase, your premier partner in property management across the breathtaking landscape of the Turks and Caicos Islands! Nestled
                 in the heart of Providenciales, our licensed company extends its reach to serve all the islands within this captivating archipelago.
               </div>
@@ -209,7 +209,7 @@ const AboutUs = props => {
               <hr className="mb-4" style={{ width: "40px", color: "#087990", height: "6px" }} />
             </div>
             <div className="mt-3 col-md-12">
-              <p className="mx-lg-5 mt-3 fw-bold mx-lg-5 me-3" style={{ fontSize: "14px" }}>
+              <p className="mx-lg-5 mt-3 mx-lg-5 me-3">
                 Helping the residents of the Turks and Caicos Islands find their next home! At TCI Homebase, we pride ourselves on pioneering digital solutions
                 that revolutionize the way properties are paired with their ideal occupants. Whether you{"'"}re a discerning landlord or a homeowner with a
                 property gem, our expert team is dedicated to showcasing your listing with precision and finesse, ensuring it finds its perfect match in record
@@ -230,7 +230,7 @@ const AboutUs = props => {
               <hr className="mb-4" style={{ width: "40px", color: "#087990", height: "6px" }} />
             </div>
             <div className="mt-3 col-md-12 ps-5">
-              <p className="mt-4 me-3 mb-5" style={{ fontSize: "14px" }}>
+              <p className="mt-4 me-3 mb-5">
                 Are you interested in promoting your business on our site? Contact us on tci.homebase.tc@gmail.com or at +1(649) 348-4021
               </p>
             </div>

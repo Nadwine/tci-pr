@@ -170,10 +170,10 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
             ))}
           </div>
         )}
-        <div onClick={() => resetFilter()} className="w-100 d-flex px-3 btn-link mt-5 text-dark border-info mb-2 justify-content-center point">
+        <div onClick={() => resetFilter()} className="w-100 d-flex px-3 text-primary mt-5 text-dark mb-2 justify-content-center point">
           <div>Reset filter</div>
         </div>
-        <ul className="list-group mx-lg-5 shadow-sm" style={{ borderRadius: "10px" }}>
+        <ul className="list-group mx-lg-5 shadow-lg" style={{ borderRadius: "10px" }}>
           <li className="price-filter list-group-item d-flex flex-column">
             <div className="d-flex flex-row justify-content-between">
               <p className="fw-bold" style={{ marginRight: "32px" }}>

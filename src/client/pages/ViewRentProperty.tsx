@@ -154,7 +154,7 @@ const ViewRentProperty = props => {
   if (loading) return <LoadingSpinnerWholePage />;
   if (!loading && !listing) return <h3 className="text-muted pt-5 text-center">The Property You Are Looking For No Longer Exists</h3>;
   return (
-    <div>
+    <div style={{ backgroundColor: "#ffffff" }}>
       <SEOHelmetTags
         title={`${listing?.Address.settlement} - ${listing?.title.slice(0, 40)}` || ""}
         description={listing?.description.slice(0, 60) || ""}
@@ -162,8 +162,8 @@ const ViewRentProperty = props => {
       />
       <EnquiryModal />
       {listing && (
-        <div className="card mb-3 shadow-lg mx-md-5">
-          <div className="d-flex flex-column text-center w-100 px-5 pt-2">
+        <div className="card mb-0 mt-0 border-0">
+          <div className="d-flex flex-column text-center w-100 px-md-5 px-4">
             <i onClick={() => saveListing()} style={{ color: "#ff617d" }} className={`ms-auto fs-3 bi bi-heart${isListingSaved ? "-fill" : ""} point`} />
             {isListingSaved ? (
               <p className="ms-auto" style={{ fontSize: "12px" }}>
@@ -176,14 +176,14 @@ const ViewRentProperty = props => {
             )}
           </div>
           <div className="card-body d-flex flex-wrap justify-content-center">
-            <div className="image-container col-12 col-md-10 me-2 pb-3">
+            <div className="image-container col-12 col-md-10 pb-3">
               <Carousel listing={listing} images={listing.ListingMedia} />
               <div className="price fw-bolder fs-5" style={{ backgroundColor: "#ebf8ff", borderBottomLeftRadius: "7px", borderBottomRightRadius: "7px" }}>
                 {"$"}
                 {listing?.PropertyForRent.rentAmount} <span style={{ fontSize: "0.6em" }}>Monthly</span>{" "}
               </div>
             </div>
-            <div className="info col-10">
+            <div className="info col-md-10 col-11">
               <div className="title fw-bolder col-12">
                 {listing.title}{" "}
                 {listing.listingStatus === "in offer" ? (

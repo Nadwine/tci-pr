@@ -15,7 +15,7 @@ const Products = props => {
     );
   }
   return (
-    <div>
+    <div style={{ backgroundColor: "#ffffff" }}>
       <div className="ps-md-5 shadow-sm">
         {/* Desktop Page Header */}
         {/* <h3 className="mt-5 d-none d-md-flex">Products & Services</h3> */}
@@ -44,7 +44,7 @@ const Products = props => {
         </div>
       </div>
       <div className="w-100 text-center">
-        <h4 className="m-5 mb-2 bolder-text text-muted">List of Services</h4>
+        <h4 className="m-5 mb-2 bolder-text">List of Services</h4>
       </div>
       <div className="col-12 mx-auto pt-md-4 products-accordions pb-5 w-100" style={{ maxWidth: "750px" }}>
         <Accordion>
@@ -164,9 +164,9 @@ const Products = props => {
       </div>
       <div className="col-12 d-flex flex-row justify-content-center flex-wrap px-md-5">
         <div className="w-100 text-center">
-          <h4 className="m-md-5 m-4 bolder-text text-muted">Our Pricing</h4>
+          <h4 className="m-md-5 m-4 bolder-text">Our Pricing</h4>
         </div>
-        <div className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-sm" style={{ padding: "30px", backgroundColor: "white" }}>
+        <div className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-5" style={{ padding: "30px", backgroundColor: "white" }}>
           <div className="card-body" style={{ backgroundColor: "white" }}>
             <h4 className="card-title fw-bolder text-center greyed-text">Basic</h4>
             <h1 className="card-title fw-bolder text-center greyed-text">$20</h1>
@@ -182,7 +182,7 @@ const Products = props => {
             </div>
           </div>
         </div>
-        <div className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-sm" style={{ padding: "30px", backgroundColor: "white" }}>
+        <div className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-5" style={{ padding: "30px", backgroundColor: "white" }}>
           <div className="card-body" style={{ backgroundColor: "white" }}>
             <h4 className="card-title fw-bolder text-center primary-text">Standard</h4>
             <h1 className="card-title fw-bolder text-center primary-text">$150</h1>
@@ -206,7 +206,7 @@ const Products = props => {
             </div>
           </div>
         </div>
-        <div className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-sm" style={{ padding: "30px", backgroundColor: "white" }}>
+        <div className="card align-items-center justify-content-center col-md-3 mx-md-2 shadow-lg mb-5" style={{ padding: "30px", backgroundColor: "white" }}>
           <div className="card-body" style={{ backgroundColor: "white" }}>
             <h4 className="card-title fw-bolder text-center text-primary-2">Premium</h4>
             <h1 className="card-title fw-bolder text-center text-primary-2">15%</h1>

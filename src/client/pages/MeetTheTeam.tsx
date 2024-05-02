@@ -49,7 +49,7 @@ const MeetTheTeam = props => {
           <div className="img-container rounded" style={imgContainerStyle}>
             <img src="/static/chrissy headshot.jpeg" style={imgContainerStyle}></img>
           </div>
-          <div className="fs-5 pt-3">Christma Jean-Louis</div>
+          <div className="fs-5 pt-3 fw-bold">Christma Jean-Louis</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
             Chief Executive Officer
           </div>
@@ -69,7 +69,7 @@ const MeetTheTeam = props => {
           <div className="img-container rounded" style={imgContainerStyle}>
             <img src="/static/Herby Headshot.jpeg" style={imgContainerStyle}></img>
           </div>
-          <div className="fs-5 pt-3">Herby Magny</div>
+          <div className="fs-5 pt-3 fw-bold">Herby Magny</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
             Chief Financial Officer
           </div>
@@ -89,7 +89,7 @@ const MeetTheTeam = props => {
           <div className="img-container rounded" style={imgContainerStyle}>
             <img src="/static/IMG_2205.JPG" style={imgContainerStyle}></img>
           </div>
-          <div className="fs-5 pt-3">Brutchsama Jean-Louis</div>
+          <div className="fs-5 pt-3 fw-bold">Brutchsama Jean-Louis</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
             Chief Technology Officer
           </div>
@@ -109,13 +109,13 @@ const MeetTheTeam = props => {
           <div className="img-container rounded" style={imgContainerStyle}>
             <img src="/static/Nae Headshot.jpeg" style={imgContainerStyle}></img>
           </div>
-          <div className="fs-5 pt-3">Nadwine Louis</div>
+          <div className="fs-5 pt-3 fw-bold">Nadwine Louis</div>
           <div className="text-decoration-underline pb-2" style={{ fontSize: "15px" }}>
             Lead Software Engineer
           </div>
           {!naeOpen && (
             <div className="px-md-5 text-center smaller-text" style={{ height: "70px", overflow: "hidden", maxWidth: "410px" }}>
-              Nadwine is a Software Engineer with expertise in full-stack development, demonstrating a strong proficiency in her..
+              Nadwine is a Software Engineer with expertise in full-stack development. In her current capacity she serves as a..
             </div>
           )}
           <Collapse in={naeOpen}>

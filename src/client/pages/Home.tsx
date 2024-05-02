@@ -100,14 +100,14 @@ const Home = props => {
               maxHeight: "350px",
               marginLeft: "0px",
               width: "100%",
-              filter: "sepia(5%) saturate(150%) brightness(70%) hue-rotate(341deg)",
+              filter: "sepia(5%) saturate(170%) brightness(65%) hue-rotate(341deg)",
               overflow: "hidden"
             }}
           >
             <img src="/static/home-photo3.jpg" style={{ position: "relative", marginTop: "-250px", width: 2000 }} className="home-photo.jpg"></img>
           </div>
           <h1
-            className="position-absolute fw-bold text-center w-100 mb-lg-3 mt-lg-2 mt-sm-5 mb-sm-2 px-5 pb-4"
+            className="position-absolute fw-bolder text-center w-100 mb-lg-3 mt-lg-2 mt-sm-5 mb-sm-2 px-5 pb-4"
             style={{ zIndex: +1, position: "relative", paddingTop: "60px", textAlign: "center", color: "white" }}
           >
             The Perfect Space Awaits
@@ -162,7 +162,7 @@ const Home = props => {
         <div className="text-center fs-6" style={{ marginLeft: "10px", marginRight: "10px" }}>
           <p className="fst-italic " style={{ fontSize: "15px" }}>
             The{" "}
-            <span className="fw-bolder" style={{ fontSize: "18px" }}>
+            <span className="fw-bolder" style={{ fontSize: "20px" }}>
               #1{" "}
             </span>
             destination for landlords advertising their rental property and residents looking to find their next rental home.
@@ -318,7 +318,7 @@ const Home = props => {
                   >
                     <FontAwesomeIcon icon={faMapLocationDot} style={{ width: "3rem", height: "3rem" }} />
                   </div>
-                  <div className="card-body">
+                  <div className="card-body mb-5">
                     <h5 className="card-title">Island-Wide Coverage</h5>
                     <p className="card-text">We list properties available on all our sister islands</p>
                   </div>
@@ -327,7 +327,10 @@ const Home = props => {
             </div>
           </div>
         )}
-        <div className="text-center text-light" style={{ backgroundColor: "#055160", minHeight: mobileView ? "8rem" : "3.5rem", alignItems: "center" }}>
+        <div
+          className="text-light px-2 py-2"
+          style={{ backgroundColor: "#055160", minHeight: mobileView ? "8rem" : "3.5rem", textAlign: mobileView ? "left" : "center" }}
+        >
           <p className="py-2">Interested in promoting your business on our website? Contact us on tci.homebase.tc@gmail.com or at +1(649) 348-4021</p>
         </div>
       </div>

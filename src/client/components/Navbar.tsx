@@ -49,7 +49,7 @@ function Navbar() {
   //@ts-ignore
   const hasProfilePic = user?.Profile?.ProfileMedia?.length > 0;
   return (
-    <nav className={`${isHome && "nav-home"} navbar navbar-expand-md navbar-light fixed-top bg-light px-0 shadow-sm`}>
+    <nav className={`${isHome && "nav-home"} navbar navbar-expand-md navbar-light fixed-top px-0 shadow-sm`} style={{ backgroundColor: "#ffffff" }}>
       <div className="container-xl">
         {/* <!-- Logo --> */}
         <span
@@ -61,7 +61,7 @@ function Navbar() {
           }}
         >
           <img src="/static/web-logo-cyan.png" style={{ width: "40px" }} className="h-8" alt="..." />
-          <span className="d-flex align-items-center fs-6 ps-2">TCI Homebase</span>
+          <span className="d-flex align-items-center fs-6 ps-2 fw-bold">TCI Homebase</span>
         </span>
 
         {isCollapsed && !isWebApp() && (

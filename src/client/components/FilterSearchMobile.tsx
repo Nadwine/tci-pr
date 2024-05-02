@@ -165,14 +165,16 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
           </div>
         )}
       </div>
-      <div onClick={() => resetFilter()} className="ms-auto px-3 btn btn-link text-dark">
+      <div onClick={() => resetFilter()} className="ms-auto px-3 btn text-primary text-dark">
         Reset filter
       </div>
       <div className="card">
         <Accordion>
           <Accordion.Item eventKey="0">
             <Accordion.Header>
-              <strong>Filter</strong>
+              <strong>
+                <i className="bi bi-sliders" /> Filter
+              </strong>
             </Accordion.Header>
             <Accordion.Collapse eventKey="0">
               <Card.Body>
@@ -271,7 +273,7 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
                     </div>
                   </li>
                   <li className="price-filter list-group-item d-flex flex-row justify-content-between">
-                    Utilities Included:
+                    Utilities Included
                     <Dropdown className="px-lg-5" onSelect={(val: any) => setBillsIncluded(val)}>
                       <Dropdown.Toggle variant="light" id="dropdown-basic">
                         {formatBoolValueToYesNo(searchParams.get("bills"))}
@@ -284,7 +286,7 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
                     </Dropdown>
                   </li>
                   <li className="furnished-filter list-group-item d-flex flex-row justify-content-between">
-                    Furnished:
+                    Furnished
                     <Dropdown className="px-lg-5" onSelect={(val: any) => setFurnished(val)}>
                       <Dropdown.Toggle variant="light" id="dropdown-basic">
                         {formatBoolValueToYesNo(searchParams.get("furnished"))}
