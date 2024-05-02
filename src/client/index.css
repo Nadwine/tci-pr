@@ -350,6 +350,22 @@ color: #075ad3;
   
 }
 
+.nav-dropdown-menu > * {
+  @media only screen and (max-device-width: 768px) { 
+    margin-right: auto;
+    margin-left: auto;
+    width: fit-content;
+  }
+}
+.nav-dropdown-menu{
+  @media only screen and (max-device-width: 768px) { 
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    background-color: #f8f9fa;
+  }
+}
+
 /*====================================================*
 |
 |             HomePage (Start)

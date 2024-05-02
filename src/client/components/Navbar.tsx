@@ -201,7 +201,7 @@ function Navbar() {
                     onBlur={() => setUserDropDownShow(false)}
                   />
                 )}
-                <div className={`dropdown-menu dropdown-menu-light mt-3 ${shouldShowUserDropDown}`} style={{ left: "auto", right: 0 }}>
+                <div className={`nav-dropdown-menu dropdown-menu dropdown-menu-light mt-3 ${shouldShowUserDropDown}`} style={{ left: "auto", right: 0 }}>
                   {user.accountType === "tenant" && (
                     <span
                       onClick={() => {
