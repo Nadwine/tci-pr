@@ -8,7 +8,7 @@ export const AddToHomeScreen = () => {
 
       <div className="d-flex flex-wrap justify-content-center w-100 pt-5">
         <div className="col-md-3">
-          <p>ISO</p>
+          <p>IOS</p>
           <img className="pb-5" src="/static/ios-add-to-home-screen.jpg" width={200} />
         </div>
         <div className="col-md-6">
