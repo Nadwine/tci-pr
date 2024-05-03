@@ -243,7 +243,7 @@ const SearchRentResults = props => {
                       <FontAwesomeIcon className="pe-1" icon={faBath} />
                       Baths {listing.PropertyForRent.numOfBathRooms}
                     </div>
-                    <div className="beds pt-3 col-sm-4 col-md-9" style={{ overflow: "hidden", textOverflow: "ellipsis", height: "5.5em" }}>
+                    <div className="beds pt-3 col-sm-4 col-md-9" style={{ overflow: "hidden", textOverflow: "ellipsis", height: "2.5em" }}>
                       {listing.description}..
                     </div>
                     <div className="beds pt-3" style={{ color: "#087990", fontSize: "13px" }}>

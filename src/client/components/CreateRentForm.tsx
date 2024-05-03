@@ -202,7 +202,15 @@ const CreateRentForm = props => {
             <label htmlFor="title" className="form-label">
               Advert title
             </label>
-            <input name="title" value={values.title} onChange={handleChange} type="text" className="form-control" required />
+            <input
+              name="title"
+              value={values.title}
+              onChange={handleChange}
+              type="text"
+              className="form-control"
+              required
+              placeholder="eg. 2 Bedroom Apartment, The Bight, Providenciales"
+            />
           </div>
           <div className="mb-3">
             <label htmlFor="maxTenant" className="form-label">
@@ -285,7 +293,7 @@ const CreateRentForm = props => {
             </label>
             <div className="d-flex flex-row">
               <input
-                placeholder="Example:  Enter 365 for 12 months"
+                placeholder="eg.  Enter 365 for 12 months"
                 name="tenancyLength"
                 value={values.tenancyLength}
                 onChange={handleChange}

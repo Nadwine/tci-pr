@@ -287,7 +287,7 @@ const Home = props => {
                     <FontAwesomeIcon icon={faLayerGroup} style={{ width: "3rem", height: "3rem" }} />
                   </div>
                   <div className="card-body">
-                    <h5 className="card-title">Free Registration</h5>
+                    <h5 className="card-title fw-bold">Free Registration</h5>
                     <p>Hassle-free registration </p>
                     <p>Guided one-on-one onboarding for landlords</p>
                   </div>
@@ -303,7 +303,7 @@ const Home = props => {
                     <FontAwesomeIcon icon={faClipboardList} style={{ width: "3rem", height: "3rem" }} />
                   </div>
                   <div className="card-body" style={{ backgroundColor: "white" }}>
-                    <h5 className="card-title">No Dead Listings</h5>
+                    <h5 className="card-title fw-bold">No Dead Listings</h5>
                     <p className="card-text">Live updates on property availability </p>
                     <p>No fake adverts</p>
                   </div>
@@ -319,7 +319,7 @@ const Home = props => {
                     <FontAwesomeIcon icon={faMapLocationDot} style={{ width: "3rem", height: "3rem" }} />
                   </div>
                   <div className="card-body mb-5">
-                    <h5 className="card-title">Island-Wide Coverage</h5>
+                    <h5 className="card-title fw-bold">Island-Wide Coverage</h5>
                     <p className="card-text">We list properties available on all our sister islands</p>
                   </div>
                 </div>

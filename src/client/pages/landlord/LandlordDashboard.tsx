@@ -33,7 +33,7 @@ export const LandlordDashboard = props => {
           <h3 className="fw-bold my-5 ms-5"> Dashboard</h3>
         </div>
         {/**---------------------------------- Accordion ----------------------------------------------- */}
-        <Accordion defaultActiveKey="0" className="px-md-5 mx-md-5 mb-5">
+        <Accordion defaultActiveKey="0" className="px-md-5 mx-md-5">
           <Accordion.Item eventKey="0">
             <Accordion.Header>
               <strong>Properties</strong>
@@ -106,16 +106,26 @@ export const LandlordDashboard = props => {
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
-        {/* <Accordion className=" px-md-5 mx-md-5">
+        <Accordion className="px-md-5 mx-md-5 mb-5">
           <Accordion.Item eventKey="0">
             <Accordion.Header>
-              <strong>Tenancies</strong>
+              <strong>Help</strong>
             </Accordion.Header>
             <Accordion.Collapse eventKey="0">
-              <p>You have no active tenancies</p>
+              <p className="py-3 ps-3">
+                <span>Need any help?</span> Checkout out our{" "}
+                <button className="btn text-primary ps-0 pe-1" onClick={() => navigate(`/help`)}>
+                  help page
+                </button>{" "}
+                page or use our landlord{" "}
+                <button className="btn text-primary ps-0 pe-1" onClick={() => navigate(`/about/landlord`)}>
+                  how to guide
+                </button>
+                for further information. You can also contact us at ___ if you and help with something else.
+              </p>
             </Accordion.Collapse>
           </Accordion.Item>
-        </Accordion> */}
+        </Accordion>
       </div>
     </div>
   );

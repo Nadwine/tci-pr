@@ -119,7 +119,7 @@ const UserProfile = props => {
         </h3>
       </div>
 
-      <div className="col-12 d-flex flex-wrap w-100">
+      <div className="col-12 d-flex flex-wrap w-100 mb-5">
         <div className="col-12 col-md-3 col-lg-3 mb-2 card shadow-lg p-2" style={{ backgroundColor: "white", borderRadius: "20px", height: "fit-content" }}>
           <div className="card border-white">
             <div

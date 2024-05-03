@@ -174,13 +174,13 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
           <div>Reset filter</div>
         </div>
         <ul className="list-group mx-lg-5 shadow-lg" style={{ borderRadius: "10px" }}>
-          <li className="price-filter list-group-item d-flex flex-column">
-            <div className="d-flex flex-row justify-content-between">
+          <li className="price-filter list-group-item d-flex flex-column border-0">
+            <div className="d-flex flex-row justify-content-between border-0">
               <p className="fw-bold" style={{ marginRight: "32px" }}>
                 Price
               </p>
               <Dropdown onSelect={val => setMinPrice(val)}>
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                <Dropdown.Toggle variant="light" id="dropdown-basic" className="border-secondary">
                   {/* Min */}
                   {searchParams.get("minPrice") || "Min"}
                 </Dropdown.Toggle>
@@ -194,7 +194,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
               </Dropdown>
               -
               <Dropdown onSelect={(val: any) => setMaxPrice(val)}>
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                <Dropdown.Toggle variant="light" id="dropdown-basic" className="border-secondary">
                   {searchParams.get("maxPrice") || "Max"}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -207,11 +207,11 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
               </Dropdown>
             </div>
           </li>
-          <li className="price-filter list-group-item d-flex flex-column">
+          <li className="price-filter list-group-item d-flex flex-column border-0">
             <div className="d-flex flex-row justify-content-between">
               <p className="fw-bold">Bedroom</p>
               <Dropdown onSelect={val => setMinBed(val)}>
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                <Dropdown.Toggle variant="light" id="dropdown-basic" className="border-secondary">
                   {/* Min */}
                   {searchParams.get("minBed") || "Min"}
                 </Dropdown.Toggle>
@@ -225,7 +225,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
               </Dropdown>
               -
               <Dropdown onSelect={(val: any) => setMaxBed(val)}>
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                <Dropdown.Toggle variant="light" id="dropdown-basic" className="border-secondary">
                   {searchParams.get("maxBed") || "Max"}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -238,11 +238,11 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
               </Dropdown>
             </div>
           </li>
-          <li className="price-filter list-group-item d-flex flex-column">
+          <li className="price-filter list-group-item d-flex flex-column border-0">
             <div className="d-flex flex-row justify-content-between">
               <p className="fw-bold">Bathroom</p>
               <Dropdown onSelect={val => setMinBath(val)}>
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                <Dropdown.Toggle variant="light" id="dropdown-basic" className="border-secondary">
                   {/* Min */}
                   {searchParams.get("minBath") || "Min"}
                 </Dropdown.Toggle>
@@ -256,7 +256,7 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
               </Dropdown>
               -
               <Dropdown onSelect={(val: any) => setMaxBath(val)}>
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                <Dropdown.Toggle variant="light" id="dropdown-basic" className="border-secondary">
                   {searchParams.get("maxBath") || "Max"}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -269,13 +269,11 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
               </Dropdown>
             </div>
           </li>
-          <li className="price-filter list-group-item d-flex flex-row justify-content-between">
+          <li className="price-filter list-group-item d-flex flex-row justify-content-between border-0">
             <div className="d-flex flex-row justify-content-between fw-bold">
-              <p className="fw-bold" style={{ marginRight: "5px" }}>
-                Utilities Included:
-              </p>
-              <Dropdown className="px-lg-5" onSelect={(val: any) => setBillsIncluded(val)}>
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
+              <p className="fw-bold">Utilities</p>
+              <Dropdown className="px-md-4" onSelect={(val: any) => setBillsIncluded(val)}>
+                <Dropdown.Toggle variant="light" id="dropdown-basic" className="border-secondary">
                   {formatBoolValueToYesNo(searchParams.get("bills"))}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -288,11 +286,9 @@ const FilterSearchDesktop = (props: FilterSearchDesktopProps) => {
           </li>
           <li className="furnished-filter list-group-item d-flex flex-row justify-content-between">
             <div className="d-flex flex-row justify-content-between fw-bold">
-              <p className="fw-bold" style={{ marginRight: "30px" }}>
-                Furnished:
-              </p>
-              <Dropdown className="px-lg-5" onSelect={(val: any) => setFurnished(val)}>
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
+              <p className="fw-bold">Furnished</p>
+              <Dropdown className="px-md-4" onSelect={(val: any) => setFurnished(val)}>
+                <Dropdown.Toggle variant="light" id="dropdown-basic" className="border-secondary">
                   {formatBoolValueToYesNo(searchParams.get("furnished"))}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
