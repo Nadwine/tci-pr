@@ -112,16 +112,17 @@ export const LandlordDashboard = props => {
               <strong>Help</strong>
             </Accordion.Header>
             <Accordion.Collapse eventKey="0">
-              <p className="py-3 ps-3">
+              <p className="py-3 ps-3 pe-2">
                 <span>Need any help?</span> Checkout out our{" "}
-                <button className="btn text-primary ps-0 pe-1" onClick={() => navigate(`/help`)}>
+                <button className="btn text-primary p-0" onClick={() => navigate(`/help`)}>
                   help page
                 </button>{" "}
                 page or use our landlord{" "}
-                <button className="btn text-primary ps-0 pe-1" onClick={() => navigate(`/about/landlord`)}>
+                <button className="btn text-primary p-0" onClick={() => navigate(`/about/landlord`)}>
                   how to guide
-                </button>
-                for further information. You can also contact us at ___ if you and help with something else.
+                </button>{" "}
+                for further information. You can also contact us at <span className="fw-bold">tci.homebase.tc@gmail.com</span> if you need any help with
+                something else.
               </p>
             </Accordion.Collapse>
           </Accordion.Item>

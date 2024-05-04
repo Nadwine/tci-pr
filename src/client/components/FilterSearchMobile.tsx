@@ -179,8 +179,8 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
             <Accordion.Collapse eventKey="0">
               <Card.Body>
                 <ul className="list-group">
-                  <li className="price-filter list-group-item d-flex flex-column">
-                    <div className="d-flex flex-row justify-content-between px-lg-5">
+                  <li className="price-filter list-group-item d-flex flex-column border-0">
+                    <div className="d-flex flex-row justify-content-between px-lg-5 fw-bold">
                       Price
                       <Dropdown onSelect={val => setMinPrice(val)}>
                         <Dropdown.Toggle variant="light" id="dropdown-basic">
@@ -210,8 +210,8 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
                       </Dropdown>
                     </div>
                   </li>
-                  <li className="price-filter list-group-item d-flex flex-column">
-                    <div className="d-flex flex-row justify-content-between px-lg-5">
+                  <li className="price-filter list-group-item d-flex flex-column border-0">
+                    <div className="d-flex flex-row justify-content-between px-lg-5 fw-bold">
                       Bedroom
                       <Dropdown onSelect={val => setMinBed(val)}>
                         <Dropdown.Toggle variant="light" id="dropdown-basic">
@@ -241,8 +241,8 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
                       </Dropdown>
                     </div>
                   </li>
-                  <li className="price-filter list-group-item d-flex flex-column">
-                    <div className="d-flex flex-row justify-content-between px-lg-5">
+                  <li className="price-filter list-group-item d-flex flex-column border-0">
+                    <div className="d-flex flex-row justify-content-between px-lg-5 fw-bold">
                       Bathroom
                       <Dropdown onSelect={val => setMinBath(val)}>
                         <Dropdown.Toggle variant="light" id="dropdown-basic">
@@ -272,8 +272,8 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
                       </Dropdown>
                     </div>
                   </li>
-                  <li className="price-filter list-group-item d-flex flex-row justify-content-between">
-                    Utilities Included
+                  <li className="price-filter list-group-item d-flex flex-row justify-content-between border-0">
+                    <span className="fw-bold">Utilities Included</span>
                     <Dropdown className="px-lg-5" onSelect={(val: any) => setBillsIncluded(val)}>
                       <Dropdown.Toggle variant="light" id="dropdown-basic">
                         {formatBoolValueToYesNo(searchParams.get("bills"))}
@@ -285,8 +285,8 @@ const FilterSearchMobile = (props: MobileFilterSearchProps) => {
                       </Dropdown.Menu>
                     </Dropdown>
                   </li>
-                  <li className="furnished-filter list-group-item d-flex flex-row justify-content-between">
-                    Furnished
+                  <li className="furnished-filter list-group-item d-flex flex-row justify-content-between border-0">
+                    <span className="fw-bold">Furnished</span>
                     <Dropdown className="px-lg-5" onSelect={(val: any) => setFurnished(val)}>
                       <Dropdown.Toggle variant="light" id="dropdown-basic">
                         {formatBoolValueToYesNo(searchParams.get("furnished"))}
