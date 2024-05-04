@@ -80,7 +80,7 @@ const AboutUs = props => {
           <div className="ps-3">
             <div className="mt-5">
               <h4 style={{ width: "20px" }}>Intro</h4>
-              <hr className="mb-4" style={{ width: "40px", color: "#087990", height: "5px" }} />
+              <hr className="mb-4" style={{ width: "40px", color: "#107a84", height: "5px" }} />
             </div>
             <div className="mx-lg-5 me-3">
               Introducing TCI Homebase, your premier partner in property management across the breathtaking landscape of the Turks and Caicos Islands! Nestled
@@ -90,7 +90,7 @@ const AboutUs = props => {
               <h4 style={{ width: "20px" }}>
                 Our <span>Mission</span>
               </h4>
-              <hr className="mb-4" style={{ width: "40px", color: "#087990", height: "5px" }} />
+              <hr className="mb-4" style={{ width: "40px", color: "#107a84", height: "5px" }} />
             </div>
             <div className="mt-3 col-md-6">
               <p className="ms-md-5 mt-3 ms-lg-5 me-3">
@@ -110,7 +110,7 @@ const AboutUs = props => {
             </div>
             <div className="mt-5">
               <h4 style={{ width: "100px" }}>Get in Touch</h4>
-              <hr className="mb-4" style={{ width: "40px", color: "#087990", height: "5px" }} />
+              <hr className="mb-4" style={{ width: "40px", color: "#107a84", height: "5px" }} />
             </div>
             <div className="mt-3 col-md-6">
               <p className="mt-4 me-3">
@@ -196,7 +196,7 @@ const AboutUs = props => {
           <div className="ps-5">
             <div className="mt-5 ms-5">
               <h4 style={{ width: "20px" }}>Intro</h4>
-              <hr className="mb-4" style={{ width: "40px", color: "#087990", height: "6px" }} />
+              <hr className="mb-4" style={{ width: "40px", color: "#107a84", height: "6px" }} />
             </div>
             <div className="mt-3 col-md-12">
               <div className="mx-lg-5 me-3">
@@ -206,7 +206,7 @@ const AboutUs = props => {
             </div>
             <div className="mt-5 ms-5">
               <h4 style={{ width: "500px" }}>Our Mission</h4>
-              <hr className="mb-4" style={{ width: "40px", color: "#087990", height: "6px" }} />
+              <hr className="mb-4" style={{ width: "40px", color: "#107a84", height: "6px" }} />
             </div>
             <div className="mt-3 col-md-12">
               <p className="mx-lg-5 mt-3 mx-lg-5 me-3">
@@ -227,7 +227,7 @@ const AboutUs = props => {
             </div>
             <div className="mt-5 ms-5">
               <h4 style={{ width: "500px" }}>Get in Touch</h4>
-              <hr className="mb-4" style={{ width: "40px", color: "#087990", height: "6px" }} />
+              <hr className="mb-4" style={{ width: "40px", color: "#107a84", height: "6px" }} />
             </div>
             <div className="mt-3 col-md-12 ps-5">
               <p className="mt-4 me-3 mb-5">

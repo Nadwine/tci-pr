@@ -141,7 +141,7 @@ const ViewRentProperty = props => {
             <Button type="button" variant="secondary" onClick={() => setShowEnquiryModal(false)}>
               Cancel
             </Button>
-            <Button style={{ backgroundColor: "#087990" }} type="submit">
+            <Button style={{ backgroundColor: "#107a84" }} type="submit">
               Submit
             </Button>
           </Modal.Footer>
@@ -194,7 +194,7 @@ const ViewRentProperty = props => {
                   ""
                 )}
                 <div className="availability col-6 col-md-3 float-end" style={{ fontSize: "15px" }}>
-                  <span className="badge rounded-pill" style={{ backgroundColor: "#087990" }}>
+                  <span className="badge rounded-pill" style={{ backgroundColor: "#107a84" }}>
                     Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}
                   </span>
                 </div>

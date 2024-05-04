@@ -18,7 +18,7 @@ const Safety = props => {
       </div>
       <div className="help-content pt-5 px-md-5">
         <h3 className="strong-text px-3">Ensuring your online experience stays happy & safe</h3>
-        <hr className="mb-4 m-3" style={{ width: "50px", color: "#087990", height: "6px" }} />
+        <hr className="mb-4 m-3" style={{ width: "50px", color: "#107a84", height: "6px" }} />
         <div className="help-article pt-3 p-3">
           <div className="title strong-text" style={{ height: "3em" }}>
             <i className="bi bi-dot" /> How TCI Homebase helps you find your next home

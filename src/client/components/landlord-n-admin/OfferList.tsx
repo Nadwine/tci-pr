@@ -124,7 +124,7 @@ const OfferList = (props: Props) => {
             Cancel
           </Button>
           <Button
-            style={{ backgroundColor: "#087990" }}
+            style={{ backgroundColor: "#107a84" }}
             onClick={() => {
               onSubmitOffer(offerAction.offerId, offerAction.status);
               setShowConfirmationModal(false);

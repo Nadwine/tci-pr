@@ -231,7 +231,7 @@ const SearchRentResults = props => {
                 <div className="foot d-flex flex-row pt-2">
                   <div onClick={() => viewProperty(listing.id)} className="col-10 point">
                     <div className="beds pt-1">
-                      <span className="badge rounded-pill" style={{ backgroundColor: "#087990" }}>
+                      <span className="badge rounded-pill" style={{ backgroundColor: "#107a84" }}>
                         Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}
                       </span>
                     </div>
@@ -246,7 +246,7 @@ const SearchRentResults = props => {
                     <div className="beds pt-3 col-sm-4 col-md-9" style={{ overflow: "hidden", textOverflow: "ellipsis", height: "2.5em" }}>
                       {listing.description}..
                     </div>
-                    <div className="beds pt-3" style={{ color: "#087990", fontSize: "13px" }}>
+                    <div className="beds pt-3" style={{ color: "#107a84", fontSize: "13px" }}>
                       {" "}
                       Added {dayjs(listing.createdAt).fromNow()}
                     </div>
@@ -286,11 +286,11 @@ const SearchRentResults = props => {
         style={{ zIndex: +1, borderBottomLeftRadius: "20px", borderBottomRightRadius: "20px", marginTop: "40px" }}
         className="paginate py-3 col-12 d-flex justify-content-center ps-lg-5 ps-md-5 ms-lg-5 ms-md-5"
       >
-        <button onClick={() => goToPrevPage()} disabled={pageFromURL === "0"} className="btn btn me-4 text-light" style={{ backgroundColor: "#087990" }}>
+        <button onClick={() => goToPrevPage()} disabled={pageFromURL === "0"} className="btn btn me-4 text-light bg-primary">
           Prev
         </button>
         Page {parseInt(pageFromURL) + 1}
-        <button onClick={() => goToNextPage()} disabled={searchResults.length === 0} className="btn btn ms-4 text-light" style={{ backgroundColor: "#087990" }}>
+        <button onClick={() => goToNextPage()} disabled={searchResults.length === 0} className="btn btn ms-4 text-light bg-primary">
           Next
         </button>
       </div>

@@ -272,7 +272,7 @@ export const Chat = (props: Props) => {
                   </button>
                 </div>
               </div>
-              <button className="btn btn mt-4 text-light" style={{ backgroundColor: "#087990" }} type="submit">
+              <button className="btn btn mt-4 text-light bg-primary" type="submit">
                 Submit
               </button>
             </div>

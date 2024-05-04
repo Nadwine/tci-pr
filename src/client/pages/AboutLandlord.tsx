@@ -109,7 +109,7 @@ const AboutLandlord = props => {
                 <Typography>{step.description}</Typography>
                 <Box sx={{ mb: 2 }}>
                   <div>
-                    <Button variant="contained" onClick={handleNext} sx={{ mt: 1, mr: 1, backgroundColor: "#087990" }}>
+                    <Button variant="contained" onClick={handleNext} sx={{ mt: 1, mr: 1, backgroundColor: "#107a84" }}>
                       {index === steps.length - 1 ? "Finish" : "Continue"}
                     </Button>
                     <Button disabled={index === 0} onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
