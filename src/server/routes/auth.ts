@@ -29,7 +29,7 @@ export const getAppBuildInfo = async (req: Request, res: Response, next: NextFun
 export const refreshUserPermission = async (req: Request, res: Response) => {
   try {
     if (!req.session.user) {
-      return res.json({ result: "success", sessionUser: null });
+      return res.json({ result: "success", sessionUser: null, appBuildNumber: Number(process.env.APP_BUILD_NUMBER) });
     } else {
       const foundUser: User | null = await User.findByPk(req.session.user.id, { include: [{ model: Profile, include: [ProfileMedia] }] });
 

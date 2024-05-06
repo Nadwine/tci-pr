@@ -86,7 +86,7 @@ const getStyleSheets = async () => {
   return allContent.join("\n");
 };
 
-async function createServer(isProd = process.env.NODE_ENV === "production") {
+async function createServer(isProd = process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
   // Imports
   const { Pool } = await import("pg");
   const pgSession = require("connect-pg-simple")(session);
