@@ -23,7 +23,7 @@ export default function SEOHelmetTags({ title, description, type }: Props) {
       <meta charSet="UTF-8"></meta>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta name="keywords" content="TCI, Homes, Rent, Landlord, Property, Management, Turks and Caicos Islands"></meta>
+      <meta name="keywords" content="TCI, Homes, Rent, Landlord, Property, Management, Turks and Caicos Islands, Apartments"></meta>
       <meta name="author" content="TCI Homebase"></meta>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 
