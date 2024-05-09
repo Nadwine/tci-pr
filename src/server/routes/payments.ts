@@ -484,11 +484,21 @@ export const attachCardToLandlord = async (req: Request, res: Response) => {
 export const stripeWebhook = async (req: Request, res: Response) => {
   process.env.NODE_ENV === "development" && console.log("STRIPE WebHook Hit");
 
+  // todo validate signature
   const signature = req.headers["stripe-signature"];
   let stripeEvent = req.body.type;
 
   try {
     switch (stripeEvent) {
+      case "invoice.paid":
+        {
+          // success rent reoccurring payment
+          // https://docs.stripe.com/api/invoices/object
+          const dataObject = req.body.data.object;
+          const centPaid = dataObject.amount_paid;
+          console.log("invoice.paid", req.body);
+        }
+        break;
       case "payment_intent.succeeded":
         // const paymentIntentSucceeded = req.body.data.object;
         // Then define and call a function to handle the event payment_intent.succeeded

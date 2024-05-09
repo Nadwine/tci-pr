@@ -474,6 +474,7 @@ const LandLordCreateListing = props => {
               className="form-control mb-5 ms-auto mt-2"
               type="file"
               id="formFileMultiple"
+              accept="image/jpg, image/jpeg, image/png, video/*"
               onChange={event => {
                 if (!event.target.files) return;
                 const filesArray = Array.from(event.target.files);

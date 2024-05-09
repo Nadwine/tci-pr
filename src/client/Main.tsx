@@ -71,6 +71,7 @@ import { HelmetProvider } from "react-helmet-async";
 import DisableWebsiteBanner from "./components/DisableWebsiteBanner";
 import { AddToHomeScreen } from "./pages/AddToHomeScreen";
 const tenMinute = 600000;
+const thirtyMinutes = 1800000;
 
 function initTranslations() {
   i18n
@@ -120,7 +121,7 @@ const Main = () => {
         window.alert("New Software version. Confirm to update");
         window.location.reload();
       }
-    }, tenMinute);
+    }, thirtyMinutes);
 
     axios.get("/api/auth/refresh-perms").then(res => {
       const newAppBuildNumber = res.data?.appBuildNumber;

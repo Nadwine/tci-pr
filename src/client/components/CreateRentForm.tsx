@@ -103,7 +103,7 @@ const CreateRentForm = props => {
       const res = await axios.post("/api/listing/rent/create", body, axiosConfig);
       if (res.status === 200) navigate("/admin/dashboard/listings");
       if (res.status !== 200) {
-        toast.error("Oops something went wrong. If you continue to see this issue please contact your administrator administrator for further assistance");
+        toast.error("Oops something went wrong. If you continue to see this issue please contact your administrator for further assistance");
         console.log("/api/listing/rent/create", res);
       }
     },
@@ -429,6 +429,7 @@ const CreateRentForm = props => {
               className="form-control mb-5 ms-auto mt-2"
               type="file"
               id="formFileMultiple"
+              accept="image/jpg, image/jpeg, image/png, video/*"
               onChange={event => {
                 if (!event.target.files) return;
                 const filesArray = Array.from(event.target.files);

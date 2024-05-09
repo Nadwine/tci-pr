@@ -305,7 +305,7 @@ function Navbar() {
           {!user && (
             <div className="navbar-nav ms-auto">
               <span
-                className="point nav-item nav-link fw-bold"
+                className="point nav-item nav-link fw-bold mx-auto"
                 onClick={() => {
                   navigate("/login");
                   setIsCollapse(true);
@@ -313,6 +313,7 @@ function Navbar() {
                 }}
                 style={{ color: "#032830" }}
               >
+                <hr className="d-md-none" />
                 Sign in
               </span>
             </div>
@@ -326,7 +327,7 @@ function Navbar() {
                   setIsCollapse(true);
                   setUserDropDownShow(false);
                 }}
-                className="btn btn-md w-full w-lg-auto text-light fw-bold"
+                className="btn btn-md w-full w-lg-auto text-light fw-bold mx-auto"
                 style={{ borderRadius: "10px", backgroundColor: "#087990" }}
               >
                 Register
