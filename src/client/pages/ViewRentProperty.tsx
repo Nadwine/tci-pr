@@ -16,6 +16,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import Carousel from "../components/Carousel";
 import GonePropertyOverlay from "../components/GonePropertyOverlay";
 import SEOHelmetTags from "../components/SEOHelmetTags";
+import { Offcanvas } from "react-bootstrap";
 
 const ViewRentProperty = props => {
   const params = useParams();
@@ -26,6 +27,7 @@ const ViewRentProperty = props => {
   const [loading, setLoading] = useState(true);
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
   const [isEnqJustSent, setIsEnqJustSent] = useState(false);
+  const [showShare, setShowShare] = useState(false);
   const enquiryRef = useRef<HTMLFormElement>(null);
   const user = useSelector((root: RootState) => root.auth.user);
   const isOwner = user?.id === listing?.Admin?.userId || user?.id === listing?.ListingLandlord?.userId;
@@ -150,6 +152,72 @@ const ViewRentProperty = props => {
     );
   };
 
+  const shareWhatsapp = () => {
+    const link = document.createElement("a");
+    link.href = `whatsapp://send?text=${window.location.href}`;
+    link.setAttribute("data-action", "share/whatsapp/share");
+    link.click();
+  };
+
+  const shareFacebookMessenger = () => {
+    const link = document.createElement("a");
+    link.href = `fb-messenger://share/?link=${window.location.href}&app_id=123456789"`;
+    link.click();
+  };
+
+  const shareFacebook = () => {
+    const link = document.createElement("a");
+    link.href = `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`;
+    link.click();
+  };
+
+  const shareInstagram = () => {
+    const link = document.createElement("a");
+    link.href = `instagram://sharesheet?text=${window.location.href}`;
+    link.click();
+  };
+
+  const shareTwitterX = () => {
+    const link = document.createElement("a");
+    link.href = `http://twitter.com/share?url=${window.location.href}`;
+    link.click();
+  };
+
+  const ShareCanvas = () => (
+    <Offcanvas show={showShare} placement="bottom" onHide={() => setShowShare(false)}>
+      <Offcanvas.Header className="fs-5" closeButton>
+        Share
+      </Offcanvas.Header>
+      <Offcanvas.Body>
+        <div className="d-flex h-75 w-100 overflow-scroll">
+          <div className="d-flex flex-column text-center point px-2">
+            <i onClick={() => shareWhatsapp()} className="bi bi-whatsapp fs-5" />
+            Whatsapp
+          </div>
+          <div className="d-flex flex-column text-center point px-2">
+            <i onClick={() => shareFacebookMessenger()} className="bi bi-messenger fs-5" />
+            Messenger
+          </div>
+          <div className="d-flex flex-column text-center point px-2">
+            <i onClick={() => shareFacebook()} className="bi bi-facebook fs-5" />
+            Facebook
+          </div>
+          <div className="d-flex flex-column text-center point px-2">
+            <i onClick={() => shareInstagram()} className="bi bi-instagram fs-5" />
+            Instagram
+          </div>
+          <div className="d-flex flex-column text-center point px-2">
+            <i onClick={() => shareTwitterX()} className="bi bi-twitter-x fs-5" />
+            <span style={{ whiteSpace: "nowrap" }}>Twitter-X</span>
+          </div>
+        </div>
+        <div className="d-md-none" style={{ textAlign: "right" }}>
+          Swipe for more {">"}
+        </div>
+      </Offcanvas.Body>
+    </Offcanvas>
+  );
+
   console.log(listing);
   if (loading) return <LoadingSpinnerWholePage />;
   if (!loading && !listing) return <h3 className="text-muted pt-5 text-center">The Property You Are Looking For No Longer Exists</h3>;
@@ -161,19 +229,25 @@ const ViewRentProperty = props => {
         type="website"
       />
       <EnquiryModal />
+      <ShareCanvas />
       {listing && (
         <div className="card mb-0 mt-0 border-0">
-          <div className="d-flex flex-column text-center w-100 px-md-5 px-4">
-            <i onClick={() => saveListing()} style={{ color: "#ff617d" }} className={`ms-auto fs-3 bi bi-heart${isListingSaved ? "-fill" : ""} point`} />
-            {isListingSaved ? (
-              <p className="ms-auto" style={{ fontSize: "12px" }}>
-                Saved
-              </p>
-            ) : (
-              <p className="ms-auto" style={{ fontSize: "12px" }}>
-                Save
-              </p>
-            )}
+          <div className="d-flex justify-content-between">
+            <div className="pt-2 ps-3 point" onClick={() => setShowShare(true)}>
+              <span style={{ fontSize: "12px" }}>Share</span> <i className="bi bi-box-arrow-up text-primary fs-5" />
+            </div>
+            <div className="d-flex flex-column text-center px-md-5 px-4">
+              <i onClick={() => saveListing()} style={{ color: "#ff617d" }} className={`ms-auto fs-3 bi bi-heart${isListingSaved ? "-fill" : ""} point`} />
+              {isListingSaved ? (
+                <p className="ms-auto" style={{ fontSize: "12px" }}>
+                  Saved
+                </p>
+              ) : (
+                <p className="ms-auto" style={{ fontSize: "12px" }}>
+                  Save
+                </p>
+              )}
+            </div>
           </div>
           <div className="card-body d-flex flex-wrap justify-content-center">
             <div className="image-container col-12 col-md-10 pb-3">
