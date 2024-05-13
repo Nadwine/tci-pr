@@ -3,6 +3,7 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosRequestTransformer, AxiosRe
 import React from "react";
 import { toast } from "react-toastify";
 import JsonView from "@uiw/react-json-view";
+import { store } from "../client/redux/store";
 
 // https://lifesaver.codes/answer/need-some-advice-about-handling-302-redirects-from-ajax
 export default function initAxios() {
@@ -31,7 +32,9 @@ export default function initAxios() {
         // To ignore this and do something before a redirect (recommend using fetch for those cases)
         window.location = error.response.data.redirect;
       }
-      if (import.meta.env.DEV && error.message !== "Network Error") {
+      const environment = store.getState().auth.environment;
+      const isDev_or_test = environment === "development" || environment === "test";
+      if (isDev_or_test && error.message !== "Network Error") {
         const hoveInfo = React.createElement("div", { className: "text-center", style: { fontSize: "20px" } }, "Click inside to close");
         const devInfo = React.createElement(
           "div",

@@ -17,7 +17,7 @@ import axios from "axios";
 import { LoadingSpinnerWholePage } from "./components/LoadingSpinners";
 import Home from "./pages/Home";
 import CookieConsentModal from "./components/CookieConsentModal";
-import { setAppBuildNumber, setBrowserInfo, setVisitorId } from "./redux/reducers/authReducer";
+import { setAppBuildNumber, setBrowserInfo, setEnvironment, setVisitorId } from "./redux/reducers/authReducer";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { ToastContainer } from "react-toastify";
@@ -108,6 +108,10 @@ const Main = () => {
 
   useEffect(() => {
     // initTranslations();
+    axios.get("/api/environment").then(res => {
+      res.data && dispatcher(setEnvironment(res.data));
+    });
+
     verifyAuthState()
       .then(() => setLoadingCredentials(false))
       .catch(() => setLoadingCredentials(false));
