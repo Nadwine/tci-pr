@@ -189,7 +189,7 @@ const ViewRentProperty = props => {
         Share
       </Offcanvas.Header>
       <Offcanvas.Body>
-        <div className="d-flex h-75 w-100 overflow-scroll">
+        <div className="d-flex h-75 w-100 overflow-scroll" style={{ justifyContent: "space-evenly" }}>
           <div className="d-flex flex-column text-center point px-2">
             <i onClick={() => shareWhatsapp()} className="bi bi-whatsapp fs-5" />
             Whatsapp
