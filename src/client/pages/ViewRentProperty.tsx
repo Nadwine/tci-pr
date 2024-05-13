@@ -183,6 +183,12 @@ const ViewRentProperty = props => {
     link.click();
   };
 
+  const shareImessage_or_SMS = () => {
+    const link = document.createElement("a");
+    link.href = `sms://?&body=${window.location.href}`;
+    link.click();
+  };
+
   const ShareCanvas = () => (
     <Offcanvas show={showShare} placement="bottom" onHide={() => setShowShare(false)}>
       <Offcanvas.Header className="fs-5" closeButton>
@@ -201,6 +207,12 @@ const ViewRentProperty = props => {
           <div className="d-flex flex-column text-center point px-2">
             <i onClick={() => shareFacebook()} className="bi bi-facebook fs-5" />
             Facebook
+          </div>
+          <div className="d-flex flex-column text-center point px-2 align-items-center">
+            <div style={{ backgroundColor: "black", width: "1.6em", borderRadius: "5px", marginBottom: "7px" }}>
+              <i onClick={() => shareImessage_or_SMS()} className="bi bi-chat-fill text-white" />
+            </div>
+            Message
           </div>
           <div className="d-flex flex-column text-center point px-2">
             <i onClick={() => shareInstagram()} className="bi bi-instagram fs-5" />
