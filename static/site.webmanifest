@@ -1,1 +1,19 @@
-{"name":"TCI Homebase","short_name":"TCI Homebase","icons":[{"src":"/web-logo-cyan.png","sizes":"192x192","type":"image/png"},{"src":"/web-logo-cyan.png","sizes":"512x512","type":"image/png"}],"theme_color":"#ffffff","background_color":"#ffffff","display":"standalone"}
+{
+  "name": "TCI Homebase",
+  "short_name": "TCI Homebase",
+  "icons": [
+    { "src": "/web-logo-cyan.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/web-logo-cyan.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "url_handlers": [
+    {
+      "origin": "https://tcihomebase.com"
+    },
+    {
+      "origin": "https://test.tcihomebase.com"
+    }
+  ]
+}
