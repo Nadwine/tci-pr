@@ -245,7 +245,7 @@ const ViewRentProperty = props => {
       {listing && (
         <div className="card mb-0 mt-0 border-0">
           <div className="d-flex justify-content-between">
-            <div className="pt-2 ps-3 point" onClick={() => setShowShare(true)}>
+            <div className="pt-2 ps-4 point" onClick={() => setShowShare(true)}>
               <span style={{ fontSize: "12px" }}>Share</span> <i className="bi bi-box-arrow-up text-primary fs-5" />
             </div>
             <div className="d-flex flex-column text-center px-md-5 px-4">
