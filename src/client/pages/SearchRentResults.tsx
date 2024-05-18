@@ -250,7 +250,7 @@ const SearchRentResults = props => {
                       </div>
                     </div>
                     <div className="beds pt-3 col-sm-4 col-md-9" style={{ height: "2.5em" }}>
-                      <span className="d-inline-block text-truncate" style={{ maxWidth: "350px" }}>
+                      <span className="d-inline-block text-truncate" style={{ maxWidth: "250px" }}>
                         {listing.description}
                       </span>
                     </div>
