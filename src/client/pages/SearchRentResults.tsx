@@ -235,16 +235,24 @@ const SearchRentResults = props => {
                         Available {dayjs(listing?.PropertyForRent.availability).format("MMM, D, YYYY")}
                       </span>
                     </div>
-                    <div className="beds pt-2">
-                      <FontAwesomeIcon className="pe-1" icon={faBed} />
-                      Rooms {listing.PropertyForRent.numOfRooms}
+                    <div className="d-flex">
+                      <div className="beds pt-2 pe-3">
+                        <span className="badge rounded-pill text-dark" style={{ fontSize: "13px", backgroundColor: "#e9e9eb" }}>
+                          <FontAwesomeIcon className="pe-1" icon={faBed} />
+                          Rooms {listing.PropertyForRent.numOfRooms}
+                        </span>
+                      </div>
+                      <div className="beds pt-2">
+                        <span className="badge rounded-pill text-dark" style={{ fontSize: "13px", backgroundColor: "#e9e9eb" }}>
+                          <FontAwesomeIcon className="pe-1" icon={faBath} />
+                          Baths {listing.PropertyForRent.numOfBathRooms}
+                        </span>
+                      </div>
                     </div>
-                    <div className="beds pt-2">
-                      <FontAwesomeIcon className="pe-1" icon={faBath} />
-                      Baths {listing.PropertyForRent.numOfBathRooms}
-                    </div>
-                    <div className="beds pt-3 col-sm-4 col-md-9" style={{ overflow: "hidden", textOverflow: "ellipsis", height: "2.5em" }}>
-                      {listing.description}..
+                    <div className="beds pt-3 col-sm-4 col-md-9" style={{ height: "2.5em" }}>
+                      <span className="d-inline-block text-truncate" style={{ maxWidth: "350px" }}>
+                        {listing.description}
+                      </span>
                     </div>
                     <div className="beds pt-3" style={{ color: "#107a84", fontSize: "13px" }}>
                       {" "}

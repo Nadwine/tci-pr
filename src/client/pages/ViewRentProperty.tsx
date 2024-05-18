@@ -301,10 +301,12 @@ const ViewRentProperty = props => {
                     <FontAwesomeIcon className="pe-1" icon={faPerson} />
                     Tenants {listing.PropertyForRent.maxTenant}
                   </div>
-                  {listing.PropertyForRent.sqFt && (
+                  {listing.PropertyForRent.sqFt ? (
                     <div className="tenants pt-2">
                       <i className="bi bi-rulers" style={{ fontSize: "13px" }}></i> {listing.PropertyForRent.sqFt} sq ft
                     </div>
+                  ) : (
+                    ""
                   )}
                 </div>
                 <div style={{ fontSize: "15px" }} className="col-5 col-md-3 pt-5 mt-2 me-2 float-end">
