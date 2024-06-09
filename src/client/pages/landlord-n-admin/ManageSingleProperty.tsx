@@ -373,7 +373,7 @@ const ManageSingleProperty = props => {
         </Accordion>
         <Accordion style={{ maxWidth: "500px" }}>
           <Accordion.Header>Tenancy Details</Accordion.Header>
-          {onGoingTenancies?.length && (
+          {onGoingTenancies?.length ? (
             <Accordion.Body>
               <div>
                 Listing package:{" "}
@@ -391,6 +391,8 @@ const ManageSingleProperty = props => {
                 <br /> {onGoingTenancies[0]?.tenancyStatus}
               </div>
             </Accordion.Body>
+          ) : (
+            ""
           )}
         </Accordion>
       </div>

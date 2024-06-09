@@ -81,7 +81,7 @@ function Navbar() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+          {isCollapsed ? <span className="navbar-toggler-icon"></span> : <span className="bi bi-x-lg"></span>}
         </button>
 
         {/* notification icons Start */}

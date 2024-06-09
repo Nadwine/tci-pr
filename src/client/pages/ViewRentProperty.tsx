@@ -245,7 +245,7 @@ const ViewRentProperty = props => {
       {listing && (
         <div className="card mb-0 mt-0 border-0">
           <div className="d-flex justify-content-between">
-            <div className="pt-2 ps-3 point" onClick={() => setShowShare(true)}>
+            <div className="pt-2 ps-4 point" onClick={() => setShowShare(true)}>
               <span style={{ fontSize: "12px" }}>Share</span> <i className="bi bi-box-arrow-up text-primary fs-5" />
             </div>
             <div className="d-flex flex-column text-center px-md-5 px-4">
@@ -301,10 +301,12 @@ const ViewRentProperty = props => {
                     <FontAwesomeIcon className="pe-1" icon={faPerson} />
                     Tenants {listing.PropertyForRent.maxTenant}
                   </div>
-                  {listing.PropertyForRent.sqFt && (
+                  {listing.PropertyForRent.sqFt ? (
                     <div className="tenants pt-2">
                       <i className="bi bi-rulers" style={{ fontSize: "13px" }}></i> {listing.PropertyForRent.sqFt} sq ft
                     </div>
+                  ) : (
+                    ""
                   )}
                 </div>
                 <div style={{ fontSize: "15px" }} className="col-5 col-md-3 pt-5 mt-2 me-2 float-end">
