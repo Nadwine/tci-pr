@@ -126,30 +126,44 @@ export const registerUser = async (req: Request, res: Response) => {
     endpoint: process.env.AWS_SES_ENDPOINT,
     credentials: { accessKeyId: process.env.AWS_SES_KEY, secretAccessKey: process.env.AWS_SES_SECRET }
   });
+  const sgMail = require("@sendgrid/mail");
+  sgMail.setApiKey(process.env.SENDGRID_MAIL_SENDER_TOKEN);
 
-  ses.sendEmail(
-    {
-      Destination: { ToAddresses: [email] },
-      Message: {
-        Body: {
-          Html: { Data: html },
-          Text: { Data: html }
+  sgMail
+    .send(html)
+    .then(() => {
+      return res.redirect(`/register-confirm?verification_sent=true&email=${email}`);
+    })
+    .catch(error => {
+      console.log("Email Failed To Send Error", JSON.stringify(error));
+      return res.redirect(`/register-confirm?verification_sent=false&email=${email}`);
+    });
+
+  if (!process.env.SENDGRID_MAIL_SENDER_TOKEN) {
+    ses.sendEmail(
+      {
+        Destination: { ToAddresses: [email] },
+        Message: {
+          Body: {
+            Html: { Data: html },
+            Text: { Data: html }
+          },
+          Subject: {
+            Data: "Account Verification"
+          }
         },
-        Subject: {
-          Data: "Account Verification"
-        }
+        Source: process.env.AWS_SES_EMAIL_ADDRESS
       },
-      Source: process.env.AWS_SES_EMAIL_ADDRESS
-    },
-    (emailFailedError, data) => {
-      if (emailFailedError?.message) {
-        console.log("Email Failed To Send Error", emailFailedError.message);
-        return res.redirect(`/register-confirm?verification_sent=false&email=${email}`);
-      } else {
-        return res.redirect(`/register-confirm?verification_sent=true&email=${email}`);
+      (emailFailedError, data) => {
+        if (emailFailedError?.message) {
+          console.log("Email Failed To Send Error", emailFailedError.message);
+          return res.redirect(`/register-confirm?verification_sent=false&email=${email}`);
+        } else {
+          return res.redirect(`/register-confirm?verification_sent=true&email=${email}`);
+        }
       }
-    }
-  );
+    );
+  }
 };
 
 /*==================================================================**

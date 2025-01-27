@@ -45,7 +45,7 @@ Name: Christma Jean-Louis
 Company TCI Homebase Property Management
 
 # Gmail
-tci.homebase.tc@gmail.com
+tci.homebase.tc@gmail.com  Password: Pr!z3winnerz
 tci.landlordtest1@gmail.com
 tci.xuser@gmail.com
 tci.yuser@gmail.com
