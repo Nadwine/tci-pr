@@ -147,7 +147,6 @@
     "kill-port": "2.0.1",
     "nodemon": "^3.1.9",
     "npm-run-all": "4.1.5",
-    "postcss": "^8.5.3",
     "prettier": "2.8.1",
     "rimraf": "3.0.2",
     "sequelize-auto-migrations-v2": "1.2.1",
@@ -155,7 +154,9 @@
     "sequelize-typescript-migration-lts": "3.2.5",
     "serverless-s3-local": "^0.3.23",
     "sqlite": "4.0.23",
-    "sqlite3": "^5.1.7",
-    "tailwindcss": "^3.2.4"
+    "sqlite3": "^5.1.7"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

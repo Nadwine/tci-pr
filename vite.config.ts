@@ -12,7 +12,11 @@ export default defineConfig({
     hmr: isProd ? hmrDisable : true
   },
   css: {
-    postcss: "./postcss.config.js"
+    postcss: {
+      // Only apply PostCSS to your app's CSS, not node_modules
+      plugins:
+        process.env.NODE_ENV === "production" ? [require("tailwindcss")(), require("autoprefixer")()] : [require("tailwindcss")(), require("autoprefixer")()]
+    }
   },
   build: {
     minify: isProd,
