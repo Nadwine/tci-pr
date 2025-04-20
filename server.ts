@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import fs from "fs/promises";
 import path from "path";
-import * as yup from "yup";
+import Joi from "joi";
 import express from "express";
 import session from "express-session";
 import compression from "compression";
@@ -32,8 +32,6 @@ async function initialiseModels() {
       "listing_view.ts",
       "listing_saved.ts",
       "property_for_rent.ts",
-      // "property_for_sale.ts",
-      // "land_for_sale.ts",
       "listing_media.ts",
       "profile.ts",
       "profile_media.ts",
@@ -60,11 +58,9 @@ async function initialiseModels() {
       await dbModel
         .sync({ alter: true })
         .then(async () => {
-          // await new Promise(r => setTimeout(r, 100));
           console.log(`successfully synced ${file} Model`);
         })
         .catch(async err => {
-          // await new Promise(r => setTimeout(r, 100));
           console.error(`${file} Model failed to sync`, err?.message || err);
         });
     }
@@ -97,7 +93,7 @@ async function createServer(isProd = process.env.NODE_ENV === "production" || pr
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DATABASE,
-    max: 20, // max pool size can up to maybe 50
+    max: 20,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000
   });
@@ -105,38 +101,31 @@ async function createServer(isProd = process.env.NODE_ENV === "production" || pr
   const app = express();
   app.use(express.json());
   app.use(express.urlencoded({ extended: true, limit: "50mb" }));
-  // Create Vite server in middleware mode and configure the app type as
-  // 'custom', disabling Vite's own HTML serving logic so parent server
-  // can take control
   const vite = await createViteServer({
     server: { middlewareMode: true },
     appType: "custom",
     logLevel: isTest ? "error" : "info"
   });
 
-  // use vite's connect instance as middleware
-  // if you use your own express router (express.Router()), you should use router.use
+  app.use(vite.middlewares);
   const oneDay = 86400;
   const thirtyDays = 2592000000;
   const oneMinute = 60000;
   const twoMinute = 120000;
-  app.use(vite.middlewares);
   const requestHandler = express.static(resolve("assets"));
   app.use(requestHandler);
   app.use(
     session({
       store: new pgSession({
-        // connect-pg-simple options here
         pool: postgresConnectionPool,
         createTableIfMissing: true,
-        tableName: "session", // default "session"
+        tableName: "session",
         schemaName: "public"
       }),
       saveUninitialized: false,
       secret: "tcipr_hush",
       resave: false,
       cookie: { maxAge: thirtyDays }
-      // Insert express-session options here
     })
   );
 
@@ -168,37 +157,18 @@ async function createServer(isProd = process.env.NODE_ENV === "production" || pr
     const url = req.originalUrl;
 
     try {
-      // 1. Read index.html
       let template = await fs.readFile(isProd ? resolve("dist/client/index.html") : resolve("index.html"), "utf-8");
-
-      // 2. Apply Vite HTML transforms. This injects the Vite HMR client, and
-      //    also applies HTML transforms from Vite plugins, e.g. global preambles
-      //    from @vitejs/plugin-react
       template = await vite.transformIndexHtml(url, template);
-
-      // 3. Load the server entry. vite.ssrLoadModule automatically transforms
-      //    your ESM source code to be usable in Node.js! There is no bundling
-      //    required, and provides efficient invalidation similar to HMR.
       let productionBuildPath = path.join(__dirname, "./dist/server/entry-server.mjs");
       let devBuildPath = path.join(__dirname, "./src/client/entry-server.tsx");
       const { render } = await vite.ssrLoadModule(isProd ? productionBuildPath : devBuildPath);
-
-      // 4. render the app HTML. This assumes entry-server.js's exported `render`
-      //    function calls appropriate framework SSR APIs,
-      //    e.g. ReactDOMServer.renderToString()
       const appHtml = await render(url);
       const cssAssets = isProd ? "" : await stylesheets;
-
-      // 5. Inject the app-rendered HTML into the template.
       const html = template.replace(`<!--app-html-->`, appHtml).replace(`<!--head-->`, cssAssets);
-
-      // 6. Send the rendered HTML back.
       res.status(200).set({ "Content-Type": "text/html" }).end(html);
     } catch (e: any) {
       !isProd && vite.ssrFixStacktrace(e);
       console.log("vite console log", e.stack);
-      // If an error is caught, let Vite fix the stack trace so it maps back to
-      // your actual source code.
       if (process.env.NODE_ENV === "development") {
         vite.ssrRewriteStacktrace(e);
       } else {
@@ -208,15 +178,16 @@ async function createServer(isProd = process.env.NODE_ENV === "production" || pr
     }
   });
 
-  // Schema validation Error MiddleWare
+  // Schema validation Error Middleware
   app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-    if (error instanceof yup.ValidationError) {
+    if (error instanceof Joi.ValidationError) {
       console.log("server validation error", req.originalUrl);
-      return res.status(400).json({ message: error?.message, err: error?.errors }); // status code is 400 by default
+      return res.status(400).json({ message: error?.message, err: error?.details.map(detail => detail.message) });
     }
 
     return res.status(500).json({ message: "Server Validation Err", err: error });
   });
+
   const port = process.env.SERVER_PORT || 8080;
   app.listen(Number(port), "0.0.0.0", () => {
     console.log(`\x1b[43m \x1b[30m App is listening on http://localhost:${port} with environment >> ${process.env.NODE_ENV}\x1b[0m `);

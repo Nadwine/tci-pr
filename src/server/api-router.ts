@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-import { validate } from "express-yup";
+import Joi from "joi";
 import {
   changePasswordFromEmailToken,
   confirmUserAccountFromEmailToken,
@@ -66,20 +66,31 @@ import {
 import { getTenancyAgreementFromS3Bucket, uploadTenancyAgreement } from "./routes/tenancy-document-route";
 import { uploadNewPropertyDoc } from "./routes/property_doc_route";
 import { createNewExpenseWithDoc } from "./routes/expense-route";
+
 const memStorage = multer.memoryStorage();
 const uploadMemory = multer({ storage: memStorage });
 const router = express.Router();
 
-// Logger to console log all api routes called;
+// Custom Joi validation middleware
+const validateJoi = (schema: Joi.ObjectSchema) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const { error } = schema.validate(req.body, { abortEarly: false });
+    if (error) {
+      return res.status(400).json({
+        message: error.message,
+        err: error.details.map(detail => detail.message)
+      });
+    }
+    next();
+  };
+};
+
+// Logger to console log all api routes called
 router.use("*", (req: Request, res: Response, next: NextFunction) => {
-  // If it is an image or video or static asset we will ignore url log
-  // will log too many times 1 page can load multiple images
   const isAsset = req.rawHeaders.filter(h => h.includes("image") || h.includes("video")).length > 0;
 
-  // "/api/auth/credentials & refresh-perms is called too many times"
   if (!isAsset && req.originalUrl !== "/api/auth/credentials" && req.originalUrl !== "/api/auth/refresh-perms" && req.originalUrl !== "/api/enquiry/latest") {
     res.on("finish", () => {
-      // console.log(`Responded with status ${res.statusCode}`);
       console.log(`${req.method}(${res.statusCode})`, req.originalUrl, `  --  ${dayjs().format("h:mm a")}`);
     });
   }
@@ -88,9 +99,7 @@ router.use("*", (req: Request, res: Response, next: NextFunction) => {
 
 router.get("/environment", (req, res) => res.send(process.env.NODE_ENV));
 
-// TODO: Secure all Routes with auth
-
-//  api/auth    routes
+// api/auth routes
 router.get("/auth/credentials", getUserCredentials);
 router.get("/auth/refresh-perms", refreshUserPermission);
 router.get("/auth/app-build-info", getAppBuildInfo);
@@ -102,7 +111,7 @@ router.post("/auth/forget-password/:token", changePasswordFromEmailToken);
 router.post("/auth/login", loginUser);
 router.get("/auth/logout", logoutUser);
 
-// /api/listing   routes
+// /api/listing routes
 router.post("/listing/rent/create", ensureAdmin, uploadMemory.any(), adminCreateRentListingRoute);
 router.post("/listing/rent/landlord/create", ensureAuthentication, uploadMemory.any(), landLordSubmitRentListingRoute);
 router.get("/listing/rent/search", searchRentListingRoute);
@@ -121,22 +130,22 @@ router.post("/listing/:listingId/save-unsave", ensureAuthentication, toggleASave
 router.get("/listing/my-saved", ensureAuthentication, getMySavedListings);
 router.get("/listing/landlord/profile-properties/:id", getPublicListingsByUserId);
 
-// /api/enquiry   routes
+// /api/enquiry routes
 router.post("/enquiry/set-seen", ensureAuthentication, setMessageAsSeen);
 router.post("/enquiry/:listingId", ensureAuthentication, createEnquiryRoute);
 router.get("/enquiry/latest", ensureAuthentication, getLatestEnquiry);
 
-// /api/message   routes
+// /api/message routes
 router.get("/message/enquiry/:enquiryConversationId", ensureAuthentication, getMessagesByEnquiryConversationId);
 router.post("/message/enquiry", ensureAuthentication, sendMessageToConversation);
 
-// /api/payments  routes
+// /api/payments routes
 router.post("/payment/rent/create/monthly-payment-link", ensureAdmin, createNewRentMonthly);
 router.post("/payment/single-collect", ensureAdmin, collectSinglePayment);
 router.post("/payment/rent/attach-landlord", ensureAuthentication, adminCreateLandLordForListing);
 router.post("/payment/add-landlord-card", ensureAuthentication, attachCardToLandlord);
 router.post("/payment/pay-out-landlord", ensureAuthentication, payLandlordForProperty);
-router.get("/payment/package/:listingId", redirectStripePackagePayment); // public-route
+router.get("/payment/package/:listingId", redirectStripePackagePayment);
 router.post("/payment/webhook", express.raw({ type: "application/json" }), stripeWebhook);
 
 // /api/feedback

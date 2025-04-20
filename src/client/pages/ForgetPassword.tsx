@@ -2,58 +2,61 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import * as yup from "yup";
+import Joi from "joi";
 import _ from "lodash";
-import { ValidationError } from "yup";
-import { passwordRegEx } from "../../utils/validation-schemas/schema-register";
 import { toast } from "react-toastify";
 
 const PwdError = "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character";
 
-const passwordValidationSchema: yup.AnyObjectSchema = yup.object({
-  password: yup.string().required("Please enter a password").matches(passwordRegEx, PwdError),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
+const passwordValidationSchema = Joi.object({
+  password: Joi.string()
     .required()
+    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+    .messages({
+      "string.empty": "Please enter a password",
+      "string.pattern.base": PwdError
+    }),
+  confirmPassword: Joi.string().valid(Joi.ref("password")).required().messages({
+    "any.only": "Passwords must match",
+    "string.empty": "Confirm Password is required"
+  })
 });
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
-  // searching url for registration query param
   const { token } = useParams();
   const [searchParams] = useSearchParams();
   const forgetPasswordStatus = searchParams.get("status");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [errors, setErrors] = useState(searchParams.get("message") || Object);
+  const [errors, setErrors]: any = useState(searchParams.get("message") || {});
   const [touched, setTouched] = useState({});
-  const [emailValid, setEmailValid] = useState<boolean | undefined>();
+  const [emailValid, setEmailValid] = useState<boolean | undefined>(undefined);
 
   const validateForm = (checkIfFieldWasTouched: boolean) => {
     const formData = {
-      password: password,
-      confirmPassword: confirmPassword
+      password,
+      confirmPassword
     };
     const newErrors = {};
-    passwordValidationSchema.validate(formData, { abortEarly: false }).catch((errs: ValidationError) => {
-      errs.inner.forEach((e: ValidationError) => {
-        const field = e.path || "";
-        const message = e.message;
-        // console.log(errs.message);
-        // if the field was interacted with
+    const { error } = passwordValidationSchema.validate(formData, { abortEarly: false });
+
+    if (error) {
+      error.details.forEach(err => {
+        const field = err.path[0];
+        const message = err.message;
         if (checkIfFieldWasTouched) {
           if (touched[field]) {
-            // add to newErrors.fieldName
             newErrors[field] = message;
           }
         } else {
           newErrors[field] = message;
         }
       });
-      setErrors(newErrors);
-    });
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   useEffect(() => {
@@ -63,9 +66,8 @@ const ForgetPassword = () => {
 
   const submitPasswordReset = async () => {
     await axios
-      .post(`/api/auth/forget-password/${token}`, { password: password })
+      .post(`/api/auth/forget-password/${token}`, { password })
       .then(() => {
-        // navigate
         toast.success("success");
         setPassword("");
         setConfirmPassword("");
@@ -76,13 +78,14 @@ const ForgetPassword = () => {
       });
   };
 
-  const handlePasswordReset = async e => {
+  const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = {
-      password: password,
-      confirmPassword: confirmPassword
+      password,
+      confirmPassword
     };
-    const isFormValid = await passwordValidationSchema.isValid(formData);
+    const { error } = passwordValidationSchema.validate(formData);
+    const isFormValid = !error;
 
     if (isFormValid) {
       submitPasswordReset();
@@ -91,13 +94,15 @@ const ForgetPassword = () => {
     }
   };
 
-  const handleEmailSend = async e => {
+  const handleEmailSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    const isFormValid = await yup.string().email().isValid(email);
+    const emailSchema = Joi.string().email({ tlds: { allow: false } });
+    const { error } = emailSchema.validate(email);
+    const isFormValid = !error;
     setEmailValid(isFormValid);
 
     if (isFormValid) {
-      const res = await axios.post("/api/auth/forget-password/send-email", { email: email });
+      const res = await axios.post("/api/auth/forget-password/send-email", { email });
       if (res.status === 200) {
         toast.success("Successfully sent");
       } else {
@@ -106,9 +111,8 @@ const ForgetPassword = () => {
     }
   };
 
-  const renderSentMessage = true; // ForgetPasswordResult !== 'failed' || emailSubmitted === true
+  const renderSentMessage = true;
 
-  // TODO: check first if email exist then rate limit the re-send endpoint to avoid spam email
   return (
     <div>
       {!forgetPasswordStatus && <div className="text-danger text-center">status query missing</div>}
@@ -153,6 +157,7 @@ const ForgetPassword = () => {
               style={{ width: "15em", height: "3em", marginBottom: "2px" }}
               placeholder="New Password"
               onChange={e => setPassword(e.target.value)}
+              onBlur={() => setTouched({ ...touched, password: true })}
             />
             <input
               type="password"
@@ -162,6 +167,7 @@ const ForgetPassword = () => {
               style={{ width: "15em", height: "3em" }}
               placeholder="Confirm Password"
               onChange={e => setConfirmPassword(e.target.value)}
+              onBlur={() => setTouched({ ...touched, confirmPassword: true })}
             />
             <button type="submit" className="btn btn-dark fw-bold my-3">
               Confirm

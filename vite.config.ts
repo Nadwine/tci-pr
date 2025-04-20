@@ -15,13 +15,25 @@ const test = {
 } as UserConfig["test"];
 
 // https://vitejs.dev/config/
+// export default defineConfig({
+//   plugins: [react()],
+//   server: { port: 3000, hmr: isProd ? hmrDisable : true },
+//   build: {
+//     minify: isProd ? true : false
+//   },
+//   root: "",
+//   // @ts-ignore
+//   test
+// });
+
 export default defineConfig({
   plugins: [react()],
-  server: { port: 3000, hmr: isProd ? hmrDisable : true },
   build: {
-    minify: isProd ? true : false
+    outDir: "dist/client",
+    ssr: "src/client/entry-server.tsx",
+    ssrManifest: true
   },
-  root: "",
-  // @ts-ignore
-  test
+  server: {
+    port: 8080
+  }
 });

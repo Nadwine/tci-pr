@@ -1,11 +1,10 @@
-import React, { FormEventHandler, FormHTMLAttributes, MutableRefObject, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppContext } from "../Context";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import stringToBoolean from "../../utils/stringToBoolean";
 import { connect } from "react-redux";
-import { registerBodySchema } from "../../utils/validation-schemas/schema-register";
-import { ValidationError } from "yup";
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
+import Joi from "joi";
 
 const Register = () => {
   const { t } = useTranslation();
@@ -23,10 +22,66 @@ const Register = () => {
   const [errors, setErrors]: any = useState({});
   const navigate = useNavigate();
 
+  // Joi schema for validation
+  const registerBodySchema = Joi.object({
+    username: Joi.string()
+      .min(3)
+      .max(30)
+      .required()
+      .messages({
+        "string.base": t("validation.username.string") || "Username must be a string",
+        "string.empty": t("validation.username.required") || "Username is required",
+        "string.min": t("validation.username.min") || "Username must be at least 3 characters",
+        "string.max": t("validation.username.max") || "Username must be at most 30 characters"
+      }),
+    email: Joi.string()
+      .email({ tlds: { allow: false } })
+      .required()
+      .messages({
+        "string.email": t("validation.email.invalid") || "Email must be a valid email address",
+        "string.empty": t("validation.email.required") || "Email is required"
+      }),
+    password: Joi.string()
+      .min(8)
+      .required()
+      .messages({
+        "string.min": t("validation.password.min") || "Password must be at least 8 characters",
+        "string.empty": t("validation.password.required") || "Password is required"
+      }),
+    confirmPassword: Joi.string()
+      .valid(Joi.ref("password"))
+      .required()
+      .messages({
+        "any.only": t("validation.confirmPassword.match") || "Passwords must match",
+        "string.empty": t("validation.confirmPassword.required") || "Confirm Password is required"
+      }),
+    terms: Joi.boolean()
+      .valid(true)
+      .required()
+      .messages({
+        "any.only": t("validation.terms.required") || "You must agree to the terms"
+      }),
+    registerReason: Joi.string()
+      .valid("tenant", "landlord")
+      .required()
+      .messages({
+        "any.only": t("validation.registerReason.invalid") || "Please select a valid registration reason",
+        "string.empty": t("validation.registerReason.required") || "Registration reason is required"
+      }),
+    registrationNumber: Joi.string()
+      .when("registerReason", {
+        is: "landlord",
+        then: Joi.string().optional(),
+        otherwise: Joi.string().allow("").optional()
+      })
+      .messages({
+        "string.empty": t("validation.registrationNumber.required") || "Registration number is required"
+      })
+  });
+
   useEffect(() => {
     console.log("register page mounted the DOM with server data >>", name, serverError);
 
-    // setting page error from url and removing it immediately
     if (urlQuery.has("error")) {
       setServerError(urlQuery.get("error") || "");
       urlQuery.delete("error");
@@ -35,44 +90,44 @@ const Register = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Here we are doing manual validation due to formik not supporting HTTP form post
-  // Resulting in writing more code than needed
-  const validateForm = (checkIfFieldWasTouched: boolean) => {
+  const validateForm = checkIfFieldWasTouched => {
     const formData = {
-      username: username,
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword,
-      terms: terms,
-      registerReason: registerReason,
-      registrationNumber: registrationNumber
+      username,
+      email,
+      password,
+      confirmPassword,
+      terms,
+      registerReason,
+      registrationNumber
     };
+
+    const { error } = registerBodySchema.validate(formData, { abortEarly: false });
     const newErrors = {};
-    registerBodySchema.validate(formData, { abortEarly: false }).catch((errs: ValidationError) => {
-      errs.inner.forEach((e: ValidationError) => {
-        const field = e.path || "";
-        const message = e.message;
-        // console.log(errs.message);
-        // if the field was interacted with
+
+    if (error) {
+      error.details.forEach(err => {
+        const field = err.path[0];
+        const message = err.message;
         if (checkIfFieldWasTouched) {
           if (touched[field]) {
-            // add to newErrors.fieldName
             newErrors[field] = message;
           }
         } else {
           newErrors[field] = message;
         }
       });
-      setErrors(newErrors);
-    });
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   useEffect(() => {
     validateForm(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [touched, username, email, password, confirmPassword, terms]);
+  }, [touched, username, email, password, confirmPassword, terms, registerReason, registrationNumber]);
 
-  const setElementAsTouched = (htmlField: any) => {
+  const setElementAsTouched = htmlField => {
     setTouched({ ...touched, [htmlField]: true });
   };
 
@@ -85,12 +140,11 @@ const Register = () => {
       registerReason: "tenant",
       terms
     };
-    const isFormValid = await registerBodySchema.isValid(formData);
+
+    const isFormValid = validateForm(false);
 
     if (isFormValid) {
       e.target.submit();
-    } else {
-      validateForm(false);
     }
   };
 
@@ -101,11 +155,9 @@ const Register = () => {
           className="login-sidebar col-lg-5 col-xl-4 p-12 p-xl-20 position-fixed start-0 top-0 h-screen overflow-y-hidden d-none d-lg-flex flex-column px-3"
           style={{ paddingTop: "4.3rem", height: "98%", boxShadow: "13px 10px 29px -17px rgba(0,0,0,0.75)" }}
         >
-          {/* <!-- Logo --> */}
           <a className="d-block" href="#">
             <img src="/static/web-logo-white.png" className="h-10" alt="..." style={{ width: "70px" }} />
           </a>
-          {/* <!-- Title --> */}
           <div className="mt-32 mb-20">
             <h1 className="ls-tight font-bolder fs-2 pt-5 text-white mb-5">Register to start your journey in finding or renting a property.</h1>
             <div style={{ paddingTop: "30px" }}>
@@ -122,22 +174,17 @@ const Register = () => {
               </button>
             </div>
           </div>
-          {/* <!-- Circle --> */}
           <div className="w-56 h-56 bg-orange-500 rounded-circle position-absolute bottom-0 end-20 transform translate-y-1/3"></div>
         </div>
         <div className="col-12 col-md-9 col-lg-7 offset-lg-5 border-left-lg min-h-lg-screen d-flex flex-column justify-content-center py-lg-16 px-lg-20 position-relative">
           <div className="row">
             <div className="col-lg-10 col-md-9 col-xl-6 mx-auto ms-xl-0">
               <div className="mt-10 mt-lg-5 mb-5 d-flex align-items-center d-lg-block">
-                {/* <span className="d-inline-block d-lg-block h1 mb-lg-6 me-3">👋</span> */}
                 <div className="flex text-danger text-sm">{serverError}</div>
-                <h1 className="ls-tight font-bolder h2">
-                  {/* {t("register.welcome.text")} */}
-                  Create an account
-                </h1>
+                <h1 className="ls-tight font-bolder h2">Create an account</h1>
               </div>
               <form action="/api/auth/register" method="POST" onSubmit={handleFormSubmit}>
-                <div className="text-danger text-sm">{errors.registerReason && errors.registerReason}</div>
+                <div className="text-danger text-sm">{errors.registerReason}</div>
                 <div className="mb-4">
                   <label className="pe-3 mb-1 fw-bolder">What are you looking for?</label>
                   <select
@@ -152,7 +199,7 @@ const Register = () => {
                     <option value="landlord">I am a landlord</option>
                   </select>
                 </div>
-                <div className="text-danger text-sm">{errors.email && errors.email}</div>
+                <div className="text-danger text-sm">{errors.email}</div>
                 <div className="mb-4">
                   <label className="form-label" htmlFor="email">
                     Email
@@ -169,7 +216,7 @@ const Register = () => {
                 </div>
                 {registerReason === "landlord" && (
                   <div className="mb-4">
-                    <label className="form-label" htmlFor="email">
+                    <label className="form-label" htmlFor="registrationNumber">
                       Business Registration Number
                     </label>
                     <input
@@ -184,7 +231,7 @@ const Register = () => {
                     />
                   </div>
                 )}
-                <div className="text-danger text-sm">{errors.password && errors.password}</div>
+                <div className="text-danger text-sm">{errors.password}</div>
                 <div className="mb-4">
                   <label className="form-label" htmlFor="password">
                     Password
@@ -200,7 +247,7 @@ const Register = () => {
                     autoComplete="current-password"
                   />
                 </div>
-                <div className="text-danger text-sm">{errors.confirmPassword && errors.confirmPassword}</div>
+                <div className="text-danger text-sm">{errors.confirmPassword}</div>
                 <div className="mb-5">
                   <label className="form-label" htmlFor="confirm-password">
                     Confirm Password
@@ -216,7 +263,7 @@ const Register = () => {
                     autoComplete="current-password"
                   />
                 </div>
-                <div className="text-danger text-sm">{errors.terms && errors.terms}</div>
+                <div className="text-danger text-sm">{errors.terms}</div>
                 <div className="mb-5">
                   <div className="form-check">
                     <input
@@ -243,9 +290,6 @@ const Register = () => {
                   </button>
                 </div>
               </form>
-              {/* <div className="py-5 text-center">
-                <span className="text-xs text-uppercase font-semibold">or</span>
-              </div> */}
               <div className="GitHub & Google row visually-hidden">
                 <div className="col-sm-6">
                   <a href="#" className="btn btn-neutral w-full">
