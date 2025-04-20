@@ -153,7 +153,7 @@
     "sequelize-auto-migrations-v2": "1.2.1",
     "sequelize-cli": "6.2.0",
     "sequelize-typescript-migration-lts": "3.2.5",
-    "serverless-s3-local": "^0.8.5",
+    "serverless-s3-local": "^0.3.23",
     "sqlite": "4.0.23",
     "sqlite3": "^5.1.7",
     "tailwindcss": "3.2.4"

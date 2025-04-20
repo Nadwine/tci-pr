@@ -21,7 +21,7 @@
     "target": "ES2017",
     "noImplicitAny": false,
     "resolveJsonModule": true,
-    "typeRoots": ["types/", "node_modules/@types", "node_modules/yup/*"]
+    "typeRoots": ["types/", "node_modules/@types", "node_modules/yup/*", "./src/types"]
   },
   "include": ["src/**/*", "types/*", "server.ts", "node_modules/vite/types/*"],
   "ts-node": {
