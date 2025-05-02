@@ -1,14 +1,21 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": ".",
-    "module": "commonjs",
+    "module": "esnext",
     "target": "esnext",
+    "jsx": "react-jsx",
+    "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "noEmit": false
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "noEmit": true,
+    "skipLibCheck": true,
+    "types": ["node", "react", "react-dom"]
   },
-  "include": ["server.ts", "src/**/*"],
+  "include": ["src/**/*", "server.ts"],
   "exclude": ["node_modules", "dist"]
 }
