@@ -13,8 +13,7 @@
       "@/*": ["src/*"]
     },
     "noEmit": true,
-    "skipLibCheck": true,
-    "types": ["node", "react", "react-dom"]
+    "skipLibCheck": true
   },
   "include": ["src/**/*", "server.ts"],
   "exclude": ["node_modules", "dist"]
