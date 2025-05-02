@@ -1,14 +1,18 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
+    "jsx": "react-jsx",
     "outDir": "dist",
     "module": "commonjs",
     "target": "esnext",
     "noEmit": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "strict": true,
     "moduleResolution": "node",
+    "types": ["node", "express", "joi", "sequelize", "vite"],
     "skipLibCheck": true
   },
-  "include": ["server.ts"],
+  "include": ["server.ts", "src/**/*"],
   "exclude": ["node_modules", "dist"]
 }
