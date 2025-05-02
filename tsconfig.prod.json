@@ -1,6 +1,14 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "jsx": "react-jsx"
-  }
+    "outDir": "dist",
+    "rootDir": ".",
+    "module": "commonjs",
+    "target": "esnext",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "noEmit": false
+  },
+  "include": ["server.ts", "src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
