@@ -13,9 +13,7 @@ export default defineConfig({
   },
   css: {
     postcss: {
-      // Only apply PostCSS to your app's CSS, not node_modules
-      plugins:
-        process.env.NODE_ENV === "production" ? [require("tailwindcss")(), require("autoprefixer")()] : [require("tailwindcss")(), require("autoprefixer")()]
+      plugins: [require("autoprefixer")()]
     }
   },
   build: {

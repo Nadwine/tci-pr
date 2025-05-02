@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/BrutchsamaJeanLouis/makit"
   },
-  "author": "BrutchsamaJeanLouis",
+  "author": "NadwineLouis",
   "license": "MIT",
   "scripts": {
     "first-setup": "yarn && npm run create-db && npm run build && npm link serverless",
