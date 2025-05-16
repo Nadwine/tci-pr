@@ -1,0 +1,14 @@
+web: tcipr
+  startCommand: npm run serve
+  buildCommand: npm run build
+  environment:
+    NODE_VERSION: "24.0.2"
+    USE_NPM: "true"
+    BUN_VERSION: "none"
+  envVars:
+    - key: NODE_ENV
+      value: production
+    - key: FORCE_REBUILD
+      value: true
+    - key: NPM_CONFIG_PRODUCTION
+      value: false

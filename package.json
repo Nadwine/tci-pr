@@ -19,6 +19,7 @@
     "server:test": "NODE_ENV=test nodemon --exec 'ts-node server.ts'",
     "server:sqlite": "NODE_ENV=development SQLITE=true nodemon --exec 'ts-node server.ts'",
     "client": "npm run build:client && vite --config vite.config.ts dev",
+    "prebuild": "rm -rf node_modules package-lock.json && npm install --no-fund --no-audit && npm list express ts-node vite react-dom || exit 1",
     "build": "npx rimraf dist && npm run build:server:ts && npm run build:client && npm run build:server && npm run copy-files",
     "build-prod": "npx rimraf dist && npm run build:server:ts && npm run build:client && npm run build:server && npm run copy-files && node ./archive-creator.js",
     "build:client": "vite build --outDir dist/client --ssrManifest",
@@ -110,7 +111,6 @@
     "sharp": "^0.34.1",
     "signature_pad": "^4.2.0",
     "stripe": "14.12.0",
-    "typescript": "4.9.4",
     "uuid": "9.0.0",
     "vite": "^6.3.2",
     "vitest": "^3.1.1"
@@ -162,12 +162,13 @@
     "sequelize-cli": "6.2.0",
     "sequelize-typescript-migration-lts": "3.2.5",
     "serverless": "^3.40.0",
-    "serverless-s3-local": "^0.3.23",
+    "serverless-s3-local": "^0.8.5",
     "sqlite": "4.0.23",
     "sqlite3": "^5.1.7",
-    "ts-node": "10.9.1"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "18.20.4"
   }
 }
