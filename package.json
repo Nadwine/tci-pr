@@ -23,7 +23,7 @@
     "build-prod": "npx rimraf dist && npm run build:server:ts && npm run build:client && npm run build:server && npm run copy-files && node ./archive-creator.js",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --ssr src/client/entry-server.tsx --outDir dist/server",
-    "build:server:ts": "ts-node --transpile-only server.ts > dist/server.js",
+    "build:server:ts": "mkdir -p dist && ts-node --transpile-only server.ts > dist/server.js",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "coverage": "vitest --coverage",
@@ -162,7 +162,7 @@
     "sequelize-auto-migrations-v2": "1.2.1",
     "sequelize-cli": "6.2.0",
     "sequelize-typescript-migration-lts": "3.2.5",
-    "serverless": "^3.38.0",
+    "serverless": "^3.40.0",
     "serverless-s3-local": "^0.3.23",
     "sqlite": "4.0.23",
     "sqlite3": "^5.1.7"
